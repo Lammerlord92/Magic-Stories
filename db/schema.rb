@@ -11,19 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160209161217) do
+ActiveRecord::Schema.define(version: 20160209182109) do
+
+  create_table "categories", force: :cascade do |t|
+    t.string   "name"
+    t.string   "desciption"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "options", force: :cascade do |t|
+    t.string   "option"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "stories", force: :cascade do |t|
-    t.string   "frontpage"
-    t.string   "title"
-    t.string   "description"
-    t.string   "language"
-    t.float    "price"
-    t.date     "release_date"
-    t.boolean  "published"
-    t.integer  "num_purchased"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
