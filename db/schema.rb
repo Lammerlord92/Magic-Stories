@@ -14,8 +14,16 @@
 ActiveRecord::Schema.define(version: 20160209161217) do
 
   create_table "stories", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "frontpage"
+    t.string   "title"
+    t.string   "description"
+    t.string   "language"
+    t.float    "price"
+    t.date     "release_date"
+    t.boolean  "published"
+    t.integer  "num_purchased"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
 end
