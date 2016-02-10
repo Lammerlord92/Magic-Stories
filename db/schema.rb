@@ -45,15 +45,11 @@ ActiveRecord::Schema.define(version: 20160209191724) do
   enable_extension "plpgsql"
 
   create_table "administrators", force: :cascade do |t|
-    t.integer  "user_id",    null: false
-    t.integer  "sku",        null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "free_users", force: :cascade do |t|
-    t.integer  "user_id",    null: false
-    t.integer  "sku",        null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -112,8 +108,6 @@ ActiveRecord::Schema.define(version: 20160209191724) do
   add_index "mailboxer_receipts", ["receiver_id", "receiver_type"], name: "index_mailboxer_receipts_on_receiver_id_and_receiver_type", using: :btree
 
   create_table "premium_users", force: :cascade do |t|
-    t.integer  "user_id",    null: false
-    t.integer  "sku",        null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -138,6 +132,8 @@ ActiveRecord::Schema.define(version: 20160209191724) do
     t.string   "phone"
     t.date     "birthday",                            null: false
     t.string   "sku",                                 null: false
+    t.integer  "role_id"
+    t.string   "role_type"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
