@@ -32,7 +32,19 @@ class DeviseCreateUsers < ActiveRecord::Migration
 
 
       t.timestamps null: false
+
+      t.string   "username",                            null: false
+      t.string   "name",                                null: false
+      t.string   "surname1",                            null: false
+      t.string   "surname2",                            null: false
+      t.string   "phone"
+      t.date     "birthday",                            null: false
+      t.string   "sku",                                 null: false
+      t.integer  "role_id"
+      t.string   "role_type"
     end
+
+
 
     add_index :users, :email,                unique: true
     add_index :users, :reset_password_token, unique: true

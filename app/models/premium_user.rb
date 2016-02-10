@@ -1,3 +1,3 @@
 class PremiumUser < ActiveRecord::Base
-  has_one :user, as: :sku
+  has_many :users, as: :role
 end

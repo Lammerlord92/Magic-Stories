@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
 
   acts_as_messageable
 
-  belongs_to :sku, polymorphic: true
+  belongs_to :role, polymorphic: true
 
 
   validates :username, :name, :surname1, :surname2, :email, :birthday, :sku, presence: true
