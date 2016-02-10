@@ -9,7 +9,27 @@
 <body>
 
   <header>
-    <%# TODO layout base %>
+    <div class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Magic Stories</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#">Historias</a></li>
+          <li><a href="#">Crear historia</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuario<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Mi perfil</a></li>
+              <li><a href="#">Mis amigos</a></li>
+              <li><a href="#">Invitar amigos</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">Cerrar sesión</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
   </header>
 
   <%= yield %>
@@ -17,7 +37,7 @@
   <p class="alert"><%= alert %></p>
 
   <footer>
-    <%# TODO layout base %>
+    <!-- TODO footer del layout -->
   </footer>
 
 </body>
