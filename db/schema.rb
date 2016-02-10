@@ -11,10 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160210042009) do
+ActiveRecord::Schema.define(version: 20160210190237) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "administrators", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "sku",        null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "free_users", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "sku",        null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "mailboxer_conversation_opt_outs", force: :cascade do |t|
     t.integer "unsubscriber_id"
@@ -69,8 +83,15 @@ ActiveRecord::Schema.define(version: 20160210042009) do
   add_index "mailboxer_receipts", ["notification_id"], name: "index_mailboxer_receipts_on_notification_id", using: :btree
   add_index "mailboxer_receipts", ["receiver_id", "receiver_type"], name: "index_mailboxer_receipts_on_receiver_id_and_receiver_type", using: :btree
 
+  create_table "premium_users", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "sku",        null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false, unique: true
+    t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -82,13 +103,13 @@ ActiveRecord::Schema.define(version: 20160210042009) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.string   "username",                            null: false, unique: true
+    t.string   "username",                            null: false
     t.string   "name",                                null: false
     t.string   "surname1",                            null: false
     t.string   "surname2",                            null: false
     t.string   "phone"
     t.date     "birthday",                            null: false
-    t.string   "sku",                                 null:false, unique: true
+    t.string   "sku",                                 null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
