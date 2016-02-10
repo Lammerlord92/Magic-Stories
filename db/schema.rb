@@ -11,14 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20160209191724) do
+ActiveRecord::Schema.define(version: 20160210190237) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "administrators", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
-    t.string   "desciption"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "chapters", force: :cascade do |t|
@@ -29,29 +36,7 @@ ActiveRecord::Schema.define(version: 20160209191724) do
     t.integer  "story_id"
   end
 
-  add_index "chapters", ["story_id"], name: "index_chapters_on_story_id"
-
-  create_table "options", force: :cascade do |t|
-    t.string   "option"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "stories", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-=======
-ActiveRecord::Schema.define(version: 20160210190237) do
->>>>>>> e6134ecc58b661e75f37b6754eb98d2b228702cc
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
-  create_table "administrators", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
+  add_index "chapters", ["story_id"], name: "index_chapters_on_story_id", using: :btree
 
   create_table "free_users", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -111,10 +96,39 @@ ActiveRecord::Schema.define(version: 20160210190237) do
   add_index "mailboxer_receipts", ["notification_id"], name: "index_mailboxer_receipts_on_notification_id", using: :btree
   add_index "mailboxer_receipts", ["receiver_id", "receiver_type"], name: "index_mailboxer_receipts_on_receiver_id_and_receiver_type", using: :btree
 
+  create_table "options", force: :cascade do |t|
+    t.string   "option"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "premium_users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "stories", force: :cascade do |t|
+    t.string   "frontpage"
+    t.string   "title"
+    t.string   "description"
+    t.string   "language"
+    t.float    "price"
+    t.date     "release_date"
+    t.boolean  "published"
+    t.integer  "num_purchased"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "story_categories", force: :cascade do |t|
+    t.integer  "story_id"
+    t.integer  "category_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "story_categories", ["category_id"], name: "index_story_categories_on_category_id", using: :btree
+  add_index "story_categories", ["story_id"], name: "index_story_categories_on_story_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -143,7 +157,10 @@ ActiveRecord::Schema.define(version: 20160210190237) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "chapters", "stories"
   add_foreign_key "mailboxer_conversation_opt_outs", "mailboxer_conversations", column: "conversation_id", name: "mb_opt_outs_on_conversations_id"
   add_foreign_key "mailboxer_notifications", "mailboxer_conversations", column: "conversation_id", name: "notifications_on_conversation_id"
   add_foreign_key "mailboxer_receipts", "mailboxer_notifications", column: "notification_id", name: "receipts_on_notification_id"
+  add_foreign_key "story_categories", "categories"
+  add_foreign_key "story_categories", "stories"
 end
