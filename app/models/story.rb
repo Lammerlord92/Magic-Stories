@@ -7,6 +7,7 @@ class Story < ActiveRecord::Base
   #validates :price, :format => { :with => /\A\d+(?:\.\d{0,2})?\z/ }, :numericality => {:greater_than => 0}
   # :release_date debe estar en pasado
   validates_associated :chapters
+  validate :check_date
 
   attr_reader :categories
   has_many :chapters
@@ -23,6 +24,14 @@ class Story < ActiveRecord::Base
     @categories.each do |category_id|
       Story_category.create(category_id:category_id, story_id:self.id)
     end
+  end
+
+  def check_date
+    date1 = release_date
+    date2 = Time.now
+    date3 = date1 -1
+
+    date3<date2
   end
 
 
