@@ -1,6 +1,8 @@
 class Story < ActiveRecord::Base
   attr_reader :categories
   has_many :chapters
+  has_many :story_categories
+  has_many :categories, through: :story_categories
   #Setter de la relación
   def categories=(value)
     @stories=value
