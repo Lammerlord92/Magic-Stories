@@ -1,4 +1,13 @@
 class Story < ActiveRecord::Base
+  validates :frontpage, presence: true
+  validates :title, presence: true
+  validates :description, presence: true
+  validates :language, presence: true
+  #Precio debe ser minimo 0
+  #validates :price, :format => { :with => /\A\d+(?:\.\d{0,2})?\z/ }, :numericality => {:greater_than => 0}
+  # :release_date debe estar en pasado
+  validates_associated :chapters
+
   attr_reader :categories
   has_many :chapters
   has_many :story_categories
