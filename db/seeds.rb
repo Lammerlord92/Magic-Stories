@@ -16,10 +16,31 @@ user2 = User.create({email: 'cani93@hotmail.com', password: 'judiaspintas', pass
                    username: 'themaoisha', name: 'juanfran', surname1: 'nieto', surname2: 'mendoza', phone: 619663023,
                    birthday: '30/10/1993', sku: '586936'})
 
+user3 = User.create({email: 'lanube@hotmail.com', password: 'judiaspintas', password_confirmation: 'judiaspintas',
+                     username: 'carmelo', name: 'carmelo', surname1: 'camelino', surname2: 'mendoza', phone: 619663023,
+                     birthday: '30/10/1993', sku: '586931'})
+
 userAcc1 = FreeUser.create()
 userAcc2 = PremiumUser.create()
+userAcc3 = FreeUser.create()
 
 user1.update_attribute(:role, userAcc1)
 user2.update_attribute(:role, userAcc2)
+user2.update_attribute(:role, userAcc3)
+
+a = Friendship.createFriendship(user1, user2)
+b = Friendship.createFriendship(user2, user3)
+c = Friendship.createFriendship(user3, user1)
+
+@ret = ""
+User.all.each do |usuario|
+  usuario.friends.each do |amigo|
+    @ret << "-" << usuario.username << " es amigo de " << amigo.username << "\n"
+  end
+end
+
+
+puts @ret
+
 
 

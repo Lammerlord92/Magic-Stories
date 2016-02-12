@@ -6,7 +6,16 @@ class User < ActiveRecord::Base
 
   acts_as_messageable
 
+  # Distinguiendo roles
+
   belongs_to :role, polymorphic: true
+
+  # Friendshipping
+
+  has_many :friendships
+  has_many :friends, :through => :friendships
+  has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
+  has_many :inverse_friends, :through => :inverse_friendships, :source => :user
 
 
   validates :username, :name, :surname1, :surname2, :email, :birthday, :sku, presence: true
