@@ -48,4 +48,17 @@ perfil2 = Profile.create({name: 'Hola bebés2', avatar: 'http://www.image1.es', 
 perfil3 = Profile.create({name: 'Hola bebés3', avatar: 'http://www.image2.es', description: 'This is my profile2', signature: 'My sign Bebés2', user_id: user3.id})
 
 
+story1 = Story.create!({frontpage: 'https:www.frontpage.com', title: 'Titulo1', description: 'Descripcion1',
+                       language: 'Español', price: 0.36, num_purchased: 3, release_date: '18/02/2016', published: true, creatorProfile: perfil1})
+
+story2 = Story.create!({frontpage: 'https:www.frontpage.com', title: 'Titulo2', description: 'Descripcion2',
+                        language: 'Español', price: 0.36, num_purchased: 3, release_date: '18/02/2016', published: true, creatorProfile: perfil2})
+
+story3 = Story.create!({frontpage: 'https:www.frontpage.com', title: 'Titulo2', description: 'Descripcion2',
+                        language: 'Español', price: 0.36, num_purchased: 3, release_date: '18/02/2016', published: true, creatorProfile: perfil2})
+
+story3.readerProfiles << perfil3
+story3.readerProfiles << perfil2
+story3.readerProfiles << perfil1
+
 
