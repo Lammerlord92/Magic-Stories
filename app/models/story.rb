@@ -13,6 +13,16 @@ class Story < ActiveRecord::Base
   has_many :chapters
   has_many :story_categories
   has_many :categories, through: :story_categories
+
+  #Creador perfil y usuario
+
+  belongs_to :creatorProfile, class_name: "Profile"
+  belongs_to :creator, through: :creatorProfile, class_name: "User"
+
+  # Lectores perfiles, para ir a usuario se tiene que hacer a raiz del perfil, no se pueden dar dos saltos. (NO through through)
+  has_many :readings
+  has_many :readerProfiles, through: :readings
+
   #Setter de la relación
   def categories=(value)
     @stories=value
