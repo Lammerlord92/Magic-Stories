@@ -10,6 +10,10 @@ class User < ActiveRecord::Base
 
   belongs_to :role, polymorphic: true
 
+  # Perfil?
+
+  has_one :profile
+
   # Friendshipping
 
   has_many :friendships
