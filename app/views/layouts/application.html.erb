@@ -10,7 +10,7 @@
 
   <header>
     <div class="navbar navbar-default">
-      <div class="container-fluid">
+      <div class="container">
         <div class="navbar-header">
           <a class="navbar-brand" href="#">Magic Stories</a>
         </div>
@@ -37,8 +37,18 @@
   <p class="alert"><%= alert %></p>
 
   <footer>
-    <!-- TODO footer del layout -->
+    <nav class="navbar navbar-default navbar-bottom" role="navigation">
+      <div class="container">
+        <b>&#0169; Magic Stories <span id="year"/>
+          <script>
+            document.getElementById("year").innerHTML = new Date().getFullYear();
+          </script>
+        </b>
+      </div>
+    </nav>
   </footer>
+
+  
 
 </body>
 </html>
