@@ -24,7 +24,9 @@
               <li><a href="#">Mis amigos</a></li>
               <li><a href="#">Invitar amigos</a></li>
               <li role="separator" class="divider"></li>
-              <li><a href="#">Cerrar sesión</a></li>
+              <li>
+                <%= link_to('Cerrar sesión', destroy_user_session_path, :method => :delete) %>
+              </li>
             </ul>
           </li>
         </ul>
