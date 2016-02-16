@@ -4,41 +4,6 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
-  <style>
-
-    #login{
-      margin: 0 auto;
-      display:block;
-      margin-top: 5%;
-    }
-
-    #modal{
-      width: 400px;
-      background: #CACACA;
-      height: 300px;
-      box-shadow: 0px 0px 10px 4px;
-      margin: 0 auto;
-      margin-top: 12%;
-      border-radius: 5px;
-    }
-
-    #close{
-      position: absolute;
-      right: 0px;
-      top: 0px;
-    }
-
-    .glyphicon {
-      font-size: 2.0em;
-      color: white;
-    }
-
-    .glyphicon:hover{
-      font-size: 2.0em;
-      color: gray;
-    }
-  </style>
 </head>
 
 <body>
@@ -64,19 +29,5 @@
     </form>
   </div>
 </section>
-
-<script>
-  $(document).ready(function(){
-    $("#login").on('click',function(){
-      $("#modal").modal({show:true});
-    });
-    $("#close").on('click',function(){
-      $("#modal").modal('hide');
-    });
-  });
-</script>
-
 </body>
-
-
 </html>

@@ -6,5 +6,4 @@ class StoryController < ApplicationController
     end
     def show
     end
-
 end
