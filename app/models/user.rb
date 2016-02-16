@@ -31,10 +31,6 @@ class User < ActiveRecord::Base
     Date.today - :birthday.to_date >= 18.years.to_date # 18 años
   end
 
-  def name
-    return :name
-  end
-
   #Returning the email address of the model if an email should be sent for this object (Message or Notification).
   #If no mail has to be sent, return nil.
   def mailboxer_email(object)
