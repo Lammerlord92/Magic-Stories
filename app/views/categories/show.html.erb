@@ -1,2 +1,8 @@
-<h1>Categories#show</h1>
-<p>Find me in app/views/categories/show.html.erb</p>
+<h1><%= @category.name  %></h1>
+
+<p>
+  Descripción: <%= @category.description  %>
+</p>
+<div class="fiel">
+  <%= image_tag @category.icon.url(:thumb) %>
+</div>
