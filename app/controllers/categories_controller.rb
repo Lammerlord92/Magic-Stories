@@ -4,7 +4,7 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    @category=Category.find(params[:id])
+    @category=set_category
   end
 
   def new
@@ -12,7 +12,7 @@ class CategoriesController < ApplicationController
   end
 
   def edit
-    @category=Category.find(params[:id])
+    @category=set_category
   end
 
   def create
@@ -25,6 +25,7 @@ class CategoriesController < ApplicationController
   end
 
   def update
+    @category=set_category
     if @category.update(category_params)
       redirect_to @category
     else
@@ -33,6 +34,7 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
+    @category=set_category
     @category.destroy
     redirect_to categories_path
   end
