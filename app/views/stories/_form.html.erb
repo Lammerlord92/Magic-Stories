@@ -3,11 +3,7 @@
 <head>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 
-  <style>
-    #buttonStory{
-      display: block;
-    }
-  </style>
+
 
 </head>
 
@@ -50,17 +46,17 @@
     <section id="modal" class="modal fade">
       <div class="modal-body">
         <form action="buttonStory.php" method="post" role="form">
-
+          <span id="close" onclick="close();" class="glyphicon glyphicon-remove circle pull-right"></span>
 
           <div class="form-group">
-            <label form="title">Title</label>
-            <input type="title" class="form-control" id="id">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" placeholder="Enter Title">
           </div>
 
 
           <div class="form-group">
-            <label form="description">Description</label>
-            <input type="description" class="form-control" id="id">
+            <label for="description">Description</label>
+            <textarea typeof="text" class="form-control" id="description" placeholder="Enter Description"></textarea>
           </div>
 
 
@@ -81,6 +77,9 @@
         $("#buttonStory").on('click',function(){
           $("#modal").modal({
             show:true
+          })
+          $("#close").on('click',function(){
+            $("#modal").modal('hide')
           })
         })
       })
