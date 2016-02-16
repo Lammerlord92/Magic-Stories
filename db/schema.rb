@@ -135,7 +135,7 @@ ActiveRecord::Schema.define(version: 20160213043725) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "story", force: :cascade do |t|
+  create_table "stories", force: :cascade do |t|
     t.string   "frontpage"
     t.string   "title"
     t.string   "description"
@@ -185,10 +185,10 @@ ActiveRecord::Schema.define(version: 20160213043725) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  add_foreign_key "chapters", "story"
+  add_foreign_key "chapters", "stories"
   add_foreign_key "mailboxer_conversation_opt_outs", "mailboxer_conversations", column: "conversation_id", name: "mb_opt_outs_on_conversations_id"
   add_foreign_key "mailboxer_notifications", "mailboxer_conversations", column: "conversation_id", name: "notifications_on_conversation_id"
   add_foreign_key "mailboxer_receipts", "mailboxer_notifications", column: "notification_id", name: "receipts_on_notification_id"
   add_foreign_key "story_categories", "categories"
-  add_foreign_key "story_categories", "story"
+  add_foreign_key "story_categories", "stories"
 end

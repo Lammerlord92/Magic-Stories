@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   get 'welcome/index'
   get 'welcome/popup'
-  get 'story/show'
+  get 'stories/show'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -14,16 +14,16 @@ Rails.application.routes.draw do
 
 
   #Stories
-  resources :story
+  resources :stories
 =begin
-     get "/story"
-     post "/story"
-     delete "/story"
-     get "/story/:id"
-     get "/story/new"
-     get "/story/:id/edit"
-     patch "/story/:id"
-     put "/story/:id"
+     get "/stories"
+     post "/stories"
+     delete "/stories"
+     get "/stories/:id"
+     get "/stories/new"
+     get "/stories/:id/edit"
+     patch "/stories/:id"
+     put "/stories/:id"
 =end
 
   # Example of regular route:

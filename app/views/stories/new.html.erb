@@ -1,0 +1,32 @@
+<h1>Crear historia</h1>
+
+<%=form_for(@story) do |f|%>
+  <% @story.errors.full_messages.each do |message| %>
+      <div class="error">
+        *<%= message  %>
+      </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.text_field :frontpage, placeholder: "Portada" %>
+  </div>
+  <div class="field">
+    <%= f.text_field :title, placeholder: "Título" %>
+  </div>
+  <div class="field">
+    <%= f.text_area :description, placeholder: "Descripción" %>
+  </div>
+  <div class="field">
+    <%= f.text_field :language, placeholder: "Idioma" %>
+  </div>
+  <div class="field">
+    <%= f.text_field :price, placeholder: "Precio" %>
+  </div>
+  <div class="field">
+    <%= f.date_select :release_date, placeholder: "Fecha de salida" %>
+  </div>
+
+  <div class="field">
+    <%= f.submit "Guardar" %>
+  </div>
+<%end%>

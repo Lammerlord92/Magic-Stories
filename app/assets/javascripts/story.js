@@ -31,7 +31,7 @@ app.controller('ReaderController', function($scope){
         $scope.story.chunk = $scope.story.chunks.filter(function(chunk){
             return chunk.id === id; 
         })[0];
-        //console.log($scope.story.chunk);
+        //console.log($scope.stories.chunk);
     }
     function parseHistory(file){
         $scope.story = file;
