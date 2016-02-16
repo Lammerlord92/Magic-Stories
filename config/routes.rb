@@ -10,6 +10,19 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 
+  #Stories
+  resources :story
+=begin
+     get "/story"
+     post "/story"
+     delete "/story"
+     get "/story/:id"
+     get "/story/new"
+     get "/story/:id/edit"
+     patch "/story/:id"
+     put "/story/:id"
+=end
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
