@@ -1,11 +1,11 @@
 <% name ||= "Crear" %>
 <h1><%= name %> categoría</h1>
 <%= form_for(@category) do |cat| %>
-    <%= @category.errors.full_messages.each do |message| %>
+    <% @category.errors.full_messages.each do |message| %>
         <div class="error">
           *<%= message  %>
         </div>
-    <% end %> %>
+    <% end %>
     <div class="field">
       <%= cat.text_field :name, placeholder: "Nombre de categoría", class:"form-field" %>
     </div>
