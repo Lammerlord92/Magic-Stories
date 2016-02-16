@@ -6,6 +6,26 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+category1=Category.create!({name: "Drogas", description: "Historia sobre drogas",
+                            icon: File.new("public/system/categories/icons/000/000/006/original/seta-icono-new-super-mario-bros-wii-articulo-videojuegos-zehngames.png")})
+category2=Category.create!({name: "Relleno", description: "Historia con mucho relleno",
+                            icon: File.new("public/system/categories/icons/000/000/007/original/MagekyouSharingan_Riku.png")})
+category3=Category.create!({name: "Postapocalíptica", description: "Historia postapocalíptica",
+                            icon: File.new("public/system/categories/icons/000/000/008/original/icono_app_izombie.jpg")})
+category4=Category.create!({name: "Terror", description: "Historia de terror",
+                            icon: File.new("public/system/categories/icons/000/000/009/original/original.jpeg")})
+category6=Category.create!({ name: "Ninjas", description: "Katanas y shurikens",
+                             icon: File.new("public/system/categories/icons/000/000/011/original/Mangekyou_Sharingan.png")})
+category7=Category.create!({name: "Estafa", description: "Cuando lo compres, te darás cuenta",
+                            icon: File.new("public/system/categories/icons/000/000/012/original/tumblr_o20wx97uhe1r868elo1_400.gif")})
+category8=Category.create!({name: "+18", description: "Ejem, ejem....",
+                            icon: File.new("public/system/categories/icons/000/000/013/original/tumblr_inline_n0sh29l3aN1qhxoyk.gif")})
+category9=Category.create!({name: "Romántica", description: "Amoríos y demas",
+                            icon: File.new("public/system/categories/icons/000/000/014/original/tumblr_mj0vgg5TKE1rz4ni1o1_400.gif")})
+category10=Category.create!({name: "Política", description: "Guía de latrocinio",
+                             icon: File.new("public/system/categories/icons/000/000/015/original/tumblr_n2l8l5aVaN1rvner1o1_500.jpg")})
+category5=Category.create!({name: "Vergonzante", description: "Es un espectaculo vergonzante - Shogun 2",
+                            icon: File.new("public/system/categories/icons/000/000/010/original/puedo-eliminar-icono-celular-facebook_1_1720410.jpg")})
 
 
 user1 = User.create({email: 'kiny93@hotmail.com', password: 'judiaspintas', password_confirmation: 'judiaspintas',
