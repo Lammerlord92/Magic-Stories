@@ -1,33 +1,18 @@
-<article data-ng-show="story.chunk">
-	<header>
-		<h2>{{story.title}} <small>{{story.pages}} página(s).</small></h2>
-		<h3 class="text-muted"><small>Escrito por {{story.author.name}}.</small></h3>
-	</header>
-	<section>
-		<button class="btn btn-primary" 
-                data-ng-click="setChunk(story.chunk.parent)" 
-                data-ng-show="story.chunk.parent">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-            Atrás
-        </button>
-		<blockquote>
-			<p>
-				{{story.chunk.text}}
-			</p>
-            <!-- If story has at least one child  -->
-			<div data-ng-show="story.chunk.children[0]">
-				<i>¿Que deberia hacer el personaje a continuacion?</i>
-				<button class="btn btn-primary btn-block" 
-                        data-ng-repeat="newchunk in story.chunk.children" 
-						data-ng-click="setChunk(newchunk.id)">
-					<span class="glyphicon glyphicon-chevron-right"></span>
-                    {{newchunk.text}}
-				</button>
-			</div>
-            <!-- else -->
-			<div data-ng-hide="story.chunk.children[0]">
-				<i class="text-muted">FIN</i>
-			</div>
-		</blockquote>
-	</section>
-</article>
+<dl class="dl-horizontal">
+  <dt>Front page: </dt>
+  <dd><%= story.frontpage %></dd>
+  <dt>title: </dt>
+  <dd><%= story.title %></dd>
+  <dt>Description: </dt>
+  <dd><%= story.description %></dd>
+  <dt>Language:</dt>
+  <dd><%= story.language %></dd>
+  <dt>Price: </dt>
+  <dd><%= story.price %></dd>
+  <dt>Release date: </dt>
+  <dd><%= story.release_date %></dd>
+  <dt>Published: </dt>
+  <dd><%= story.published %></dd>
+  <dt>Num purchased: </dt>
+  <dd><%= story.num_purchased %></dd>
+</dl>

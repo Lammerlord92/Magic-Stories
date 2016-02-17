@@ -1,1 +1,6 @@
-<<%= @stories.inspect %>
+<div class="storylist">
+<%= @stories.each do |story| %>
+      <a href="/stories/<%= story.id %>"><%= story.title %></a>
+      <br>
+<% end %>
+</div>
