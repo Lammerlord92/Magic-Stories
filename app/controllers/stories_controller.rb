@@ -5,6 +5,11 @@ class StoriesController < ApplicationController
        @stories = Story.all
     end
 
+    #GET /stories/read/:id
+    def read
+      # @story = Story.find(params[:id])
+    end
+
     #GET /stories/:id
     def show
       @story = Story.find(params[:id])

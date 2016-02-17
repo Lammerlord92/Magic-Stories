@@ -7,7 +7,7 @@ class CategoriesControllerTest < ActionController::TestCase
   end
 
   test "should get show" do
-    get :show
+    get :read
     assert_response :success
   end
 

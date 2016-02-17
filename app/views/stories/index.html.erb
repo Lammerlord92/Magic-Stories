@@ -1,6 +1,7 @@
 <div class="storylist">
-<%= @stories.each do |story| %>
+  <h1>Story List</h1>
+  <% @stories.each do |story| %>
       <a href="/stories/<%= story.id %>"><%= story.title %></a>
       <br>
-<% end %>
+  <% end %>
 </div>
