@@ -8,7 +8,7 @@
 
 category1=Category.create!({name: "Drogas", description: "Historia sobre drogas",
                             icon: File.new("public/system/categories/icons/000/000/006/original/seta-icono-new-super-mario-bros-wii-articulo-videojuegos-zehngames.png")})
-category2=Category.create!({name: "Relleno", description: "Historia con mucho relleno",
+category2=Category.create!({name: "Relleno", description: "Esta historia tiene tanto relleno que se convirtió en Hokage",
                             icon: File.new("public/system/categories/icons/000/000/007/original/MagekyouSharingan_Riku.png")})
 category3=Category.create!({name: "Postapocalíptica", description: "Historia postapocalíptica",
                             icon: File.new("public/system/categories/icons/000/000/008/original/icono_app_izombie.jpg")})
