@@ -41,4 +41,13 @@ class User < ActiveRecord::Base
     return nil
   end
 
+
+  def self.generateSKU
+    r = SecureRandom.urlsafe_base64(n= 8, false)
+    until User.find_by_sku(r) == nil
+      r = SecureRandom.urlsafe_base64(n= 8, false)
+    end
+    return r
+  end
+
 end

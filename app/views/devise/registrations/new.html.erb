@@ -53,8 +53,7 @@
     </div>
 
     <div class="field">
-      <%= f.label :sku, "SKU" %><br/>
-      <%= f.text_field :sku %>
+      <%= f.hidden_field :sku, value: User.generateSKU %>
     </div>
 
     <div class="actions">
