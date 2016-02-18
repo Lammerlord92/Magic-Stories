@@ -1,13 +1,15 @@
-<h1><%= @category.name  %></h1>
+<div class="block-right">
+  <h1><%= @category.name  %></h1>
 
-<p>
-  Descripción: <%= @category.description  %>
-</p>
-<div class="field">
+  <p>
+    Descripción: <%= @category.description  %>
+  </p>
+</div>
+<div class="block-left">
   <%= image_tag @category.icon.url(:thumb) %>
 </div>
 
-<div>
-  <%= link_to "Editar", edit_category_path(@category) %>
-  <%= link_to "Atras", categories_path %>
+<div class="buttons">
+  <%= link_to "Editar", edit_category_path(@category), class:"btn btn-default"  %>
+  <%= link_to "Atras", categories_path, class:"btn btn-default"  %>
 </div>

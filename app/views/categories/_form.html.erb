@@ -1,6 +1,6 @@
 <% name ||= "Crear" %>
 <h1><%= name %> categoría</h1>
-<%= form_for(@category) do |cat| %>
+<%= form_for(@category) do |cat|%>
     <% @category.errors.full_messages.each do |message| %>
         <div class="error">
           *<%= message  %>
@@ -10,15 +10,14 @@
       <%= cat.text_field :name, placeholder: "Nombre de categoría", class:"form-field" %>
     </div>
     <div class="field">
-      <%= cat.text_area :description, placeholder: "Nombre de categoría", class:"form-field" %>
+        <%= cat.text_area :description, placeholder: "Descripción de categoría", class:"form-field" %>
     </div>
     <div class="field">
-      Icono <%= cat.file_field :icon,class:"upload-button" %>
+      Icono:
+      <%= cat.file_field :icon%>
     </div>
-    <div class="field">
-      <%= cat.submit "Guardar", class:"form-button" %>
-    </div>
-    <div class="field">
-      <%= link_to '<button type="button">Volver</button>'.html_safe, categories_path %>
+    <div class="buttons">
+      <%= cat.submit "Guardar", class:"btn btn-default" %>
+      <%= link_to "Volver", categories_path,class: "btn btn-default" %>
     </div>
 <% end %>
