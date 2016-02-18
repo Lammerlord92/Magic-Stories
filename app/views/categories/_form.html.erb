@@ -13,7 +13,7 @@
       <%= cat.text_area :description, placeholder: "Nombre de categoría", class:"form-field" %>
     </div>
     <div class="field">
-      Icono <%= cat.file_field :icon %>
+      Icono <%= cat.file_field :icon,class:"upload-button" %>
     </div>
     <div class="field">
       <%= cat.submit "Guardar", class:"form-button" %>
