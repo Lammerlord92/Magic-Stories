@@ -1,5 +1,5 @@
 class Story < ActiveRecord::Base
-  validates :frontpage, presence: true
+  #validates :frontpage, presence: true
   validates :title, presence: true
   validates :description, presence: true
   validates :language, presence: true
@@ -7,12 +7,14 @@ class Story < ActiveRecord::Base
   #validates :price, :format => { :with => /\A\d+(?:\.\d{0,2})?\z/ }, :numericality => {:greater_than => 0}
   # :release_date debe estar en pasado
   validates_associated :chapters
-  #validate :check_date
+  validate :check_date
 
   attr_reader :categories
   has_many :chapters
   has_many :story_categories
   has_many :categories, through: :story_categories
+
+  validates :cover, presence: true
 
   #Creador perfil
 
@@ -23,9 +25,21 @@ class Story < ActiveRecord::Base
   has_many :readings
   has_many :readerProfiles, through: :readings
 
+  has_attached_file :cover, styles: {medium: "1280x720", thumb:"500x300"}
+  validates_attachment_content_type :cover, content_type: /\Aimage\/.*\Z/
+
+
   #Setter de la relación
   def categories=(value)
     @stories=value
+  end
+
+
+  def check_date
+    date1 = release_date - 1
+    date2 = Time.now()
+
+    date2 > date1
   end
 
   private
@@ -36,13 +50,7 @@ class Story < ActiveRecord::Base
     end
   end
 
-  #def check_date
-    #date1 = release_date
-    #date2 = Time.now
-    #date3 = date1 -1
 
-   # date3<date2
-  #end
 
 
 end

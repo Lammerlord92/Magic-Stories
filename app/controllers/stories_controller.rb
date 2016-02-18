@@ -22,19 +22,25 @@ class StoriesController < ApplicationController
 
     #POST /stories
     def create
-      @story = Story.new(frontpage: params[:story][:frontpage],
-                            title: params[:story][:title],
-                             description: params[:story][:description],
-                              language: params[:story][:language],
-                              price: params[:story][:price],
-                              release_date: params[:story][:release_date],
-                              published: false,
-                              num_purchased: 0)
+      @story = Story.new(story_params)
+      @story.num_purchased = 0
+      @story.published = false
 
-      if @story.save
-        redirect_to @story
+      if @story.check_date
+        if @story.save
+          redirect_to @story
+        else
+          render :new
+        end
       else
+        flash[:notice] = 'invalid date'
         render :new
       end
+    end
+
+
+    def story_params
+      # Con frontpage-> params.require(:story).permit(:title,:description,:cover,:frontpage,:language,:price,:release_date,:published,:num_purchased)
+      params.require(:story).permit(:title,:description,:cover,:language,:price,:release_date,:published,:num_purchased)
     end
 end
