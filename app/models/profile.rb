@@ -4,4 +4,6 @@ class Profile < ActiveRecord::Base
   validates :name, :avatar, :description, :signature, presence: true
   validates :avatar, :signature, uniqueness: true
 
+  has_many :stories
+
 end
