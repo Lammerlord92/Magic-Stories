@@ -43,4 +43,10 @@ class StoriesController < ApplicationController
       # Con frontpage-> params.require(:story).permit(:title,:description,:cover,:frontpage,:language,:price,:release_date,:published,:num_purchased)
       params.require(:story).permit(:title,:description,:cover,:language,:price,:release_date,:published,:num_purchased)
     end
+
+
+    def show_story_acquired
+      @stories = Story.find_by_profile_id(params[:id])
+
+    end
 end
