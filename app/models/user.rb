@@ -10,6 +10,11 @@ class User < ActiveRecord::Base
 
   belongs_to :role, polymorphic: true
 
+
+  # Tiene muchos reportes (Complaint and suggestion)
+  has_many :reports
+
+
   # Perfil?
 
   has_one :profile
@@ -20,6 +25,9 @@ class User < ActiveRecord::Base
   has_many :friends, :through => :friendships
   has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
   has_many :inverse_friends, :through => :inverse_friendships, :source => :user
+
+  has_many :actor_user_groups
+  has_many :user_groups, :through => :actor_user_groups
 
 
   validates :username, :name, :surname1, :surname2, :email, :birthday, :sku, presence: true
@@ -39,6 +47,15 @@ class User < ActiveRecord::Base
     #return :email
     #if false
     return nil
+  end
+
+
+  def self.generateSKU
+    r = SecureRandom.urlsafe_base64(n= 8, false)
+    until User.find_by_sku(r) == nil
+      r = SecureRandom.urlsafe_base64(n= 8, false)
+    end
+    return r
   end
 
 end
