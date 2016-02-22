@@ -2,7 +2,18 @@ class StoriesController < ApplicationController
 
     #GET /stories
     def index
-       @stories = Story.all
+      @q = params[:q]                                   #Puequeño Buscador que comprueba que el parametro q del formulario
+      if @q                                             # es igual a cada atributo y devuelve el filtrado en caso negativo devuelve All.
+        @stories = Story.where(:title  => @q )
+      elsif @stories.empty?
+        @stories = Story.where(:description  => @q )
+      elsif @stories.empty?
+        @stories = Story.where(:price  => @q )
+      elsif @stories.empty?
+        @stories = Story.where(:language  => @q )
+      else
+        @stories = Story.all
+      end
     end
 
     #GET /stories/read/:id
@@ -22,19 +33,31 @@ class StoriesController < ApplicationController
 
     #POST /stories
     def create
-      @story = Story.new(frontpage: params[:story][:frontpage],
-                            title: params[:story][:title],
-                             description: params[:story][:description],
-                              language: params[:story][:language],
-                              price: params[:story][:price],
-                              release_date: params[:story][:release_date],
-                              published: false,
-                              num_purchased: 0)
+      @story = Story.new(story_params)
+      @story.num_purchased = 0
+      @story.published = false
 
-      if @story.save
-        redirect_to @story
+      if @story.check_date
+        if @story.save
+          redirect_to @story
+        else
+          render :new
+        end
       else
+        flash[:notice] = 'invalid date'
         render :new
       end
+    end
+
+
+    def story_params
+      # Con frontpage-> params.require(:story).permit(:title,:description,:cover,:frontpage,:language,:price,:release_date,:published,:num_purchased)
+      params.require(:story).permit(:title,:description,:cover,:language,:price,:release_date,:published,:num_purchased)
+    end
+
+
+    def show_stories_acquired
+      @stories = Story.find_by_profile_id(params[:id])
+
     end
 end

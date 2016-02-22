@@ -1,3 +1,33 @@
 // Place all the styles related to the categories controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import "bootstrap";
+
+.category-row{
+  margin: 1em;
+}
+
+.category-list{
+  margin-bottom:1em;
+}
+
+.block-right{
+  float: left;
+  align-items: center;
+}
+.block-left{
+  float: left;
+  margin-left: 1em;
+}
+.buttons{
+  clear: left;
+  position: relative;
+
+}
+.button{
+  text-align: center;
+  display: inline-block;
+}
+.field{
+  margin: 1em;
+}
