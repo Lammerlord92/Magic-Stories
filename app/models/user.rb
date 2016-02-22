@@ -21,6 +21,9 @@ class User < ActiveRecord::Base
   has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
   has_many :inverse_friends, :through => :inverse_friendships, :source => :user
 
+  has_many :actor_user_groups
+  has_many :user_groups, :through => :actor_user_groups
+
 
   validates :username, :name, :surname1, :surname2, :email, :birthday, :sku, presence: true
   validates :username, :email, :sku, uniqueness: true

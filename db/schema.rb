@@ -11,10 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160218205518) do
+ActiveRecord::Schema.define(version: 20160222180946) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "actor_user_groups", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "usergroup_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
 
   create_table "administrators", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -41,6 +48,23 @@ ActiveRecord::Schema.define(version: 20160218205518) do
   end
 
   add_index "chapters", ["story_id"], name: "index_chapters_on_story_id", using: :btree
+
+  create_table "discount_user_groups", force: :cascade do |t|
+    t.integer  "user_group_id"
+    t.integer  "discount_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "discounts", force: :cascade do |t|
+    t.string   "code"
+    t.string   "title"
+    t.string   "description"
+    t.float    "amount"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.boolean  "used"
+  end
 
   create_table "free_users", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -160,6 +184,15 @@ ActiveRecord::Schema.define(version: 20160218205518) do
 
   add_index "story_categories", ["category_id"], name: "index_story_categories_on_category_id", using: :btree
   add_index "story_categories", ["story_id"], name: "index_story_categories_on_story_id", using: :btree
+
+  create_table "user_groups", force: :cascade do |t|
+    t.string   "name"
+    t.string   "code"
+    t.integer  "discount_user_group_id"
+    t.integer  "actor_user_group_id"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
