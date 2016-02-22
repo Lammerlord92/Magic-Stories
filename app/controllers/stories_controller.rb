@@ -2,15 +2,9 @@ class StoriesController < ApplicationController
 
     #GET /stories
     def index
-      @q = params[:q]                                   #Puequeño Buscador que comprueba que el parametro q del formulario
-      if @q                                             # es igual a cada atributo y devuelve el filtrado en caso negativo devuelve All.
-        @stories = Story.where(:title  => @q )
-      elsif @stories.empty?
-        @stories = Story.where(:description  => @q )
-      elsif @stories.empty?
-        @stories = Story.where(:price  => @q )
-      elsif @stories.empty?
-        @stories = Story.where(:language  => @q )
+      @q = params[:q]
+      if @q
+        @stories = Story.where(:title => @q)
       else
         @stories = Story.all
       end
