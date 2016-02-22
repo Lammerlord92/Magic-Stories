@@ -10,6 +10,11 @@ class User < ActiveRecord::Base
 
   belongs_to :role, polymorphic: true
 
+
+  # Tiene muchos reportes (Complaint and suggestion)
+  has_many :reports
+
+
   # Perfil?
 
   has_one :profile
@@ -42,6 +47,15 @@ class User < ActiveRecord::Base
     #return :email
     #if false
     return nil
+  end
+
+
+  def self.generateSKU
+    r = SecureRandom.urlsafe_base64(n= 8, false)
+    until User.find_by_sku(r) == nil
+      r = SecureRandom.urlsafe_base64(n= 8, false)
+    end
+    return r
   end
 
 end
