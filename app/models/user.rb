@@ -10,6 +10,11 @@ class User < ActiveRecord::Base
 
   belongs_to :role, polymorphic: true
 
+
+  # Tiene muchos reportes (Complaint and suggestion)
+  has_many :reports
+
+
   # Perfil?
 
   has_one :profile
