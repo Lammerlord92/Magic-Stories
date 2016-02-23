@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  title: MyString
+  description: MyString
+  amount: 
+  validity: 2016-02-22 19:09:46
+  used: false
+
+two:
+  code: MyString
+  title: MyString
+  description: MyString
+  amount: 
+  validity: 2016-02-22 19:09:46
+  used: false
