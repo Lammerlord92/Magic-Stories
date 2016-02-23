@@ -187,6 +187,7 @@ ActiveRecord::Schema.define(version: 20160223023512) do
     t.date     "release_date"
     t.boolean  "published"
     t.integer  "num_purchased"
+    t.integer  "profile_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.string   "cover_file_name"
