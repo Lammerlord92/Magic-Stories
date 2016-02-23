@@ -7,6 +7,10 @@ class WelcomeController < ApplicationController
     end
   end
 
+  def index2
+    render :layout => nil
+  end
+
   def popup
   end
 end

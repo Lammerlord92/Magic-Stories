@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
   get 'welcome/index'
+  get 'welcome/index2'
   get 'welcome/popup'
   get 'stories/read'
 

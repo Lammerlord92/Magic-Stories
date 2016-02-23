@@ -10,13 +10,56 @@
 
   <%= render 'layouts/header' %>
 
-  <div class="container-fluid">
-  <%= yield %>
-  </div>
+
+  <!-- Begin Body -->
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-2" id="leftCol">
+        <div class="well">
+          <ul class="nav nav-stacked" id="sidebar">
+            <li>
+              <a href="#sec1">Section 1</a>
+            </li>
+            <li>
+              <a href="#sec2">Section 2</a>
+            </li>
+            <li>
+              <a href="#sec3">Section 3</a>
+            </li>
+            <li>
+              <a href="#sec4">Section 4</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-sm-8" id="bodyCol">
+        <%= yield %>
+      </div>
+      <div class="col-sm-2" id="rightCol">
+        <img src="/system/index/la_publicidad.png" ></img>
+        <img src="/system/index/la_publicidad.png" ></img>
+        <img src="/system/index/la_publicidad.png" ></img>
+        <img src="/system/index/la_publicidad.png" ></img>
+        <img src="/system/index/la_publicidad.png" ></img>
+        <img src="/system/index/la_publicidad.png" ></img>
+        <img src="/system/index/la_publicidad.png" ></img>
+
+        </div>
+
+      </div>
+    </div>
+
+
+
   <p class="notice"><%= notice %></p>
   <p class="alert"><%= alert %></p>
 
   <%= render 'layouts/footer' %>
 
 </body>
+  <!-- script references -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/scripts.js"></script>
 </html>
