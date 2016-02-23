@@ -1,4 +1,16 @@
 <% name ||= "Crear" %>
+
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+  <style>
+    #buttonStory{
+      display: block;
+    }
+  </style>
+
+</head>
+
 <h1>Crear historia</h1>
 
 <%=form_for(@story) do |f|%>
@@ -32,7 +44,45 @@
       <%= f.date_select :release_date, placeholder: "Fecha de salida" %>
     </div>
     <br>
+
+    <button type="button" id="buttonStory" class="btn btn-primary">Select category...</button>
+
+    <section id="modal" class="modal fade">
+      <div class="modal-body">
+        <form action="buttonStory.php" method="post" role="form">
+
+
+          <div class="form-group">
+            <label form="title">Title</label>
+            <input type="title" class="form-control" id="id">
+          </div>
+
+
+          <div class="form-group">
+            <label form="description">Description</label>
+            <input type="description" class="form-control" id="id">
+          </div>
+
+
+        </form>
+      </div>
+    </section>
+
     <div class="field">
       <%= f.submit "Guardar" %>
     </div>
+
+
+    <script src="http://code.jquery.com/jquery=1.11.0.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        jQuery.noConflict();
+        $("#buttonStory").on('click',function(){
+          $("#modal").modal({
+            show:true
+          })
+        })
+      })
+    </script>
 <%end%>

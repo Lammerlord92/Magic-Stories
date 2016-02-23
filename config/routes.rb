@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'welcome/index'
   get 'welcome/index2'
   get 'welcome/popup'
+  get 'stories/popupStory'
   get 'stories/read'
 
   # The priority is based upon order of creation: first created -> highest priority.
