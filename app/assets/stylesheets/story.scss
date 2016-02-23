@@ -26,3 +26,11 @@ input[readonly] {
   background-color: white !important;
   cursor: text !important;
 }
+
+.option{
+  background-color: #ddd;
+  margin: 1em 0;
+  padding: 1em;
+  border: 1px solid grey;
+  border-radius: 5px;
+}
