@@ -23,6 +23,7 @@ class StoriesController < ApplicationController
     #GET /stories/new
     def new
       @story = Story.new
+      @categories = Category.all
     end
 
     #POST /stories
