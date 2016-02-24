@@ -1,14 +1,13 @@
 class Friendship < ActiveRecord::Base
   belongs_to :user
   belongs_to :friend, :class_name => "User"
-  belongs_to :request_friendship
+  belongs_to :request_friendship, class_name: "RequestFriendship", foreign_key: "request_friendship_id"
 
   validates :user, uniqueness: {scope: :friend}
-  validates :request_friendship, allow_nil: false
 
-  def self.createFriendship(friend1, friend2)
-    self.create({user_id: friend1.id, friend_id: friend2.id})
-    self.create({user_id: friend2.id, friend_id: friend1.id})
+  def self.createFriendship(peticion)
+    self.create({user_id: peticion.sender_id, friend_id: peticion.recipient_id, request_friendship: peticion})
+    self.create({user_id: peticion.recipient_id, friend_id: peticion.sender_id, request_friendship: peticion})
   end
 
 end

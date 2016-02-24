@@ -28,15 +28,15 @@ category5=Category.create!({name: "Vergonzante", description: "Es un espectaculo
                             icon: File.new("public/categories/original/10/puedo-eliminar-icono-celular-facebook_1_1720410.jpg")})
 
 
-user1 = User.create({email: 'kiny93@hotmail.com', password: 'judiaspintas', password_confirmation: 'judiaspintas',
+user1 = User.create!({email: 'kiny93@hotmail.com', password: 'judiaspintas', password_confirmation: 'judiaspintas',
          username: 'juaniemen', name: 'juanfran', surname1: 'nieto', surname2: 'mendoza', phone: 619663023,
          birthday: '30/10/1993', sku: '132563'})
 
-user2 = User.create({email: 'cani93@hotmail.com', password: 'judiaspintas', password_confirmation: 'judiaspintas',
+user2 = User.create!({email: 'cani93@hotmail.com', password: 'judiaspintas', password_confirmation: 'judiaspintas',
                    username: 'themaoisha', name: 'juanfran', surname1: 'nieto', surname2: 'mendoza', phone: 619663023,
                    birthday: '30/10/1993', sku: '586936'})
 
-user3 = User.create({email: 'lanube@hotmail.com', password: 'judiaspintas', password_confirmation: 'judiaspintas',
+user3 = User.create!({email: 'lanube@hotmail.com', password: 'judiaspintas', password_confirmation: 'judiaspintas',
                      username: 'carmelo', name: 'carmelo', surname1: 'camelino', surname2: 'mendoza', phone: 619663023,
                      birthday: '30/10/1993', sku: '586931'})
 
@@ -48,9 +48,13 @@ user1.update_attribute(:role, userAcc1)
 user2.update_attribute(:role, userAcc2)
 user2.update_attribute(:role, userAcc3)
 
-a = Friendship.createFriendship(user1, user2)
-b = Friendship.createFriendship(user2, user3)
-c = Friendship.createFriendship(user3, user1)
+aa = RequestFriendship.create!({message: "Kierez zer mi amigo?", sender_id: user1.id, recipient_id: user2.id, status: "ACCEPTED"})
+ab = RequestFriendship.create!({message: "Kierez zer mi amigo?", sender_id: user3.id, recipient_id: user2.id, status: "ACCEPTED"})
+ac = RequestFriendship.create!({message: "Kierez zer mi amigo?", sender_id: user1.id, recipient_id: user3.id, status: "ACCEPTED"})
+
+a = Friendship.createFriendship(aa)
+b = Friendship.createFriendship(ab)
+c = Friendship.createFriendship(ac)
 
 @ret = ""
 User.all.each do |usuario|
@@ -68,17 +72,6 @@ perfil2 = Profile.create({name: 'Hola bebés2', avatar: 'http://www.image1.es', 
 perfil3 = Profile.create({name: 'Hola bebés3', avatar: 'http://www.image2.es', description: 'This is my profile2', signature: 'My sign Bebés2', user_id: user3.id})
 
 
-story1 = Story.create!({frontpage: 'https:www.frontpage.com', title: 'Titulo1', description: 'Descripcion1',
-                       language: 'Español', price: 0.36, num_purchased: 3, release_date: '18/02/2016', published: true, creatorProfile: perfil1})
 
-story2 = Story.create!({frontpage: 'https:www.frontpage.com', title: 'Titulo2', description: 'Descripcion2',
-                        language: 'Español', price: 0.36, num_purchased: 3, release_date: '18/02/2016', published: true, creatorProfile: perfil2})
-
-story3 = Story.create!({frontpage: 'https:www.frontpage.com', title: 'Titulo2', description: 'Descripcion2',
-                        language: 'Español', price: 0.36, num_purchased: 3, release_date: '18/02/2016', published: true, creatorProfile: perfil2})
-
-story3.readerProfiles << perfil3
-story3.readerProfiles << perfil2
-story3.readerProfiles << perfil1
 
 

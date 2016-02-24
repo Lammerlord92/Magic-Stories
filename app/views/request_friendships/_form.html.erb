@@ -1,0 +1,19 @@
+<%= simple_form_for(@request_friendship) do |f| %>
+  <%= f.error_notification %>
+    <div class="form-inputs">
+      <%= f.input :message, type: "text-field", placeholder: "Introduzca un mensaje" %>
+
+      <%= f.input :recipient_id, placeholder: "Recipient ID" %>
+
+      <%= f.input :sender_id, placeholder: "Sender ID" %>
+
+      <%= f.input :status, placeholder: "PENDING|ACCEPTED|REJECTED" %>
+
+
+
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

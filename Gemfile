@@ -30,6 +30,7 @@ gem "paperclip"
 
 gem 'mailboxer'
 gem 'devise'
+gem 'simple_form'
 
 #gem 'ransack'
 

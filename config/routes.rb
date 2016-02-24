@@ -6,6 +6,13 @@ Rails.application.routes.draw do
   get 'stories/popupStory'
   get 'stories/read'
 
+
+  get 'request_friendships/send_request/:recipient' => 'request_friendships#send_request'
+  post 'request_friendships/creates' => 'request_friendships#creates'
+  get 'request_friendships/deciding_request/:rf/:choice' => 'request_friendships#deciding_request'
+  get 'request_friendships/show_pending' => 'request_friendships#show_pending'
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -14,6 +21,13 @@ Rails.application.routes.draw do
   #categories
   resources :categories
 
+
+  #peticiones de amistad
+  resource :request_friendships
+  get 'request_friendships/send_request/:recipient', to: 'request_friendships#send_request'
+  post 'request_friendships/creates', to: 'request_friendships#creates'
+  get 'request_friendships/deciding_request/:rf/:choice', to: 'request_friendships#deciding_request'
+  get 'request_friendships/show_pending', to: 'request_friendships#show_pending'
 
   #Stories
   resources :stories

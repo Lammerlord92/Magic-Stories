@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+<h1>Peticiones pendientes</h1>
+  <div class="container-fluid">
+    <% @request_friendships.each do |request_friendship| %>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-3">
+              </div>
+              <div class="col-md-9">
+                <div class="row text-center">
+                  <%= request_friendship.message %>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 text-center">
+                    <div class="btn btn-primary"> <%= link_to "Aceptar", "/request_friendships/deciding_request/#{request_friendship.id}/1"  %>
+                      </div>
+                  </div>
+                  <div class="col-md-6 text-center">
+                    <div class="btn btn-primary">
+                      <%= link_to "Rechazar", "/request_friendships/deciding_request/#{request_friendship.id}/1"  %>
+                     </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <% end %>
+
+<%= link_to 'Back', request_friendships_path %>
