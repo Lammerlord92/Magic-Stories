@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   #########################################################################
   get 'welcome/index'
   get 'stories/read'
+  get 'welcome/maker'
 
 
   get 'request_friendships/send_request/:recipient' => 'request_friendships#send_request'

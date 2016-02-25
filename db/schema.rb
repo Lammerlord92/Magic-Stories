@@ -167,6 +167,13 @@ ActiveRecord::Schema.define(version: 20160223191838) do
     t.boolean  "profile_status"
   end
 
+  create_table "readings", force: :cascade do |t|
+    t.integer  "story_id"
+    t.integer  "profile_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "reports", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "title"
