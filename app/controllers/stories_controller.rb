@@ -61,4 +61,11 @@ class StoriesController < ApplicationController
       @stories = Story.find_by_profile_id(params[:id])
 
     end
+
+    def show_stories_created
+      if current_user == premiumUser
+        @stories = Story.where("premiumUser = ?", params[:current_user])
+      end
+    end
+
 end

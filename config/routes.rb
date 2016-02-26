@@ -49,6 +49,8 @@ Rails.application.routes.draw do
 
   #Stories
   resources :stories
+  get 'stories/show_stories_created' => 'stories#show_stories_created'
+
 =begin
      get "/stories"
      post "/stories"
