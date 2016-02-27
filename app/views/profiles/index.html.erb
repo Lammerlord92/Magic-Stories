@@ -1,0 +1,11 @@
+<div class="block-right">
+  <h1><%= @profile.name  %></h1>
+
+  <p>
+    Descripción: <%= @profile.description  %>
+  </p>
+</div>
+
+<div class="buttons">
+  <%= link_to "Editar", edit_profile_path(@profile), class:"btn btn-default"  %>
+</div>

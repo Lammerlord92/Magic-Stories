@@ -50,6 +50,7 @@ Rails.application.routes.draw do
   #Stories
   resources :stories
   get 'stories/show_stories_created' => 'stories#show_stories_created'
+  get 'stories/show_stories_created', to: 'stories#show_stories_created'
 
 =begin
      get "/stories"
@@ -61,6 +62,9 @@ Rails.application.routes.draw do
      patch "/stories/:id"
      put "/stories/:id"
 =end
+
+  #Profiles
+  resources :profiles
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

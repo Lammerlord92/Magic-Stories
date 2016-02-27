@@ -56,14 +56,13 @@ class StoriesController < ApplicationController
       params.require(:story).permit(:title,:description,:cover,:language,:price,:release_date,:published,:num_purchased)
     end
 
-
     def show_stories_acquired
       @stories = Story.find_by_profile_id(params[:id])
 
     end
 
     def show_stories_created
-      if current_user == premiumUser
+      if :current_user.is_a?(PremiumUser)
         @stories = Story.where("premiumUser = ?", params[:current_user])
       end
     end
