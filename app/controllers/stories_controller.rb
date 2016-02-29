@@ -5,9 +5,12 @@ class StoriesController < ApplicationController
     # Documentacion sobre queries aqui:
     # http://guides.rubyonrails.org/active_record_querying.html
     @q = params[:q]
-    query = 'title => ? OR description => ? OR price => ? OR language => ?'
+    query = 'title like ? OR description like ? OR language like ?'
     if @q
-      @stories = Story.where(query, @q)
+      @stories = Story.where(query, "%#{@q}%", "%#{@q}%", "%#{@q}%")
+      if @stories.blank?
+        flash.alert = "Not found"
+      end
     else
       @stories = Story.all
     end
@@ -39,6 +42,8 @@ class StoriesController < ApplicationController
       if @story.save
         redirect_to @story
       else
+        flash[:alert] = 'Error saving story'
+        @categories = Category.all
         render :new
       end
     else

@@ -10,10 +10,17 @@
 <h1>Crear historia</h1>
 
 <%=form_for(@story) do |f|%>
-    <% @story.errors.full_messages.each do |message| %>
-        <div class="error">
-          *<%= message  %>
-        </div>
+    <% if @story.errors.full_messages.length > 0 %>
+      <div class="errors">
+        <p>
+          Se encontraron los siguientes errores al guardar la historia:
+        </p>
+        <% @story.errors.full_messages.each do |message| %>
+            <p class="error">
+              *<%= message  %>
+            </p>
+        <% end %>
+      </div>
     <% end %>
 
     <div class="field">
@@ -43,6 +50,10 @@
 
     <button type="button" id="buttonStory" class="btn btn-primary">Select category...</button>
 
+    <div class="field">
+      <%= f.submit "Guardar" %>
+    </div>
+
     <section id="modal" class="modal fade">
       <div class="modal-body">
         <form action="buttonStory.php" method="post" role="form">
@@ -68,9 +79,7 @@
       </div>
     </section>
 
-    <div class="field">
-      <%= f.submit "Guardar" %>
-    </div>
+
 
 
     <script src="http://code.jquery.com/jquery=1.11.0.min.js"></script>

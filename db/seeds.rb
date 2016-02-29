@@ -4,7 +4,7 @@
 # Examples:
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+#   Cura.create(name: 'Emmanuel', city: cities.first, rol: 'cazador')
 
 category1=Category.create!({name: "Drogas", description: "Historia sobre drogas",
                             icon: File.new("public/categories/original/1/seta-icono-new-super-mario-bros-wii-articulo-videojuegos-zehngames.png")})
