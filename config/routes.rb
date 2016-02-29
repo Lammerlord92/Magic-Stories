@@ -66,6 +66,8 @@ Rails.application.routes.draw do
   #Profiles
   resources :profiles
 
+  #users
+  get 'user' => 'user#index'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
