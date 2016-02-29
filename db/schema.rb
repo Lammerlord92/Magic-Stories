@@ -45,12 +45,8 @@ ActiveRecord::Schema.define(version: 20160223191838) do
   create_table "categories", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.string   "icon_file_name"
-    t.string   "icon_content_type"
-    t.integer  "icon_file_size"
-    t.datetime "icon_updated_at"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "chapters", force: :cascade do |t|
@@ -88,9 +84,8 @@ ActiveRecord::Schema.define(version: 20160223191838) do
   create_table "friendships", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "friend_id"
-    t.integer  "request_friendship_id"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "mailboxer_conversation_opt_outs", force: :cascade do |t|
@@ -202,7 +197,6 @@ ActiveRecord::Schema.define(version: 20160223191838) do
     t.date     "release_date"
     t.boolean  "published"
     t.integer  "num_purchased"
-    t.integer  "profile_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.string   "cover_file_name"
