@@ -19,9 +19,6 @@ Rails.application.routes.draw do
   #                               DELETE	/users(.:format)          	devise/registrations#destroy
   #########################################################################
   get 'welcome/index'
-  get 'welcome/index2'
-  get 'welcome/popup'
-  get 'stories/popupStory'
   get 'stories/read'
 
 
