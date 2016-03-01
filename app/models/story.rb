@@ -23,12 +23,6 @@ class Story < ActiveRecord::Base
   #TODO Ahora el foreign key es "id" porque si no peta, hay que arreglarlo
   belongs_to :creatorProfile, class_name: "Profile", foreign_key: "id"
 
-  # Lectores perfiles, para ir a usuario se tiene que hacer a raiz del perfil, no se pueden dar dos saltos. (NO through through)
-
-  has_many :readings
-  has_many :readerProfiles, through: :readings
-
-
 
   has_attached_file :cover, styles: {medium: "1280x720", thumb:"500x300"}
   validates_attachment_content_type :cover, content_type: /\Aimage\/.*\Z/

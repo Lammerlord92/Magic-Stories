@@ -45,8 +45,12 @@ ActiveRecord::Schema.define(version: 20160223191838) do
   create_table "categories", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.string   "icon_file_name"
+    t.string   "icon_content_type"
+    t.integer  "icon_file_size"
+    t.datetime "icon_updated_at"
   end
 
   create_table "chapters", force: :cascade do |t|
@@ -161,13 +165,6 @@ ActiveRecord::Schema.define(version: 20160223191838) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.boolean  "profile_status"
-  end
-
-  create_table "readings", force: :cascade do |t|
-    t.integer  "story_id"
-    t.integer  "profile_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "reports", force: :cascade do |t|
