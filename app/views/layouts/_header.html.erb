@@ -19,7 +19,7 @@
           <li role="separator" class="divider"></li>
           <li>
               ¿Es usted <%= current_user.email %>?
-               <%= link_to "Cerrar sesión", destroy_user_session_path%>
+               <%= link_to "Cerrar sesión", destroy_user_session_path, :method => :delete %>
           </li>
 
           <% else %>
