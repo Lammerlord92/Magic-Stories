@@ -48,19 +48,18 @@ Rails.application.routes.draw do
   get 'request_friendships/show_pending', to: 'request_friendships#show_pending'
 
   #Stories
+  get 'stories/acquired' => 'stories#show_stories_acquired'
+  get 'stories/created' => 'stories#show_stories_created'
   resources :stories
-  get 'stories/show_stories_created' => 'stories#show_stories_created'
-  get 'stories/show_stories_created', to: 'stories#show_stories_created'
-
 =begin
-     get "/stories"
-     post "/stories"
-     delete "/stories"
-     get "/stories/:id"
-     get "/stories/new"
-     get "/stories/:id/edit"
-     patch "/stories/:id"
-     put "/stories/:id"
+  get "/stories"
+  post "/stories"
+  delete "/stories"
+  get "/stories/:id"
+  get "/stories/new"
+  get "/stories/:id/edit"
+  patch "/stories/:id"
+  put "/stories/:id"
 =end
 
   #Profiles

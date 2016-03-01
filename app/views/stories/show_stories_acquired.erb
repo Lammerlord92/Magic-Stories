@@ -1,7 +1,7 @@
 <div class="storyAcquieredlist">
   <h1>Story List</h1>
   <% @stories.each do |story| %>
-      <a href="/stories/<%= story.id %>"><%= story.title %><%= story.release_date %></a>
+      <a href="/stories/<%= story.id %>"><%= story.title %></a>
       <br>
   <% end %>
 </div>

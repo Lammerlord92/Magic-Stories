@@ -14,11 +14,14 @@ class Story < ActiveRecord::Base
   has_many :story_categories
   has_many :categories, through: :story_categories
 
-  validates :cover, presence: true
+  #TODO
+  #Hasta que no se solucione el problema con la gema de imagenes
+  #debe poder no ponerse portada (para poder hacer pruebas)
+  #validates :cover, presence: true
 
   #Creador perfil
-
-  belongs_to :creatorProfile, class_name: "Profile", foreign_key: "profile_id"
+  #TODO Ahora el foreign key es "id" porque si no peta, hay que arreglarlo
+  belongs_to :creatorProfile, class_name: "Profile", foreign_key: "id"
 
   # Lectores perfiles, para ir a usuario se tiene que hacer a raiz del perfil, no se pueden dar dos saltos. (NO through through)
 

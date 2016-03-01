@@ -58,15 +58,14 @@ class StoriesController < ApplicationController
     params.require(:story).permit(:title,:description,:cover,:language,:price,:release_date,:published,:num_purchased)
   end
 
+  #TODO Aun no se pueden adquirir historias
   def show_stories_acquired
-    @stories = Story.find_by_profile_id(params[:id])
-
+    @stories = []
   end
 
   def show_stories_created
-    if :current_user.is_a?(PremiumUser)
-      @stories = Story.where('premiumUser = ?', params[:current_user])
-    end
+    profile = Profile.find_by(user: current_user)
+    @stories = Story.where(creatorProfile: profile)
   end
 
 end
