@@ -1,7 +1,7 @@
 class Friendship < ActiveRecord::Base
   belongs_to :user
-  belongs_to :friend, :class_name => "User"
-  belongs_to :request_friendship, class_name: "RequestFriendship", foreign_key: "request_friendship_id"
+  belongs_to :friend, :class_name => 'User'
+  belongs_to :request_friendship, class_name: 'RequestFriendship', foreign_key: 'request_friendship_id'
 
   validates :user, uniqueness: {scope: :friend}
 

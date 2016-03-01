@@ -1,10 +1,26 @@
 Rails.application.routes.draw do
   devise_for :users
+  ##########################################################################
+  ###Rutas añadidas por devise####
+  #new_user_session_path	        GET	/users/sign_in(.:format)	      devise/sessions#new
+  #user_session_path	            POST	/users/sign_in(.:format)  	  devise/sessions#create
+  #destroy_user_session_path      DELETE	/users/sign_out(.:format)	  devise/sessions#destroy
+  #user_password_path	            POST	/users/password(.:format)	    devise/passwords#create
+  #new_user_password_path	        GET	/users/password/new(.:format)	  devise/passwords#new
+  #edit_user_password_path	      GET	/users/password/edit(.:format)	devise/passwords#edit
+  #                               PATCH	/users/password(.:format)   	devise/passwords#update
+  #                               PUT	/users/password(.:format)	      devise/passwords#update
+  #cancel_user_registration_path	GET	/users/cancel(.:format)	        devise/registrations#cancel
+  #user_registration_path	        POST	/users(.:format)	            devise/registrations#create
+  #new_user_registration_path    	GET	/users/sign_up(.:format)	      devise/registrations#new
+  #edit_user_registration_path   	GET	/users/edit(.:format)	          devise/registrations#edit
+  #                               PATCH	/users(.:format)	            devise/registrations#update
+  #                               PUT	/users(.:format)	              devise/registrations#update
+  #                               DELETE	/users(.:format)          	devise/registrations#destroy
+  #########################################################################
   get 'welcome/index'
-  get 'welcome/index2'
-  get 'welcome/popup'
-  get 'stories/popupStory'
   get 'stories/read'
+  get 'welcome/maker'
 
 
   get 'request_friendships/send_request/:recipient' => 'request_friendships#send_request'
@@ -30,18 +46,25 @@ Rails.application.routes.draw do
   get 'request_friendships/show_pending', to: 'request_friendships#show_pending'
 
   #Stories
+  get 'stories/acquired' => 'stories#show_stories_acquired'
+  get 'stories/created' => 'stories#show_stories_created'
   resources :stories
 =begin
-     get "/stories"
-     post "/stories"
-     delete "/stories"
-     get "/stories/:id"
-     get "/stories/new"
-     get "/stories/:id/edit"
-     patch "/stories/:id"
-     put "/stories/:id"
+  get "/stories"
+  post "/stories"
+  delete "/stories"
+  get "/stories/:id"
+  get "/stories/new"
+  get "/stories/:id/edit"
+  patch "/stories/:id"
+  put "/stories/:id"
 =end
 
+  #Profiles
+  resources :profiles
+
+  #users
+  get 'user' => 'user#index'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

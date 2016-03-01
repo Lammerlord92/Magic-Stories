@@ -1,0 +1,63 @@
+<% name ||= "Editar" %>
+
+<head>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+
+
+</head>
+
+<h1><%= name %> perfil</h1>
+
+<%=form_for(@profile) do |f|%>
+<% @profile.errors.full_messages.each do |message| %>
+<div class="error">
+    *<%= message  %>
+</div>
+<% end %>
+
+<br>
+<div class="field">
+    <%= f.text_field :name, placeholder: "Nombre" %>
+</div>
+<br>
+<div class="field">
+    <%= f.text_field :avatar, placeholder: "Avatar" %>
+</div>
+<br>
+<div class="field">
+    <%= f.text_area :description, placeholder: "Descripción" %>
+</div>
+<br>
+<div class="field">
+    <%= f.text_field :signature, placeholder: "Firma"  %>
+</div>
+
+<div class="field">
+    <%= f.radio_button :profile_status, TRUE, :checked => true  %> Si
+    <%= f.radio_button :profile_status, FALSE,  :checked => false %> No
+</div>
+
+<div class="field">
+    <%= f.submit "Guardar" %>
+</div>
+
+
+<script src="http://code.jquery.com/jquery=1.11.0.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        jQuery.noConflict();
+        $("#buttonStory").on('click',function(){
+            jQuery.noConflict();
+            $("#modal").modal({
+                show:true
+            })
+            jQuery.noConflict();
+            $("#close").on('click',function(){
+                $("#modal").modal('hide')
+            })
+        })
+    })
+</script>
+<%end%>

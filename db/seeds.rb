@@ -4,7 +4,7 @@
 # Examples:
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+#   Cura.create(name: 'Emmanuel', city: cities.first, rol: 'cazador')
 
 category1=Category.create!({name: "Drogas", description: "Historia sobre drogas",
                             icon: File.new("public/categories/original/1/seta-icono-new-super-mario-bros-wii-articulo-videojuegos-zehngames.png")})
@@ -48,18 +48,20 @@ user1.update_attribute(:role, userAcc1)
 user2.update_attribute(:role, userAcc2)
 user2.update_attribute(:role, userAcc3)
 
-aa = RequestFriendship.create!({message: "Kierez zer mi amigo?", sender_id: user1.id, recipient_id: user2.id, status: "ACCEPTED"})
-ab = RequestFriendship.create!({message: "Kierez zer mi amigo?", sender_id: user3.id, recipient_id: user2.id, status: "ACCEPTED"})
-ac = RequestFriendship.create!({message: "Kierez zer mi amigo?", sender_id: user1.id, recipient_id: user3.id, status: "ACCEPTED"})
+friendShip1 = RequestFriendship.create!({message: "Kierez zer mi amigo?", sender_id: user1.id, recipient_id: user2.id, status: "ACCEPTED"})
+friendShip2 = RequestFriendship.create!({message: "Kierez zer mi amigo?", sender_id: user3.id, recipient_id: user2.id, status: "ACCEPTED"})
+friendShip3 = RequestFriendship.create!({message: "Kierez zer mi amigo?", sender_id: user1.id, recipient_id: user3.id, status: "ACCEPTED"})
 
-a = Friendship.createFriendship(aa)
-b = Friendship.createFriendship(ab)
-c = Friendship.createFriendship(ac)
+Friendship.createFriendship(friendShip1)
+Friendship.createFriendship(friendShip2)
+Friendship.createFriendship(friendShip3)
 
-@ret = ""
-User.all.each do |usuario|
+@ret = ''
+# Metodo de active_record. Recorre un maximo de 1000 usuarios por defecto
+# documentacion: http://guides.rubyonrails.org/active_record_querying.html
+User.find_each do |usuario|
   usuario.friends.each do |amigo|
-    @ret << "-" << usuario.username << " es amigo de " << amigo.username << "\n"
+    @ret << '-' << usuario.username << ' es amigo de ' << amigo.username << '\n'
   end
 end
 
@@ -67,9 +69,9 @@ end
 puts @ret
 
 
-perfil1 = Profile.create({name: 'Hola bebés', avatar: 'http://www.image.es', description: 'This is my profile', signature: 'My sign Bebés', user_id: user1.id})
-perfil2 = Profile.create({name: 'Hola bebés2', avatar: 'http://www.image1.es', description: 'This is my profile1', signature: 'My sign Bebés1', user_id: user2.id})
-perfil3 = Profile.create({name: 'Hola bebés3', avatar: 'http://www.image2.es', description: 'This is my profile2', signature: 'My sign Bebés2', user_id: user3.id})
+perfil1 = Profile.create({name: 'Hola bebés', avatar: 'http://www.image.es', description: 'This is my profile', signature: 'My sign Bebés', user_id: user1.id, profile_status: true})
+perfil2 = Profile.create({name: 'Hola bebés2', avatar: 'http://www.image1.es', description: 'This is my profile1', signature: 'My sign Bebés1', user_id: user2.id, profile_status: true})
+perfil3 = Profile.create({name: 'Hola bebés3', avatar: 'http://www.image2.es', description: 'This is my profile2', signature: 'My sign Bebés2', user_id: user3.id, profile_status: true})
 
 
 

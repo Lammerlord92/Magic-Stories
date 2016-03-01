@@ -9,15 +9,35 @@
       <li><a href="/stories">Historias</a></li>
       <li><a href="/stories/new">Crear historia</a></li>
       <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuario<span class="caret"></span></a>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+            role="button" aria-haspopup="true" aria-expanded="false">
+          <% if user_signed_in? %>
+          <%= current_user.username %>
+          <% else %>
+          Usuario
+          <% end %>
+        <span class="caret"></span></a>
         <ul class="dropdown-menu">
+          <% if user_signed_in? %>
           <li><a href="#">Mi perfil</a></li>
           <li><a href="#">Mis amigos</a></li>
           <li><a href="#">Invitar amigos</a></li>
+          <li><a href="/user">Buscar gente</a></li>
           <li role="separator" class="divider"></li>
           <li>
-            <%= link_to('Cerrar sesión', destroy_user_session_path, :method => :delete) %>
+               <%= link_to "Cerrar sesión", destroy_user_session_path, :method => :delete %>
           </li>
+
+          <% else %>
+          <li>
+              <%= link_to "Iniciar sesión", new_user_session_path %>
+
+          </li>
+          <li>
+               <%= link_to "Registrarse", new_user_registration_path %>
+          </li>
+          <% end %>
+
         </ul>
       </li>
     </ul>

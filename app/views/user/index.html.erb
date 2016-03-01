@@ -1,0 +1,24 @@
+<div class="storylist">
+
+  <table>
+    <tr>
+      <th>Nombre|</th>
+      <th>Email</th>
+    </tr>
+    <h1>Listado de personas</h1>
+    <% @users.each do |user| %>
+        <tr>
+          <td><%= user.name %></td>
+          <td><%= user.email %></td>
+        </tr>
+    <% end %>
+
+
+  </table>
+</div>
+
+<h1>Introduzca el nombre</h1>
+<form>
+  <input name=”q” <%= @q %> >
+  <button type=”submit”>Buscar</button>
+</form>
