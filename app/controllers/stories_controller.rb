@@ -59,6 +59,12 @@ class StoriesController < ApplicationController
 
     def show_stories_acquired
       @stories = Story.find_by_profile_id(params[:id])
-
     end
+
+
+    def read
+      # @story = Story.find(params[:id])
+    end
+
+
 end
