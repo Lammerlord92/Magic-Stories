@@ -13,7 +13,7 @@ class UserController < ApplicationController
     @q = params[:q]
     query = 'username like ? OR name like ? OR surname1 like ? OR surname2 like ? OR email like ? '
     if @q
-      @users = Story.where(query, "%#{@q}%", "%#{@q}%", "%#{@q}%", "%#{@q}%", "%#{@q}%")
+      @users = User.where(query, "%#{@q}%", "%#{@q}%", "%#{@q}%", "%#{@q}%", "%#{@q}%")
       if @users.blank?
         flash.alert = "User Not found"
       end
