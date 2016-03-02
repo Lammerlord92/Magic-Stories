@@ -104,20 +104,24 @@ class RequestFriendshipsController < ApplicationController
 
       #Para que no sea grande ni saque datos explicitos ponemos un número 1 = ACCEPTED, 2 = REJECTED
       choice = "ACCEPTED"
-      if (params[:choice]) == 2
+      if (params[:choice] == "2")
         choice = "REJECTED"
       end
 
 
       result = RequestFriendship.where({recipient_id: current_user.id, sender_id: request_friendship.sender_id,
                                         status: "PENDING"}).last
+
+      message_suffix = ""
       respond_to do |format|
         if result.update({status: choice})
           if(choice == "ACCEPTED")
             Friendship.createFriendship(result)
+            message_suffix = "ACEPTADO"
           else
-            format.html { redirect_to welcome_index_path, notice: 'La petición se ha denegado' }
+            message_suffix = "DENEGADO"
           end
+          format.html { redirect_to welcome_index_path, notice: 'La petición se ha ' << message_suffix }
         else
           format.html { render 'welcome/index' }
         end

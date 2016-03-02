@@ -58,4 +58,10 @@ class User < ActiveRecord::Base
     return r
   end
 
+  after_create {
+    Profile.create({user_id: self.id, avatar: "http://manualdeamarresyhechizos.com/wp-content/uploads/2014/11/huevos_gallina-180x180.jpg"})
+    self.update({role: FreeUser.create})
+  }
+
+
 end

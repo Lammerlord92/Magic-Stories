@@ -8,6 +8,8 @@
           <div class="container">
             <div class="row">
               <div class="col-md-3">
+                <% a = Profile.where({user_id: request_friendship.sender_id}).first.avatar %>
+                <%= image_tag( a, class: "img-circle") %>
               </div>
               <div class="col-md-9">
                 <div class="row text-center">
@@ -16,11 +18,11 @@
                 </div>
                 <br/>
                 <div class="row">
-                  <div class="col-md-6 text-center">
+                  <div class="col-md-6 text-right">
                     <%= link_to "Aceptar", "/request_friendships/deciding_request/#{request_friendship.id}/1", class: "btn btn-primary"  %>
                   </div>
-                  <div class="col-md-6 text-center">
-                      <%= link_to "Rechazar", "/request_friendships/deciding_request/#{request_friendship.id}/1", class: "btn btn-primary"  %>
+                  <div class="col-md-6 text-left">
+                      <%= link_to "Rechazar", "/request_friendships/deciding_request/#{request_friendship.id}/2", class: "btn btn-primary"  %>
                   </div>
                 </div>
               </div>
