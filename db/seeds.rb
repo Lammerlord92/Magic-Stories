@@ -40,6 +40,10 @@ user3 = User.create!({email: 'lanube@hotmail.com', password: 'judiaspintas', pas
                      username: 'carmelo', name: 'carmelo', surname1: 'camelino', surname2: 'mendoza', phone: 619663023,
                      birthday: '30/10/1993', sku: '586931'})
 
+user4 = User.create!({email: 'curro@correo.es', password: '123456789', password_confirmation: '123456789',
+                      username: 'curro', name: 'curro', surname1: 'gil', surname2: 'SC', phone: 690764841,
+                      birthday: '06/02/1993', sku: '586974'})
+
 userAcc1 = FreeUser.create()
 userAcc2 = PremiumUser.create()
 userAcc3 = FreeUser.create()
