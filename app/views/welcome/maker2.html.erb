@@ -30,15 +30,23 @@
         // mxCell nodes for the model cells in the output
         var doc = mxUtils.createXmlDocument();
 
-        var person1 = doc.createElement('Person');
-        person1.setAttribute('firstName', 'Daffy');
-        person1.setAttribute('lastName', 'Duck');
+        var chapter1 = doc.createElement('Chapter');
+        chapter1.setAttribute('title', 'Juanoide presenta');
+        chapter1.setAttribute('body', 'Juan ha ido a ISPP');
 
-        var person2 = doc.createElement('Person');
-        person2.setAttribute('firstName', 'Bugs');
-        person2.setAttribute('lastName', 'Bunny');
+        var chapter2 = doc.createElement('Chapter');
+        chapter2.setAttribute('title', 'Juanoide pone la numeración');
+        chapter2.setAttribute('body', 'Juanoide ha hecho las cosas bien');
 
-        var relation = doc.createElement('Knows');
+        var chapter3 = doc.createElement('Chapter');
+        chapter3.setAttribute('title', 'El grupo 1 se queja');
+        chapter3.setAttribute('body', 'Buuuuu');
+
+        var chapter4 = doc.createElement('Chapter');
+        chapter4.setAttribute('title', 'Juanoide no pone la numeración');
+        chapter4.setAttribute('body', 'Juanoide no ha hecho las cosas bien');
+
+        var relation = doc.createElement('sendTo');
         relation.setAttribute('since', '1985');
 
         // Creates the graph inside the given container
@@ -67,19 +75,20 @@
         {
           if (mxUtils.isNode(cell.value))
           {
-            if (cell.value.nodeName.toLowerCase() == 'person')
+            if (cell.value.nodeName.toLowerCase() == 'chapter')
             {
-              var firstName = cell.getAttribute('firstName', '');
-              var lastName = cell.getAttribute('lastName', '');
+              var title = cell.getAttribute('title', '');
+              var body = cell.getAttribute('body', '');
 
-              if (lastName != null && lastName.length > 0)
+              if (body != null && body.length > 0)
               {
-                return lastName + ', ' + firstName;
+                //return body + ', ' + title;
+                return title;
               }
 
-              return firstName;
+              return title;
             }
-            else if (cell.value.nodeName.toLowerCase() == 'knows')
+            else if (cell.value.nodeName.toLowerCase() == 'sendTo')
             {
               return cell.value.nodeName + ' (Since '
                   +  cell.getAttribute('since', '') + ')';
@@ -95,20 +104,20 @@
         graph.cellLabelChanged = function(cell, newValue, autoSize)
         {
           if (mxUtils.isNode(cell.value) &&
-              cell.value.nodeName.toLowerCase() == 'person')
+              cell.value.nodeName.toLowerCase() == 'chapter')
           {
             var pos = newValue.indexOf(' ');
 
-            var firstName = (pos > 0) ? newValue.substring(0,
+            var title = (pos > 0) ? newValue.substring(0,
                 pos) : newValue;
-            var lastName = (pos > 0) ? newValue.substring(
+            var body = (pos > 0) ? newValue.substring(
                 pos + 1, newValue.length) : '';
 
             // Clones the value for correct undo/redo
             var elt = cell.value.cloneNode(true);
 
-            elt.setAttribute('firstName', firstName);
-            elt.setAttribute('lastName', lastName);
+            elt.setAttribute('title', title);
+            elt.setAttribute('body', body);
 
             newValue = elt;
             autoSize = true;
@@ -122,12 +131,12 @@
         graph.getEditingValue = function(cell)
         {
           if (mxUtils.isNode(cell.value) &&
-              cell.value.nodeName.toLowerCase() == 'person')
+              cell.value.nodeName.toLowerCase() == 'chapter')
           {
-            var firstName = cell.getAttribute('firstName', '');
-            var lastName = cell.getAttribute('lastName', '');
+            var title = cell.getAttribute('title', '');
+            var body = cell.getAttribute('body', '');
 
-            return firstName + ' ' + lastName;
+            return title + ' ' + body;
           }
         };
 
@@ -189,9 +198,17 @@
         graph.getModel().beginUpdate();
         try
         {
-          var v1 = graph.insertVertex(parent, null, person1, 40, 40, 80, 30);
-          var v2 = graph.insertVertex(parent, null, person2, 200, 150, 80, 30);
+          //var w = chapter1.getAttribute('title').length * 7;
+
+          var v1 = graph.insertVertex(parent, null, chapter1, 40, 40, chapter1.getAttribute('title').length * 7, 30);
+          var v2 = graph.insertVertex(parent, null, chapter2, 200, 150, chapter2.getAttribute('title').length * 7, 30);
+          var v3 = graph.insertVertex(parent, null, chapter3, 450, 125, chapter3.getAttribute('title').length * 7, 30);
+          var v4 = graph.insertVertex(parent, null, chapter4, 200, 100, chapter4.getAttribute('title').length * 7, 30);
+
           var e1 = graph.insertEdge(parent, null, relation, v1, v2);
+          var e2 = graph.insertEdge(parent, null, relation, v2, v3);
+          var e3 = graph.insertEdge(parent, null, relation, v1, v4);
+          var e4 = graph.insertEdge(parent, null, relation, v4, v3);
         }
         finally
         {

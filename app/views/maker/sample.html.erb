@@ -1,0 +1,150 @@
+<head>
+  <title>Creador de historias</title>
+
+  <!-- Sets the basepath for the library -->
+  <script type="text/javascript">
+      xBasePath='../src';
+  </script>
+
+  <!-- Loads and initializes the library -->
+  <script type="text/javascript" src="../src/js/mxClient.js"></script>
+
+  <!-- Example code -->
+  <script type="text/javascript">
+    function main(container){
+      //Checks if the browser is not supported
+      if(!mxClient.isBrowserSupported()){
+        mxUtils.error('Browser is not supported!',200,false);
+      }
+      else{
+        //Disables the built-in context menu
+        //mxEvent.disableContextMenu(container);6
+
+
+
+
+        //Creating XML document 03/03/2016
+        var doc = mxUtils.createXmlDocument();
+
+        var element01 = doc.createElement('Chapter');
+        element01.setAttribute('title','Un nuevo comienzo');
+        element01.setAttribute('body','adasdads asda sasd asd asd ad sadasdasdads asda sdad adsadsasd adsa dasdasd asda a.');
+
+        var element02 = doc.createElement('Chapter');
+        element02.setAttribute('title','Un camino incierto');
+        element02.setAttribute('body','adasdads asda sasd asd asd ad sadasdasdads asda sdad adsadsasd adsa dasdasd asda a.');
+
+        var element03 = doc.createElement('Chapter');
+        element03.setAttribute('title','El molino');
+        element03.setAttribute('body','adasdads asda sasd asd asd ad sadasdasdads asda sdad adsadsasd adsa dasdasd asda a.');
+
+        var element04 = doc.createElement('Chapter');
+        element02.setAttribute('title','Sale el sol');
+        element02.setAttribute('body','adasdads asda sasd asd asd ad sadasdasdads asda sdad adsadsasd adsa dasdasd asda a.');
+
+        var element05 = doc.createElement('Chapter');
+        element02.setAttribute('title','Un final inesperado');
+        element02.setAttribute('body','adasdads asda sasd asd asd ad sadasdasdads asda sdad adsadsasd adsa dasdasd asda a.');
+
+        var relation01 = doc.createElement('dirige a')
+        var relation02 = doc.createElement('dirige a')
+        var relation03 = doc.createElement('dirige a')
+        var relation04 = doc.createElement('dirige a')
+
+
+
+
+
+
+
+        //Creates the graph inside the given container
+        var graph = new mxGraph(container);
+
+
+
+        //Enable or disable size change 03/03/2016
+        graph.setCellsResizable(true);
+
+        //Configures the container to resize and add a border at the bottom. 03/03/2016
+        graph.setResizeContainer(true);
+        graph.minimumContainerSize = new mxRectangle(0,0,500,300);
+        graph.setBorder(60);
+
+        //Stops editing on enter key, handles escape 03/03/2016
+        new mxKeyHandler(graph);
+
+        //Overrides method to disable edge label editing 03/03/2016
+        graph.isCellEditable = function(cell){
+          return !this.getModel().isEdge(cell);
+        };
+
+        //Overrides method to provide a cell label in the display
+        graph.convertValueToString = function(cell){
+          if (mxUtils.isNode(cell.value)){
+            if(cell.value.nodeName.toLowerCase()=='chapter'){
+              var firstName = cell.getAttribute('title','');
+              var lastName = cell.getAttributes('body','');
+
+              if(body !=null && body.length > 0){
+                return body + ', '+title;
+              }
+
+              return title;
+            }
+
+            else if(cell.value.nodeName.toLowerCase()=='dirige a'){
+              return cell.value.nodeName;
+            }
+          }
+
+          return '';
+        };
+
+
+        //Overrides method to store a cell label in the model 03/03/2016
+        var cellLabelChanged = graph.cellLabelChanged;
+        graph.cellLabelChanged = function(cell, newValue, autoSize){
+          if (mxUtils.isNode(cel.value) && cell.value.nodeName.toLowerCase() == 'chapter'){
+            var pos = newValue.indexOf(' ');
+            var title = (pos > 0) ? newValue.substring (0,pos) : newValue;
+            var body = (pos>0) ? newValue.substring(pos + 1, newValue.length) : '';
+
+            //Clones the value for correct undo/redo
+            var elt = cell.value.cloneNode(true);
+
+            elt.setAttribute('title', title);
+            elt.setAttribute('body', body);
+
+            newValue = elt;
+            autoSize = true;
+
+          }
+
+          cellLabelChanged.apply(this,arguments);
+        }
+
+        //Override method to create the editing value 03/03/2016
+        var getEditingValue = graph.getEditingValue;
+        graph.getEditingValue = function(cell);{
+          if(mxUtils.isNode(cell.value) && cell.value.nodeName.toLowerCase() == 'chapter'){
+            var title=cell.getAttribute('title','');
+            var body=cell.getAttribute('body','');
+
+            return firstName + ' ' + lastName;
+          }
+        };
+
+        //Adds a special tooltip for edges
+        graph.setTooltips(true);
+
+        var getTooltipForCell = graph.getTooltipForCell;
+        graph.getTooltipForCell = function(cell){
+          //Adds some relation details for edges
+          if (graph.getModel().isEdge(cell)){
+            var src= this.getLabel(this.getModel().getTerminal(cell,true));
+            var trg= this.getLabel(this.get)
+          }
+        }
+        }
+      }
+</body>
