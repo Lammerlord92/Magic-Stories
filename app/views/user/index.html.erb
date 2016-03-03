@@ -18,7 +18,7 @@
 </div>
 
 <h1>Introduzca el nombre</h1>
-<form>
-  <input name=”q” <%= @q %> >
-  <button type=”submit”>Buscar</button>
+<form action="/users" method="get">
+  <input type="text" name="q" placeholder="Buscar usuarios">
+  <button type="submit">Buscar</button>
 </form>
