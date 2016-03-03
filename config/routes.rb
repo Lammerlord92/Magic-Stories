@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   get 'welcome/index'
   get 'stories/read'
   get 'welcome/maker'
-
+  get 'welcome/maker2'
 
   get 'request_friendships/send_request/:recipient' => 'request_friendships#send_request'
   post 'request_friendships/creates' => 'request_friendships#creates'
