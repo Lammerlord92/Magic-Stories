@@ -10,7 +10,6 @@
 
   <%= render 'layouts/header' %>
 
-
   <!-- Begin Body -->
   <div class="container">
     <div class="row">
@@ -35,24 +34,23 @@
 
       <div class="col-sm-8" id="bodyCol">
         <%= yield %>
+        <br>
+        <% if flash.alert %>
+          <p class="alert-notice"><%= flash.alert %></p>
+        <% end %>
+        <% if flash.notice %>
+          <p class="alert-alert"><%= flash.notice %></p>
+        <% end %>
       </div>
-      <div class="col-sm-2" id="rightCol">
-      <!-- Posible publi -->
+      <div class="col-sm-2 jumbotron" id="rightCol">
+        <!-- Posible publi -->
+        <p class="lead">Aqui ira un banner</p>
       </div>
 
-      </div>
     </div>
-
-
-
-  <p class="notice"><%= flash.alert %></p>
-  <p class="alert"><%= flash.notice %></p>
+  </div>
 
   <%= render 'layouts/footer' %>
 
 </body>
-  <!-- script references -->
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/scripts.js"></script>
 </html>
