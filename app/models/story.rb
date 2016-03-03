@@ -39,7 +39,7 @@ class Story < ActiveRecord::Base
     date2 > date1
   end
 
-  # Devuelve TRUE si la historia ha sido adquirida por el current_user.
+  # Devuelve TRUE si la historia ha sido adquirida por el usuario 'user'.
   def has_been_acquired_by_user?(user)
     current_user_profile = Profile.find_by(user_id: user.id)
     addition = Addition.find_by(profile_id: current_user_profile, story_id: self.id)
