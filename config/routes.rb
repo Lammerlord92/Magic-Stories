@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :user
   ##########################################################################
   ###Rutas añadidas por devise####
   #new_user_session_path	        GET	/users/sign_in(.:format)	      devise/sessions#new
