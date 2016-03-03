@@ -2,8 +2,7 @@
 <div class="field">
   <%= image_tag @story.cover.url(:thumb) %>
 </div>
-<form action="/additions/create" method="get">
-  <input type="hidden" name="story_id" value="<%=@story.id%>">
+<form action="/additions/create/<%=@story.id%>" method="get">
   <button type="submit">Adquirir</button>
 </form>
 <%= render @story %>

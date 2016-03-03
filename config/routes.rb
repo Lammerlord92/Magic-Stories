@@ -63,6 +63,9 @@ Rails.application.routes.draw do
   #Profiles
   resources :profiles
 
+  #Additions
+  get 'additions/create/:story_id' => 'additions#create'
+
   #users
   get 'user' => 'user#index'
   # Example of regular route:
