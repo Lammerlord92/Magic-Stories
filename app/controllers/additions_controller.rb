@@ -3,7 +3,7 @@ class AdditionsController < ActionController::Base
   def create
     id = params[:story_id]
 
-    @addition= Addition.new
+    @addition = Addition.new
     @addition.purchase_date = Date.current
     story = Story.find(id)
     @addition.base_price = story.price
@@ -13,9 +13,21 @@ class AdditionsController < ActionController::Base
     @addition.story_id = id
 
     if @addition.save
-     redirect_to '/stories'
+      redirect_to '/stories' #TODO Debería redirigir a la vista (cuando se implemente) de historias adquiridas
     else
-      redirect_to '/stories/1'
+      redirect_to '/stories/#{id}'
+    end
+  end
+
+  def delete
+    id = params[:story_id]
+    addition = Addition.find_by(story_id: id)
+    if addition != nil
+      if addition.destroy()
+        redirect_to '/stories' #TODO Debería redirigir a la vista (cuando se implemente) de historias adquiridas
+      else
+        redirect_to '/stories/#{id}'
+      end
     end
   end
 

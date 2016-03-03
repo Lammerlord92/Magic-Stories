@@ -65,6 +65,7 @@ Rails.application.routes.draw do
 
   #Additions
   get 'additions/create/:story_id' => 'additions#create'
+  delete 'additions' => 'additions#delete'
 
   #users
   get 'user' => 'user#index'

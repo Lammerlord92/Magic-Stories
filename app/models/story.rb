@@ -23,7 +23,6 @@ class Story < ActiveRecord::Base
   #TODO Ahora el foreign key es "id" porque si no peta, hay que arreglarlo
   belongs_to :creatorProfile, class_name: "Profile", foreign_key: "id"
 
-
   has_attached_file :cover, styles: {medium: "1280x720", thumb:"500x300"}
   validates_attachment_content_type :cover, content_type: /\Aimage\/.*\Z/
 
@@ -33,12 +32,18 @@ class Story < ActiveRecord::Base
     @stories=value
   end
 
-
   def check_date
     date1 = release_date - 1
     date2 = Time.now()
 
     date2 > date1
+  end
+
+  # Devuelve TRUE si la historia ha sido adquirida por el current_user.
+  def has_been_acquired_by_user?(user)
+    current_user_profile = Profile.find_by(user_id: user.id)
+    addition = Addition.find_by(profile_id: current_user_profile, story_id: self.id)
+    addition != nil
   end
 
   private
@@ -48,8 +53,5 @@ class Story < ActiveRecord::Base
       Story_category.create(category_id:category_id, story_id:self.id)
     end
   end
-
-
-
 
 end
