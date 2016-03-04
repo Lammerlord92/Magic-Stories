@@ -23,10 +23,7 @@ Rails.application.routes.draw do
   get 'welcome/maker'
   get 'welcome/maker2'
 
-  get 'request_friendships/send_request/:recipient' => 'request_friendships#send_request'
-  post 'request_friendships/creates' => 'request_friendships#creates'
-  get 'request_friendships/deciding_request/:rf/:choice' => 'request_friendships#deciding_request'
-  get 'request_friendships/show_pending' => 'request_friendships#show_pending'
+
 
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -44,6 +41,7 @@ Rails.application.routes.draw do
   post 'request_friendships/creates', to: 'request_friendships#creates'
   get 'request_friendships/deciding_request/:rf/:choice', to: 'request_friendships#deciding_request'
   get 'request_friendships/show_pending', to: 'request_friendships#show_pending'
+  get 'request_friendships/cancel_friendship', to: 'request_friendships#cancel_friendship'
 
   #Stories
   get 'stories/acquired' => 'stories#show_stories_acquired'

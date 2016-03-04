@@ -1,5 +1,5 @@
 class RequestFriendshipsController < ApplicationController
-  before_action :set_request_friendship, only: [:show, :edit, :update, :destroy]
+  before_action :set_request_friendship, only: [:show, :edit, :update, :destroy, :cancel_friendship]
 
   # GET /request_friendships
   # GET /request_friendships.json
@@ -136,6 +136,13 @@ class RequestFriendshipsController < ApplicationController
 
   def show_pending
     @request_friendships = RequestFriendship.where({recipient_id: current_user.id, status: "PENDING"})
+  end
+
+  def cancel_frienship
+    @request_friendship.friendships.each do |friendship|
+      Friendship.destroy(friendship.id)
+    end
+    RequestFriendship.destroy(@request_friendship.id)
   end
 
 
