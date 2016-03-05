@@ -13,9 +13,9 @@ class AdditionsController < ActionController::Base
     @addition.story_id = id
 
     if @addition.save
-      redirect_to '/stories' #TODO Debería redirigir a la vista (cuando se implemente) de historias adquiridas
+      redirect_to "/stories" #TODO Debería redirigir a la vista (cuando se implemente) de historias adquiridas
     else
-      redirect_to '/stories/#{id}'
+      redirect_to "/stories/#{id}"
     end
   end
 
@@ -24,9 +24,9 @@ class AdditionsController < ActionController::Base
     addition = Addition.find_by(story_id: id)
     if addition != nil
       if addition.destroy()
-        redirect_to '/stories' #TODO Debería redirigir a la vista (cuando se implemente) de historias adquiridas
+        redirect_to "/stories" #TODO Debería redirigir a la vista (cuando se implemente) de historias adquiridas
       else
-        redirect_to '/stories/#{id}'
+        redirect_to "/stories/#{id}"
       end
     end
   end
