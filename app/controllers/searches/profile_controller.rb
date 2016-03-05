@@ -28,7 +28,7 @@ class Searches::ProfileController < ApplicationController
         query = '(profiles.name like :q OR signature like :q OR description like :q)'
         subquery = '(users.id != :cu_id and friendships.friend_id = :cu_id)'
 
-        @users = Profile.distinct(:user_id).joins(:friendships).where(query, {q: "%#{@q}%"}) &
+        @users = Profile.where(query, q: "%#{@q}%") &
             (Profile.all - Profile.distinct(:user_id).joins(:friendships).where(subquery, {cu_id: current_user.id}))
         if @users.blank?
           flash.alert = "User Not found"
