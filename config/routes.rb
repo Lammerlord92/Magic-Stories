@@ -46,7 +46,9 @@ Rails.application.routes.draw do
   #Stories
   get 'stories/acquired' => 'stories#show_stories_acquired'
   get 'stories/created' => 'stories#show_stories_created'
-  resources :stories
+  resources :stories, :except => ['show']
+  get 'stories/show/:id', to: 'stories#show'
+  get 'stories/search', to: 'stories#search'
 =begin
   get "/stories"
   post "/stories"
@@ -59,7 +61,9 @@ Rails.application.routes.draw do
 =end
 
   #Profiles
-  resources :profiles
+  resources :profiles, :except => ['show']
+  get 'profiles/search', to: 'profiles#search'
+  get 'profiles/show/:id', to: 'profiles#show'
 
   #Additions
   get 'additions/create/:story_id' => 'additions#create'

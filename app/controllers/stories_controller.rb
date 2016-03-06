@@ -1,20 +1,7 @@
 class StoriesController < ApplicationController
+  before_action :params_search, only: [:search]
 
   #GET /stories
-  def index
-    # Documentacion sobre queries aqui:
-    # http://guides.rubyonrails.org/active_record_querying.html
-    @q = params[:q]
-    query = 'title like ? OR description like ? OR language like ?'
-    if @q
-      @stories = Story.where(query, "%#{@q}%", "%#{@q}%", "%#{@q}%")
-      if @stories.blank?
-        flash.alert = "Not found"
-      end
-    else
-      @stories = Story.all
-    end
-  end
 
   #GET /stories/read/:id
   def read
@@ -78,5 +65,28 @@ class StoriesController < ApplicationController
     profile = Profile.find_by(user: current_user)
     @stories = Story.where(creatorProfile: profile)
   end
+
+  def params_search
+    params.permit(:q)
+  end
+
+
+
+def search
+  # Documentacion sobre queries aqui:
+  # http://guides.rubyonrails.org/active_record_querying.html
+  @q = params[:q]
+  query = 'title like :q OR description like :q OR language like :q and published = true'
+  if @q
+    @stories = Story.where(query, {q: "%#{@q}%"})
+    if @stories.blank?
+      flash.alert = "Not found"
+    end
+  else
+    @stories = Story.where(published: true)
+  end
+
+  render 'list'
+end
 
 end

@@ -65,6 +65,8 @@ class RequestFriendshipsController < ApplicationController
 
   ## De aquí para arriba es scaffold, vale para un ADMIN, pero de aquí para abajo vamos a pensar las cosas...
   # GET introducir recipient en la URL
+
+  #send_request/:recipient
   def send_request
     a = current_user.id
     @request_friendship = RequestFriendship.new({message: "", status: "PENDING", sender_id: a, recipient_id: params[:recipient]})
@@ -138,7 +140,7 @@ class RequestFriendshipsController < ApplicationController
     @request_friendships = RequestFriendship.where({recipient_id: current_user.id, status: "PENDING"})
   end
 
-  def cancel_frienship
+  def cancel_friendship
     @request_friendship.friendships.each do |friendship|
       Friendship.destroy(friendship.id)
     end

@@ -61,8 +61,6 @@ ActiveRecord::Schema.define(version: 20160223191838) do
     t.integer  "story_id"
   end
 
-  add_index "chapters", ["story_id"], name: "index_chapters_on_story_id", using: :btree
-
   create_table "discount_user_groups", force: :cascade do |t|
     t.integer  "user_group_id"
     t.integer  "discount_id"
@@ -85,24 +83,12 @@ ActiveRecord::Schema.define(version: 20160223191838) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "friendly_id_slugs", force: :cascade do |t|
-    t.string   "slug",                      null: false
-    t.integer  "sluggable_id",              null: false
-    t.string   "sluggable_type", limit: 50
-    t.string   "scope"
-    t.datetime "created_at"
-  end
-
-  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
-  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
-  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
-  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
-
   create_table "friendships", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "friend_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "request_friendship_id"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   create_table "mailboxer_conversation_opt_outs", force: :cascade do |t|
@@ -177,14 +163,7 @@ ActiveRecord::Schema.define(version: 20160223191838) do
     t.integer  "user_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
-    t.boolean  "profile_status"
-  end
-
-  create_table "readings", force: :cascade do |t|
-    t.integer  "story_id"
-    t.integer  "profile_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "profile_status"
   end
 
   create_table "reports", force: :cascade do |t|
@@ -214,6 +193,7 @@ ActiveRecord::Schema.define(version: 20160223191838) do
     t.date     "release_date"
     t.boolean  "published"
     t.integer  "num_purchased"
+    t.integer  "profile_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.string   "cover_file_name"
@@ -271,7 +251,6 @@ ActiveRecord::Schema.define(version: 20160223191838) do
   add_foreign_key "additions", "discounts"
   add_foreign_key "additions", "profiles"
   add_foreign_key "additions", "stories"
-  add_foreign_key "chapters", "stories"
   add_foreign_key "mailboxer_conversation_opt_outs", "mailboxer_conversations", column: "conversation_id", name: "mb_opt_outs_on_conversations_id"
   add_foreign_key "mailboxer_notifications", "mailboxer_conversations", column: "conversation_id", name: "notifications_on_conversation_id"
   add_foreign_key "mailboxer_receipts", "mailboxer_notifications", column: "notification_id", name: "receipts_on_notification_id"

@@ -28,6 +28,8 @@ category5=Category.create!({name: "Vergonzante", description: "Es un espectaculo
                             icon: File.new("public/categories/original/10/puedo-eliminar-icono-celular-facebook_1_1720410.jpg")})
 
 
+#Creación de Usuarios
+
 user1 = User.create!({email: 'user1@mail.com', password: '123456789', password_confirmation: '123456789',
          username: 'user1', name: 'user1', surname1: 'surname11', surname2: 'suername12', phone: 619663023,
          birthday: '30/10/1993', sku: '132563'})
@@ -68,15 +70,43 @@ user10 = User.create!({email: 'user10@mail.com', password: '123456789', password
                       username: 'user10', name: 'user10', surname1: 'surname101', surname2: 'suername102', phone: 619663023,
                       birthday: '29/02/2004', sku: '159856'})
 
+# Creacion de Premiums
 
-userAcc1 = FreeUser.create()
+userAcc1 = PremiumUser.create()
 userAcc2 = PremiumUser.create()
-userAcc3 = FreeUser.create()
+userAcc3 = PremiumUser.create()
 
 
 user4.update_attribute(:role, userAcc2)
 user2.update_attribute(:role, userAcc2)
 user9.update_attribute(:role, userAcc2)
+
+
+
+## Paso auxiliar para perfiles default
+User.find_each do |usuario|
+  Profile.create({user_id: usuario.id, avatar: "http://manualdeamarresyhechizos.com/wp-content/uploads/2014/11/huevos_gallina-180x180.jpg", profile_status: "PUBLIC"})
+  usuario.update({role: FreeUser.create})
+end
+
+
+
+
+
+# Creacion de Perfiles
+
+user1.profile.update!({name: 'Profile1', description: 'This is my profile1', signature: 'My sign1'})
+user2.profile.update!({name: 'Profile2', description: 'This is my profile2', signature: 'My sign2'})
+user3.profile.update!({name: 'Profile3', description: 'This is my profile3', signature: 'My sign3'})
+user4.profile.update!({name: 'Profile4', description: 'This is my profile4', signature: 'My sign4'})
+user5.profile.update!({name: 'Profile5', description: 'This is my profile5', signature: 'My sign5'})
+user6.profile.update!({name: 'Profile6', description: 'This is my profile6', signature: 'My sign6'})
+user7.profile.update!({name: 'Profile7', description: 'This is my profile7', signature: 'My sign7'})
+user8.profile.update!({name: 'Profile8', description: 'This is my profile8', signature: 'My sign8'})
+user9.profile.update!({name: 'Profile9', description: 'This is my profile9', signature: 'My sign9'})
+user10.profile.update!({name: 'Profile10', description: 'This is my profile10', signature: 'My sign10'})
+
+# Creacion de peticiones de amistad
 
 friendShip1 = RequestFriendship.create!({message: "RequestFriendship16", sender_id: user1.id, recipient_id: user6.id, status: "ACCEPTED"})
 friendShip2 = RequestFriendship.create!({message: "RequestFriendship71", sender_id: user7.id, recipient_id: user1.id, status: "ACCEPTED"})
@@ -88,6 +118,8 @@ friendShip7 = RequestFriendship.create!({message: "RequestFriendship84", sender_
 friendShip8 = RequestFriendship.create!({message: "RequestFriendship410", sender_id: user4.id, recipient_id: user10.id, status: "ACCEPTED"})
 friendShip9 = RequestFriendship.create!({message: "RequestFriendship59", sender_id: user5.id, recipient_id: user9.id, status: "ACCEPTED"})
 friendShip10 = RequestFriendship.create!({message: "RequestFriendship105", sender_id: user10.id, recipient_id: user5.id, status: "ACCEPTED"})
+
+# Creacion de amistades
 
 Friendship.createFriendship(friendShip1)
 Friendship.createFriendship(friendShip2)
@@ -112,10 +144,105 @@ end
 
 puts @ret
 
+# Creacion de UserGroups
 
-perfil1 = Profile.create({name: 'Hola bebés', avatar: 'http://www.image.es', description: 'This is my profile', signature: 'My sign Bebés', user_id: user1.id, profile_status: "PUBLIC"})
-perfil2 = Profile.create({name: 'Hola bebés2', avatar: 'http://www.image1.es', description: 'This is my profile1', signature: 'My sign Bebés1', user_id: user2.id, profile_status: "PUBLIC"})
-perfil3 = Profile.create({name: 'Hola bebés3', avatar: 'http://www.image2.es', description: 'This is my profile2', signature: 'My sign Bebés2', user_id: user3.id, profile_status: "PUBLIC"})
+uG1 = UserGroup.create!(name: 'UserGroup1', code: '1231')
+uG2 = UserGroup.create!(name: 'UserGroup2', code: '1232')
+uG3 = UserGroup.create!(name: 'UserGroup3', code: '1233')
+uG4 = UserGroup.create!(name: 'UserGroup4', code: '1234')
+
+# Creacion de ActorUserGroup
+
+aUG1 = ActorUserGroup.create({usergroup_id: uG1.id, user_id: user1.id})
+aUG2 = ActorUserGroup.create({usergroup_id: uG1.id, user_id: user2.id})
+aUG3 = ActorUserGroup.create({usergroup_id: uG1.id, user_id: user3.id})
+aUG4 = ActorUserGroup.create({usergroup_id: uG2.id, user_id: user4.id})
+aUG5 = ActorUserGroup.create({usergroup_id: uG2.id, user_id: user5.id})
+aUG6 = ActorUserGroup.create({usergroup_id: uG2.id, user_id: user6.id})
+aUG7 = ActorUserGroup.create({usergroup_id: uG3.id, user_id: user7.id})
+aUG8 = ActorUserGroup.create({usergroup_id: uG3.id, user_id: user8.id})
+aUG9 = ActorUserGroup.create({usergroup_id: uG4.id, user_id: user9.id})
+aUG10 = ActorUserGroup.create({usergroup_id: uG4.id, user_id: user10.id})
+
+
+
+
+#
+# LA OTRA PARTE DEL MODELO
+#
+
+
+
+# Creacion de Story  -- Unión a profile
+
+story1 = Story.create!({title: 'Title1', description: 'Description', language: 'SPANISH', price: 16.30, release_date: '20/10/2015',
+              published: true, num_purchased: 0, creatorProfile: user1.profile})
+
+story2 = Story.create!({title: 'Title2', description: 'Description', language: 'SPANISH', price: 16.30, release_date: '20/10/2015',
+                        published: true, num_purchased: 0, creatorProfile: user1.profile})
+
+story3 = Story.create!({title: 'Title3', description: 'Description', language: 'ENGLISH', price: 16.30, release_date: '20/10/2015',
+                        published: true, num_purchased: 0, creatorProfile: user1.profile})
+
+story4 = Story.create!({title: 'Title4', description: 'Description', language: 'ENGLISH', price: 16.30, release_date: '20/10/2015',
+                        published: true, num_purchased: 0, creatorProfile: user1.profile})
+
+story5 = Story.create!({title: 'Title5', description: 'Description', language: 'CHINESE', price: 16.30, release_date: '20/10/2015',
+                        published: true, num_purchased: 0, creatorProfile: user2.profile})
+
+story6 = Story.create!({title: 'Title6', description: 'Description', language: 'SPANISH', price: 16.30, release_date: '20/10/2015',
+                        published: true, num_purchased: 0, creatorProfile: user2.profile})
+
+story7 = Story.create!({title: 'Title7', description: 'Description', language: 'SPANISH', price: 16.30, release_date: '20/10/2015',
+                        published: true, num_purchased: 0, creatorProfile: user2.profile})
+
+story8 = Story.create!({title: 'Title8', description: 'Description', language: 'SPANISH', price: 16.30, release_date: '20/10/2015',
+                        published: true, num_purchased: 0, creatorProfile: user2.profile})
+
+story9 = Story.create!({title: 'Title9', description: 'Description', language: 'SPANISH', price: 16.30, release_date: '21/10/2015',
+                        published: true, num_purchased: 0, creatorProfile: user3.profile})
+
+story10 = Story.create!({title: 'Title10', description: 'Description', language: 'SPANISH', price: 16.30, release_date: '21/10/2015',
+                        published: true, num_purchased: 0, creatorProfile: user3.profile})
+
+story11 = Story.create!({title: 'Title11', description: 'Description', language: 'SPANISH', price: 16.30, release_date: '21/10/2015',
+                        published: true, num_purchased: 0, creatorProfile: user3.profile})
+
+story12 = Story.create!({title: 'Title12', description: 'Description', language: 'SPANISH', price: 16.30, release_date: '21/10/2015',
+                        published: true, num_purchased: 0, creatorProfile: user3.profile})
+
+
+
+# Creación de Chapters
+
+chapter1 = Chapter.create({title: 'Title1', body: 'Body1', story: story1})
+chapter2 = Chapter.create({title: 'Title1', body: 'Body1', story: story1})
+chapter3 = Chapter.create({title: 'Title1', body: 'Body1', story: story1})
+chapter4 = Chapter.create({title: 'Title1', body: 'Body1', story: story1})
+chapter5 = Chapter.create({title: 'Title1', body: 'Body1', story: story1})
+chapter6 = Chapter.create({title: 'Title1', body: 'Body1', story: story2})
+chapter7 = Chapter.create({title: 'Title1', body: 'Body1', story: story2})
+chapter8 = Chapter.create({title: 'Title1', body: 'Body1', story: story3})
+chapter9 = Chapter.create({title: 'Title1', body: 'Body1', story: story4})
+chapter10 = Chapter.create({title: 'Title1', body: 'Body1', story: story4})
+chapter11 = Chapter.create({title: 'Title1', body: 'Body1', story: story4})
+chapter12 = Chapter.create({title: 'Title1', body: 'Body1', story: story4})
+chapter13 = Chapter.create({title: 'Title1', body: 'Body1', story: story4})
+chapter14 = Chapter.create({title: 'Title1', body: 'Body1', story: story4})
+chapter15 = Chapter.create({title: 'Title1', body: 'Body1', story: story5})
+chapter16 = Chapter.create({title: 'Title1', body: 'Body1', story: story5})
+chapter17 = Chapter.create({title: 'Title1', body: 'Body1', story: story6})
+chapter18 = Chapter.create({title: 'Title1', body: 'Body1', story: story7})
+chapter19 = Chapter.create({title: 'Title1', body: 'Body1', story: story8})
+chapter20 = Chapter.create({title: 'Title1', body: 'Body1', story: story8})
+chapter21 = Chapter.create({title: 'Title1', body: 'Body1', story: story8})
+
+
+
+
+
+
+
 
 
 

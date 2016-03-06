@@ -1,4 +1,5 @@
 class ProfilesController < ApplicationController
+  before_action :params_search, only: [:search]
   #GET /profiles
   def index
     id = current_user.id
@@ -47,5 +48,74 @@ class ProfilesController < ApplicationController
   def set_profile
     @profile=Profile.find(params[:id])
   end
+
+  def params_search
+
+    params.permit(:q, :choice)
+  end
+
+
+  def search
+    choice = params[:choice]
+    @q = params[:q]
+
+    # Si se quiere filtrar entre amigos
+    if (choice == "friends")
+
+      # Si q tiene alguna string para filtrar
+      if @q
+        subquery = '(friendships.user_id != :cu_id and friendships.friend_id = :cu_id)'
+        query = '(profiles.name like :q OR signature like :q OR description like :q)'
+        @profiles = Profile.distinct(:user_id).joins(:friendships).where(subquery, {cu_id: current_user.id}) & Profile.where(query, q: "%#{@q}%")
+
+
+        if @profiles.blank?
+          flash.alert = "Profile Not found"
+        end
+        #Si no tiene alguna string habrá que devolver todos los amigos
+      else
+        query = '(friendships.user_id != :cu_id and friendships.friend_id = :cu_id)'
+        @profiles = Profile.distinct(:user_id).joins(:friendships).where(query, {cu_id: current_user.id})
+      end
+
+      # Si se quiere filtrar entre no amigos
+    end
+    if (choice == "no_friends")
+
+      # Si q tiene alguna string buscamos por q y no amigos
+      if @q
+        query = '(profiles.name like :q OR signature like :q OR description like :q)'
+        subquery = '(users.id != :cu_id and friendships.friend_id = :cu_id)'
+
+        @profiles = Profile.where(query, q: "%#{@q}%") &
+            (Profile.all - Profile.distinct(:user_id).joins(:friendships).where(subquery, {cu_id: current_user.id}))
+        if @profiles.blank?
+          flash.alert = "Profile Not found"
+        end
+
+        # Si no, solo no_amigos
+      else
+        query = '(users.id != :cu_id and friendships.friend_id = :cu_id)'
+        @profiles = Profile.all - Profile.distinct(:user_id).joins(:friendships).where(query, {cu_id: current_user.id})
+      end
+
+      # Si no hay elección alguna entre amigos y no amigos, se filtra por q entre todos los perfiles
+    else
+      query = '(name like :q OR signature like :q OR description like :q)'
+
+      if @q
+        @profiles = Profile.where(query, {q: "%#{@q}%"})
+        if @profiles.blank?
+          flash.alert = "Profile Not found"
+        end
+      end
+
+
+    end
+    @profiles
+    render 'list'
+
+  end
+
 
 end

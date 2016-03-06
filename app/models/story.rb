@@ -21,7 +21,7 @@ class Story < ActiveRecord::Base
 
   #Creador perfil
   #TODO Ahora el foreign key es "id" porque si no peta, hay que arreglarlo
-  belongs_to :creatorProfile, class_name: "Profile", foreign_key: "id"
+  belongs_to :creatorProfile, class_name: "Profile", foreign_key: "profile_id"
 
   has_attached_file :cover, styles: {medium: "1280x720", thumb:"500x300"}
   validates_attachment_content_type :cover, content_type: /\Aimage\/.*\Z/
