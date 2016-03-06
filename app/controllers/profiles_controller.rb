@@ -57,7 +57,7 @@ class ProfilesController < ApplicationController
 
   def search
     choice = params[:choice]
-    @q = params[:q]
+    @q = params[:q].downcase
 
     # Si se quiere filtrar entre amigos
     if (choice == "friends")
@@ -65,7 +65,7 @@ class ProfilesController < ApplicationController
       # Si q tiene alguna string para filtrar
       if @q
         subquery = '(friendships.user_id != :cu_id and friendships.friend_id = :cu_id)'
-        query = '(profiles.name like :q OR signature like :q OR description like :q)'
+        query = '(lower(profiles.name) like :q OR lower(signature) like :q OR lower(description) like :q)'
         @profiles = Profile.distinct(:user_id).joins(:friendships).where(subquery, {cu_id: current_user.id}) & Profile.where(query, q: "%#{@q}%")
 
 
@@ -84,7 +84,7 @@ class ProfilesController < ApplicationController
 
       # Si q tiene alguna string buscamos por q y no amigos
       if @q
-        query = '(profiles.name like :q OR signature like :q OR description like :q)'
+        query = '(lower(profiles.name) like :q OR lower(signature) like :q OR lower(description) like :q)'
         subquery = '(users.id != :cu_id and friendships.friend_id = :cu_id)'
 
         @profiles = Profile.where(query, q: "%#{@q}%") &
@@ -101,7 +101,7 @@ class ProfilesController < ApplicationController
 
       # Si no hay elección alguna entre amigos y no amigos, se filtra por q entre todos los perfiles
     else
-      query = '(name like :q OR signature like :q OR description like :q)'
+      query = '(lower(name) like :q OR lower(signature) like :q OR lower(description) like :q)'
 
       if @q
         @profiles = Profile.where(query, {q: "%#{@q}%"})
