@@ -6,6 +6,10 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Cura.create(name: 'Emmanuel', city: cities.first, rol: 'cazador')
 
+
+############################################################################
+#   Creación de categorías. TABLA: categories
+############################################################################
 category1=Category.create!({name: "Drogas", description: "Historia sobre drogas",
                             icon: File.new("public/categories/original/1/seta-icono-new-super-mario-bros-wii-articulo-videojuegos-zehngames.png")})
 category2=Category.create!({name: "Relleno", description: "Esta historia tiene tanto relleno que se convirtió en Hokage",
@@ -28,7 +32,10 @@ category5=Category.create!({name: "Vergonzante", description: "Es un espectaculo
                             icon: File.new("public/categories/original/10/puedo-eliminar-icono-celular-facebook_1_1720410.jpg")})
 
 
-#Creación de Usuarios
+############################################################################
+#   Creación de usuarios. TABLA: users
+############################################################################
+
 
 user1 = User.create!({email: 'user1@mail.com', password: '123456789', password_confirmation: '123456789',
          username: 'user1', name: 'user1', surname1: 'surname11', surname2: 'suername12', phone: 619663023,
@@ -70,17 +77,24 @@ user10 = User.create!({email: 'user10@mail.com', password: '123456789', password
                       username: 'user10', name: 'user10', surname1: 'surname101', surname2: 'suername102', phone: 619663023,
                       birthday: '29/02/2004', sku: '159856'})
 
-# Creacion de Premiums
+############################################################################
+#   Creación de rols. TABLA:  premium_users
+############################################################################
 
 userAcc1 = PremiumUser.create()
 userAcc2 = PremiumUser.create()
 userAcc3 = PremiumUser.create()
 
 
+
+
+
+############################################################################
+#   Actualización del rol de usuario. TABLA: users
+############################################################################
 user4.update_attribute(:role, userAcc2)
 user2.update_attribute(:role, userAcc2)
 user9.update_attribute(:role, userAcc2)
-
 
 
 ## Paso auxiliar para perfiles default
@@ -106,7 +120,10 @@ user8.profile.update!({name: 'Profile8', description: 'This is my profile8', sig
 user9.profile.update!({name: 'Profile9', description: 'This is my profile9', signature: 'My sign9'})
 user10.profile.update!({name: 'Profile10', description: 'This is my profile10', signature: 'My sign10'})
 
-# Creacion de peticiones de amistad
+
+############################################################################
+#   Peticiones de amistad. TABLA: request_friendships
+############################################################################
 
 friendShip1 = RequestFriendship.create!({message: "RequestFriendship16", sender_id: user1.id, recipient_id: user6.id, status: "ACCEPTED"})
 friendShip2 = RequestFriendship.create!({message: "RequestFriendship71", sender_id: user7.id, recipient_id: user1.id, status: "ACCEPTED"})
@@ -119,8 +136,10 @@ friendShip8 = RequestFriendship.create!({message: "RequestFriendship410", sender
 friendShip9 = RequestFriendship.create!({message: "RequestFriendship59", sender_id: user5.id, recipient_id: user9.id, status: "ACCEPTED"})
 friendShip10 = RequestFriendship.create!({message: "RequestFriendship105", sender_id: user10.id, recipient_id: user5.id, status: "ACCEPTED"})
 
-# Creacion de amistades
 
+############################################################################
+#   Creación de amigos. TABLA: friendships
+############################################################################
 Friendship.createFriendship(friendShip1)
 Friendship.createFriendship(friendShip2)
 Friendship.createFriendship(friendShip3)
@@ -132,15 +151,16 @@ Friendship.createFriendship(friendShip8)
 Friendship.createFriendship(friendShip9)
 Friendship.createFriendship(friendShip10)
 
-@ret = ''
+###############################################
 # Metodo de active_record. Recorre un maximo de 1000 usuarios por defecto
 # documentacion: http://guides.rubyonrails.org/active_record_querying.html
+##################################################
+@ret = ''
 User.find_each do |usuario|
   usuario.friends.each do |amigo|
     @ret << '-' << usuario.username << ' es amigo de ' << amigo.username << '\n'
   end
 end
-
 
 puts @ret
 
@@ -236,9 +256,6 @@ chapter18 = Chapter.create({title: 'Title1', body: 'Body1', story: story7})
 chapter19 = Chapter.create({title: 'Title1', body: 'Body1', story: story8})
 chapter20 = Chapter.create({title: 'Title1', body: 'Body1', story: story8})
 chapter21 = Chapter.create({title: 'Title1', body: 'Body1', story: story8})
-
-
-
 
 
 
