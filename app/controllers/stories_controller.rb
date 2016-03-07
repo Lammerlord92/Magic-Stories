@@ -75,8 +75,8 @@ class StoriesController < ApplicationController
 def search
   # Documentacion sobre queries aqui:
   # http://guides.rubyonrails.org/active_record_querying.html
-  @q = params[:q]
-  query = 'title like :q OR description like :q OR language like :q and published = true'
+  @q = params[:q].downcase
+  query = 'lower(title) like :q OR lower(description) like :q OR lower(language) like :q and published = true'
   if @q
     @stories = Story.where(query, {q: "%#{@q}%"})
     if @stories.blank?
