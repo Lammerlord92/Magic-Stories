@@ -61,6 +61,8 @@ ActiveRecord::Schema.define(version: 20160223191838) do
     t.integer  "story_id"
   end
 
+  add_index "chapters", ["story_id"], name: "index_chapters_on_story_id", using: :btree
+
   create_table "discount_user_groups", force: :cascade do |t|
     t.integer  "user_group_id"
     t.integer  "discount_id"
@@ -163,7 +165,14 @@ ActiveRecord::Schema.define(version: 20160223191838) do
     t.integer  "user_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
-    t.string   "profile_status"
+    t.boolean  "profile_status"
+  end
+
+  create_table "readings", force: :cascade do |t|
+    t.integer  "story_id"
+    t.integer  "profile_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "reports", force: :cascade do |t|
@@ -251,6 +260,7 @@ ActiveRecord::Schema.define(version: 20160223191838) do
   add_foreign_key "additions", "discounts"
   add_foreign_key "additions", "profiles"
   add_foreign_key "additions", "stories"
+  add_foreign_key "chapters", "stories"
   add_foreign_key "mailboxer_conversation_opt_outs", "mailboxer_conversations", column: "conversation_id", name: "mb_opt_outs_on_conversations_id"
   add_foreign_key "mailboxer_notifications", "mailboxer_conversations", column: "conversation_id", name: "notifications_on_conversation_id"
   add_foreign_key "mailboxer_receipts", "mailboxer_notifications", column: "notification_id", name: "receipts_on_notification_id"
