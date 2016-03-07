@@ -46,14 +46,28 @@ class StoriesController < ApplicationController
     params.require(:story).permit(:title,:description,:cover,:language,:price,:release_date,:published,:num_purchased)
   end
 
-  #TODO ¿ Aun no se pueden adquirir historias ?
+  # Muestra una lista con las historias adquiridas por
+  # el usuario logueado o un aviso si no tiene 
   def show_stories_acquired
-    @stories = Story.find_by_profile_id(params[:id])
+    profile  = Profile.find_by(user: current_user)
+    additions = Addition.where(profile_id: profile)
+    @stories = []
+    additions.each do |addition|
+      @stories << addition.story
+    end
+    if @stories.blank?
+      flash.alert = 'Not found'
+    end
   end
 
+  # Muestra una lista con las historias creadas por
+  # el usuario logueado o un aviso si no tiene 
   def show_stories_created
     profile  = Profile.find_by(user: current_user)
     @stories = Story.where(creatorProfile: profile)
+    if @stories.blank?
+      flash.alert = 'Not found'
+    end
   end
 
   def search
