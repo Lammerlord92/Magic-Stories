@@ -59,8 +59,18 @@ class User < ActiveRecord::Base
   end
 
   after_create {
-    Profile.create({user_id: self.id, avatar: "http://manualdeamarresyhechizos.com/wp-content/uploads/2014/11/huevos_gallina-180x180.jpg"})
-    self.update({role: FreeUser.create})
+    p = Profile.create({
+          user_id: self.id,
+          avatar: "http://manualdeamarresyhechizos.com/wp-content/uploads/2014/11/huevos_gallina-180x180.jpg",
+          profile_status: "PUBLIC",
+          signature: "Firma del usuario #{self.id}",
+          description: "Perfile del usuario #{self.id}",
+          name: self.name
+        })
+    #self.update_attributes!({role: FreeUser.create, profile: p});
+    self.role = FreeUser.create
+    self.profile = p
+    self.save
   }
 
 
