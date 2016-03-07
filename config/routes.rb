@@ -1,13 +1,15 @@
 Rails.application.routes.draw do
 
+  # The priority is based upon order of creation: first created -> highest priority.
+  # See how all your routes lay out with "rake routes".
+
   #############################
   # Rutas para error_controller
   #############################
   match "/404", :to => "errors#not_found", :via => :all
   match "/500", :to => "errors#internal_server_error", :via => :all
+  
   devise_for :user
-
-
   ##########################################################################
   ###Rutas añadidas por devise####
   #new_user_session_path	        GET	/users/sign_in(.:format)	      devise/sessions#new
@@ -26,22 +28,17 @@ Rails.application.routes.draw do
   #                               PUT	/users(.:format)	              devise/registrations#update
   #                               DELETE	/users(.:format)          	devise/registrations#destroy
   #########################################################################
+  
   get 'welcome/index'
   get 'stories/read'
   get 'welcome/maker'
   get 'welcome/maker2'
 
-
-
-
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
-
   # You can have the root of your site routed with "root"
   root 'welcome#index'
+  
   #categories
   resources :categories
-
 
   #peticiones de amistad
   resource :request_friendships
@@ -54,24 +51,12 @@ Rails.application.routes.draw do
   #Stories
   get 'stories/acquired' => 'stories#show_stories_acquired'
   get 'stories/created' => 'stories#show_stories_created'
-  resources :stories, :except => ['show']
-  get 'stories/show/:id', to: 'stories#show'
   get 'stories/search', to: 'stories#search'
-=begin
-  get "/stories"
-  post "/stories"
-  delete "/stories"
-  get "/stories/:id"
-  get "/stories/new"
-  get "/stories/:id/edit"
-  patch "/stories/:id"
-  put "/stories/:id"
-=end
+  resources :stories
 
   #Profiles
-  resources :profiles, :except => ['show']
   get 'profiles/search', to: 'profiles#search'
-  get 'profiles/show/:id', to: 'profiles#show'
+  resources :profiles
 
   #Additions
   get 'additions/create/:story_id' => 'additions#create'
@@ -79,6 +64,7 @@ Rails.application.routes.draw do
 
   #users
   get 'user' => 'user#index'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
@@ -127,4 +113,5 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+
 end

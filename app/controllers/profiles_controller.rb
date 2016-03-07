@@ -1,9 +1,9 @@
 class ProfilesController < ApplicationController
   before_action :params_search, only: [:search]
+  
   #GET /profiles
   def index
-    id = current_user.id
-    @profile = Profile.find_by_user_id(id)
+    @profiles = Profile.all
   end
 
   #GET /profiles/:id
@@ -113,7 +113,7 @@ class ProfilesController < ApplicationController
 
     end
     @profiles
-    render 'list'
+    render 'index'
 
   end
 

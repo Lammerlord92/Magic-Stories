@@ -1,11 +1,34 @@
-<div class="block-right">
-  <h1><%= @profile.name  %></h1>
-
-  <p>
-    Descripción: <%= @profile.description  %>
-  </p>
-</div>
-
-<div class="buttons">
-  <%= link_to "Editar", edit_profile_path(@profile), class:"btn btn-default"  %>
-</div>
+<h1>Perfiles</h1>
+<div class="container-fluid">
+  <% @profiles.each do |profile| %>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="section">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-3">
+                  <% a = profile.avatar %>
+                  <%= image_tag( a, class: "img-circle") %>
+                </div>
+                <div class="col-md-5">
+                  <div class="row text-center">
+                    <h4><%= profile.name %></h4>
+                    </br>
+                    <%= profile.description %>
+                  </div>
+                  <br/>
+                  <% if (!current_user.profile.isFriend(profile)) %>
+                      <div class="row text-center">
+                        <%= link_to "Enviar solicitud de amistad", "/request_friendships/send_request/#{profile.user_id}", class: "btn btn-primary"  %>
+                      </div>
+                  <% end %>
+                </div>
+                <div class="col-md-2">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+  <% end %>
