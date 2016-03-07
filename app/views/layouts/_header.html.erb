@@ -19,7 +19,9 @@
         <span class="caret"></span></a>
         <ul class="dropdown-menu">
           <% if user_signed_in? %>
-          <li><a href="/profiles/<%= current_user.profile.id %>">Mi perfil</a></li>
+              <% if current_user.profile %>
+              <li><a href="/profiles/<%= current_user.profile.id %>">Mi perfil</a></li>
+              <% end %>
           <li><a href="#">Mis amigos</a></li>
           <li><a href="#">Invitar amigos</a></li>
           <li><a href="/user">Buscar gente</a></li>
