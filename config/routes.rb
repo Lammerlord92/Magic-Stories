@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
+
+  #############################
+  # Rutas para error_controller
+  #############################
+  match "/404", :to => "errors#not_found", :via => :all
+  match "/500", :to => "errors#internal_server_error", :via => :all
   devise_for :user
+
+
   ##########################################################################
   ###Rutas añadidas por devise####
   #new_user_session_path	        GET	/users/sign_in(.:format)	      devise/sessions#new
