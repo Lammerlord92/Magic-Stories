@@ -1,7 +1,62 @@
-<html>
-<head>
+<!-- Page passes the container for the graph to the program -->
+<div>
+  <!--
+  <table style="position:relative;">
+    <tr>
+      <td>
+        <div id="graphContainer"
+             style="position:relative;overflow:auto;top:30px;left:0px;bottom:0px;right:0px;width:100%;height:100%;
+             border:solid 1px black;cursor:default;">
+        </div>
+      </td>
+      <td valign="top">
+        <div id="properties"
+             style="border: solid 1px black; padding: 10px;">
+        </div>
+      </td>
+    </tr>
+  </table>
+  -->
+  <style>
+    #graphContainer{
+      position:relative;
+      overflow:auto;
+      left:0px;
+      bottom:0px;
+      right:0px;
+      width:100%;
+      height:100%;
+      border:solid 2px darkgrey;
+      cursor:default;
+    }
+    #properties{
+      border:  solid 2px darkgrey;
+      padding: 10px;
+    }
+  </style>
 
-  <title>User object example for mxGraph</title>
+  <div id="graphContainer"></div>
+  <br>
+  <div id="properties"></div>
+
+  <!-- fuken: WTF es esto ?? Un form que postea cosas a un servidor php ??
+  <section id="modal" class="modal fade">
+    <div class="modal-body">
+      <form action="buttonStory.php" method="post" role="form">
+        <span id="close" onclick="close();" class="glyphicon glyphicon-remove circle pull-right"></span>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+
+          createTextArea(graph, form, cell, attrs[i]);
+
+          <textarea typeof="text" class="form-control" id="description" placeholder="Enter Description"></textarea>
+        </div>
+
+      </form>
+    </div>
+  </section>
+  -->
 
   <!-- Sets the basepath for the library if not in same directory -->
   <script type="text/javascript">
@@ -13,44 +68,46 @@
 
   <!-- Example code -->
   <script type="text/javascript">
-    // Program starts here. Creates a sample graph in the
-    // DOM node with the specified ID. This function is invoked
-    // from the onLoad event handler of the document (see below).
-    function main(container)
-    {
+
+    // fuken: Esta funcion de jQuery carga la funcion main
+    //        cuando el html ha sido cargado entero
+    $(document).ready(function main() {
+      var container = document.getElementById('graphContainer');
       // Checks if the browser is supported
-      if (!mxClient.isBrowserSupported())
-      {
+      if (!mxClient.isBrowserSupported()) {
         // Displays an error message if the browser is not supported.
         mxUtils.error('Browser is not supported!', 200, false);
       }
-      else
-      {
+      else {
         // Note that these XML nodes will be enclosing the
         // mxCell nodes for the model cells in the output
-        var doc = mxUtils.createXmlDocument();
+        var xml = mxUtils.createXmlDocument();
 
-        var chapter1 = doc.createElement('Chapter');
+        var chapter1 = xml.createElement('Chapter');
         chapter1.setAttribute('title', 'Juanoide presenta');
         chapter1.setAttribute('body', 'Juan ha ido a ISPP');
 
-        var chapter2 = doc.createElement('Chapter');
+        var chapter2 = xml.createElement('Chapter');
         chapter2.setAttribute('title', 'Juanoide pone la numeración');
         chapter2.setAttribute('body', 'Juanoide ha hecho las cosas bien');
 
-        var chapter3 = doc.createElement('Chapter');
+        var chapter3 = xml.createElement('Chapter');
         chapter3.setAttribute('title', 'El grupo 1 se queja');
         chapter3.setAttribute('body', 'Buuuuu');
 
-        var chapter4 = doc.createElement('Chapter');
+        var chapter4 = xml.createElement('Chapter');
         chapter4.setAttribute('title', 'Juanoide no pone la numeración');
         chapter4.setAttribute('body', 'Juanoide no ha hecho las cosas bien');
 
-        var relation = doc.createElement('sendTo');
+        var relation = xml.createElement('sendTo');
         relation.setAttribute('since', '1985');
 
         // Creates the graph inside the given container
         var graph = new mxGraph(container);
+
+        // fuken: sacar el objeto graph como propiedad global
+        //        para poder verlo en la consola del navegador
+        window.gr = graph;
 
         // Optional disabling of sizing
         graph.setCellsResizable(false);
@@ -65,33 +122,27 @@
         new mxKeyHandler(graph);
 
         // Overrides method to disallow edge label editing
-        graph.isCellEditable = function(cell)
-        {
+        graph.isCellEditable = function (cell) {
           return !this.getModel().isEdge(cell);
         };
 
         // Overrides method to provide a cell label in the display
-        graph.convertValueToString = function(cell)
-        {
-          if (mxUtils.isNode(cell.value))
-          {
-            if (cell.value.nodeName.toLowerCase() == 'chapter')
-            {
+        graph.convertValueToString = function (cell) {
+          if (mxUtils.isNode(cell.value)) {
+            if (cell.value.nodeName.toLowerCase() == 'chapter') {
               var title = cell.getAttribute('title', '');
-              var body = cell.getAttribute('body', '');
+              var body  = cell.getAttribute('body', '');
 
-              if (body != null && body.length > 0)
-              {
+              if (body != null && body.length > 0) {
                 //return body + ', ' + title;
                 return title;
               }
 
               return title;
             }
-            else if (cell.value.nodeName.toLowerCase() == 'sendTo')
-            {
+            else if (cell.value.nodeName.toLowerCase() == 'sendTo') {
               return cell.value.nodeName + ' (Since '
-                  +  cell.getAttribute('since', '') + ')';
+                  + cell.getAttribute('since', '') + ')';
             }
 
           }
@@ -101,17 +152,13 @@
 
         // Overrides method to store a cell label in the model
         var cellLabelChanged = graph.cellLabelChanged;
-        graph.cellLabelChanged = function(cell, newValue, autoSize)
-        {
+        graph.cellLabelChanged = function (cell, newValue, autoSize) {
           if (mxUtils.isNode(cell.value) &&
-              cell.value.nodeName.toLowerCase() == 'chapter')
-          {
+              cell.value.nodeName.toLowerCase() == 'chapter') {
             var pos = newValue.indexOf(' ');
 
-            var title = (pos > 0) ? newValue.substring(0,
-                pos) : newValue;
-            var body = (pos > 0) ? newValue.substring(
-                pos + 1, newValue.length) : '';
+            var title = (pos > 0) ? newValue.substring(0,pos)                    : newValue;
+            var body  = (pos > 0) ? newValue.substring(pos + 1, newValue.length) : '';
 
             // Clones the value for correct undo/redo
             var elt = cell.value.cloneNode(true);
@@ -128,11 +175,9 @@
 
         // Overrides method to create the editing value
         var getEditingValue = graph.getEditingValue;
-        graph.getEditingValue = function(cell)
-        {
+        graph.getEditingValue = function (cell) {
           if (mxUtils.isNode(cell.value) &&
-              cell.value.nodeName.toLowerCase() == 'chapter')
-          {
+              cell.value.nodeName.toLowerCase() == 'chapter') {
             var title = cell.getAttribute('title', '');
             var body = cell.getAttribute('body', '');
 
@@ -144,15 +189,13 @@
         graph.setTooltips(true);
 
         var getTooltipForCell = graph.getTooltipForCell;
-        graph.getTooltipForCell = function(cell)
-        {
+        graph.getTooltipForCell = function (cell) {
           // Adds some relation details for edges
-          if (graph.getModel().isEdge(cell))
-          {
+          if (graph.getModel().isEdge(cell)) {
             var src = this.getLabel(this.getModel().getTerminal(cell, true));
             var trg = this.getLabel(this.getModel().getTerminal(cell, false));
 
-            return src + ' ' + cell.value.nodeName + ' ' +  trg;
+            return src + ' ' + cell.value.nodeName + ' ' + trg;
           }
 
           return getTooltipForCell.apply(this, arguments);
@@ -162,8 +205,7 @@
         new mxRubberband(graph);
 
         // Adds an option to view the XML of the graph
-        document.body.appendChild(mxUtils.button('View XML', function()
-        {
+        document.querySelector('#bodyCol').appendChild(mxUtils.button('View XML', function () {
           var encoder = new mxCodec();
           var node = encoder.encode(graph.getModel());
           mxUtils.popup(mxUtils.getPrettyXml(node), true);
@@ -196,8 +238,7 @@
 
         // Adds cells to the model in a single step
         graph.getModel().beginUpdate();
-        try
-        {
+        try {
           //var w = chapter1.getAttribute('title').length * 7;
 
           var v1 = graph.insertVertex(parent, null, chapter1, 40, 40, chapter1.getAttribute('title').length * 7, 30);
@@ -210,16 +251,14 @@
           var e3 = graph.insertEdge(parent, null, relation, v1, v4);
           var e4 = graph.insertEdge(parent, null, relation, v4, v3);
         }
-        finally
-        {
+        finally {
           // Updates the display
           graph.getModel().endUpdate();
         }
 
         // Implements a properties panel that uses
         // mxCellAttributeChange to change properties
-        graph.getSelectionModel().addListener(mxEvent.CHANGE, function(sender, evt)
-        {
+        graph.getSelectionModel().addListener(mxEvent.CHANGE, function (sender, evt) {
           selectionChanged(graph);
         });
 
@@ -229,8 +268,7 @@
       /**
        * Updates the properties panel
        */
-      function selectionChanged(graph)
-      {
+      function selectionChanged(graph) {
         var div = document.getElementById('properties');
 
         // Forces focusout in IE
@@ -242,12 +280,10 @@
         // Gets the selection cell
         var cell = graph.getSelectionCell();
 
-        if (cell == null)
-        {
+        if (cell == null) {
           mxUtils.writeln(div, 'Nothing selected.');
         }
-        else
-        {
+        else {
 
           // Writes the title
           var center = document.createElement('center');
@@ -260,11 +296,10 @@
 
           var attrs = cell.value.attributes;
 
-          for (var i = 0; i < attrs.length; i++)
-          {
-            if(i==0){
+          for (var i = 0; i < attrs.length; i++) {
+            if (i == 0) {
               createTextField(graph, form, cell, attrs[i]);
-            }else {
+            } else {
               createTextArea(graph, form, cell, attrs[i]);
             }
           }
@@ -277,50 +312,40 @@
       /**
        * Creates the textfield for the given property.
        */
-      function createTextField(graph, form, cell, attribute)
-      {
+      function createTextField(graph, form, cell, attribute) {
         var input = form.addText(attribute.nodeName + ':', attribute.nodeValue);
 
-        var applyHandler = function()
-        {
+        var applyHandler = function () {
           var newValue = input.value || '';
           var oldValue = cell.getAttribute(attribute.nodeName, '');
 
-          if (newValue != oldValue)
-          {
+          if (newValue != oldValue) {
             graph.getModel().beginUpdate();
 
-            try
-            {
+            try {
               var edit = new mxCellAttributeChange(
                   cell, attribute.nodeName,
                   newValue);
               graph.getModel().execute(edit);
               graph.updateCellSize(cell);
             }
-            finally
-            {
+            finally {
               graph.getModel().endUpdate();
             }
           }
         };
 
-        mxEvent.addListener(input, 'keypress', function (evt)
-        {
+        mxEvent.addListener(input, 'keypress', function (evt) {
           // Needs to take shift into account for textareas
-          if (evt.keyCode == /*enter*/13 &&
-              !mxEvent.isShiftDown(evt))
-          {
+          if (evt.keyCode == /*enter*/13 && !mxEvent.isShiftDown(evt)) {
             input.blur();
           }
         });
 
-        if (mxClient.IS_IE)
-        {
+        if (mxClient.IS_IE) {
           mxEvent.addListener(input, 'focusout', applyHandler);
         }
-        else
-        {
+        else {
           // Note: Known problem is the blurring of fields in
           // Firefox by changing the selection, in which case
           // no event is fired in FF and the change is lost.
@@ -330,8 +355,10 @@
           mxEvent.addListener(input, 'blur', applyHandler);
         }
       }
-    };
+    });
 
+    // ¿para que sirve esta funcion?
+    // Esta dentro del modal que nunca se muestra
     function createTextArea(graph, form, cell, attribute)
     {
       var input = form.addTextarea(attribute.nodeName + ':', attribute.nodeValue);
@@ -386,56 +413,18 @@
       }
     };
   </script>
-</head>
 
-
-<!-- Page passes the container for the graph to the program -->
-<body onload="main(document.getElementById('graphContainer'))">
-<table style="position:relative;">
-  <tr>
-    <td>
-      <div id="graphContainer"
-           style="position:relative;overflow:auto;top:30px;left:0px;bottom:0px;right:0px;width:100%;height:100%;
-           border:solid 1px black;cursor:default;">
-      </div>
-    </td>
-    <td valign="top">
-      <div id="properties"
-           style="border: solid 1px black; padding: 10px;">
-      </div>
-    </td>
-  </tr>
-</table>
-
-<section id="modal" class="modal fade">
-  <div class="modal-body">
-    <form action="buttonStory.php" method="post" role="form">
-      <span id="close" onclick="close();" class="glyphicon glyphicon-remove circle pull-right"></span>
-
-      <div class="form-group">
-        <label for="description">Description</label>
-
-        createTextArea(graph, form, cell, attrs[i]);
-
-        <textarea typeof="text" class="form-control" id="description" placeholder="Enter Description"></textarea>
-      </div>
-
-    </form>
-  </div>
-</section>
-
-<script type="text/javascript">
-  $(document).ready(function() {
-    $("#buttonStory").on('click',function(){
-      $("#modal").modal({
-        show:true
-      });
-      $("#close").on('click',function(){
-        $("#modal").modal('hide');
-      });
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#buttonStory").on('click',function(){
+        $("#modal").modal({
+          show:true
+        });
+        $("#close").on('click',function(){
+          $("#modal").modal('hide');
+        });
+      })
     })
-  })
-</script>
+  </script>
 
-</body>
-</html>
+</div>
