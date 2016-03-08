@@ -1,5 +1,5 @@
 class MakerController < ApplicationController
   def sample
-    render 'maker/sample'
+    render 'pruebas_maker/sample'
   end
 end

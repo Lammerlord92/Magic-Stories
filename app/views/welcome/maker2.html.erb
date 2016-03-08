@@ -248,6 +248,7 @@
         }
         else
         {
+
           // Writes the title
           var center = document.createElement('center');
           mxUtils.writeln(center, cell.value.nodeName + ' (' + cell.id + ')');
@@ -387,6 +388,7 @@
   </script>
 </head>
 
+
 <!-- Page passes the container for the graph to the program -->
 <body onload="main(document.getElementById('graphContainer'))">
 <table style="position:relative;">
@@ -404,5 +406,36 @@
     </td>
   </tr>
 </table>
+
+<section id="modal" class="modal fade">
+  <div class="modal-body">
+    <form action="buttonStory.php" method="post" role="form">
+      <span id="close" onclick="close();" class="glyphicon glyphicon-remove circle pull-right"></span>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+
+        createTextArea(graph, form, cell, attrs[i]);
+
+        <textarea typeof="text" class="form-control" id="description" placeholder="Enter Description"></textarea>
+      </div>
+
+    </form>
+  </div>
+</section>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#buttonStory").on('click',function(){
+      $("#modal").modal({
+        show:true
+      });
+      $("#close").on('click',function(){
+        $("#modal").modal('hide');
+      });
+    })
+  })
+</script>
+
 </body>
 </html>
