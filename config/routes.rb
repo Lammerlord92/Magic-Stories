@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   get 'stories/read'
   get 'welcome/maker'
   get 'welcome/maker2'
+  get 'welcome/textoDesplegable'
 
   # You can have the root of your site routed with "root"
   root 'welcome#index'
