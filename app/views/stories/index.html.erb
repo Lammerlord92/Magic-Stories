@@ -1,9 +1,35 @@
 <div class="storylist">
-  <h1>Story List</h1>
+  <h1>Historias</h1>
+<div class="container-fluid">
   <% @stories.each do |story| %>
-      <a href="/stories/<%= story.id %>"><%= story.title %></a>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="section">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-3">
+                  <!-- Imagen de test -->
+                  <% a = "http://photos1.meetupstatic.com/photos/event/2/a/6/a/global_11230858.jpeg" %>
+                  <%= image_tag( a, class: "img-circle") %>
+                </div>
+                <div class="col-md-5">
+                  <div class="row text-center">
+                      <h3><a href="/stories/<%=story.id %>"><%= story.title %></a></h3>
+                    </br>
+                    <%= story.description %>
+                  </div>
+                  <br/>
+                </div>
+                <div class="col-md-2">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <br>
   <% end %>
+
 </div>
 
 <form action="/stories/search" method="get">

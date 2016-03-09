@@ -27,3 +27,11 @@
 
 # Gemfile
 Gemfile.lock
+/nbproject/private/
+
+# Byebug
+.byebug_story
+
+# SublimeFavicon
+app/assets/images/favicon.sublime-workspace
+
