@@ -70,6 +70,10 @@ class StoriesController < ApplicationController
     end
   end
 
+  def showAll
+
+  end
+
   def search
     # Documentacion sobre queries aqui:
     # http://guides.rubyonrails.org/active_record_querying.html
