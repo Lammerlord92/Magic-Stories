@@ -63,8 +63,8 @@ class StoriesController < ApplicationController
   # Muestra una lista con las historias creadas por
   # el usuario logueado o un aviso si no tiene 
   def show_stories_created
-    profile  = Profile.find_by(user: current_user)
-    @stories = Story.where(creatorProfile: profile)
+    #profile  = Profile.find_by(user: current_user)
+    @stories = current_user.profile.stories
     if @stories.blank?
       flash.alert = 'Not found'
     end
