@@ -120,6 +120,7 @@ user8.profile.update!({name: 'Profile8', description: 'This is my profile8', sig
 user9.profile.update!({name: 'Profile9', description: 'This is my profile9', signature: 'My sign9'})
 user10.profile.update!({name: 'Profile10', description: 'This is my profile10', signature: 'My sign10'})
 
+=begin
 
 ############################################################################
 #   Peticiones de amistad. TABLA: request_friendships
@@ -163,6 +164,8 @@ User.find_each do |usuario|
 end
 
 puts @ret
+
+=end
 
 # Creacion de UserGroups
 
@@ -267,7 +270,6 @@ chapter29 = Chapter.create({title: 'Title3', body: 'Body3', story: story11})
 chapter30 = Chapter.create({title: 'Title1', body: 'Body1', story: story12})
 chapter31 = Chapter.create({title: 'Title2', body: 'Body2', story: story12})
 chapter32 = Chapter.create({title: 'Title3', body: 'Body3', story: story12})
-
 
 
 

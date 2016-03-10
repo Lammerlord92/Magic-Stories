@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160310172237) do
+ActiveRecord::Schema.define(version: 20160310185855) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,8 +61,6 @@ ActiveRecord::Schema.define(version: 20160310172237) do
     t.integer  "story_id"
   end
 
-  add_index "chapters", ["story_id"], name: "index_chapters_on_story_id", using: :btree
-
   create_table "discount_user_groups", force: :cascade do |t|
     t.integer  "user_group_id"
     t.integer  "discount_id"
@@ -88,8 +86,9 @@ ActiveRecord::Schema.define(version: 20160310172237) do
   create_table "friendships", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "friend_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "request_friendship_id"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   create_table "mailboxer_conversation_opt_outs", force: :cascade do |t|
@@ -169,13 +168,6 @@ ActiveRecord::Schema.define(version: 20160310172237) do
     t.string   "profile_status"
   end
 
-  create_table "readings", force: :cascade do |t|
-    t.integer  "story_id"
-    t.integer  "profile_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "reports", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "title"
@@ -209,6 +201,7 @@ ActiveRecord::Schema.define(version: 20160310172237) do
     t.string   "cover_content_type"
     t.integer  "cover_file_size"
     t.datetime "cover_updated_at"
+    t.integer  "profile_id"
   end
 
   create_table "story_categories", force: :cascade do |t|
@@ -260,7 +253,6 @@ ActiveRecord::Schema.define(version: 20160310172237) do
   add_foreign_key "additions", "discounts"
   add_foreign_key "additions", "profiles"
   add_foreign_key "additions", "stories"
-  add_foreign_key "chapters", "stories"
   add_foreign_key "mailboxer_conversation_opt_outs", "mailboxer_conversations", column: "conversation_id", name: "mb_opt_outs_on_conversations_id"
   add_foreign_key "mailboxer_notifications", "mailboxer_conversations", column: "conversation_id", name: "notifications_on_conversation_id"
   add_foreign_key "mailboxer_receipts", "mailboxer_notifications", column: "notification_id", name: "receipts_on_notification_id"
