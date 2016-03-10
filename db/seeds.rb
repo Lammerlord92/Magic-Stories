@@ -97,13 +97,16 @@ user2.update_attribute(:role, userAcc2)
 user9.update_attribute(:role, userAcc2)
 
 
+=begin
+
+## Comentamos esta seccion porque con el after_create ya no es necesario
 ## Paso auxiliar para perfiles default
 User.find_each do |usuario|
   Profile.create({user_id: usuario.id, avatar: "http://manualdeamarresyhechizos.com/wp-content/uploads/2014/11/huevos_gallina-180x180.jpg", profile_status: "PUBLIC"})
   usuario.update({role: FreeUser.create})
 end
 
-
+=end
 
 
 
@@ -233,6 +236,28 @@ story11 = Story.create!({title: 'Title11', description: 'Description', language:
 
 story12 = Story.create!({title: 'Title12', description: 'Description', language: 'SPANISH', price: 16.30, release_date: '21/10/2015',
                         published: true, num_purchased: 0, creatorProfile: user3.profile})
+
+
+user1.profile.stories << story1
+user1.profile.stories << story2
+user1.profile.stories << story3
+user1.profile.stories << story4
+
+user2.profile.stories << story5
+user2.profile.stories << story6
+user2.profile.stories << story7
+user2.profile.stories << story8
+
+user3.profile.stories << story9
+user3.profile.stories << story10
+user3.profile.stories << story11
+user3.profile.stories << story12
+
+user1.save!
+user2.save!
+user3.save!
+
+
 
 
 
