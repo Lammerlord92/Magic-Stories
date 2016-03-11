@@ -97,39 +97,35 @@ class RequestFriendshipsController < ApplicationController
   def deciding_request
     request_friendship = RequestFriendship.find(params[:rf])
 
-    begin
-      n = current_user.id
-      if n != request_friendship.recipient_id
-        throw Exception
-      end
+    n = current_user.id
+    if n != request_friendship.recipient_id
+      throw Exception
+    end
 
 
-      #Para que no sea grande ni saque datos explicitos ponemos un número 1 = ACCEPTED, 2 = REJECTED
-      choice = "ACCEPTED"
-      if (params[:choice] == "2")
-        choice = "REJECTED"
-      end
+    #Para que no sea grande ni saque datos explicitos ponemos un número 1 = ACCEPTED, 2 = REJECTED
+    choice = "ACCEPTED"
+    if (params[:choice] == "2")
+      choice = "REJECTED"
+    end
 
 
-      result = RequestFriendship.where({recipient_id: current_user.id, sender_id: request_friendship.sender_id,
-                                        status: "PENDING"}).last
+    result = RequestFriendship.where({recipient_id: current_user.id, sender_id: request_friendship.sender_id,
+                                      status: "PENDING"}).last
 
-      message_suffix = ""
-      respond_to do |format|
-        if result.update({status: choice})
-          if(choice == "ACCEPTED")
-            Friendship.createFriendship(result)
-            message_suffix = "ACEPTADO"
-          else
-            message_suffix = "DENEGADO"
-          end
-          format.html { redirect_to welcome_index_path, notice: 'La petición se ha ' << message_suffix }
+    message_suffix = ""
+    respond_to do |format|
+      if result.update({status: choice})
+        if(choice == "ACCEPTED")
+          Friendship.createFriendship(result)
+          message_suffix = "ACEPTADO"
         else
-          format.html { render 'welcome/index' }
+          message_suffix = "DENEGADO"
         end
+        format.html { redirect_to welcome_index_path, notice: 'La petición se ha ' << message_suffix }
+      else
+        format.html { render 'welcome/index' }
       end
-    rescue Exception
-      render 'welcome/index'
     end
 
   end

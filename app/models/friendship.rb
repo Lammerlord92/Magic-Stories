@@ -6,8 +6,8 @@ class Friendship < ActiveRecord::Base
   validates :user, uniqueness: {scope: :friend}
 
   def self.createFriendship(peticion)
-    self.create({user_id: peticion.sender_id, friend_id: peticion.recipient_id, request_friendship: peticion})
-    self.create({user_id: peticion.recipient_id, friend_id: peticion.sender_id, request_friendship: peticion})
+    self.create!({user_id: peticion.sender_id, friend_id: peticion.recipient_id, request_friendship: peticion})
+    self.create!({user_id: peticion.recipient_id, friend_id: peticion.sender_id, request_friendship: peticion})
   end
 
 end

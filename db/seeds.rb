@@ -96,14 +96,16 @@ user4.update_attribute(:role, userAcc2)
 user2.update_attribute(:role, userAcc2)
 user9.update_attribute(:role, userAcc2)
 
+=begin
 
+## Comentamos esta seccion porque con el after_create ya no es necesario
 ## Paso auxiliar para perfiles default
 User.find_each do |usuario|
   Profile.create({user_id: usuario.id, avatar: "http://manualdeamarresyhechizos.com/wp-content/uploads/2014/11/huevos_gallina-180x180.jpg", profile_status: "PUBLIC"})
   usuario.update({role: FreeUser.create})
 end
 
-
+=end
 
 
 

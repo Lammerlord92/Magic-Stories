@@ -1,7 +1,7 @@
 class Profile < ActiveRecord::Base
   belongs_to :user
   has_many :friendships, through: :user
-  validates :profile_status, inclusion: {in: ["PUBLIC", "PRIVATED"]}
+  validates :profile_status, inclusion: {in: ["PUBLIC", "PRIVATE"]}
   validates :avatar, :signature, :description, :name, :profile_status, presence: true, on: :update
   validates  :signature,                                       uniqueness: true, on: :update
 

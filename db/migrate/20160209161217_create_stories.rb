@@ -9,7 +9,6 @@ class CreateStories < ActiveRecord::Migration
       t.date :release_date
       t.boolean :published
       t.integer :num_purchased
-      t.integer :profile_id
 
       t.timestamps null: false
     end
