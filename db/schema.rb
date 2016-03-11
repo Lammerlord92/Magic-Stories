@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160310185855) do
+ActiveRecord::Schema.define(version: 20160311140957) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,10 +86,18 @@ ActiveRecord::Schema.define(version: 20160310185855) do
   create_table "friendships", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "friend_id"
+<<<<<<< 21108e203e21910485a7bddb52be3912122cf34e
     t.integer  "request_friendship_id"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+=======
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.integer  "request_friendship_id"
+>>>>>>> Arreglado todo el seeds.rb, funciona stories-profile y request friendship
   end
+
+  add_index "friendships", ["request_friendship_id"], name: "index_friendships_on_request_friendship_id", using: :btree
 
   create_table "mailboxer_conversation_opt_outs", force: :cascade do |t|
     t.integer "unsubscriber_id"
@@ -204,6 +212,8 @@ ActiveRecord::Schema.define(version: 20160310185855) do
     t.integer  "profile_id"
   end
 
+  add_index "stories", ["profile_id"], name: "index_stories_on_profile_id", using: :btree
+
   create_table "story_categories", force: :cascade do |t|
     t.integer  "story_id"
     t.integer  "category_id"
@@ -253,9 +263,15 @@ ActiveRecord::Schema.define(version: 20160310185855) do
   add_foreign_key "additions", "discounts"
   add_foreign_key "additions", "profiles"
   add_foreign_key "additions", "stories"
+<<<<<<< 21108e203e21910485a7bddb52be3912122cf34e
+=======
+  add_foreign_key "chapters", "stories"
+  add_foreign_key "friendships", "request_friendships"
+>>>>>>> Arreglado todo el seeds.rb, funciona stories-profile y request friendship
   add_foreign_key "mailboxer_conversation_opt_outs", "mailboxer_conversations", column: "conversation_id", name: "mb_opt_outs_on_conversations_id"
   add_foreign_key "mailboxer_notifications", "mailboxer_conversations", column: "conversation_id", name: "notifications_on_conversation_id"
   add_foreign_key "mailboxer_receipts", "mailboxer_notifications", column: "notification_id", name: "receipts_on_notification_id"
+  add_foreign_key "stories", "profiles"
   add_foreign_key "story_categories", "categories"
   add_foreign_key "story_categories", "stories"
 end

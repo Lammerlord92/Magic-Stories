@@ -96,9 +96,13 @@ user4.update_attribute(:role, userAcc2)
 user2.update_attribute(:role, userAcc2)
 user9.update_attribute(:role, userAcc2)
 
-
 =begin
 
+<<<<<<< 21108e203e21910485a7bddb52be3912122cf34e
+=begin
+
+=======
+>>>>>>> Arreglado todo el seeds.rb, funciona stories-profile y request friendship
 ## Comentamos esta seccion porque con el after_create ya no es necesario
 ## Paso auxiliar para perfiles default
 User.find_each do |usuario|

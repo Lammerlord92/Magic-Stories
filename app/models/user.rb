@@ -63,8 +63,11 @@ class User < ActiveRecord::Base
           user_id: self.id,
           avatar: "http://manualdeamarresyhechizos.com/wp-content/uploads/2014/11/huevos_gallina-180x180.jpg",
           profile_status: "PUBLIC",
-          signature: "Firma del usuario #{self.id}",
-          description: "Perfile del usuario #{self.id}",
+          # Comentamos estas dos lineas porque no es buena practica
+          # asignar una firma o una descripcion por defecto
+          # porque el usuario podria no estar de acuerdo de ellos
+          #signature: "Firma del usuario #{self.id}",
+          #description: "Perfile del usuario #{self.id}",
           name: self.name
         })
     #self.update_attributes!({role: FreeUser.create, profile: p});
