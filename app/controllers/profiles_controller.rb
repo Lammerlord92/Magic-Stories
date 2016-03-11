@@ -130,5 +130,16 @@ class ProfilesController < ApplicationController
     redirect_to profile
   end
 
+  #GET /profiles/ban/:id
+  def ban
+    date = params[:date]
+    profile = Profile.find(params[:id])
+    user = profile.user
+
+    user.update_attribute(:banned_until, date)
+
+    redirect_to profile
+  end
+
 
 end
