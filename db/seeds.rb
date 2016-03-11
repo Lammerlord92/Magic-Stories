@@ -98,11 +98,6 @@ user9.update_attribute(:role, userAcc2)
 
 =begin
 
-<<<<<<< 21108e203e21910485a7bddb52be3912122cf34e
-=begin
-
-=======
->>>>>>> Arreglado todo el seeds.rb, funciona stories-profile y request friendship
 ## Comentamos esta seccion porque con el after_create ya no es necesario
 ## Paso auxiliar para perfiles default
 User.find_each do |usuario|
@@ -127,7 +122,6 @@ user8.profile.update!({name: 'Profile8', description: 'This is my profile8', sig
 user9.profile.update!({name: 'Profile9', description: 'This is my profile9', signature: 'My sign9'})
 user10.profile.update!({name: 'Profile10', description: 'This is my profile10', signature: 'My sign10'})
 
-=begin
 
 ############################################################################
 #   Peticiones de amistad. TABLA: request_friendships
@@ -171,8 +165,6 @@ User.find_each do |usuario|
 end
 
 puts @ret
-
-=end
 
 # Creacion de UserGroups
 
