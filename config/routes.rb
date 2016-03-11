@@ -60,6 +60,7 @@ Rails.application.routes.draw do
 
   #Profiles
   get 'profiles/search', to: 'profiles#search'
+  get 'profiles/premium/:id', to: 'profiles#premium'
   resources :profiles
 
   #Additions

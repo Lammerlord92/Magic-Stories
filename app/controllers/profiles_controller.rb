@@ -117,5 +117,18 @@ class ProfilesController < ApplicationController
 
   end
 
+  #GET /profiles/premium/:id
+  def premium
+    profile = Profile.find(params[:id])
+    user = profile.user
+
+    if user.role_type == 'FreeUser'
+      premiumUser = PremiumUser.create()
+      user.update_attribute(:role, premiumUser)
+    end
+
+    redirect_to profile
+  end
+
 
 end
