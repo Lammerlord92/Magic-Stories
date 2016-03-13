@@ -37,4 +37,5 @@ app/assets/images/favicon.sublime-workspace
 
 # JUANFRAN config Rubocop to Sublime
 .rubocop.yml
+.rubocop_todo.yml
 

@@ -136,13 +136,31 @@ class RequestFriendshipsController < ApplicationController
     @request_friendships = RequestFriendship.where({recipient_id: current_user.id, status: "PENDING"})
   end
 
+
   def cancel_friendship
-  
-    ActiveRecord::Base.transaction do
-      @request_friendship.friendships.destroy_all!
-      @request_friendship.destroy!
+    # Comprueba que el loguado esté en esa friendship
+    user1 = User.find(@request_friendship.sender_id)
+    user2 = User.find(@request_friendship.recipient_id)
+
+    if !(checkPrincipal?(user1) or
+      checkPrincipal?(user2))
+
+    raise 'Operacion no permitida'
+
     end
-    
+
+
+
+    # Si alguna operación falla no tiene efecto en la base de datos
+    ActiveRecord::Base.transaction do
+      @request_friendship.friendships.each do |fr|
+        Friendship.find(fr.id).destroy!
+      end
+      @request_friendship.update!({status: "REJECTED"})
+    end
+
+    render 'welcome/index'
+
   end
 
 
