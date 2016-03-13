@@ -8,7 +8,7 @@ class ErrorsController < ApplicationController
   end
 
   def permission_denied
-    render(:status => 423)
+    render(:status => 403)
   end
 
   def service_down
