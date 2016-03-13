@@ -10,6 +10,9 @@ class ProfilesController < ApplicationController
   def show
     @profile = Profile.find(params[:id])
     @is_current_profile = is_current_profile? @profile
+    unless @is_current_profile or @profile.profile_status == 'PUBLIC' or is_friend_profile? @profile
+      head :forbidden # TODO: Mejor redirigir a public/403.html (por crear) para estos casos
+    end
   end
 
   #GET /profiles/new
@@ -165,6 +168,12 @@ class ProfilesController < ApplicationController
     else
       return false
     end
+  end
+
+  # Devuelve true si el 'profile' dado es de un usuario amigo del usuario autentificado
+  def is_friend_profile?(profile)
+    profile_user = profile.user
+    return Friendship.are_friends?(current_user, profile_user)
   end
 
 end
