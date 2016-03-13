@@ -111,7 +111,7 @@ class RequestFriendshipsController < ApplicationController
 
 
     result = RequestFriendship.where({recipient_id: current_user.id, sender_id: request_friendship.sender_id,
-                                      status: "PENDING"}).last
+      status: "PENDING"}).last
 
     message_suffix = ""
     respond_to do |format|
@@ -137,10 +137,12 @@ class RequestFriendshipsController < ApplicationController
   end
 
   def cancel_friendship
-    @request_friendship.friendships.each do |friendship|
-      Friendship.destroy(friendship.id)
+  
+    ActiveRecord::Base.transaction do
+      @request_friendship.friendships.destroy_all!
+      @request_friendship.destroy!
     end
-    RequestFriendship.destroy(@request_friendship.id)
+    
   end
 
 
