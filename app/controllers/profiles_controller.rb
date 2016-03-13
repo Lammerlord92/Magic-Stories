@@ -1,6 +1,6 @@
 class ProfilesController < ApplicationController
   before_action :params_search, only: [:search]
-  
+
   #GET /profiles
   def index
     @profiles = Profile.all
@@ -10,7 +10,8 @@ class ProfilesController < ApplicationController
   def show
     @profile = Profile.find(params[:id])
     @is_current_profile = is_current_profile? @profile
-    unless @is_current_profile or @profile.profile_status == 'PUBLIC' or is_friend_profile? @profile
+    @is_friend_profile = is_friend_profile? @profile
+    unless @is_current_profile or @profile.profile_status == 'PUBLIC' or @is_friend_profile
       head :forbidden # TODO: Mejor redirigir a public/403.html (por crear) para estos casos
     end
   end
@@ -172,8 +173,12 @@ class ProfilesController < ApplicationController
 
   # Devuelve true si el 'profile' dado es de un usuario amigo del usuario autentificado
   def is_friend_profile?(profile)
-    profile_user = profile.user
-    return Friendship.are_friends?(current_user, profile_user)
+    if current_user.present?
+      profile_user = profile.user
+      return Friendship.are_friends?(current_user, profile_user)
+    else
+      return false
+    end
   end
 
 end

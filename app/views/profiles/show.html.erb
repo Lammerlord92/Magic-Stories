@@ -1,7 +1,12 @@
 <div class="block-right">
 
-  <h1><%= image_tag(@profile.avatar, class: "img-circle", width: 48, height: 48) %>  <%= @profile.name %></h1>
-
+  <h1>
+    <%= image_tag(@profile.avatar, class: "img-circle", width: 48, height: 48) %>
+    <%= @profile.name %>
+    <% if @profile.profile_status == 'PRIVATE' %>
+      <img src='https://storage.googleapis.com/material-icons/external-assets/v4/icons/svg/ic_lock_black_24px.svg' />
+    <% end %>
+  </h1>
   <p>
     <%= @profile.description %>
   </p>
@@ -14,11 +19,15 @@
 
 </div>
 
-<% if @is_current_profile %>
-  <div class="buttons">
+<div class="buttons">
+  <% if @is_current_profile %>
     <%= link_to "Editar", edit_profile_path(@profile), class:"btn btn-default"  %>
-  </div>
-<% end %>
+  <% else %>
+    <% unless @is_friend_profile %>
+        <%= link_to "Enviar petición de amistad", "/request_friendships/send_request/#{@profile.user_id}", class: "btn btn-default"  %>
+    <% end %>
+  <% end %>
+</div>
 
 </br>
 </br>
