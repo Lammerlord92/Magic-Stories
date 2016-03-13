@@ -29,7 +29,7 @@ class Story < ActiveRecord::Base
 
   #Setter de la relación
   def categories=(value)
-    @stories=value
+    @categories=value
   end
 
   def check_date
