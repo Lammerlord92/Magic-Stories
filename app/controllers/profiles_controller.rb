@@ -22,7 +22,11 @@ class ProfilesController < ApplicationController
   end
 
   def edit
-    @profile=set_profile
+    @profile = set_profile
+    current_profile = current_user.profile
+    if @profile.id != current_profile.id
+      head :forbidden # TODO: Mejor redirigir a public/403.html (por crear) para estos casos
+    end
   end
 
   def create
