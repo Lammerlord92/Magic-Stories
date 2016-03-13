@@ -14,6 +14,9 @@ gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+# Enlace para descasrgar ImageMagic -- Necesario para usar el comando: rake db:seed
+# http://www.imagemagick.org/script/binary-releases.php
+
 # Bootstrap
 gem 'bootstrap-sass', '~> 3.1.1'
 
