@@ -15,7 +15,7 @@ class UserController < ApplicationController
     if @q
       @users = User.where(query, "%#{@q}%", "%#{@q}%", "%#{@q}%", "%#{@q}%", "%#{@q}%")
       if @users.blank?
-        flash.alert = "User Not found"
+        flash.alert = "Usuario no encontrado"
       end
     else
       @users = User.all

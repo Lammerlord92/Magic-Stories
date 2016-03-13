@@ -31,12 +31,12 @@ class StoriesController < ApplicationController
       if @story.save
         redirect_to @story
       else
-        flash[:alert] = 'Error saving story'
+        flash[:alert] = 'Error almacenando historia'
         @categories = Category.all
         render :new
       end
     else
-      flash[:notice] = 'invalid date'
+      flash[:notice] = 'Formato de fecha invalido'
       render :new
     end
   end
@@ -56,7 +56,7 @@ class StoriesController < ApplicationController
       @stories << addition.story
     end
     if @stories.blank?
-      flash.alert = 'Not found'
+      flash.alert = 'No se han encontrado resultados'
     end
   end
 
@@ -66,7 +66,7 @@ class StoriesController < ApplicationController
     #profile  = Profile.find_by(user: current_user)
     @stories = current_user.profile.stories
     if @stories.blank?
-      flash.alert = 'Not found'
+      flash.alert = 'No se han encontrado resultados'
     end
   end
 
@@ -82,7 +82,7 @@ class StoriesController < ApplicationController
     if @q
       @stories = Story.where(query, {q: "%#{@q}%"})
       if @stories.blank?
-        flash.alert = 'Not found'
+        flash.alert = 'No se han encontrado resultados'
       end
     else
       @stories = Story.where(published: true)

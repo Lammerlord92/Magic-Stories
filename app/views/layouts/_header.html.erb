@@ -22,8 +22,8 @@
               <% if current_user.profile %>
               <li><a href="/profiles/<%= current_user.profile.id %>">Mi perfil</a></li>
               <% end %>
-          <li><a href="#">Mis amigos</a></li>
-          <li><a href="#">Invitar amigos</a></li>
+          <li><a href="/profiles">Lista de perfiles</a></li>
+          <li><a href="/profiles/search">Encontrar amigos</a></li>
           <li><a href="/user">Buscar gente</a></li>
           <li role="separator" class="divider"></li>
           <li>

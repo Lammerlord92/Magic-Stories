@@ -28,7 +28,7 @@ class RequestFriendshipsController < ApplicationController
 
     respond_to do |format|
       if @request_friendship.save
-        format.html { redirect_to @request_friendship, notice: 'Request friendship was successfully created.' }
+        format.html { redirect_to @request_friendship, notice: 'La solicitud de amistad se ha creado correctamente' }
         format.json { render :show, status: :created, location: @request_friendship }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class RequestFriendshipsController < ApplicationController
   def update
     respond_to do |format|
       if @request_friendship.update(request_friendship_params)
-        format.html { redirect_to @request_friendship, notice: 'Request friendship was successfully updated.' }
+        format.html { redirect_to @request_friendship, notice: 'La solicitud de amistad se ha actualizado correctamente.' }
         format.json { render :show, status: :ok, location: @request_friendship }
       else
         format.html { render :edit }
@@ -56,7 +56,7 @@ class RequestFriendshipsController < ApplicationController
   def destroy
     @request_friendship.destroy
     respond_to do |format|
-      format.html { redirect_to request_friendships_url, notice: 'Request friendship was successfully destroyed.' }
+      format.html { redirect_to request_friendships_url, notice: 'La solicitud de amistad fue eliminada con éxito.' }
       format.json { head :no_content }
     end
   end
@@ -84,7 +84,7 @@ class RequestFriendshipsController < ApplicationController
 
     respond_to do |format|
       if result.save
-        format.html { redirect_to welcome_index_path, notice: 'Request friendship was successfully created.' }
+        format.html { redirect_to welcome_index_path, notice: 'La solicitud de amistad se ha creado correctamente.' }
       else
         @request_friendship = result
         format.html { render :new }
