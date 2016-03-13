@@ -30,21 +30,30 @@ class ProfilesController < ApplicationController
   end
 
   def create
-    @profile= Profile.new(profile_params)
+    @profile = Profile.new(profile_params)
     @profile.user_id = current_user.id
-    if @profile.save
-      redirect_to @profile
+    if current_user.profile == nil # No permitas que un usuario cree más de un perfil
+      if @profile.save
+        redirect_to @profile
+      else
+        render :new
+      end
     else
-      render :new
+      head :forbidden
     end
   end
 
   def update
-    @profile=set_profile
-    if @profile.update(profile_params)
-      redirect_to @profile
+    @profile = set_profile
+    current_profile = current_user.profile
+    if @profile.id == current_profile.id # No permitas que un usuario edite un perfil que no es suyo
+      if @profile.update(profile_params)
+        redirect_to @profile
+      else
+        render :edit
+      end
     else
-      render :edit
+      head :forbidden
     end
   end
 
