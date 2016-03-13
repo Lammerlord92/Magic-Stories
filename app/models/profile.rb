@@ -11,6 +11,7 @@ class Profile < ActiveRecord::Base
     self.profile_status = "PUBLIC"
   }
 
+  # FIXME Este método parecido al de Friendship.are_friends?. (Este aparentemente no contempla si la petición ha sido aceptada).
   def isFriend(profile1)
     !Friendship.where({user_id: self.user.id, friend_id: profile1.user.id}).first.blank?
   end
