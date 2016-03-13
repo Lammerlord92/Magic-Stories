@@ -90,7 +90,7 @@ class ProfilesController < ApplicationController
 
 
         if @profiles.blank?
-          flash.alert = "Profile Not found"
+          flash.alert = "Perfil no encontrado"
         end
         #Si no tiene alguna string habrá que devolver todos los amigos
       else
@@ -110,7 +110,7 @@ class ProfilesController < ApplicationController
         @profiles = Profile.where(query, q: "%#{@q}%") &
             (Profile.all - Profile.distinct(:user_id).joins(:friendships).where(subquery, {cu_id: current_user.id}))
         if @profiles.blank?
-          flash.alert = "Profile Not found"
+          flash.alert = "Perfil no encontrado"
         end
 
         # Si no, solo no_amigos
@@ -126,7 +126,7 @@ class ProfilesController < ApplicationController
       if @q
         @profiles = Profile.where(query, {q: "%#{@q}%"})
         if @profiles.blank?
-          flash.alert = "Profile Not found"
+          flash.alert = "Perfil no encontrado"
         end
       end
 
