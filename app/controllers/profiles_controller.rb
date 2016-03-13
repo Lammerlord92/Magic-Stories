@@ -9,13 +9,13 @@ class ProfilesController < ApplicationController
   #GET /profiles/:id
   def show
     @profile = Profile.find(params[:id])
-    @current_profile = current_user.profile
+    @is_current_profile = is_current_profile? @profile
   end
 
   #GET /profiles/new
   def new
     current_profile = current_user.profile
-    if current_profile == nil
+    if current_profile.present?
       @profile = Profile.new
     else
       head :forbidden # TODO: Mejor redirigir a public/403.html (por crear) para estos casos
@@ -32,8 +32,8 @@ class ProfilesController < ApplicationController
 
   def create
     @profile = Profile.new(profile_params)
-    @profile.user_id = current_user.id
-    if current_user.profile == nil # No permitas que un usuario cree más de un perfil
+    if current_user.profile.present? # No permitas que un usuario cree más de un perfil
+      @profile.user_id = current_user.id
       if @profile.save
         redirect_to @profile
       else
@@ -46,8 +46,7 @@ class ProfilesController < ApplicationController
 
   def update
     @profile = set_profile
-    current_profile = current_user.profile
-    if @profile.id == current_profile.id # No permitas que un usuario edite un perfil que no es suyo
+    if is_current_profile? @profile # No permitas que un usuario edite un perfil que no es suyo
       if @profile.update(profile_params)
         redirect_to @profile
       else
@@ -158,5 +157,14 @@ class ProfilesController < ApplicationController
     redirect_to profile
   end
 
+  # Devuelve true si el 'profile' dado pertenece al usuario autentificado
+  def is_current_profile?(profile)
+    if current_user.present?
+      @current_profile = current_user.profile
+      return profile.id == @current_profile.id
+    else
+      return false
+    end
+  end
 
 end

@@ -14,7 +14,7 @@
 
 </div>
 
-<% if @profile.id == @current_profile.id %>
+<% if @is_current_profile %>
   <div class="buttons">
     <%= link_to "Editar", edit_profile_path(@profile), class:"btn btn-default"  %>
   </div>
