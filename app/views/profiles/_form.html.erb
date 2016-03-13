@@ -15,7 +15,7 @@
 
     <br>
     <div class="field">
-      <%= f.label :name %>
+      <%= f.label :name, "Nombre" %>
       <%= f.text_field :name, placeholder: "Nombre" %>
     </div>
     <br>
@@ -25,21 +25,19 @@
     </div>
     <br>
     <div class="field">
-      <%= f.label :description %>
+      <%= f.label :description, "Descripción" %>
       <%= f.text_area :description, placeholder: "Descripción" %>
     </div>
     <br>
     <div class="field">
-      <%= f.label :signature %>
+      <%= f.label :signature, "Firma" %>
       <%= f.text_field :signature, placeholder: "Firma" %>
     </div>
-
     <div class="field">
-      <%= f.label :profile_status %>
+      <%= f.label :profile_status, "Privacidad" %>
       <%= f.radio_button :profile_status, 'PUBLIC', :checked => 'PUBLIC' %> Público
       <%= f.radio_button :profile_status, 'PRIVATE', :checked => 'PRIVATE' %> Privado
     </div>
-
     <div class="field">
       <%= f.submit "Guardar" %>
     </div>
