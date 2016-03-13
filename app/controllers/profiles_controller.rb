@@ -11,12 +11,15 @@ class ProfilesController < ApplicationController
     @profile = Profile.find(params[:id])
   end
 
-
   #GET /profiles/new
   def new
-    @profile = Profile.new
+    current_profile = current_user.profile
+    if current_profile == nil
+      @profile = Profile.new
+    else
+      head :forbidden # TODO: Mejor redirigir a public/403.html (por crear) para estos casos
+    end
   end
-
 
   def edit
     @profile=set_profile
