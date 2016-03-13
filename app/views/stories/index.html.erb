@@ -1,6 +1,12 @@
 <div class="storylist">
   <h1>Historias</h1>
   </div>
+
+<form action="/stories/search" method="get">
+  <input type="text" name="q" placeholder="Buscar historias">
+  <button type="submit">Buscar</button>
+</form>
+
 <div class="container-fluid">
   <% @stories.each do |story| %>
       <div class="row">
@@ -33,7 +39,3 @@
 
 </div>
 
-<form action="/stories/search" method="get">
-  <input type="text" name="q" placeholder="Buscar historias">
-  <button type="submit">Buscar</button>
-</form>
