@@ -9,6 +9,7 @@ class ProfilesController < ApplicationController
   #GET /profiles/:id
   def show
     @profile = Profile.find(params[:id])
+    @current_profile = current_user.profile
   end
 
   #GET /profiles/new
