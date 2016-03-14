@@ -5,9 +5,13 @@
     </div>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="/categories">Categorías</a></li>
-      <li><a href="/categories/new">Crear categoría</a></li>
+      <% if user_signed_in? %>
+        <li><a href="/categories/new">Crear categoría</a></li> <!-- No tiene sentido que cualquiera entre y llene la BD de mierda -->
+      <% end %>
       <li><a href="/stories">Historias</a></li>
-      <li><a href="/stories/new">Crear historia</a></li>
+      <% if user_signed_in? %>
+        <li><a href="/stories/new">Crear historia</a></li> <!-- No tiene sentido que cualquiera entre y llene la BD de mierda -->
+      <% end %>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown"
             role="button" aria-haspopup="true" aria-expanded="false">
