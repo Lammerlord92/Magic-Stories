@@ -83,7 +83,6 @@ class StoriesController < ApplicationController
     else
       @stories = Story.where(published: true)
     end
-    render 'index'
   end
 
 end
