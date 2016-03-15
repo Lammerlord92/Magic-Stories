@@ -86,7 +86,12 @@ userAcc2 = PremiumUser.create()
 userAcc3 = PremiumUser.create()
 
 
+############################################################################
+#   Creación de rols. TABLA:  administrator
+############################################################################
 
+userAcc4 = Administrator.create()
+userAcc5 = Administrator.create()
 
 
 ############################################################################
@@ -95,6 +100,9 @@ userAcc3 = PremiumUser.create()
 user4.update_attribute(:role, userAcc2)
 user2.update_attribute(:role, userAcc2)
 user9.update_attribute(:role, userAcc2)
+
+user1.update_attribute(:role, userAcc4)
+user3.update_attribute(:role, userAcc5)
 
 =begin
 
