@@ -61,8 +61,8 @@ Rails.application.routes.draw do
   get 'request_friendships/cancel_friendship', to: 'request_friendships#cancel_friendship'
 
   #Stories
-  get 'stories/acquired' => 'stories#show_stories_acquired'
-  get 'stories/created' => 'stories#show_stories_created'
+  get 'stories/acquired' => 'stories#acquired'
+  get 'stories/created' => 'stories#created'
   get 'stories/search', to: 'stories#search'
   resources :stories
 

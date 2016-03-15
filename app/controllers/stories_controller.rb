@@ -5,6 +5,30 @@ class StoriesController < ApplicationController
     @stories = Story.all
   end
 
+  # Devuelve una lista con las historias adquiridas por
+  # el usuario logueado o un aviso si no tiene 
+  def acquired
+    profile  = Profile.find_by(user: current_user)
+    additions = Addition.where(profile_id: profile)
+    @stories = []
+    additions.each do |addition|
+      @stories << addition.story
+    end
+    if @stories.blank?
+      flash.alert = 'No se han encontrado resultados'
+    end
+  end
+
+  # Devuelve una lista con las historias creadas por
+  # el usuario logueado o un aviso si no tiene 
+  def created
+    #profile  = Profile.find_by(user: current_user)
+    @stories = current_user.profile.stories
+    if @stories.blank?
+      flash.alert = 'No se han encontrado resultados'
+    end
+  end
+
   #GET /stories/read/:id
   def read
     # @story = Story.find(params[:id])
@@ -44,30 +68,6 @@ class StoriesController < ApplicationController
   def story_params
     # Con frontpage -> params.require(:story).permit(:title,:description,:cover,:frontpage,:language,:price,:release_date,:published,:num_purchased)
     params.require(:story).permit(:title,:description,:cover,:language,:price,:release_date,:published,:num_purchased)
-  end
-
-  # Muestra una lista con las historias adquiridas por
-  # el usuario logueado o un aviso si no tiene 
-  def show_stories_acquired
-    profile  = Profile.find_by(user: current_user)
-    additions = Addition.where(profile_id: profile)
-    @stories = []
-    additions.each do |addition|
-      @stories << addition.story
-    end
-    if @stories.blank?
-      flash.alert = 'No se han encontrado resultados'
-    end
-  end
-
-  # Muestra una lista con las historias creadas por
-  # el usuario logueado o un aviso si no tiene 
-  def show_stories_created
-    #profile  = Profile.find_by(user: current_user)
-    @stories = current_user.profile.stories
-    if @stories.blank?
-      flash.alert = 'No se han encontrado resultados'
-    end
   end
 
   def search
