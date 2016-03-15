@@ -1,7 +1,15 @@
-<div class="storyCreatedlist">
-  <h1>Story List</h1>
-  <% @stories.each do |story| %>
-      <a href="/stories/<%= story.id %>"><%= story.title %></a>
-      <br>
-  <% end %>
-</div>
+<%= render 'stories/header' %>
+
+<ul class="nav nav-tabs nav-justified">
+  <li role="presentation">
+    <%= link_to "Todas", stories_path, class:"btn btn-default" %>
+  </li>
+  <li role="presentation">
+    <%= link_to "Adquiridas", stories_acquired_path, class:"btn btn-default" %>
+  </li>
+  <li role="presentation" class="active">
+    <%= link_to "Creadas", stories_created_path, class:"btn btn-default" %>
+  </li>
+</ul>
+
+<%= render 'stories/list' %>

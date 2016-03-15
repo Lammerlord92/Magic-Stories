@@ -63,7 +63,6 @@ Rails.application.routes.draw do
   get 'stories/acquired' => 'stories#show_stories_acquired'
   get 'stories/created' => 'stories#show_stories_created'
   get 'stories/search', to: 'stories#search'
-  get 'stories/showAll' => 'stories#showAll'
   resources :stories
 
   #Profiles
