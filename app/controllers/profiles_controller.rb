@@ -121,10 +121,13 @@ class ProfilesController < ApplicationController
 
       # Si no hay elección alguna entre amigos y no amigos, se filtra por q entre todos los perfiles
     else
-      query = '(lower(name) like :q OR lower(signature) like :q OR lower(description) like :q)'
+      queryUser = '(lower(name) like :q OR lower(surname1) like :q OR lower(surname2) like :q OR lower(email) like :q OR lower(username) like :q)'
+      users = User.where(queryUser, {q: "%#{@q}%"})
+      #query = '(lower(name) like :q OR lower(signature) like :q OR lower(description) like :q'
 
       if @q
-        @profiles = Profile.where(query, {q: "%#{@q}%"})
+        #@profiles = Profile.where(query, {q: "%#{@q}%"})
+        @profiles = Profile.where(user_id: users)
         if @profiles.blank?
           flash.alert = "Perfil no encontrado"
         end
@@ -132,8 +135,8 @@ class ProfilesController < ApplicationController
 
 
     end
-    @profiles
-    render 'index'
+    #@profiles
+    #render 'index'
 
   end
 

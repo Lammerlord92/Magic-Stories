@@ -1,0 +1,34 @@
+<div class="container-fluid">
+  <% @profiles.each do |profile| %>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="section">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-3">
+                  <% a = profile.avatar %>
+                  <%= image_tag( a, class: "img-circle") %>
+                </div>
+                <div class="col-md-5">
+                  <div class="row text-center">
+                    <h4><a href="/profiles/<%=profile.id %>"><%= profile.name %></a></h4>
+                    </br>
+                    <%= profile.description %>
+                  </div>
+                  <br/>
+                  <% if current_user && current_user.profile && !current_user.profile.isFriend(profile) %>
+                      <div class="row text-center">
+                        <%= link_to "Enviar solicitud de amistad", "/request_friendships/send_request/#{profile.user_id}", class: "btn btn-primary"  %>
+                      </div>
+                  <% end %>
+                </div>
+                <div class="col-md-2">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  <% end %>
+</div>
+<br>
