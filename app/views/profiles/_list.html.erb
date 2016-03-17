@@ -11,17 +11,21 @@
                 </div>
                 <div class="col-md-5">
                   <div class="row text-center">
-                    <h4><a href="/profiles/<%=profile.id %>"><%= profile.name %></a></h4>
+                    <h4>
+                      <a href="/profiles/<%=profile.id %>"><%= profile.name %></a>
+                      <% if profile.profile_status == 'PRIVATE' %>
+                        <img src='https://storage.googleapis.com/material-icons/external-assets/v4/icons/svg/ic_lock_black_24px.svg' />
+                      <% end %>
+                    </h4>
                     </br>
                     <%= profile.description %>
                   </div>
                   <br/>
                   <% if current_user && current_user.profile && !current_user.profile.isFriend(profile) %>
                       <%if current_user.profile!=profile%>
-                          <div class="row text-center">
+                        <div class="row text-center">
                           <%= link_to "Enviar solicitud de amistad", "/request_friendships/send_request/#{profile.user_id}", class: "btn btn-primary"  %>
-
-                      </div>
+                        </div>
                       <% else %>
                           <div class="row text-center">
                           <%= link_to "Editar", edit_profile_path(profile), class:"btn btn-default"  %>
