@@ -17,9 +17,16 @@
                   </div>
                   <br/>
                   <% if current_user && current_user.profile && !current_user.profile.isFriend(profile) %>
-                      <div class="row text-center">
-                        <%= link_to "Enviar solicitud de amistad", "/request_friendships/send_request/#{profile.user_id}", class: "btn btn-primary"  %>
+                      <%if current_user.profile!=profile%>
+                          <div class="row text-center">
+                          <%= link_to "Enviar solicitud de amistad", "/request_friendships/send_request/#{profile.user_id}", class: "btn btn-primary"  %>
+
                       </div>
+                      <% else %>
+                          <div class="row text-center">
+                          <%= link_to "Editar", edit_profile_path(profile), class:"btn btn-default"  %>
+                          </div>
+                      <% end %>
                   <% end %>
                 </div>
                 <div class="col-md-2">
