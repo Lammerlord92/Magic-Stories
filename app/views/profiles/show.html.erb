@@ -23,7 +23,7 @@
   <% if @is_current_profile %>
     <%= link_to "Editar", edit_profile_path(@profile), class:"btn btn-default"  %>
   <% else %>
-    <% unless @is_friend_profile %>
+    <% unless @is_friend_profile or not current_user.present? %>
         <%= link_to "Enviar petición de amistad", "/request_friendships/send_request/#{@profile.user_id}", class: "btn btn-default"  %>
     <% end %>
   <% end %>
