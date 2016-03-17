@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160311192414) do
+ActiveRecord::Schema.define(version: 20160317121738) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,21 @@ ActiveRecord::Schema.define(version: 20160311192414) do
   end
 
   add_index "chapters", ["story_id"], name: "index_chapters_on_story_id", using: :btree
+
+  create_table "comments", force: :cascade do |t|
+    t.string   "title"
+    t.string   "body"
+    t.date     "date"
+    t.integer  "rating"
+    t.string   "author"
+    t.integer  "profile_id"
+    t.integer  "story_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "comments", ["profile_id"], name: "index_comments_on_profile_id", using: :btree
+  add_index "comments", ["story_id"], name: "index_comments_on_story_id", using: :btree
 
   create_table "discount_user_groups", force: :cascade do |t|
     t.integer  "user_group_id"
@@ -268,6 +283,8 @@ ActiveRecord::Schema.define(version: 20160311192414) do
   add_foreign_key "additions", "profiles"
   add_foreign_key "additions", "stories"
   add_foreign_key "chapters", "stories"
+  add_foreign_key "comments", "profiles"
+  add_foreign_key "comments", "stories"
   add_foreign_key "friendships", "request_friendships"
   add_foreign_key "mailboxer_conversation_opt_outs", "mailboxer_conversations", column: "conversation_id", name: "mb_opt_outs_on_conversations_id"
   add_foreign_key "mailboxer_notifications", "mailboxer_conversations", column: "conversation_id", name: "notifications_on_conversation_id"
