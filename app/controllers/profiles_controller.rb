@@ -12,7 +12,7 @@ class ProfilesController < ApplicationController
     @is_current_profile = is_current_profile? @profile
     @is_friend_profile = is_friend_profile? @profile
     unless @is_current_profile or @profile.profile_status == 'PUBLIC' or @is_friend_profile
-      head :forbidden # TODO: Mejor redirigir a public/403.html (por crear) para estos casos
+      render 'errors/permission_denied'
     end
   end
 
@@ -22,7 +22,7 @@ class ProfilesController < ApplicationController
     if current_profile.present?
       @profile = Profile.new
     else
-      head :forbidden # TODO: Mejor redirigir a public/403.html (por crear) para estos casos
+      render 'errors/permission_denied'
     end
   end
 
@@ -30,7 +30,7 @@ class ProfilesController < ApplicationController
     @profile = set_profile
     current_profile = current_user.profile
     if @profile.id != current_profile.id
-      head :forbidden # TODO: Mejor redirigir a public/403.html (por crear) para estos casos
+      render 'errors/permission_denied'
     end
   end
 
@@ -44,7 +44,7 @@ class ProfilesController < ApplicationController
         render :new
       end
     else
-      head :forbidden
+      render 'errors/permission_denied'
     end
   end
 
@@ -57,7 +57,7 @@ class ProfilesController < ApplicationController
         render :edit
       end
     else
-      head :forbidden
+      render 'errors/permission_denied'
     end
   end
 
@@ -70,7 +70,6 @@ class ProfilesController < ApplicationController
   end
 
   def params_search
-
     params.permit(:q, :choice)
   end
 
