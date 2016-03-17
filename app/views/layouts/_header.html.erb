@@ -27,8 +27,7 @@
               <li><a href="/profiles/<%= current_user.profile.id %>">Mi perfil</a></li>
               <% end %>
           <li><a href="/profiles">Lista de perfiles</a></li>
-          <li><a href="/profiles/search">Encontrar amigos</a></li>
-          <li><a href="/user">Buscar gente</a></li>
+          <li><a href="/profiles/search?choice=friends">Ver amigos</a></li>
           <li role="separator" class="divider"></li>
           <li>
                <%= link_to "Cerrar sesión", destroy_user_session_path, :method => :delete %>

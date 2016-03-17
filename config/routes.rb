@@ -76,9 +76,6 @@ Rails.application.routes.draw do
   get 'additions/create/:story_id' => 'additions#create'
   delete 'additions' => 'additions#delete'
 
-  #users
-  get 'user' => 'user#index'
-
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
