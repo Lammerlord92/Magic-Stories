@@ -161,19 +161,6 @@ Friendship.createFriendship(friendShip8)
 Friendship.createFriendship(friendShip9)
 Friendship.createFriendship(friendShip10)
 
-###############################################
-# Metodo de active_record. Recorre un maximo de 1000 usuarios por defecto
-# documentacion: http://guides.rubyonrails.org/active_record_querying.html
-##################################################
-@ret = ''
-User.find_each do |usuario|
-  usuario.friends.each do |amigo|
-    @ret << '-' << usuario.username << ' es amigo de ' << amigo.username << '\n'
-  end
-end
-
-puts @ret
-
 # Creacion de UserGroups
 
 uG1 = UserGroup.create!(name: 'UserGroup1', code: '1231')
