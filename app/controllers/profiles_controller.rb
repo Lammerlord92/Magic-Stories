@@ -98,8 +98,8 @@ class ProfilesController < ApplicationController
       end
 
       # Si se quiere filtrar entre no amigos
-    end
-    if (choice == "no_friends")
+
+    elsif (choice == "no_friends")
 
       # Si q tiene alguna string buscamos por q y no amigos
       if @q
