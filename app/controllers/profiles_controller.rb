@@ -88,7 +88,7 @@ class ProfilesController < ApplicationController
     users = User.where(queryUser, {q: "%#{@q}%"})
 
     # Si se quiere filtrar entre amigos
-    if (choice == "friends")
+    if user_signed_in? and choice == "friends"
 
       # Si q tiene alguna string para filtrar
       if @q
@@ -108,7 +108,7 @@ class ProfilesController < ApplicationController
 
       # Si se quiere filtrar entre no amigos
 
-    elsif (choice == "no_friends")
+    elsif user_signed_in? and choice == "no_friends"
 
       # Si q tiene alguna string buscamos por q y no amigos
       if @q

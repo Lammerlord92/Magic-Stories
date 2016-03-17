@@ -1,14 +1,5 @@
 <h1>Resultados de la búsqueda</h1>
 
-<!-- Cuadro de búsqueda de perfiles de usuario -->
-<form action="/profiles/search" method="get">
-  <div class="field">
-    <input type="radio" name="choice" value="friends"> Amigos
-    <input type="radio" name="choice" value="no_friends"> No amigos
-  </div>
-  <input type="text" name="q" placeholder="Buscar usuarios">
-  <button type="submit">Buscar</button>
-</form>
-<br>
+<%= render 'profiles/searchbox' %>
 
 <%= render 'profiles/list' %>
