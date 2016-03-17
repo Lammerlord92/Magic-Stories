@@ -11,9 +11,9 @@ class ProfilesController < ApplicationController
     @profile = Profile.find(params[:id])
     @is_current_profile = is_current_profile? @profile
     @is_friend_profile = is_friend_profile? @profile
-    unless @is_current_profile or @profile.profile_status == 'PUBLIC' or @is_friend_profile
-      render 'errors/permission_denied'
-    end
+    #unless @is_current_profile or @profile.profile_status == 'PUBLIC' or @is_friend_profile
+    #  render 'errors/permission_denied'
+    #end
   end
 
   #GET /profiles/new
