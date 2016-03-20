@@ -325,4 +325,19 @@ option3 = Option.create!({option: 'Option3', parent: chapter1, child: chapter4})
 
 puts 'Success: Creación de Options'
 
+# Asignacion de categorias a historias
+storyCategory1 = StoryCategory.create!(story: story1, category: category1)
+storyCategory2 = StoryCategory.create!(story: story1, category: category2)
+story1.story_categories << storyCategory1
+story1.story_categories << storyCategory2
+story1.save!
+
+storyCategory3 = StoryCategory.create!(story: story2, category: category2)
+storyCategory4 = StoryCategory.create!(story: story2, category: category3)
+story2.story_categories << storyCategory3
+story2.story_categories << storyCategory4
+story3.save!
+
+puts 'Success: Asignacion de categorias a historias'
+
 
