@@ -7,25 +7,26 @@
 #   Cura.create(name: 'Emmanuel', city: cities.first, rol: 'cazador')
 
 ############################################################################
-#   BORRADO DE TABLAS:
+#   BORRADO DE TABLAS: HACER UN RAKE DB:RESET
 ############################################################################
-Category.delete_all
-Addition.delete_all
-User.delete_all
-PremiumUser.delete_all
-Administrator.delete_all
-Friendship.delete_all
-RequestFriendship.delete_all
-Chapter.delete_all
-Story.delete_all
-Profile.delete_all
-UserGroup.delete_all
-ActorUserGroup.delete_all
-Comment.delete_all
-DiscountUserGroup.delete_all
-FreeUser.delete_all
-Option.delete_all
-Report.delete_all
+#Category.delete_all
+#Addition.delete_all
+#User.delete_all
+#PremiumUser.delete_all
+#Administrator.delete_all
+#Friendship.delete_all
+#RequestFriendship.delete_all
+#Chapter.delete_all
+#Story.delete_all
+#Profile.delete_all
+#UserGroup.delete_all
+#ActorUserGroup.delete_all
+#Comment.delete_all
+#DiscountUserGroup.delete_all
+#FreeUser.delete_all
+#Option.delete_all
+#Report.delete_all
+#
 
 puts "Success: Todas las tablas han sido borradas"
 
@@ -156,6 +157,7 @@ user7.profile.update!({name: 'Profile7', description: 'This is my profile7', sig
 user8.profile.update!({name: 'Profile8', description: 'This is my profile8', signature: 'My sign8'})
 user9.profile.update!({name: 'Profile9', description: 'This is my profile9', signature: 'My sign9', profile_status: 'PRIVATE'})
 user10.profile.update!({name: 'Profile10', description: 'This is my profile10', signature: 'My sign10'})
+user11.profile.update!({name: 'David', description: 'Descripción de David', signature: 'My sign11', avatar: 'http://cdn.teknlife.com/wp-content/uploads/2014/02/Bellotas_de_encina.jpg'})
 puts "Success: Actualización de usuarios con perfiles"
 
 ############################################################################
