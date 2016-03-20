@@ -318,9 +318,11 @@ chapter32 = Chapter.create({title: 'Title3', body: 'Body3', story: story12})
 
 puts "Success: Creación de capitulos"
 
+# Creacion de Options
+option1 = Option.create!({option: 'Option1', parent: chapter1, child: chapter2})
+option2 = Option.create!({option: 'Option2', parent: chapter1, child: chapter3})
+option3 = Option.create!({option: 'Option3', parent: chapter1, child: chapter4})
 
-
-
-
+puts 'Success: Creación de Options'
 
 

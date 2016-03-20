@@ -66,6 +66,9 @@ Rails.application.routes.draw do
   get 'stories/search', to: 'stories#search'
   resources :stories
 
+  #Chapters
+  get 'chapters/:id' => 'chapters#show'
+
   #Profiles
   get 'profiles/search', to: 'profiles#search'
   get 'profiles/premium/:id', to: 'profiles#premium'
