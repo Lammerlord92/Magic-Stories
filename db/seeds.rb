@@ -6,6 +6,28 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Cura.create(name: 'Emmanuel', city: cities.first, rol: 'cazador')
 
+############################################################################
+#   BORRADO DE TABLAS:
+############################################################################
+Category.delete_all
+Addition.delete_all
+User.delete_all
+PremiumUser.delete_all
+Administrator.delete_all
+Friendship.delete_all
+RequestFriendship.delete_all
+Chapter.delete_all
+Story.delete_all
+Profile.delete_all
+UserGroup.delete_all
+ActorUserGroup.delete_all
+Comment.delete_all
+DiscountUserGroup.delete_all
+FreeUser.delete_all
+Option.delete_all
+Report.delete_all
+
+puts "Success: Todas las tablas han sido borradas"
 
 ############################################################################
 #   Creación de categorías. TABLA: categories
@@ -30,7 +52,7 @@ category10=Category.create!({name: "Política", description: "Guía de latrocini
                              icon: File.new("public/categories/original/9/tumblr_n2l8l5aVaN1rvner1o1_500.jpg")})
 category5=Category.create!({name: "Vergonzante", description: "Es un espectaculo vergonzante - Shogun 2",
                             icon: File.new("public/categories/original/10/puedo-eliminar-icono-celular-facebook_1_1720410.jpg")})
-
+puts "Success: Creación de categorías"
 
 ############################################################################
 #   Creación de usuarios. TABLA: users
@@ -76,6 +98,10 @@ user9 = User.create!({email: 'user9@mail.com', password: '123456789', password_c
 user10 = User.create!({email: 'user10@mail.com', password: '123456789', password_confirmation: '123456789',
                       username: 'user10', name: 'user10', surname1: 'surname101', surname2: 'suername102', phone: 619663023,
                       birthday: '29/02/2004', sku: '159856'})
+user11 = User.create!({email: 'winslopu@hotmail.com', password: 'Pegaso33', password_confirmation: 'Pegaso33',
+                       username: 'Winslou', name: 'David', surname1: 'Rubio', surname2: 'Lucas', phone: 645544778,
+                       birthday: '29/02/2004', sku: '159857'})
+puts "Success: Creación de usuarios"
 
 ############################################################################
 #   Creación de rols. TABLA:  premium_users
@@ -84,7 +110,7 @@ user10 = User.create!({email: 'user10@mail.com', password: '123456789', password
 userAcc1 = PremiumUser.create()
 userAcc2 = PremiumUser.create()
 userAcc3 = PremiumUser.create()
-
+puts "Success: Creación rol Premium"
 
 ############################################################################
 #   Creación de rols. TABLA:  administrator
@@ -92,7 +118,7 @@ userAcc3 = PremiumUser.create()
 
 userAcc4 = Administrator.create()
 userAcc5 = Administrator.create()
-
+puts "Success: Creación usuario administrator"
 
 ############################################################################
 #   Actualización del rol de usuario. TABLA: users
@@ -103,6 +129,7 @@ user9.update_attribute(:role, userAcc2)
 
 user1.update_attribute(:role, userAcc4)
 user3.update_attribute(:role, userAcc5)
+puts "Success: Actualizado roles"
 
 =begin
 
@@ -129,7 +156,7 @@ user7.profile.update!({name: 'Profile7', description: 'This is my profile7', sig
 user8.profile.update!({name: 'Profile8', description: 'This is my profile8', signature: 'My sign8'})
 user9.profile.update!({name: 'Profile9', description: 'This is my profile9', signature: 'My sign9', profile_status: 'PRIVATE'})
 user10.profile.update!({name: 'Profile10', description: 'This is my profile10', signature: 'My sign10'})
-
+puts "Success: Actualización de usuarios con perfiles"
 
 ############################################################################
 #   Peticiones de amistad. TABLA: request_friendships
@@ -145,7 +172,7 @@ friendShip7 = RequestFriendship.create!({message: "RequestFriendship84", sender_
 friendShip8 = RequestFriendship.create!({message: "RequestFriendship410", sender_id: user4.id, recipient_id: user10.id, status: "ACCEPTED"})
 friendShip9 = RequestFriendship.create!({message: "RequestFriendship59", sender_id: user5.id, recipient_id: user9.id, status: "ACCEPTED"})
 friendShip10 = RequestFriendship.create!({message: "RequestFriendship105", sender_id: user10.id, recipient_id: user5.id, status: "ACCEPTED"})
-
+puts "Success: Creación de peticiones de amistad"
 
 ############################################################################
 #   Creación de amigos. TABLA: friendships
@@ -160,14 +187,14 @@ Friendship.createFriendship(friendShip7)
 Friendship.createFriendship(friendShip8)
 Friendship.createFriendship(friendShip9)
 Friendship.createFriendship(friendShip10)
-
+puts "Success: Creación de amigos"
 # Creacion de UserGroups
 
 uG1 = UserGroup.create!(name: 'UserGroup1', code: '1231')
 uG2 = UserGroup.create!(name: 'UserGroup2', code: '1232')
 uG3 = UserGroup.create!(name: 'UserGroup3', code: '1233')
 uG4 = UserGroup.create!(name: 'UserGroup4', code: '1234')
-
+puts "Success: Creación de grupos de usuarios"
 # Creacion de ActorUserGroup
 
 aUG1 = ActorUserGroup.create({usergroup_id: uG1.id, user_id: user1.id})
@@ -181,7 +208,7 @@ aUG8 = ActorUserGroup.create({usergroup_id: uG3.id, user_id: user8.id})
 aUG9 = ActorUserGroup.create({usergroup_id: uG4.id, user_id: user9.id})
 aUG10 = ActorUserGroup.create({usergroup_id: uG4.id, user_id: user10.id})
 
-
+puts "Success: Creación de ActorUserGroup"
 
 
 #
@@ -227,7 +254,7 @@ story11 = Story.create!({title: 'Title11', description: 'Description', language:
 
 story12 = Story.create!({title: 'Title12', description: 'Description', language: 'SPANISH', price: 16.30, release_date: '21/10/2015',
                         published: true, num_purchased: 0, creatorProfile: user3.profile})
-
+puts "Success: Creación de historias"
 
 user1.profile.stories << story1
 user1.profile.stories << story2
@@ -248,7 +275,7 @@ user1.save!
 user2.save!
 user3.save!
 
-
+puts "Success: Actualizado usuarios con historias"
 
 
 
@@ -287,7 +314,7 @@ chapter30 = Chapter.create({title: 'Title1', body: 'Body1', story: story12})
 chapter31 = Chapter.create({title: 'Title2', body: 'Body2', story: story12})
 chapter32 = Chapter.create({title: 'Title3', body: 'Body3', story: story12})
 
-
+puts "Success: Creación de capitulos"
 
 
 
