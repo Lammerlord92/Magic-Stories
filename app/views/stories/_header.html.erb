@@ -1,0 +1,36 @@
+<h1>Historias</h1>
+
+<!-- Cuadro de búsqueda de historias -->
+<form action="/stories/search" method="get">
+  <input type="text" name="q" placeholder="Buscar historias">
+  <button type="submit">Buscar</button>
+</form>
+<br>
+
+<!-- Tabs para cada listado -->
+<ul class="nav nav-tabs nav-justified">
+  
+  <!-- Todas las historias (todos los usuarios) -->
+  <li <% if option == "all" %>class="active"<% end %> role="presentation">
+    <%= link_to "Todas", stories_path, class:"btn btn-default" %>
+  </li>
+
+  <!-- Historias adquiridas (sólo usuarios logueados) -->
+  <% if user_signed_in? %>
+
+    <li <% if option == "acquired" %>class="active"<% end %> role="presentation">
+      <%= link_to "Adquiridas", stories_acquired_path, class:"btn btn-default" %>
+    </li>
+
+    <!-- Historias creadas (sólo usuarios premium y admins) -->
+    <% unless current_user.role_type == "FreeUser" %>
+      
+      <li <% if option == "created" %>class="active"<% end %> role="presentation">
+        <%= link_to "Creadas", stories_created_path, class:"btn btn-default" %>
+      </li>
+
+    <% end %>
+
+  <% end %>
+
+</ul>

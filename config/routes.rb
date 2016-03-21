@@ -42,6 +42,8 @@ Rails.application.routes.draw do
   get 'welcome/maker2'
   get 'welcome/maker3'
   get 'welcome/maker4'
+  get 'welcome/maker5'
+  get 'welcome/maker6'
   get 'welcome/textoDesplegable'
 
   # You can have the root of your site routed with "root"
@@ -59,11 +61,13 @@ Rails.application.routes.draw do
   get 'request_friendships/cancel_friendship', to: 'request_friendships#cancel_friendship'
 
   #Stories
-  get 'stories/acquired' => 'stories#show_stories_acquired'
-  get 'stories/created' => 'stories#show_stories_created'
+  get 'stories/acquired' => 'stories#acquired'
+  get 'stories/created' => 'stories#created'
   get 'stories/search', to: 'stories#search'
-  get 'stories/showAll' => 'stories#showAll'
   resources :stories
+
+  #Chapters
+  get 'chapters/:id' => 'chapters#show'
 
   #Profiles
   get 'profiles/search', to: 'profiles#search'
@@ -74,9 +78,6 @@ Rails.application.routes.draw do
   #Additions
   get 'additions/create/:story_id' => 'additions#create'
   delete 'additions' => 'additions#delete'
-
-  #users
-  get 'user' => 'user#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

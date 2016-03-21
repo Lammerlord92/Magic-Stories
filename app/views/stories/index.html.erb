@@ -1,27 +1,2 @@
-<div class="storylist">
-  <h1>Historias</h1>
-  </div>
-
-<form action="/stories/search" method="get">
-  <input type="text" name="q" placeholder="Buscar historias">
-  <button type="submit">Buscar</button>
-</form>
-<br>
-<% @stories.each do |story| %>
-  <div class="row">
-    <div class="col-md-3">
-      <!-- Imagen de test -->
-      <% a = "http://photos1.meetupstatic.com/photos/event/2/a/6/a/global_11230858.jpeg" %>
-      <%= image_tag( a, class: "img-circle") %>
-    </div>
-    <div class="col-md-8 text-center pull-right story">
-      <h3><a href="/stories/<%=story.id %>"><%= story.title %></a></h3>
-      </br>
-      <%= story.description %>
-      <br/>
-    </div>
-  </div>
-  <br>
-<% end %>
-
-
+<%= render 'stories/header', option: "all" %>
+<%= render 'stories/list' %>

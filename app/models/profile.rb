@@ -6,6 +6,7 @@ class Profile < ActiveRecord::Base
   validates  :signature,                                       uniqueness: true, on: :update
 
   has_many :stories
+  has_many :comments
 
   before_create {
     self.profile_status = "PUBLIC"
