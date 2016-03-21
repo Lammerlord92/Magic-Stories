@@ -15,7 +15,7 @@ Los métodos con exclamación lanzan una except.
     current_user.role.equal?(user.role)
   end
 
-    def checkRole!(user)
+  def checkRole!(user)
     if(current_user.id.equal?(user.id))
       raise 'Operacion no permitida'
     end
