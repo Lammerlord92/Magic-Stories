@@ -26,7 +26,7 @@ class CategoriesController < ApplicationController
 
   def update
     @category=set_category
-    if @category.update(category_params)
+    if @category.update_attributes!(category_params)
       redirect_to @category
     else
       render :edit

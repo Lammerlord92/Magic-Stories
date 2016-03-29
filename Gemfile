@@ -31,8 +31,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
-# para usar esta necesitas instalar imagemagick con *sudo apt-get install imagemagick*
-gem 'paperclip'
+
 gem 'rails-i18n'
 
 gem 'mailboxer'

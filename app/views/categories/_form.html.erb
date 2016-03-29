@@ -1,5 +1,29 @@
+<script>
+document.onload=function() {
+  previewFile();  //calls the function named previewFile()
+}
+function previewFile() {
+  var preview = document.querySelector('img'); //selects the query named img
+  var file = document.querySelector('input[type=file]').files[0]; //sames as here
+  var reader = new FileReader();
+
+  reader.onloadend = function () {
+    preview.src = reader.result;
+    document.getElementById("category_icon").setAttribute("value", reader.result);
+  }
+
+  if (file) {
+    reader.readAsDataURL(file); //reads the data as a URL
+
+  } else {
+    preview.src = "";
+  }
+}
+
+</script>
+
 <% name ||= "Crear" %>
-<h1><%= name %> categoría</h1>
+<h1><%= name %> género</h1>
 <%= form_for(@category) do |cat|%>
     <% @category.errors.full_messages.each do |message| %>
         <div class="error">
@@ -7,15 +31,17 @@
         </div>
     <% end %>
     <div class="field">
-      <%= cat.text_field :name, placeholder: "Nombre de categoría", class:"form-field" %>
+      <%= cat.text_field :name, placeholder: "Género", class:"form-field" %>
     </div>
     <div class="field">
-        <%= cat.text_area :description, placeholder: "Descripción de categoría", class:"form-field" %>
+        <%= cat.text_area :description, placeholder: "Descripción del género", class:"form-field" %>
     </div>
     <div class="field">
-      Icono:
-      <%= cat.file_field :icon%>
+      <input type="file" onchange="previewFile()"><br>
+      <img src="<%= @category.icon %>" height="200" alt="Image preview...">
+
     </div>
+    <%=hidden_field(:category,:icon)%>
     <div class="buttons">
       <%= cat.submit "Guardar", class:"btn btn-default" %>
       <%= link_to "Volver", categories_path,class: "btn btn-default" %>

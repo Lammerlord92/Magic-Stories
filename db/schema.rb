@@ -45,12 +45,8 @@ ActiveRecord::Schema.define(version: 20160317121738) do
   create_table "categories", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.string   "icon_file_name"
-    t.string   "icon_content_type"
-    t.integer  "icon_file_size"
-    t.datetime "icon_updated_at"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "chapters", force: :cascade do |t|
@@ -60,8 +56,6 @@ ActiveRecord::Schema.define(version: 20160317121738) do
     t.datetime "updated_at", null: false
     t.integer  "story_id"
   end
-
-  add_index "chapters", ["story_id"], name: "index_chapters_on_story_id", using: :btree
 
   create_table "comments", force: :cascade do |t|
     t.string   "title"
@@ -187,13 +181,6 @@ ActiveRecord::Schema.define(version: 20160317121738) do
     t.string   "profile_status"
   end
 
-  create_table "readings", force: :cascade do |t|
-    t.integer  "story_id"
-    t.integer  "profile_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "reports", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "title"
@@ -221,12 +208,8 @@ ActiveRecord::Schema.define(version: 20160317121738) do
     t.date     "release_date"
     t.boolean  "published"
     t.integer  "num_purchased"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.string   "cover_file_name"
-    t.string   "cover_content_type"
-    t.integer  "cover_file_size"
-    t.datetime "cover_updated_at"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.integer  "profile_id"
   end
 
@@ -282,7 +265,6 @@ ActiveRecord::Schema.define(version: 20160317121738) do
   add_foreign_key "additions", "discounts"
   add_foreign_key "additions", "profiles"
   add_foreign_key "additions", "stories"
-  add_foreign_key "chapters", "stories"
   add_foreign_key "comments", "profiles"
   add_foreign_key "comments", "stories"
   add_foreign_key "friendships", "request_friendships"
