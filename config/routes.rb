@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   get 'welcome/maker4'
   get 'welcome/maker5'
   get 'welcome/maker6'
+  get 'welcome/maker2pruebaJulio'
   get 'welcome/textoDesplegable'
 
   # You can have the root of your site routed with "root"

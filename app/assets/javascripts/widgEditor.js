@@ -174,7 +174,8 @@ function widgInit()
 	/* Detects if designMode is available, and also if browser is IE or Mozilla (excludes Safari) */
 	if (typeof(document.designMode) == "string" && (document.all || document.designMode == "off"))
 	{
-		var theTextareas = document.getElementsByTagName("textarea");
+		//var theTextareas = document.getElementsByTagName("textarea");
+		var theTextareas = document.getElementsByClassName("widgEditor nothing");
 		
 		for (var i = 0; i < theTextareas.length; i++)
 		{
@@ -201,81 +202,99 @@ function widgInit()
 }
 
 
-
-
-function widgEditor(replacedTextareaID)
+function widgEditor(replacedTextareaID,titleValue)
 {
-	var self = this;
-	
-	this.theTextarea = document.getElementById(replacedTextareaID);
-	this.theContainer = document.createElement("div");
-	this.theIframe = document.createElement("iframe");
-	this.theInput = document.createElement("input");
-	this.theExtraInput = document.createElement("input");
-	this.IE = false;
-	this.locked = true;
-	this.pasteCache = "";
-	this.wysiwyg = true;
-	
-	if (document.all)
-	{
-		this.IE = true;
-	}
-	
-	if (this.theTextarea.id == null)
-	{
-		this.theTextarea.id = this.theTextarea.name;
-	}
-	
-	this.theTextarea.style.visibility = "hidden";
 
-	/* Modify DOM objects for editor */
-	this.theContainer.id = this.theTextarea.id + "WidgContainer";
-	this.theContainer.className = "widgContainer";
-	
-	this.theIframe.id = this.theTextarea.id + "WidgIframe";
-	this.theIframe.className = "widgIframe";
-	
-	this.theInput.type = "hidden";
-	this.theInput.id = this.theTextarea.id;
-	this.theInput.name = this.theTextarea.name;
-	this.theInput.value = this.theTextarea.value;
+    var self = this;
 
-	this.theToolbar = new widgToolbar(this);
-	
-	/* An extra input to determine if the submitted data is from the normal textarea or from the widgEditor */
-	this.theExtraInput.type = "hidden";	
-	this.theExtraInput.id = this.theTextarea.id + "WidgEditor";
-	this.theExtraInput.name = this.theTextarea.name + "WidgEditor";
-	this.theExtraInput.value = "true";
-	
-	this.theTextarea.id += "WidgTextarea";
-	this.theTextarea.name += "WidgTextarea";
-	
-	this.theContainer.appendChild(this.theToolbar.theList);
-	this.theContainer.appendChild(this.theIframe);
-	this.theContainer.appendChild(this.theInput);
-	this.theContainer.appendChild(this.theExtraInput);
-	this.theContainer.style.visibility = "hidden";
+    //Variable para comprobar de si existe o no ya un container
+    var alreadyContainer = document.getElementById("my_textBodyWidgContainer");
 
-	this.theInput.widgEditorObject = this;
-	
-	this.theTextarea.parentNode.replaceChild(this.theContainer, this.theTextarea);
+    this.theTextarea = document.getElementById(replacedTextareaID);
 
-	/* Fill editor with old textarea content */
-	this.writeDocument(this.theInput.value);
-	
-	/* Make editor editable */
-	this.initEdit();
-	
-	/* Attach onsubmit to parent form */
-	this.modifyFormSubmit();
-	
-	return true;
+    //TODO AQUI CAMBIO EL VALOR DEL INPUT si esto se comenta nos sale el valor inicial nothing Selected 2
+    if(titleValue==null || titleValue == "Nothing Selected 2"){
+        document.getElementById("my_textBody").value = "Nothing Selected 2";
+    }else{
+        document.getElementById("my_textBody").value = titleValue;
+    }
+
+    this.theContainer = document.createElement("div");
+    this.theIframe = document.createElement("iframe");
+    this.theInput = document.createElement("input");
+    this.theExtraInput = document.createElement("input");
+    this.IE = false;
+    this.locked = true;
+    this.pasteCache = "";
+    this.wysiwyg = true;
+
+    if (document.all)
+    {
+        this.IE = true;
+    }
+
+    if (this.theTextarea.id == null)
+    {
+        this.theTextarea.id = this.theTextarea.name;
+    }
+
+    this.theTextarea.style.visibility = "hidden";
+
+    /* Modify DOM objects for editor */
+    this.theContainer.id = this.theTextarea.id + "WidgContainer";
+    this.theContainer.className = "widgContainer";
+
+    this.theIframe.id = this.theTextarea.id + "WidgIframe";
+    this.theIframe.className = "widgIframe";
+
+    this.theInput.type = "hidden";
+    this.theInput.id = this.theTextarea.id;
+    this.theInput.name = this.theTextarea.name;
+
+    //TODO AQUI CAMBIO EL VALOR DEL TEXTAREA DEL EDITOR
+    this.theInput.value = this.theTextarea.value;
+
+    //TODO AQUI ES DONDE SE AÑADE EL MENU DE EDICION
+    this.theToolbar = new widgToolbar(this);
+
+    /* An extra input to determine if the submitted data is from the normal textarea or from the widgEditor */
+    this.theExtraInput.type = "hidden";
+    this.theExtraInput.id = this.theTextarea.id + "WidgEditor";
+    this.theExtraInput.name = this.theTextarea.name + "WidgEditor";
+    this.theExtraInput.value = "true";
+
+    this.theTextarea.id += "WidgTextarea";
+    this.theTextarea.name += "WidgTextarea";
+
+    this.theContainer.appendChild(this.theToolbar.theList);
+    this.theContainer.appendChild(this.theIframe);
+    this.theContainer.appendChild(this.theInput);
+    this.theContainer.appendChild(this.theExtraInput);
+    this.theContainer.style.visibility = "hidden";
+
+    this.theInput.widgEditorObject = this;
+
+    //TODO AQUI ESTA LA CLAVE DE LA DUPLICACION, HAY QUE ENTENDER EL CODIGO
+    //Compruebo que el container no exista, en caso de que exista lo sustituimos el nuevo container por el que ya hay
+    //para evitar duplicados
+    if(alreadyContainer==null){
+        this.theTextarea.parentNode.replaceChild(this.theContainer, this.theTextarea);
+    }else{
+        alreadyContainer.parentNode.replaceChild(this.theContainer, alreadyContainer);
+    }
+
+    /* Fill editor with old textarea content */
+    var ifr = this;
+    writeDocument(this.theInput.value,ifr);
+
+    /* Make editor editable */
+    initEdit(ifr);
+
+    /* Attach onsubmit to parent form */
+    //this.modifyFormSubmit();
+
+    return true;
 }
-
-
-
 
 /* Clean pasted content */
 widgEditor.prototype.cleanPaste = function()
@@ -454,12 +473,13 @@ widgEditor.prototype.cleanSource = function()
 
 
 
-widgEditor.prototype.convertSPANs = function(theSwitch)
+//widgEditor.prototype.convertSPANs = function(theSwitch)
+function convertSPANs(ifr,theSwitch)
 {
 	if (theSwitch)
 	{
 		/* Replace styled spans with their semantic equivalent */
-		var theSPANs = this.theIframe.contentWindow.document.getElementsByTagName("span");
+		var theSPANs = ifr.theIframe.contentWindow.document.getElementsByTagName("span");
 	
 		while(theSPANs.length > 0)
 		{
@@ -476,27 +496,27 @@ widgEditor.prototype.convertSPANs = function(theSwitch)
 			switch (theSPANs[0].getAttribute("style"))
 			{
 				case "font-weight: bold;":
-					theReplacementElement = this.theIframe.contentWindow.document.createElement("strong");
+					theReplacementElement = ifr.theIframe.contentWindow.document.createElement("strong");
 					theParentElement = theReplacementElement;
 					
 					break;
 				
 				case "font-style: italic;":
-					theReplacementElement = this.theIframe.contentWindow.document.createElement("em");
+					theReplacementElement = ifr.theIframe.contentWindow.document.createElement("em");
 					theParentElement = theReplacementElement;
 					
 					break;
 					
 				case "font-weight: bold; font-style: italic;":
-					theParentElement = this.theIframe.contentWindow.document.createElement("em");
-					theReplacementElement = this.theIframe.contentWindow.document.createElement("strong");
+					theParentElement = ifr.theIframe.contentWindow.document.createElement("em");
+					theReplacementElement = ifr.theIframe.contentWindow.document.createElement("strong");
 					theReplacementElement.appendChild(theParentElement);
 					
 					break;
 					
 				case "font-style: italic; font-weight: bold;":
-					theParentElement = this.theIframe.contentWindow.document.createElement("strong");
-					theReplacementElement = this.theIframe.contentWindow.document.createElement("em");
+					theParentElement = ifr.theIframe.contentWindow.document.createElement("strong");
+					theReplacementElement = ifr.theIframe.contentWindow.document.createElement("em");
 					theReplacementElement.appendChild(theParentElement);
 					
 					break;
@@ -517,18 +537,18 @@ widgEditor.prototype.convertSPANs = function(theSwitch)
 				theSPANs[0].parentNode.replaceChild(theReplacementElement, theSPANs[0]);
 			}
 			
-			theSPANs = this.theIframe.contentWindow.document.getElementsByTagName("span");
+			theSPANs = ifr.theIframe.contentWindow.document.getElementsByTagName("span");
 		}
 	}
 	else
 	{
 		/* Replace em and strong tags with styled spans */
-		var theEMs = this.theIframe.contentWindow.document.getElementsByTagName("em");
+		var theEMs = ifr.theIframe.contentWindow.document.getElementsByTagName("em");
 		
 		while(theEMs.length > 0)
 		{
 			var theChildren = new Array();
-			var theSpan = this.theIframe.contentWindow.document.createElement("span");
+			var theSpan = ifr.theIframe.contentWindow.document.createElement("span");
 			
 			theSpan.setAttribute("style", "font-style: italic;");
 			
@@ -543,15 +563,15 @@ widgEditor.prototype.convertSPANs = function(theSwitch)
 			}
 
 			theEMs[0].parentNode.replaceChild(theSpan, theEMs[0]);
-			theEMs = this.theIframe.contentWindow.document.getElementsByTagName("em");
+			theEMs = ifr.theIframe.contentWindow.document.getElementsByTagName("em");
 		}
 		
-		var theSTRONGs = this.theIframe.contentWindow.document.getElementsByTagName("strong");
+		var theSTRONGs = ifr.theIframe.contentWindow.document.getElementsByTagName("strong");
 		
 		while(theSTRONGs.length > 0)
 		{
 			var theChildren = new Array();
-			var theSpan = this.theIframe.contentWindow.document.createElement("span");
+			var theSpan = ifr.theIframe.contentWindow.document.createElement("span");
 			
 			theSpan.setAttribute("style", "font-weight: bold;");
 			
@@ -566,7 +586,7 @@ widgEditor.prototype.convertSPANs = function(theSwitch)
 			}
 
 			theSTRONGs[0].parentNode.replaceChild(theSpan, theSTRONGs[0]);
-			theSTRONGs = this.theIframe.contentWindow.document.getElementsByTagName("strong");
+			theSTRONGs = ifr.theIframe.contentWindow.document.getElementsByTagName("strong");
 		}
 	}
 	
@@ -608,13 +628,14 @@ widgEditor.prototype.detectPaste = function(e)
 
 
 /* Turn on document editing */
-widgEditor.prototype.initEdit = function()
+//widgEditor.prototype.initEdit = function()
+function initEdit(ifr)
 {
-	var self = this;
+	var self = ifr;
 	
 	try
 	{
-		this.theIframe.contentWindow.document.designMode = "on";
+        ifr.theIframe.contentWindow.document.designMode = "on";
 	}
 	catch (e)
 	{
@@ -624,30 +645,30 @@ widgEditor.prototype.initEdit = function()
 		return false;
 	}
 	
-	if (!this.IE)
+	if (!ifr.IE)
 	{
-		this.convertSPANs(false);
+        convertSPANs(ifr,false);
 	}
-	
-	this.theContainer.style.visibility = "visible";
-	this.theTextarea.style.visibility = "visible";
+
+    ifr.theContainer.style.visibility = "visible";
+    ifr.theTextarea.style.visibility = "visible";
 	
 	/* Mozilla event capturing */
 	if (typeof document.addEventListener == "function")
 	{
-		this.theIframe.contentWindow.document.addEventListener("mouseup", function(){widgToolbarCheckState(self); return true;}, false);
-		this.theIframe.contentWindow.document.addEventListener("keyup", function(){widgToolbarCheckState(self); return true;}, false);
-		this.theIframe.contentWindow.document.addEventListener("keydown", function(e){self.detectPaste(e); return true;}, false);
+        ifr.theIframe.contentWindow.document.addEventListener("mouseup", function(){widgToolbarCheckState(self); return true;}, false);
+        ifr.theIframe.contentWindow.document.addEventListener("keyup", function(){widgToolbarCheckState(self); return true;}, false);
+        ifr.theIframe.contentWindow.document.addEventListener("keydown", function(e){self.detectPaste(e); return true;}, false);
 	}
 	/* IE event capturing */
 	else
 	{
-		this.theIframe.contentWindow.document.attachEvent("onmouseup", function(){widgToolbarCheckState(self); return true;});
-		this.theIframe.contentWindow.document.attachEvent("onkeyup", function(){widgToolbarCheckState(self); return true;});
-		this.theIframe.contentWindow.document.attachEvent("onkeydown", function(e){self.detectPaste(e); return true;}, false);
+        ifr.theIframe.contentWindow.document.attachEvent("onmouseup", function(){widgToolbarCheckState(self); return true;});
+        ifr.theIframe.contentWindow.document.attachEvent("onkeyup", function(){widgToolbarCheckState(self); return true;});
+        ifr.theIframe.contentWindow.document.attachEvent("onkeydown", function(e){self.detectPaste(e); return true;}, false);
 	}
-	
-	this.locked = false;
+
+    ifr.locked = false;
 
 	return true;	
 }
@@ -682,19 +703,21 @@ widgEditor.prototype.insertNewParagraph = function(elementArray, succeedingEleme
 
 
 /* Add submit listener to parent form */
-widgEditor.prototype.modifyFormSubmit = function()
+/*widgEditor.prototype.modifyFormSubmit = function()
 {
 	var self = this;
 	var theForm = this.theContainer.parentNode;
 	var oldOnsubmit = null;
-	
-	/* Find the parent form element */
+
+	window.alert(theForm.nodeName);
+	/* Find the parent form element
 	while (theForm.nodeName.toLowerCase() != "form")
 	{
+		window.alert(theForm.nodeName);
 		theForm = theForm.parentNode;
 	}
 
-	/* Add onsubmit without overwriting existing function calls */
+	/* Add onsubmit without overwriting existing function calls
 	oldOnsubmit = theForm.onsubmit;
 
 	if (typeof theForm.onsubmit != "function")
@@ -715,7 +738,7 @@ widgEditor.prototype.modifyFormSubmit = function()
 	}
 
 	return true;
-}
+}*/
 
 
 
@@ -893,8 +916,9 @@ widgEditor.prototype.updateWidgInput = function()
 
 
 /* Write initial content to editor */
-widgEditor.prototype.writeDocument = function(documentContent)
+function writeDocument (documentContent,auxThis)
 {
+	window.alert("DOcCOntent" + documentContent);
 	/* HTML template into which the HTML Editor content is inserted */
 	var documentTemplate = '\
 		<html>\
@@ -905,7 +929,7 @@ widgEditor.prototype.writeDocument = function(documentContent)
 				INSERT:CONTENT:END\
 			</body>\
 		</html>\
-	';
+		';
 	
 	/* Insert dynamic variables/content into document */
 	/* IE needs stylesheet to be written inline */
@@ -920,19 +944,19 @@ widgEditor.prototype.writeDocument = function(documentContent)
 	}
 	
 	documentTemplate = documentTemplate.replace(/INSERT:CONTENT:END/, documentContent);
-	
-	this.theIframe.contentWindow.document.open();
-	this.theIframe.contentWindow.document.write(documentTemplate);
-	this.theIframe.contentWindow.document.close();
+
+    auxThis.theIframe.contentWindow.document.open();
+    auxThis.theIframe.contentWindow.document.write(documentTemplate);
+    auxThis.theIframe.contentWindow.document.close();
 
 	/* In Firefox stylesheet needs to be loaded separate to other HTML, because if it's loaded inline it causes Firefox to have problems with an empty document */
 	if (typeof document.all == "undefined")
 	{
-		var stylesheet = this.theIframe.contentWindow.document.createElement("link");
+		var stylesheet = auxThis.theIframe.contentWindow.document.createElement("link");
 		stylesheet.setAttribute("rel", "stylesheet");
 		stylesheet.setAttribute("type", "text/css");
 		stylesheet.setAttribute("href", "../stylesheets/widgContent.css");
-		this.theIframe.contentWindow.document.getElementsByTagName("head")[0].appendChild(stylesheet);
+        auxThis.theIframe.contentWindow.document.getElementsByTagName("head")[0].appendChild(stylesheet);
 	}
 	
 	return true;
@@ -950,7 +974,7 @@ function widgToolbar(theEditor)
 	
 	/* Create toolbar ul element */
 	this.theList = document.createElement("ul");
-	this.theList.id = this.widgEditorObject.theInput.id + "WidgToolbar";
+	this.theList.id = "my_TextBodyWidgToolbar";
 	this.theList.className = "widgToolbar";
 	this.theList.widgToolbarObject = this;
 
@@ -1024,6 +1048,7 @@ widgToolbar.prototype.addButton = function(theID, theClass, theLabel, theAction)
 	theLink.action = theAction;
 	theLink.onclick = widgToolbarAction;
 	theLink.onmouseover = widgToolbarMouseover;
+
 
 	theLink.appendChild(theText);
 	menuItem.appendChild(theLink);
