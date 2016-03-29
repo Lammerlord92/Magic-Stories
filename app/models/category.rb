@@ -2,10 +2,9 @@ class Category
   include Cequel::Record
 #  has_many :story_categories
 #  has_many :stories, through: :story_categories
-
   validates :name, presence: true
-#  validates :name, uniqueness: true
-  key :name, :text
+  key :id, :timeuuid, auto: true
+  column :name, :text
   column :description, :text
   column :icon, :text
   validates :description, presence: true
