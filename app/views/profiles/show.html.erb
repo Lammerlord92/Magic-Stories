@@ -7,38 +7,73 @@
       <img src='https://storage.googleapis.com/material-icons/external-assets/v4/icons/svg/ic_lock_black_24px.svg' />
     <% end %>
   </h1>
-  <p>
-    <%= @profile.description %>
-  </p>
 
-  <% if current_user.present? and @profile.user.banned_until.present? and (current_user.role_type == 'Administrator' || @profile.user == current_user) %>
-      <p>
-        Baneado hasta: <%= @profile.user.banned_until %>
-      </p>
+  <!-- Información privilegiada -->
+  <% unless @is_current_profile or @profile.profile_status == 'PUBLIC' or @is_friend_profile or current_user.role_type == 'Administrator' %>
+    <p><em>Este perfil es privado y solo puede acceder a él si usted es amigo de este usuario.</em></p>
+  <% else %>
+    <p><%= @profile.description %></p>
   <% end %>
 
+  <% if current_user.present? and @profile.user.banned_until.present? and (current_user.role_type == 'Administrator' || @profile.user == current_user) %>
+      <p>Baneado hasta: <%= @profile.user.banned_until %></p>
+  <% end %>
 </div>
 
 <div class="buttons">
   <% if @is_current_profile %>
     <%= link_to "Editar", edit_profile_path(@profile), class:"btn btn-default"  %>
+    </br>
   <% else %>
-    <% unless @is_friend_profile %>
+    <% unless @is_friend_profile or not current_user.present? %>
         <%= link_to "Enviar petición de amistad", "/request_friendships/send_request/#{@profile.user_id}", class: "btn btn-default"  %>
+        </br>
     <% end %>
   <% end %>
+
+  <% if current_user.present? && current_user.role_type == 'Administrator' && @profile.user.role_type == 'FreeUser' %>
+      <%= link_to "Convertir a Premium", "/profiles/premium/#{@profile.id}", class:"btn btn-default"  %>
+      </br>
+  <% end %>
+
+  <% if current_user.present? && current_user.role_type == 'Administrator' && @profile.user.role_type != 'Administrator' && @profile.user.banned_until == nil %>
+      <form action="/profiles/ban/<%=@profile.id%>" method="get">
+        <input type="text" name="date" placeholder="Banear hasta">
+        <button type="submit">Banear</button>
+      </form>
+<% end %>
 </div>
 
-</br>
-</br>
+<% if @profile.profile_status == 'PUBLIC' ||  current_user.present? && (current_user.role_type == 'Administrator' || @is_friend_profile || @is_current_profile) %>
+    <div>
+      <table>
+        <tr>
+          <td>Titulo</td>
+          <td>Comentario</td>
+          <td>Rating</td>
+          <td>Autor</td>
+        </tr>
 
-<% if current_user.present? && current_user.role_type == 'Administrator' && @profile.user.role_type == 'FreeUser' %>
-    <%= link_to "Convertir a Premium", "/profiles/premium/#{@profile.id}", class:"btn btn-default"  %>
+        <% @comments.each do |comment|%>
+            <tr>
+              <td>
+                <%= comment.title %>
+              </td>
+              <td>
+                <%= comment.body %>
+              </td>
+              <td>
+                <%= comment.rating %>
+              </td>
+              <td>
+                <%= comment.author %>
+              </td>
+            </tr>
+        <% end %>
+
+
+      </table>
+    </div>
+
 <% end %>
 
-<% if current_user.present? && current_user.role_type == 'Administrator' && @profile.user.role_type != 'Administrator' && @profile.user.banned_until == nil %>
-    <form action="/profiles/ban/<%=@profile.id%>" method="get">
-      <input type="text" name="date" placeholder="Baneado hasta">
-      <button type="submit">Banear</button>
-    </form>
-<% end %>

@@ -1,0 +1,67 @@
+<div>
+  <style>
+    .box{
+      border-bottom: 2px solid gray;
+    }
+    .chapter, .story{
+      border: none;
+      margin: .5em 0;
+      padding: .5em 0;
+    }
+    .btn{
+      border-radius: 0;
+    }
+  </style>
+  <h1>Stories: DB read</h1>
+  <div class="box story">
+    <h2 class="box">Story</h2>
+    <h3><%= @story.title %> - <small><%= @story.release_date %></small></h3>
+    <p><em><%= @story.published ? 'P' : 'No p' %>ublicado</em></p>
+    <p><%= @story.description %></p>
+  </div>
+  <div class="chapter">
+    <h2 class="box">Chapter</h2>
+    <h3 id="chapter-title"></h3>
+    <p id="chapter-body"></p>
+  </div>
+  <ul id="chapter-list" class="list-unstyled"></ul>
+</div>
+<script type="text/javascript" charset="utf-8">
+$("document").ready(function(){
+  var self = window;
+  var ch_list = $("#chapter-list");
+  var ch = $(".chapter");
+  ch.hide();
+  $.getJSON("/stories/<%= @story.id %>.json").then(function(json){
+    self.story = json;
+    if(json.chapter_ids){
+      json.chapter_ids.forEach(function(id){
+        var btn = $("<button class='btn btn-primary'>");
+        btn.html("Read chapter "+id);
+        btn.click(function(event){
+          getChapter(id);
+        }).bind(this);
+        var li = $("<li>");
+        li.append(btn);
+        ch_list.append(li);
+      });
+    }else{
+      target.append($("<li>").text("no chapters"))
+    }
+  });
+
+  function getChapter(chapter_id){
+    var ch_title = $("#chapter-title");
+    var ch_body  = $("#chapter-body");
+    $.getJSON("/chapters/"+chapter_id+".json").then(function(chapter){
+      console.log(chapter);
+
+      ch_title.text(chapter.title);
+      ch_body.text(chapter.body);
+
+      ch.show();
+
+    });
+  }
+});
+</script>

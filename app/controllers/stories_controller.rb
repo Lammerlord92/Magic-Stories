@@ -34,6 +34,10 @@ class StoriesController < ApplicationController
     # @story = Story.find(params[:id])
   end
 
+  def dbread
+    @story = Story.find(params[:id]);
+  end
+
   #GET /stories/:id
   def show
     @story = Story.find(params[:id])

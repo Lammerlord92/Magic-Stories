@@ -11,9 +11,10 @@ class ProfilesController < ApplicationController
     @profile = Profile.find(params[:id])
     @is_current_profile = is_current_profile? @profile
     @is_friend_profile = is_friend_profile? @profile
-    unless @is_current_profile or @profile.profile_status == 'PUBLIC' or @is_friend_profile
-      head :forbidden # TODO: Mejor redirigir a public/403.html (por crear) para estos casos
-    end
+    #unless @is_current_profile or @profile.profile_status == 'PUBLIC' or @is_friend_profile
+    #  render 'errors/permission_denied'
+    #end
+    @comments = @profile.comments
   end
 
   #GET /profiles/new
@@ -22,7 +23,7 @@ class ProfilesController < ApplicationController
     if current_profile.present?
       @profile = Profile.new
     else
-      head :forbidden # TODO: Mejor redirigir a public/403.html (por crear) para estos casos
+      render 'errors/permission_denied'
     end
   end
 
@@ -30,7 +31,7 @@ class ProfilesController < ApplicationController
     @profile = set_profile
     current_profile = current_user.profile
     if @profile.id != current_profile.id
-      head :forbidden # TODO: Mejor redirigir a public/403.html (por crear) para estos casos
+      render 'errors/permission_denied'
     end
   end
 
@@ -44,7 +45,7 @@ class ProfilesController < ApplicationController
         render :new
       end
     else
-      head :forbidden
+      render 'errors/permission_denied'
     end
   end
 
@@ -57,7 +58,7 @@ class ProfilesController < ApplicationController
         render :edit
       end
     else
-      head :forbidden
+      render 'errors/permission_denied'
     end
   end
 
@@ -70,23 +71,31 @@ class ProfilesController < ApplicationController
   end
 
   def params_search
-
     params.permit(:q, :choice)
   end
 
 
   def search
     choice = params[:choice]
-    @q = params[:q].downcase
+    @q = params[:q]
+
+    if @q
+      @q = @q.downcase
+    else
+      @q = ''
+    end
+
+    queryUser = '(lower(name) like :q OR lower(surname1) like :q OR lower(surname2) like :q OR lower(email) like :q OR lower(username) like :q)'
+    users = User.where(queryUser, {q: "%#{@q}%"})
 
     # Si se quiere filtrar entre amigos
-    if (choice == "friends")
+    if user_signed_in? and choice == "friends"
 
       # Si q tiene alguna string para filtrar
       if @q
         subquery = '(friendships.user_id != :cu_id and friendships.friend_id = :cu_id)'
-        query = '(lower(profiles.name) like :q OR lower(signature) like :q OR lower(description) like :q)'
-        @profiles = Profile.distinct(:user_id).joins(:friendships).where(subquery, {cu_id: current_user.id}) & Profile.where(query, q: "%#{@q}%")
+        #query = '(lower(profiles.name) like :q OR lower(signature) like :q OR lower(description) like :q)'
+        @profiles = Profile.distinct(:user_id).joins(:friendships).where(subquery, {cu_id: current_user.id}) & Profile.where(user_id: users)
 
 
         if @profiles.blank?
@@ -99,16 +108,17 @@ class ProfilesController < ApplicationController
       end
 
       # Si se quiere filtrar entre no amigos
-    end
-    if (choice == "no_friends")
+
+    elsif user_signed_in? and choice == "no_friends"
 
       # Si q tiene alguna string buscamos por q y no amigos
       if @q
         query = '(lower(profiles.name) like :q OR lower(signature) like :q OR lower(description) like :q)'
         subquery = '(users.id != :cu_id and friendships.friend_id = :cu_id)'
 
-        @profiles = Profile.where(query, q: "%#{@q}%") &
+        @profiles = Profile.where(user_id: users) &
             (Profile.all - Profile.distinct(:user_id).joins(:friendships).where(subquery, {cu_id: current_user.id}))
+
         if @profiles.blank?
           flash.alert = "Perfil no encontrado"
         end
@@ -121,10 +131,11 @@ class ProfilesController < ApplicationController
 
       # Si no hay elección alguna entre amigos y no amigos, se filtra por q entre todos los perfiles
     else
-      query = '(lower(name) like :q OR lower(signature) like :q OR lower(description) like :q)'
+      #query = '(lower(name) like :q OR lower(signature) like :q OR lower(description) like :q'
 
       if @q
-        @profiles = Profile.where(query, {q: "%#{@q}%"})
+        #@profiles = Profile.where(query, {q: "%#{@q}%"})
+        @profiles = Profile.where(user_id: users)
         if @profiles.blank?
           flash.alert = "Perfil no encontrado"
         end
@@ -132,8 +143,8 @@ class ProfilesController < ApplicationController
 
 
     end
-    @profiles
-    render 'index'
+    #@profiles
+    #render 'index'
 
   end
 

@@ -37,7 +37,6 @@ Rails.application.routes.draw do
   #########################################################################
   
   get 'welcome/index'
-  get 'stories/read'
   get 'welcome/maker'
   get 'welcome/maker2'
   get 'welcome/maker3'
@@ -62,10 +61,15 @@ Rails.application.routes.draw do
   get 'request_friendships/cancel_friendship', to: 'request_friendships#cancel_friendship'
 
   #Stories
+  get 'stories/read'
+  get 'stories/read/:id' => 'stories#dbread' # read from DB
   get 'stories/acquired' => 'stories#acquired'
   get 'stories/created' => 'stories#created'
   get 'stories/search', to: 'stories#search'
   resources :stories
+
+  #Chapters
+  get 'chapters/:id' => 'chapters#show'
 
   #Profiles
   get 'profiles/search', to: 'profiles#search'
@@ -76,9 +80,6 @@ Rails.application.routes.draw do
   #Additions
   get 'additions/create/:story_id' => 'additions#create'
   delete 'additions' => 'additions#delete'
-
-  #users
-  get 'user' => 'user#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
