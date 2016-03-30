@@ -24,7 +24,7 @@
         <ul class="dropdown-menu">
           <% if user_signed_in? %>
               <% if current_user.profile %>
-                <li><a href="/users/">Mi cuenta</a></li>
+                <li><a href="/user/edit">Mi cuenta</a></li>
                 <li><a href="/profiles/<%= current_user.profile.id %>">Mi perfil</a></li>
               <% end %>
           <li><a href="/profiles">Comunidad</a></li>
