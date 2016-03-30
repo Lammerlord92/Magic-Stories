@@ -1859,7 +1859,7 @@ function actualizaNodo(){
 }
 
 function crearNuevoNodo(){
-    var container = document.getElementById("graphContainer");
+    //var container = document.getElementById("graphContainer");
     console.log(graph);
     var xml = mxUtils.createXmlDocument();
     var countVertex = graph.getChildVertices(graph.getDefaultParent()).length;
@@ -1883,6 +1883,16 @@ function crearNuevoNodo(){
         graph.getModel().endUpdate();
         var count2 = graph.getChildVertices(graph.getDefaultParent()).length;
         console.log(count2);
+    }
+}
+
+function eliminar(){
+    var selectedThing = null;
+    graph.container.focus();
+    selectedThing = graph.getSelectionCell();
+
+    if(selectedThing!=null){
+        graph.getModel().remove(selectedThing);
     }
 }
 
