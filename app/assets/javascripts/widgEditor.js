@@ -108,6 +108,11 @@ widgToolbarItems.push("orderedlist");
 widgToolbarItems.push("image");
 widgToolbarItems.push("htmlsource");
 widgToolbarItems.push("blockformat");
+widgToolbarItems.push("alignRight");
+widgToolbarItems.push("alignLeft");
+widgToolbarItems.push("center");
+widgToolbarItems.push("justify");
+widgToolbarItems.push("underline");
 
 /* Options on block format select element. Consists of string pairs (option value, option label) */
 var widgSelectBlockOptions = new Array();
@@ -521,6 +526,13 @@ function convertSPANs(ifr,theSwitch)
 					theReplacementElement.appendChild(theParentElement);
 					
 					break;
+
+                /*TODO case "text-align: center;":
+                    window.alert("ja jaja estoy aqui!!");
+                    theParentElement = ifr.theIframe.contentWindow.document.createElement("center");
+                    theReplacementElement.appendChild(theParentElement);
+
+                    break;*/
 					
 				default:
 					replaceNodeWithChildren(theSPANs[0]);
@@ -1022,6 +1034,31 @@ function widgToolbar(theEditor)
 				this.addSelect(this.theList.id + "SelectBlock", "widgSelectBlock", widgSelectBlockOptions, "formatblock");
 				
 				break;
+
+            case "alignRight":
+                this.addButton(this.theList.id + "ButtonAlignRight", "widgButtonAlignRight", "Align Right", "right");
+
+                break;
+
+            case "alignLeft":
+                this.addButton(this.theList.id + "ButtonAlignLeft", "widgButtonAlignLeft", "Align Left", "left");
+
+                break;
+
+            case "center":
+                this.addButton(this.theList.id + "ButtonCenter", "widgButtonCenter", "Center", "center");
+
+                break;
+
+            case "justify":
+                this.addButton(this.theList.id + "ButtonJustify", "widgButtonJustify", "Justify", "justify");
+
+                break;
+
+            case "underline":
+                this.addButton(this.theList.id + "ButtonUnderline", "widgButtonUnderline", "Underline", "underline");
+
+                break;
 		}
 	}
 
@@ -1431,6 +1468,12 @@ function widgToolbarCheckState(theWidgEditor, resubmit)
 				theWidgEditor.theToolbar.setState("Italic", "on");
 				
 				break;
+
+            /*TODO case "center":
+                window.alert("Entra en center!!");
+                theWidgEditor.theToolbar.setState("Center", "on");
+
+                break;*/
 				
 			case "li":
 			
@@ -1461,6 +1504,12 @@ function widgToolbarCheckState(theWidgEditor, resubmit)
 					theWidgEditor.theToolbar.setState("Bold", "on");
 					theWidgEditor.theToolbar.setState("Italic", "on");
 				}
+
+                /*TODO else if(theParentNode.getAttribute("style") == "text-align: center;")
+                {
+                    window.alert("ENtra aqui2!!!");
+                    theWidgEditor.theToolbar.setState("Center", "on");
+                }*/
 				
 				break;
 			
@@ -1474,6 +1523,16 @@ function widgToolbarCheckState(theWidgEditor, resubmit)
 				theWidgEditor.theToolbar.setState("Ordered", "off");
 				
 				break;
+
+            case "u":
+                theWidgEditor.theToolbar.setState("Underline", "on");
+
+                break;
+
+            /*TODO case "p":
+                theWidgEditor.theToolbar.setState("Center", "on");
+                window.alert("WIIII");
+                break;*/
 			
 			default:
 				theWidgEditor.theToolbar.setState("SelectBlock", "<" + theParentNode.nodeName.toLowerCase() + ">");
@@ -1659,7 +1718,7 @@ String.prototype.isAcceptedElementName = function()
 /* Check if a string is the nodeName of an inline element */
 String.prototype.isInlineName = function()
 {
-	var inlineList = new Array("#text", "a", "em", "font", "span", "strong", "u");
+	var inlineList = new Array("#text", "a", "em", "font", "span", "strong", "u", "p");
 	var theName = this.toLowerCase();
 	
 	for (var i = 0; i < inlineList.length; i++)
@@ -1772,6 +1831,182 @@ function actualizaNodo(){
                 //TODO }
                 console.log("Body del nodo"+attrs[i].value);
             }
+        }
+
+        var graphBB = savedCell;
+    }
+
+}
+
+function crearNuevoNodo(){
+    var container = document.getElementById("graphContainer");
+    console.log(graph);
+    var xml = mxUtils.createXmlDocument();
+    var countVertex = graph.getChildVertices(graph.getDefaultParent()).length;
+    console.log(countVertex);
+    var count = countVertex+1;
+    var chapterX = xml.createElement('Chapter');
+    var newId = 'Chapter' + count;
+    console.log(newId);
+    chapterX.setAttribute('title', 'Example Title for the Chapter' + count);
+    chapterX.setAttribute('body', 'Example body for the Chapter' + count);
+
+    var parent = graph.getDefaultParent();
+
+    graph.getModel().beginUpdate();
+    try {
+        graph.insertVertex(parent, null, chapterX, 40, 200, chapterX.getAttribute('title').length * 7, 30);
+        console.log("Lo hace");
+    }
+    finally {
+        // Updates the display
+        graph.getModel().endUpdate();
+        var count2 = graph.getChildVertices(graph.getDefaultParent()).length;
+        console.log(count2);
+    }
+}
+
+
+function centrar(){
+    var iFrameAux = $("#my_textBodyWidgIframe").contents();
+    var newEntryData = iFrameAux.find('body');
+
+    if(savedCell== null || savedGraph == null){
+        console.log("Entra en el IF tras click en la funcion centrar");
+    }
+
+    else{
+        console.log("Entra en el ELSE tras click en la funcion centrar");
+        var cellBB = savedCell;
+        var graphBB = savedGraph;
+        var attrs = cellBB.value.attributes;
+
+        newEntryData.append($("<style type='text/css'>  body{text-align: center}  </style>"));;
+
+        console.log(newEntryData);
+
+        graphBB.getModel().beginUpdate();
+        try {
+            var edit = new mxCellAttributeChange(
+                cellBB, attrs[1].nodeName,
+                newEntryData);
+            graphBB.getModel().execute(edit);
+            graphBB.updateCellSize(cellBB);
+        }
+        finally {
+            graphBB.getModel().endUpdate();
+            graphBB=null;
+        }
+
+        var graphBB = savedCell;
+    }
+
+}
+
+
+function derecha(){
+    var iFrameAux = $("#my_textBodyWidgIframe").contents();
+    var newEntryData = iFrameAux.find('body');
+
+    if(savedCell== null || savedGraph == null){
+        console.log("Entra en el IF tras click en la funcion centrar");
+    }
+
+    else{
+        console.log("Entra en el ELSE tras click en la funcion centrar");
+        var cellBB = savedCell;
+        var graphBB = savedGraph;
+        var attrs = cellBB.value.attributes;
+
+        newEntryData.append($("<style type='text/css'>  body{text-align: right}  </style>"));;
+
+        console.log(newEntryData);
+
+        graphBB.getModel().beginUpdate();
+        try {
+            var edit = new mxCellAttributeChange(
+                cellBB, attrs[1].nodeName,
+                newEntryData);
+            graphBB.getModel().execute(edit);
+            graphBB.updateCellSize(cellBB);
+        }
+        finally {
+            graphBB.getModel().endUpdate();
+            graphBB=null;
+        }
+
+        var graphBB = savedCell;
+    }
+
+}
+
+
+function izquierda(){
+    var iFrameAux = $("#my_textBodyWidgIframe").contents();
+    var newEntryData = iFrameAux.find('body');
+
+    if(savedCell== null || savedGraph == null){
+        console.log("Entra en el IF tras click en la funcion centrar");
+    }
+
+    else{
+        console.log("Entra en el ELSE tras click en la funcion centrar");
+        var cellBB = savedCell;
+        var graphBB = savedGraph;
+        var attrs = cellBB.value.attributes;
+
+        newEntryData.append($("<style type='text/css'>  body{text-align: left}  </style>"));;
+
+        console.log(newEntryData);
+
+        graphBB.getModel().beginUpdate();
+        try {
+            var edit = new mxCellAttributeChange(
+                cellBB, attrs[1].nodeName,
+                newEntryData);
+            graphBB.getModel().execute(edit);
+            graphBB.updateCellSize(cellBB);
+        }
+        finally {
+            graphBB.getModel().endUpdate();
+            graphBB=null;
+        }
+
+        var graphBB = savedCell;
+    }
+
+}
+
+
+function justificar(){
+    var iFrameAux = $("#my_textBodyWidgIframe").contents();
+    var newEntryData = iFrameAux.find('body');
+
+    if(savedCell== null || savedGraph == null){
+        console.log("Entra en el IF tras click en la funcion centrar");
+    }
+
+    else{
+        console.log("Entra en el ELSE tras click en la funcion centrar");
+        var cellBB = savedCell;
+        var graphBB = savedGraph;
+        var attrs = cellBB.value.attributes;
+
+        newEntryData.append($("<style type='text/css'>  body{text-align: justify}  </style>"));;
+
+        console.log(newEntryData);
+
+        graphBB.getModel().beginUpdate();
+        try {
+            var edit = new mxCellAttributeChange(
+                cellBB, attrs[1].nodeName,
+                newEntryData);
+            graphBB.getModel().execute(edit);
+            graphBB.updateCellSize(cellBB);
+        }
+        finally {
+            graphBB.getModel().endUpdate();
+            graphBB=null;
         }
 
         var graphBB = savedCell;
