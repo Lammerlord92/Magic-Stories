@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160317121738) do
+ActiveRecord::Schema.define(version: 20160402190125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,7 +51,6 @@ ActiveRecord::Schema.define(version: 20160317121738) do
     t.string   "icon_content_type"
     t.integer  "icon_file_size"
     t.datetime "icon_updated_at"
-    t.text     "icon"
   end
 
   create_table "chapters", force: :cascade do |t|
@@ -96,6 +95,17 @@ ActiveRecord::Schema.define(version: 20160317121738) do
     t.boolean  "used"
   end
 
+  create_table "follows", force: :cascade do |t|
+    t.string   "follower_type"
+    t.integer  "follower_id"
+    t.string   "followable_type"
+    t.integer  "followable_id"
+    t.datetime "created_at"
+  end
+
+  add_index "follows", ["followable_id", "followable_type"], name: "fk_followables", using: :btree
+  add_index "follows", ["follower_id", "follower_type"], name: "fk_follows", using: :btree
+
   create_table "free_users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -110,6 +120,17 @@ ActiveRecord::Schema.define(version: 20160317121738) do
   end
 
   add_index "friendships", ["request_friendship_id"], name: "index_friendships_on_request_friendship_id", using: :btree
+
+  create_table "likes", force: :cascade do |t|
+    t.string   "liker_type"
+    t.integer  "liker_id"
+    t.string   "likeable_type"
+    t.integer  "likeable_id"
+    t.datetime "created_at"
+  end
+
+  add_index "likes", ["likeable_id", "likeable_type"], name: "fk_likeables", using: :btree
+  add_index "likes", ["liker_id", "liker_type"], name: "fk_likes", using: :btree
 
   create_table "mailboxer_conversation_opt_outs", force: :cascade do |t|
     t.integer "unsubscriber_id"
@@ -164,6 +185,27 @@ ActiveRecord::Schema.define(version: 20160317121738) do
   add_index "mailboxer_receipts", ["notification_id"], name: "index_mailboxer_receipts_on_notification_id", using: :btree
   add_index "mailboxer_receipts", ["receiver_id", "receiver_type"], name: "index_mailboxer_receipts_on_receiver_id_and_receiver_type", using: :btree
 
+  create_table "membership_cards", force: :cascade do |t|
+    t.string   "code"
+    t.datetime "expiration"
+    t.float    "premiumMonths"
+    t.text     "message"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "usage"
+  end
+
+  create_table "mentions", force: :cascade do |t|
+    t.string   "mentioner_type"
+    t.integer  "mentioner_id"
+    t.string   "mentionable_type"
+    t.integer  "mentionable_id"
+    t.datetime "created_at"
+  end
+
+  add_index "mentions", ["mentionable_id", "mentionable_type"], name: "fk_mentionables", using: :btree
+  add_index "mentions", ["mentioner_id", "mentioner_type"], name: "fk_mentions", using: :btree
+
   create_table "options", force: :cascade do |t|
     t.string   "option"
     t.datetime "created_at", null: false
@@ -175,6 +217,7 @@ ActiveRecord::Schema.define(version: 20160317121738) do
   create_table "premium_users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "expiration"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -186,6 +229,13 @@ ActiveRecord::Schema.define(version: 20160317121738) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.string   "profile_status"
+  end
+
+  create_table "readings", force: :cascade do |t|
+    t.integer  "story_id"
+    t.integer  "profile_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "reports", force: :cascade do |t|
@@ -222,7 +272,6 @@ ActiveRecord::Schema.define(version: 20160317121738) do
     t.integer  "cover_file_size"
     t.datetime "cover_updated_at"
     t.integer  "profile_id"
-    t.text     "cover"
   end
 
   add_index "stories", ["profile_id"], name: "index_stories_on_profile_id", using: :btree

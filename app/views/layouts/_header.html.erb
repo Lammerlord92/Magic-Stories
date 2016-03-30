@@ -1,20 +1,35 @@
-<header class="navbar navbar-default">
-  <div class="container">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/">Tree Story</a>
+<header class="navbar navbar-default" id="lay">
+  <div class="container" id="barcon" >
+    <div class="navbar-header row row-centered  col-md-4 col-centered">
+
+      <a href="/">
+        <img class="image-responsive  col-md-4 col-centered" src="/assets/logo fondo.png" alt="Tree Story">
+      </a>
+
+      <a id="barcon" href="">
+        <img class="image-responsive  col-md-2 col-centered" src="/assets/msj blanco.png" alt="Comentarios">
+      </a>
+
     </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="/categories">Categorías</a></li>
+    <ul class="nav navbar-nav" id="barcon">
+      <li><a href="/stories" id="barcon">Descubrir</a></li>
+
+      <li><a href="/categories" id="barcon">Géneros</a></li>
+
       <% if user_signed_in? %>
-        <li><a href="/categories/new">Crear categoría</a></li> <!-- No tiene sentido que cualquiera entre y llene la BD de mierda -->
+        <% if current_user.role_type == 'PremiumUser' %>
+
+          <li><%= button_to '+ Nueva Historia',"/stories/new",  class: 'btn',method: :get, id: 'NH' %></li>
+        
+        <% end %>
       <% end %>
-      <li><a href="/stories">Historias</a></li>
-      <% if user_signed_in? %>
-        <li><a href="/stories/new">Crear historia</a></li> <!-- No tiene sentido que cualquiera entre y llene la BD de mierda -->
-      <% end %>
-      <li class="dropdown">
+    
+    </ul>
+    
+    <ul class="nav navbar-nav navbar-right" id="barcon">  
+      <li class="dropdown" id="barcon">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-            role="button" aria-haspopup="true" aria-expanded="false">
+            role="button" aria-haspopup="true" aria-expanded="false" id="barcon">
           <% if user_signed_in? %>
           <%= current_user.username %>
           <% else %>
@@ -24,9 +39,13 @@
         <ul class="dropdown-menu">
           <% if user_signed_in? %>
               <% if current_user.profile %>
-                <li><a href="/user/edit">Mi cuenta</a></li>
                 <li><a href="/profiles/<%= current_user.profile.id %>">Mi perfil</a></li>
               <% end %>
+              <% if current_user.role_type == 'Administrator' %>
+                  <li><a href="/categories/new">Crear género</a></li> <!-- No tiene sentido que cualquiera entre y llene la BD de mierda -->
+              <% end %>
+
+
           <li><a href="/profiles">Comunidad</a></li>
           <li><a href="/profiles/search?choice=friends">Mis conexiones</a></li>
           <li role="separator" class="divider"></li>

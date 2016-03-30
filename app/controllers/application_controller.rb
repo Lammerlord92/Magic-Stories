@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
 
   before_filter :configure_permitted_parameters, if: :devise_controller?
 
-
   def respond_modal_with(*args, &blk)
     options = args.extract_options!
     options[:responder] = ModalsResponder
@@ -19,4 +18,15 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:sign_up) {|u| u.permit(:email, :password, :password_confirmation,
                                                            :username, :name, :surname1, :surname2, :sku, :birthday, :phone)}
   end
+
+  # Sin layout para páginas de devise
+
+  layout :layout
+
+  private
+
+  def layout
+    !(devise_controller? && action_name != 'edit') && "application"
+  end
+
 end
