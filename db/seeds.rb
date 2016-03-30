@@ -340,4 +340,14 @@ story3.save!
 
 puts 'Success: Asignacion de categorias a historias'
 
+# Creacion de Comments'user7', surname1: 'surname71', surname2: 'suername72'
+comment1 = Comment.create({title: 'Title1', body: 'Body1', date: '01/01/2016', rating: 1, author: 'user2 surname21 surname22', profile: user1.profile})
+comment2 = Comment.create({title: 'Title2', body: 'Body2', date: '01/01/2016', rating: 10, author: 'user3 surname31 surname32', profile: user1.profile})
+comment3 = Comment.create({title: 'Title3', body: 'Body3', date: '03/01/2016', rating: 5, author: 'user3 surname31 surname32', profile: user1.profile})
+comment4 = Comment.create({title: 'Title4', body: 'Body4', date: '04/01/2016', rating: 8, author: 'user1 surname11 surname12', profile: user1.profile})
+comment5 = Comment.create({title: 'Title5', body: 'Body5', date: '05/01/2016', rating: 1, author: 'user2 surname21 surname22', profile: user2.profile})
+comment6 = Comment.create({title: 'Title6', body: 'Body6', date: '01/02/2016', rating: 7, author: 'user2 surname21 surname22', profile: user2.profile})
+comment7 = Comment.create({title: 'Title7', body: 'Body7', date: '03/02/2016', rating: 5, author: 'user5 surname51 surname52', profile: user3.profile})
+comment8 = Comment.create({title: 'Title8', body: 'Body8', date: '07/02/2016', rating: 8, author: 'user8 surname81 surname82', profile: user6.profile})
 
+puts 'Success: Creacion de comentarios'
