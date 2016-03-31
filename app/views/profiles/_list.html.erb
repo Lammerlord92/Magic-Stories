@@ -33,7 +33,7 @@
 
     <!-- Botón de amistad -->
     <% if user_signed_in? %>
-    <div class="row container-fluid">
+    <div class="row container-fluid boton">
     <% if current_user.profile == profile %>
       <%= link_to "Editar mi perfil", "/profiles/#{profile.id}/edit", class: "btn btn-primary btn-block" %>
     <% elsif current_user.profile.isFriend(profile) %>
