@@ -17,9 +17,11 @@
     <% end %>
 
     <div class="field">
-      <label for="cover">Portada</label><br>
-      <%= f.file_field :cover %>
+      <input type="file" onchange="previewFile()"><br>
+      <img src="<%=@story.cover %>" height="200" alt="Imagen actual">
+
     </div>
+    <%=hidden_field(:story,:cover)%>
     <div class="field">
       <label for="title">Titulo</label><br>
       <%= f.text_field :title, placeholder: "Título" %>

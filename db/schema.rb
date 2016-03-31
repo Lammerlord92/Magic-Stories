@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20160317121738) do
     t.string   "icon_content_type"
     t.integer  "icon_file_size"
     t.datetime "icon_updated_at"
+    t.text     "icon"
   end
 
   create_table "chapters", force: :cascade do |t|

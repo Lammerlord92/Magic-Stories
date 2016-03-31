@@ -1,5 +1,5 @@
 class AddIconToCategories < ActiveRecord::Migration
   def change
-    add_attachment :categories, :icon
+    add_column :categories, :icon, :text
   end
 end
