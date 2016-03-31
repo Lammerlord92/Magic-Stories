@@ -1,5 +1,5 @@
 class AddCoverToStories < ActiveRecord::Migration
   def change
-    add_attachment :stories,:cover
+    add_column :stories, :cover, :text
   end
 end

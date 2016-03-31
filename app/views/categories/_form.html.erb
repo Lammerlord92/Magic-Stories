@@ -1,3 +1,29 @@
+<script>
+  document.onload=function(){
+    previewFile();  //calls the function named previewFile()
+  }
+  function previewFile(){
+    var preview = document.querySelector('img'); //selects the query named img
+    var file    = document.querySelector('input[type=file]').files[0]; //sames as here
+    var reader  = new FileReader();
+
+    reader.onloadend = function () {
+      preview.src = reader.result;
+      document.getElementById("category_icon").setAttribute("value",reader.result);
+    }
+
+    if (file) {
+      reader.readAsDataURL(file); //reads the data as a URL
+
+    } else {
+      preview.src = "";
+    }
+  }
+
+
+</script>
+
+
 <% name ||= "Crear" %>
 <h1><%= name %> categoría</h1>
 <%= form_for(@category) do |cat|%>
@@ -13,9 +39,11 @@
         <%= cat.text_area :description, placeholder: "Descripción de categoría", class:"form-field" %>
     </div>
     <div class="field">
-      Icono:
-      <%= cat.file_field :icon%>
+      <input type="file" onchange="previewFile()"><br>
+      <img src="<%=@category.icon %>" height="200" alt="Imagen actual">
+
     </div>
+    <%=hidden_field(:category,:icon)%>
     <div class="buttons">
       <%= cat.submit "Guardar", class:"btn btn-default" %>
       <%= link_to "Volver", categories_path,class: "btn btn-default" %>
