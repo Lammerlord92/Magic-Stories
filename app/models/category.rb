@@ -17,7 +17,7 @@ class Category
     c=Category.find_by_name(self.name)
     if !c.nil?
       if !(c.id==self.id)
-        self.errors.add(:category, 'Ese nombre ya existe, panoli')
+        self.errors.add(:category,'Ese nombre ya existe, panoli')
         false
       end
     end
