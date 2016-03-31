@@ -1,4 +1,16 @@
-class Story < ActiveRecord::Base
+class Story
+  include Cequel::Record
+
+  key :id, :timeuuid, auto: true
+  column :frontpage, :text
+  column :title, :text
+  column :description, :text
+  column :language, :text
+  column :price, :double
+  column :release_date, :timestamp
+  column :published, :boolean
+  column :num_purchased, :int    #:bigint
+
   #validates :frontpage, presence: true
   validates :title, presence: true
   validates :description, presence: true
@@ -6,14 +18,14 @@ class Story < ActiveRecord::Base
   #Precio debe ser minimo 0
   #validates :price, :format => { :with => /\A\d+(?:\.\d{0,2})?\z/ }, :numericality => {:greater_than => 0}
   # :release_date debe estar en pasado
-  validates_associated :chapters
-  validate :check_date
+#  validates_associated :chapters
+#  validate :check_date
 
-  attr_reader :categories
-  has_many :chapters
-  has_many :story_categories
-  has_many :categories, through: :story_categories
-  has_many :comments
+#  attr_reader :categories
+#  has_many :chapters
+#  has_many :story_categories
+#  has_many :categories, through: :story_categories
+#  has_many :comments
 
   #TODO
   #Hasta que no se solucione el problema con la gema de imagenes
