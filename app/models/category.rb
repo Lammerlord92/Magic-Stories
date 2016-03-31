@@ -4,14 +4,15 @@ class Category
 #  has_many :stories, through: :story_categories
 
   key :id, :timeuuid, auto: true
-  column :name, :text, :index => true, unique: true
+  column :name, :text, :index => true
   column :description, :text
   column :icon, :text
   validates :description, presence: true
   validates :icon, presence: true
 #  validates :icon, presence: true
-  before_save :check_category_name
 
+  #Forma de comprobar que el nombre es único
+  before_save :check_category_name
   def check_category_name
     c=Category.find_by_name(self.name)
     if !c.nil?
