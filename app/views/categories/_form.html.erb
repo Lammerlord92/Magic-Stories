@@ -1,5 +1,10 @@
 <script>
 document.onload=function() {
+  var title = $("#tit");
+  var name=$();
+  if (title=!"Nuevo género"){
+    title.hide();
+  }
   previewFile();  //calls the function named previewFile()
 }
 function previewFile() {
@@ -22,17 +27,20 @@ function previewFile() {
 
 </script>
 
-<% name ||= "Crear" %>
-<h1><%= name %> género</h1>
+<% name ||= "Nuevo género" %>
+<h1 id="tit"><%= name %> </h1>
 <%= form_for(@category) do |cat|%>
     <% @category.errors.full_messages.each do |message| %>
         <div class="error">
           *<%= message  %>
         </div>
     <% end %>
+
     <div class="field">
-      <%= cat.text_field :name, placeholder: "Género", class:"form-field" %>
+      <!-- Hay que ponerle un if para que al editarlo no se pueda modificar o hacer un método que se compruebe que no exista en la db-->
+        <%= cat.text_field :name, placeholder: "Género", class:"form-field" %>
     </div>
+
     <div class="field">
         <%= cat.text_area :description, placeholder: "Descripción del género", class:"form-field" %>
     </div>
