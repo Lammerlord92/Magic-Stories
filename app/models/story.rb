@@ -22,7 +22,7 @@ class Story
 #  validate :check_date
 
 #  attr_reader :categories
-#  has_many :chapters
+  has_many :chapters
 #  has_many :story_categories
 #  has_many :categories, through: :story_categories
 #  has_many :comments
