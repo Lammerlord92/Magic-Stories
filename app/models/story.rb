@@ -34,37 +34,37 @@ class Story
 
   #Creador perfil
   #TODO Ahora el foreign key es "id" porque si no peta, hay que arreglarlo
-  belongs_to :creatorProfile, class_name: "Profile", foreign_key: "profile_id"
+#  belongs_to :creatorProfile, class_name: "Profile", foreign_key: "profile_id"
 
 #  has_attached_file :cover, styles: {medium: "1280x720", thumb:"500x300"}
 #  validates_attachment_content_type :cover, content_type: /\Aimage\/.*\Z/
 
 
   #Setter de la relación
-  def categories=(value)
-    @categories=value
-  end
+#  def categories=(value)
+#    @categories=value
+#  end
 
-  def check_date
-    date1 = release_date - 1
-    date2 = Time.now()
+#  def check_date
+#    date1 = release_date - 1
+#    date2 = Time.now()
 
-    date2 > date1
-  end
+#    date2 > date1
+#  end
 
   # Devuelve TRUE si la historia ha sido adquirida por el usuario 'user'.
-  def has_been_acquired_by_user?(user)
-    current_user_profile = Profile.find_by(user_id: user.id)
-    addition = Addition.find_by(profile_id: current_user_profile, story_id: self.id)
-    addition != nil
-  end
+#  def has_been_acquired_by_user?(user)
+#    current_user_profile = Profile.find_by(user_id: user.id)
+#    addition = Addition.find_by(profile_id: current_user_profile, story_id: self.id)
+#    addition != nil
+#  end
 
-  private
+#  private
 
-  def save_categories
-    @categories.each do |category_id|
-      Story_category.create(category_id:category_id, story_id:self.id)
-    end
-  end
+#  def save_categories
+#    @categories.each do |category_id|
+#      Story_category.create(category_id:category_id, story_id:self.id)
+#    end
+#  end
 
 end
