@@ -267,12 +267,34 @@
         // Gets the selection cell
         cell = graph.getSelectionCell();
 
+        //Global variables
+        window.savedCell = null;
+        window.savedGraph = null;
+
         if (cell == null) {
+          //var changingObject = $("#my_textBodyWidgIframe").contents().set('body','aahahahaha');
+          $('#properties').hide();
+          //var changingBody = changingObject.find('body').html();
+          //console.log("linea de cambio = "+changingBody);
+
           //mxUtils.writeln(div, 'Nothing selected.');
           document.getElementById("my_textTitle").value = "Nothing selected";
-          document.getElementById("my_textBody").value = "Nothing selected 2";
+          //document.getElementById("my_textBodyWidgIframe").value = "Nothing selected 2";
         }
         else {
+          $('#properties').show();
+          console.log("ENTRA EN EL ELSE");
+          //var buttonAux = $("#submitButtonId");
+          var buttonAux = document.getElementById("submitButtonId");
+
+          //Change global variables
+          savedCell = cell;
+          savedGraph = graph;
+
+          //buttonAux.setAttribute("a1",cell);
+          //buttonAux.setAttribute("a2",graph);
+          //buttonAux.data("a1",JSON.stringify(cell));
+          //buttonAux.data("a2",JSON.stringify(graph));
 
           var attrs = cell.value.attributes;
 
@@ -282,7 +304,9 @@
             } else { //Obtains the body
               var data = attrs[i];
               var titleValue = data.value;
-              widgEditor("my_textBody",titleValue);
+
+              //widgEditor("my_textBody",titleValue);
+              setFormBodyValue(titleValue,cell,graph);
             }
           }
           //mxUtils.br(div);
@@ -330,18 +354,24 @@
 
 
       function setFormBodyValue(bodyValue,cell,graph) {
-        document.getElementById("my_textBody").value = bodyValue.nodeValue;
-        var inputBody = document.getElementById("my_textBody");
+        //document.getElementById("my_textBody").value = bodyValue.nodeValue;
+        widgEditor("my_textBody",bodyValue);
+        var inputBody = document.getElementById("my_textBodyWidgIframe");
+        var iFrameContent = $("#my_textBodyWidgIframe").contents();
+        console.log("my_textBody ="+bodyValue);
+        console.log("inputBody = "+iFrameContent.find('body').html());
 
         //Check if the body value is different from the previous one and changes it
 
-         var applyHandler = function () {
+        var applyHandler = function () {
           var newValue = inputBody.value || '';
           var oldValue = bodyValue.nodeValue;
-
+          console.log("newValue = "+newValue);
+          console.log("oldValue ="+oldValue);
 
           if (newValue != oldValue) {
             graph.getModel().beginUpdate();
+            console.log("newValue y oldValue son distintos");
             try {
               var edit = new mxCellAttributeChange(
                   cell, bodyValue.nodeName,
@@ -352,6 +382,9 @@
             finally {
               graph.getModel().endUpdate(); graph=null;
             }
+          }
+         else{
+            console.log("newValue y oldValue son iguales");
           }
         };
 
@@ -381,19 +414,6 @@
       }
 
     });
-  </script>
-
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $("#buttonStory").on('click',function(){
-        $("#modal").modal({
-          show:true
-        });
-        $("#close").on('click',function(){
-          $("#modal").modal('hide');
-        });
-      })
-    })
   </script>
 
 </div>
@@ -440,6 +460,8 @@
           <!--<textarea id="my_textBody" name="noise" class="widgEditor nothing"/>
           <input id="theTextarea" name="noise" class="widgEditor nothing"/>-->
           <br/>
+
+          <button id="submitButtonId" name="submitButtonName" onclick="actualizaNodo()"> Guardar body</button>
          </div>
       </div>
 

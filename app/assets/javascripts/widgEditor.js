@@ -206,7 +206,8 @@ function widgEditor(replacedTextareaID,titleValue)
 {
 
     var self = this;
-
+    console.log("Dentro del widgEditor(), replacedTextAreaID = "+replacedTextareaID);
+    console.log("Dentro del widgEditor(), titleValue = "+titleValue);
     //Variable para comprobar de si existe o no ya un container
     var alreadyContainer = document.getElementById("my_textBodyWidgContainer");
 
@@ -253,7 +254,7 @@ function widgEditor(replacedTextareaID,titleValue)
 
     //TODO AQUI CAMBIO EL VALOR DEL TEXTAREA DEL EDITOR
     this.theInput.value = this.theTextarea.value;
-
+    console.log("this.theIframe.contenido ="+this.theIframe.innerText);
     //TODO AQUI ES DONDE SE AÑADE EL MENU DE EDICION
     this.theToolbar = new widgToolbar(this);
 
@@ -286,7 +287,7 @@ function widgEditor(replacedTextareaID,titleValue)
     /* Fill editor with old textarea content */
     var ifr = this;
     writeDocument(this.theInput.value,ifr);
-
+    console.log("this.theInput.value = "+this.theInput.value);
     /* Make editor editable */
     initEdit(ifr);
 
@@ -918,7 +919,6 @@ widgEditor.prototype.updateWidgInput = function()
 /* Write initial content to editor */
 function writeDocument (documentContent,auxThis)
 {
-	window.alert("DOcCOntent" + documentContent);
 	/* HTML template into which the HTML Editor content is inserted */
 	var documentTemplate = '\
 		<html>\
@@ -935,7 +935,7 @@ function writeDocument (documentContent,auxThis)
 	/* IE needs stylesheet to be written inline */
 	if (typeof document.all != "undefined")
 	{
-		documentTemplate = documentTemplate.replace(/INSERT:STYLESHEET:END/, '<link rel="stylesheet" type="text/css" href="' + widgStylesheet + '"></link>');
+		documentTemplate = documentTemplate.replace(/INSERT:STYLESHEET:END/, '<link rel="stylesheet" type="text/css" href="' + widgStylesheet + '"/>');
 	}
 	/* Firefox can't have stylesheet written inline */
 	else
@@ -1729,4 +1729,52 @@ String.prototype.validTags = function()
 		});
 		
 	return theString;
+}
+
+
+
+
+function actualizaNodo(){
+    var iFrameAux = $("#my_textBodyWidgIframe").contents();
+    var newEntryData = iFrameAux.find('body').html();
+    var buttonAux = document.getElementById("submitButtonId");
+
+
+    if(savedCell== null || savedGraph == null){
+        console.log("Entra en el IF tras click");
+    }
+
+    else{
+        console.log("Entra en el ELSE tras click");
+        var cellBB = savedCell;
+        var graphBB = savedGraph;
+        var attrs = cellBB.value.attributes;
+
+        for (var i = 0; i < attrs.length; i++) {
+            if (i == 0) { //Obtains the title
+                console.log("Título del nodo "+attrs[i].value);
+            } else { //Obtains the body
+                console.log("Valor a comparar 1 -> ",newEntryData);
+                console.log("Valor a comparar 2 -> ",attrs[1].value);
+                //TODO if (newEntryData != attrs[1].value) {
+                    graphBB.getModel().beginUpdate();
+                     try {
+                     var edit = new mxCellAttributeChange(
+                     cellBB, attrs[1].nodeName,
+                     newEntryData);
+                     graphBB.getModel().execute(edit);
+                     graphBB.updateCellSize(cellBB);
+                     }
+                     finally {
+                     graphBB.getModel().endUpdate();
+                     graphBB=null;
+                     }
+                //TODO }
+                console.log("Body del nodo"+attrs[i].value);
+            }
+        }
+
+        var graphBB = savedCell;
+    }
+
 }
