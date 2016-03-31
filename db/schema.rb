@@ -229,6 +229,7 @@ ActiveRecord::Schema.define(version: 20160317121738) do
     t.integer  "cover_file_size"
     t.datetime "cover_updated_at"
     t.integer  "profile_id"
+    t.text     "cover"
   end
 
   add_index "stories", ["profile_id"], name: "index_stories_on_profile_id", using: :btree

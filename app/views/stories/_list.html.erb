@@ -1,9 +1,9 @@
+
 <% @stories.each do |story| %>
   <div class="row">
     <div class="col-md-3">
-      <!-- Imagen de test -->
-      <% a = "http://photos1.meetupstatic.com/photos/event/2/a/6/a/global_11230858.jpeg" %>
-      <%= image_tag( a, class: "img-circle") %>
+      <!-- Imagen de test  -->
+      <img class="cover" src="<%=story.cover %>" height="150" srcset="http://www.drosophila.es/wp-content/uploads/2013/11/Bellota_Encina_Carrasca.jpg">
     </div>
     <div class="col-md-8 text-center pull-right story">
       <h3><a href="/stories/<%=story.id %>"><%= story.title %></a></h3>
