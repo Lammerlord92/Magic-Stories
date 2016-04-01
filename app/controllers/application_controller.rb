@@ -20,13 +20,13 @@ class ApplicationController < ActionController::Base
   end
 
   # Sin layout para páginas de devise
-  
+
   layout :layout
 
   private
 
   def layout
-    devise_controller? && "application"
+    !devise_controller? && "application"
   end
 
 end
