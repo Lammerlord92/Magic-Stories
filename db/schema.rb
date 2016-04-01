@@ -11,10 +11,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160210190237) do
+ActiveRecord::Schema.define(version: 20160317121738) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "actor_user_groups", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "usergroup_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "additions", force: :cascade do |t|
+    t.datetime "purchase_date"
+    t.float    "base_price"
+    t.integer  "discount_id"
+    t.integer  "profile_id"
+    t.integer  "story_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "additions", ["discount_id"], name: "index_additions_on_discount_id", using: :btree
+  add_index "additions", ["profile_id"], name: "index_additions_on_profile_id", using: :btree
+  add_index "additions", ["story_id"], name: "index_additions_on_story_id", using: :btree
 
   create_table "administrators", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -24,8 +45,13 @@ ActiveRecord::Schema.define(version: 20160210190237) do
   create_table "categories", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.string   "icon_file_name"
+    t.string   "icon_content_type"
+    t.integer  "icon_file_size"
+    t.datetime "icon_updated_at"
+    t.text     "icon"
   end
 
   create_table "chapters", force: :cascade do |t|
@@ -38,10 +64,52 @@ ActiveRecord::Schema.define(version: 20160210190237) do
 
   add_index "chapters", ["story_id"], name: "index_chapters_on_story_id", using: :btree
 
+  create_table "comments", force: :cascade do |t|
+    t.string   "title"
+    t.string   "body"
+    t.date     "date"
+    t.integer  "rating"
+    t.string   "author"
+    t.integer  "profile_id"
+    t.integer  "story_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "comments", ["profile_id"], name: "index_comments_on_profile_id", using: :btree
+  add_index "comments", ["story_id"], name: "index_comments_on_story_id", using: :btree
+
+  create_table "discount_user_groups", force: :cascade do |t|
+    t.integer  "user_group_id"
+    t.integer  "discount_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "discounts", force: :cascade do |t|
+    t.string   "code"
+    t.string   "title"
+    t.string   "description"
+    t.float    "amount"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.boolean  "used"
+  end
+
   create_table "free_users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "friendships", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "friend_id"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.integer  "request_friendship_id"
+  end
+
+  add_index "friendships", ["request_friendship_id"], name: "index_friendships_on_request_friendship_id", using: :btree
 
   create_table "mailboxer_conversation_opt_outs", force: :cascade do |t|
     t.integer "unsubscriber_id"
@@ -100,6 +168,8 @@ ActiveRecord::Schema.define(version: 20160210190237) do
     t.string   "option"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "parent_id"
+    t.integer  "child_id"
   end
 
   create_table "premium_users", force: :cascade do |t|
@@ -107,8 +177,37 @@ ActiveRecord::Schema.define(version: 20160210190237) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "profiles", force: :cascade do |t|
+    t.string   "name"
+    t.string   "avatar"
+    t.string   "description"
+    t.string   "signature"
+    t.integer  "user_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "profile_status"
+  end
+
+  create_table "reports", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.string   "body"
+    t.string   "status"
+    t.string   "type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "request_friendships", force: :cascade do |t|
+    t.integer  "sender_id",    null: false
+    t.integer  "recipient_id", null: false
+    t.text     "message"
+    t.string   "status"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
   create_table "stories", force: :cascade do |t|
-    t.string   "frontpage"
     t.string   "title"
     t.string   "description"
     t.string   "language"
@@ -116,9 +215,17 @@ ActiveRecord::Schema.define(version: 20160210190237) do
     t.date     "release_date"
     t.boolean  "published"
     t.integer  "num_purchased"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "cover_file_name"
+    t.string   "cover_content_type"
+    t.integer  "cover_file_size"
+    t.datetime "cover_updated_at"
+    t.integer  "profile_id"
+    t.text     "cover"
   end
+
+  add_index "stories", ["profile_id"], name: "index_stories_on_profile_id", using: :btree
 
   create_table "story_categories", force: :cascade do |t|
     t.integer  "story_id"
@@ -129,6 +236,15 @@ ActiveRecord::Schema.define(version: 20160210190237) do
 
   add_index "story_categories", ["category_id"], name: "index_story_categories_on_category_id", using: :btree
   add_index "story_categories", ["story_id"], name: "index_story_categories_on_story_id", using: :btree
+
+  create_table "user_groups", force: :cascade do |t|
+    t.string   "name"
+    t.string   "code"
+    t.integer  "discount_user_group_id"
+    t.integer  "actor_user_group_id"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -152,15 +268,23 @@ ActiveRecord::Schema.define(version: 20160210190237) do
     t.string   "sku",                                 null: false
     t.integer  "role_id"
     t.string   "role_type"
+    t.datetime "banned_until"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "additions", "discounts"
+  add_foreign_key "additions", "profiles"
+  add_foreign_key "additions", "stories"
   add_foreign_key "chapters", "stories"
+  add_foreign_key "comments", "profiles"
+  add_foreign_key "comments", "stories"
+  add_foreign_key "friendships", "request_friendships"
   add_foreign_key "mailboxer_conversation_opt_outs", "mailboxer_conversations", column: "conversation_id", name: "mb_opt_outs_on_conversations_id"
   add_foreign_key "mailboxer_notifications", "mailboxer_conversations", column: "conversation_id", name: "notifications_on_conversation_id"
   add_foreign_key "mailboxer_receipts", "mailboxer_notifications", column: "notification_id", name: "receipts_on_notification_id"
+  add_foreign_key "stories", "profiles"
   add_foreign_key "story_categories", "categories"
   add_foreign_key "story_categories", "stories"
 end

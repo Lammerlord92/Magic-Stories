@@ -1,0 +1,51 @@
+<header class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Tree Story</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="/categories">Categorías</a></li>
+      <% if user_signed_in? %>
+        <li><a href="/categories/new">Crear categoría</a></li> <!-- No tiene sentido que cualquiera entre y llene la BD de mierda -->
+      <% end %>
+      <li><a href="/stories">Historias</a></li>
+      <% if user_signed_in? %>
+        <li><a href="/stories/new">Crear historia</a></li> <!-- No tiene sentido que cualquiera entre y llene la BD de mierda -->
+      <% end %>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+            role="button" aria-haspopup="true" aria-expanded="false">
+          <% if user_signed_in? %>
+          <%= current_user.username %>
+          <% else %>
+          Usuario
+          <% end %>
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <% if user_signed_in? %>
+              <% if current_user.profile %>
+                <li><a href="/user/edit">Mi cuenta</a></li>
+                <li><a href="/profiles/<%= current_user.profile.id %>">Mi perfil</a></li>
+              <% end %>
+          <li><a href="/profiles">Comunidad</a></li>
+          <li><a href="/profiles/search?choice=friends">Mis conexiones</a></li>
+          <li role="separator" class="divider"></li>
+          <li>
+               <%= link_to "Cerrar sesión", destroy_user_session_path, :method => :delete %>
+          </li>
+
+          <% else %>
+          <li>
+              <%= link_to "Iniciar sesión", new_user_session_path %>
+
+          </li>
+          <li>
+               <%= link_to "Registrarse", new_user_registration_path %>
+          </li>
+          <% end %>
+
+        </ul>
+      </li>
+    </ul>
+  </div>
+</header>

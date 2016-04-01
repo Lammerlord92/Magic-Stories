@@ -1,0 +1,48 @@
+<article data-ng-show="reader.story.chunk">
+	<header>
+		<h2>{{reader.story.title}} <small>{{reader.story.pages}} página(s).</small></h2>
+		<h3 class="text-muted"><small>Escrito por {{reader.story.author.name}}.</small></h3>
+	</header>
+	<section>
+		<button class="btn btn-primary" 
+            data-ng-click="reader.setChunk(reader.story.chunk.parent)"
+            data-ng-show="reader.story.chunk.parent">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+      Atrás
+    </button>
+		<blockquote>
+			<p>
+				{{reader.story.chunk.text}}
+			</p>
+      <!-- If story has at least one child  -->
+			<div data-ng-show="reader.story.chunk.children[0]">
+				<i>¿Que deberia hacer el personaje a continuacion?</i>
+				<!--
+        <button class="btn btn-primary btn-block"
+                data-ng-repeat="newchunk in story.chunk.children"
+						    data-ng-click="setChunk(newchunk.id)">
+					<span class="glyphicon glyphicon-chevron-right"></span>
+          {{newchunk.text}}
+				</button>
+        -->
+        &nbsp;
+        <button data-ng-click="reader.setChunk(reader.selectedOption)" class="btn btn-primary">
+          <span class="glyphicon glyphicon-chevron-right"></span> Siguiente
+        </button>
+        <br>
+        <div class="option" data-ng-repeat="newchunk in reader.story.chunk.children">
+          <label for="option">
+            <input name="option" type="radio" data-ng-model="reader.selectedOption"
+                   value="{{newchunk.id}}">
+            {{newchunk.text}}
+          </label>
+          <br>
+        </div>
+			</div>
+      <!-- else -->
+			<div data-ng-hide="reader.story.chunk.children[0]">
+				<i class="text-muted">FIN</i>
+			</div>
+		</blockquote>
+	</section>
+</article>

@@ -1,0 +1,23 @@
+.glyphicon{
+	color: black;
+	font-size: 20px
+}
+
+.left-divider{
+	border-left: 1px solid;
+}
+
+.boton{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.boton .btn-primary{
+	background-color: green !important;
+	border: 0 !important;
+	border-radius: 0 !important;
+}
+
+.boton .btn-primary:hover{
+	background-color: darkgreen !important;
+}

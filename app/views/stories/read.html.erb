@@ -1,0 +1,72 @@
+<style>
+  .glyphicon{
+    font-size: 1em !important;
+  }
+</style>
+<div data-ng-app="app">
+    <header class="page-header">
+        <h1 class="text-primary"><em>Rapsoda</em>: Lector</h1>
+    </header>
+    <div data-ng-controller="ReaderController as reader">
+        <span class="btn btn-success btn-file">
+            <span class="glyphicon glyphicon-cloud-upload"></span>
+            Examinar&hellip;
+            <input  type="file" id="textfile"
+                    accept="application/json"
+                    onchange="angular.element(this).scope().reader.fileChange()">
+        </span>
+        <span id="filename"></span>
+        <span class="help-block">Sube un archivo JSON</span>
+        <hr
+        data-ng-show="reader.history.chunk">
+        <%= render 'angular_story' %>
+    </div>
+    <hr />
+</div>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+  var app = angular.module('app', []);
+
+  app.controller('ReaderController', function($scope){
+    var file_input = document.getElementById('textfile');
+    var container  = document.getElementById('show-text');
+    var filename   = document.getElementById('filename');
+    var self = this;
+    self.story = {};
+    self.selectedOption = "aaaa";
+    self.readtext = function(file){
+      var reader  = new FileReader();
+      reader.onload = function(event){
+        var result = event.target.result;
+        try{
+          self.story = JSON.parse(result);
+          parseHistory(self.story);
+          angular.element(filename).text(file.name);
+        }
+        catch(err){
+          self.story.error = true;
+          throw new SyntaxError('Error parsing input file');
+        }
+        $scope.$apply();
+      };
+      reader.readAsText(file);
+    };
+    self.fileChange = function(){
+      self.readtext(file_input.files[0]);
+    };
+
+    function setChunk(id){
+      self.story.chunk = self.story.chunks.filter(function(chunk){
+        return chunk.id === id;
+      })[0];
+      console.log("current chunk: ");
+      console.log(self.story.chunk);
+    }
+    function parseHistory(file){
+      self.story = file;
+      setChunk('c1');
+    }
+    self.al = function(o){window.alert(o);};
+    self.setChunk = setChunk;
+  });
+</script>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .caja {
+      width: 100px;
+      height: 100px;
+      background: red;
+      -webkit-transition: width 0.5s; /* For Safari 3.1 to 6.0 */
+      -webkit-transition: height 0.5s;
+      -webkit-transition: p 0.5s;
+
+      transition: width 0.5s, height 0.5s, p 0.5s;
+    }
+    .dentrocuadro{
+      width: 90px;
+      height: 100px;
+    }
+    .dentrocuadrohide{
+      width: 300px;
+      height: 300px;
+      visibility:hidden;
+    }
+
+    .caja:hover {
+      width: 300px;
+      height: 300px;
+    }
+    .caja:hover p{
+      visibility:visible;
+      width: 300px;
+      height: 300px;
+      position:absolute;
+    }
+  </style>
+</head>
+<body>
+
+<p><b>Note:</b> This example does not work in Internet Explorer 9 and earlier versions.</p>
+
+<div class="caja">
+  <h4 class="dentrocuadro">ahdah sdksjdh</h4>
+  <p class="dentrocuadrohide">ahdah sdksjdh adksjabdhjkasbdkjhasbdhjksa</p>
+</div>
+
+<p>Hover over the div element above, to see the transition effect.</p>
+
+</body>
+</html>

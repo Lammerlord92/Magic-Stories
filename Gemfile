@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
 
+# Esta gema solo es para Juan Fran para que me marque los warnings y los hightlinings en sublime
+gem 'rubocop', require: false 
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5'
@@ -14,6 +17,9 @@ gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+# Enlace para descasrgar ImageMagic -- Necesario para usar el comando: rake db:seed
+# http://www.imagemagick.org/script/binary-releases.php
+
 # Bootstrap
 gem 'bootstrap-sass', '~> 3.1.1'
 
@@ -26,9 +32,11 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+gem 'rails-i18n'
 
 gem 'mailboxer'
 gem 'devise'
+gem 'simple_form'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -42,6 +50,7 @@ gem 'devise'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  gem 'railroady'
 end
 
 group :development do

@@ -1,0 +1,20 @@
+
+<%= simple_form_for(@request_friendship, :url => "/request_friendships/creates", :method => :post) do |f| %>
+  <%= f.error_notification %>
+    <div class="form-inputs">
+      <%= f.input :message, type: "text-field", placeholder: "Introduzca un mensaje" %>
+
+      <%= f.hidden_field :recipient_id, value: @request_friendship.recipient_id %>
+
+      <%= f.hidden_field :sender_id, value: @request_friendship.sender_id %>
+
+      <%= f.hidden_field :status, value: @request_friendship.status %>
+
+
+
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

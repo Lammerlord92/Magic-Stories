@@ -1,0 +1,31 @@
+#login{
+  margin: 0 auto;
+  display:block;
+  margin-top: 5%;
+}
+
+#modal{
+  width: 400px;
+  background: #CACACA;
+  height: 300px;
+  box-shadow: 0px 0px 10px 4px;
+  margin: 0 auto;
+  margin-top: 12%;
+  border-radius: 5px;
+}
+
+#close{
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+
+.glyphicon {
+  font-size: 2.0em;
+  color: white;
+}
+
+.glyphicon:hover{
+  font-size: 2.0em;
+  color: gray;
+}

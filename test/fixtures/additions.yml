@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  purchase_date: 2016-02-23 20:18:38
+  base_price: 1.5
+  discount_id: 
+  profile_id: 
+  story_id: 
+
+two:
+  purchase_date: 2016-02-23 20:18:38
+  base_price: 1.5
+  discount_id: 
+  profile_id: 
+  story_id: 

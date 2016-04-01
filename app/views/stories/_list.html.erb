@@ -1,0 +1,16 @@
+
+<% @stories.each do |story| %>
+  <div class="row">
+    <div class="col-md-3">
+      <!-- Imagen de test  -->
+      <img class="cover" src="<%=story.cover %>" height="150" >
+    </div>
+    <div class="col-md-8 text-center pull-right story">
+      <h3><a href="/stories/<%=story.id %>"><%= story.title %></a></h3>
+      </br>
+      <%= story.description %>
+      <br/>
+    </div>
+  </div>
+  <br>
+<% end %>
