@@ -1,26 +1,58 @@
-<h2>Iniciar sesión</h2>
+<head>
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
+<body>
+  <div class="container">
+    <br>
+    <form action="" class="form-horizontal">
+      <div class="form-group">
+        <img  class="image-responsive col-md-2" src="/assets/logo definitivo.png">
+      </div>
+      <br>
+
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="form-group">
+
+        <p>
+          <%= f.email_field :email, autofocus: true, :placeholder => "e-mail" %><br><br>
+
+          <%= f.password_field :password, autocomplete: "off", :placeholder => "Contraseña" %>
+        </p>
+      </div>
+        
+        
+
+        
+        <% if devise_mapping.rememberable? -%>
+          <div class="form-group">
+            <%= f.check_box :remember_me %>
+            <%= f.label :remember_me, "SESIÓN ACTIVA" %>
+          </div>
+        <% end -%>
+
+        <br>
+
+        <div class="form-group">
+          <p>
+          <%= f.submit "Iniciar sesión" , class: 'btn btn-primary' %> <br>
+          </p>
+
+          <p>
+          <button class="btn btn-danger btn-sm" type="submmit" formaction="/user/sign_up">Regístrate</button> <br>
+          </p>
+
+          <p>
+          <button class="btn btn-success btn-lg" type="submmit" formaction="#">DESCUBRE</button>
+          </p>
+          <%-# DEMO Por añadir -%>
+
+        </div>
+        <% end %>
+      
+        
+    </form>
   </div>
-
-  <div class="field">
-    <%= f.label :password, "Contraseña" %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me, "Recuérdame" %>
-    </div>
-  <% end -%>
-
-  <div class="actions">
-    <%= f.submit "Iniciar sesión" , class: 'btn btn-primary' %>
-  </div>
-<% end %>
-<br>
-<%= render "devise/shared/links" %>
+<body>
