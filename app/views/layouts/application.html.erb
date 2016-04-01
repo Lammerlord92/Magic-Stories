@@ -13,8 +13,8 @@
   <!-- Begin Body -->
   <div class="container">
     <div class="row">
-      
-      <div class="col-sm-10" id="bodyCol">
+
+      <div class="col-sm-12" id="bodyCol">
         <%= yield %>
         <br>
         <% if flash.alert %>
@@ -23,11 +23,6 @@
         <% if flash.notice %>
           <p class="alert-alert"><%= flash.notice %></p>
         <% end %>
-      </div>
-      
-      <div class="col-sm-2 jumbotron" id="rightCol">
-        <!-- Posible publi -->
-        <p class="lead">Aqui ira un banner</p>
       </div>
 
     </div>
