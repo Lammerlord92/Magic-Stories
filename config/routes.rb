@@ -81,6 +81,10 @@ Rails.application.routes.draw do
   get 'additions/create/:story_id' => 'additions#create'
   delete 'additions' => 'additions#delete'
 
+  #Comments
+  get 'comments/new/:id', to: 'comments#new'
+  resources :comments
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
