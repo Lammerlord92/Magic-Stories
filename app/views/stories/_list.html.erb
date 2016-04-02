@@ -2,18 +2,7 @@
   <div class="row">
     <% stories.each do |story| %>
       <div class="col-md-3">
-        <div class="center">
-          <div class="story">
-            <p class="title"><%= story.title %></p>
-            <a href="/stories/<%=story.id %>">
-              <img class="cover-image" title="<%= story.title %>" src="/assets/temporal_cover.jpg" />
-            </a>
-            <div class="story-info">
-              <p class="author"><%= story.creatorProfile.name %></p>
-              <p class="valoration">Valoración</p>
-            </div>
-          </div>
-        </div>
+        <%= render 'stories/story_slot', story: story %>
       </div>
     <% end %>
   </div>
