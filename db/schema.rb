@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160317121738) do
+ActiveRecord::Schema.define(version: 20160330174119) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,8 +60,6 @@ ActiveRecord::Schema.define(version: 20160317121738) do
     t.datetime "updated_at", null: false
     t.integer  "story_id"
   end
-
-  add_index "chapters", ["story_id"], name: "index_chapters_on_story_id", using: :btree
 
   create_table "comments", force: :cascade do |t|
     t.string   "title"
@@ -163,6 +161,15 @@ ActiveRecord::Schema.define(version: 20160317121738) do
   add_index "mailboxer_receipts", ["notification_id"], name: "index_mailboxer_receipts_on_notification_id", using: :btree
   add_index "mailboxer_receipts", ["receiver_id", "receiver_type"], name: "index_mailboxer_receipts_on_receiver_id_and_receiver_type", using: :btree
 
+  create_table "membership_cards", force: :cascade do |t|
+    t.string   "code"
+    t.datetime "expiration"
+    t.float    "premiumMonths"
+    t.text     "message"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
   create_table "options", force: :cascade do |t|
     t.string   "option"
     t.datetime "created_at", null: false
@@ -185,13 +192,6 @@ ActiveRecord::Schema.define(version: 20160317121738) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.string   "profile_status"
-  end
-
-  create_table "readings", force: :cascade do |t|
-    t.integer  "story_id"
-    t.integer  "profile_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "reports", force: :cascade do |t|
@@ -282,7 +282,6 @@ ActiveRecord::Schema.define(version: 20160317121738) do
   add_foreign_key "additions", "discounts"
   add_foreign_key "additions", "profiles"
   add_foreign_key "additions", "stories"
-  add_foreign_key "chapters", "stories"
   add_foreign_key "comments", "profiles"
   add_foreign_key "comments", "stories"
   add_foreign_key "friendships", "request_friendships"
