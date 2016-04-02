@@ -82,6 +82,100 @@ input[readonly] {
   margin: auto auto;
 }
 
+/* Relativo a story-metadata */
+
+.story-metadata {
+  border: 1px solid #ccc;
+}
+
+.story-metadata h2 {
+  margin-left: 3%;
+}
+
+.story-metadata p {
+  font-size: 135%;
+  margin-left: 3%;
+}
+
+.story-metadata .valoration {
+  text-align: center;
+  font-size: 130%;
+  color: gray;
+  margin-left: 0px;
+}
+
+.story-metadata .center .story {
+  margin-top: 0px;
+  margin-bottom: 1.2em;
+}
+
+/* Relativo a story-data */
+
+.story-data {
+  border: 1px solid #ccc;
+}
+
+.story-data .title {
+  text-align: center;
+}
+
+.story-data .synopsis {
+  margin-left: 15px;
+
+}
+
+.story-data hr {
+  margin-top: 0px;
+  width: 40%;
+}
+
+.story-data .buttons {
+  text-align: center;
+  margin-top: 7%;
+  margin-bottom: 2%;
+}
+
+.story-data .btn-primary {
+  color: black;
+	background-color: #ff9000 !important;
+	border: 0 !important;
+	border-radius: 0 !important;
+  width: 25% !important;
+}
+
+.story-data .btn-primary:hover {
+  color: black;
+	background-color: #ef8000 !important;
+}
+
+.story-data .btn-default {
+  color: black;
+	background-color: #b3bcff !important;
+	border: 0 !important;
+	border-radius: 0 !important;
+  width: 25% !important;
+}
+
+.story-data .btn-default:hover {
+  color: black;
+	background-color: #a3acef !important;
+}
+
+p.btn-label {
+  font-size: 1.4em;
+  margin-bottom: 0.1em;
+}
+
+p.price {
+  margin-bottom: 0px;
+}
+
+p.price span {
+  font-weight: bold;
+}
+
+/* Otras cosas */
+
 hr {
-  width: 45%;
+  width: 60%;
 }
