@@ -4,13 +4,11 @@
       <a class="navbar-brand" href="/">Tree Story</a>
     </div>
     <ul class="nav navbar-nav navbar-right">
-      <li><a href="/categories">Categorías</a></li>
-      <% if user_signed_in? %>
-        <li><a href="/categories/new">Crear categoría</a></li> <!-- No tiene sentido que cualquiera entre y llene la BD de mierda -->
-      <% end %>
+      <li><a href="/categories">Géneros</a></li>
+
       <li><a href="/stories">Historias</a></li>
       <% if user_signed_in? %>
-        <li><a href="/stories/new">Crear historia</a></li> <!-- No tiene sentido que cualquiera entre y llene la BD de mierda -->
+        <li><a href="/stories/new">+ Nueva Historia</a></li> <!-- No tiene sentido que cualquiera entre y llene la BD de mierda -->
       <% end %>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown"
@@ -27,6 +25,11 @@
                 <li><a href="/user/edit">Mi cuenta</a></li>
                 <li><a href="/profiles/<%= current_user.profile.id %>">Mi perfil</a></li>
               <% end %>
+              <% if current_user.role_type == 'Administrator' %>
+                  <li><a href="/categories/new">Crear género</a></li> <!-- No tiene sentido que cualquiera entre y llene la BD de mierda -->
+              <% end %>
+
+
           <li><a href="/profiles">Comunidad</a></li>
           <li><a href="/profiles/search?choice=friends">Mis conexiones</a></li>
           <li role="separator" class="divider"></li>
