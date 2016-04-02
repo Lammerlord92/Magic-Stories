@@ -1,0 +1,49 @@
+
+<h1>Nuevo comentario</h1>
+
+
+<%= form_for([@profile, @comment])  do |f| %>
+
+    <% if @comment.errors.full_messages.length > 0 %>
+        <div class="errors">
+          <p>
+            Se encontraron los siguientes errores al guardar el comentario:
+          </p>
+          <% @comment.errors.full_messages.each do |message| %>
+              <p class="error">
+                *<%= message  %>
+              </p>
+          <% end %>
+        </div>
+    <% end %>
+
+    <br>
+
+    <div class="field">
+      <%= f.label :title, 'Titulo' %>
+      <%= f.text_field :title, placeholder: 'Titulo' %>
+    </div>
+
+    <br>
+
+    <div class="field">
+      <%= f.label :body, 'Comentario' %>
+      <%= f.text_area :body, placeholder: 'Comentario' %>
+    </div>
+
+    <br>
+
+    <div class="field">
+      <%= f.label :rating, 'Rating' %>
+      <%= f.number_field :rating, placeholder: 'Rating' %>
+    </div>
+
+    <br>
+
+    <%= f.hidden_field :profile_id, :value => @idProfile %>
+
+    <div class="field">
+      <%= f.submit 'Publicar' %>
+    </div>
+
+<% end %>

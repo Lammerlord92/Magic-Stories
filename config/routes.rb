@@ -43,6 +43,7 @@ Rails.application.routes.draw do
   get 'welcome/maker4'
   get 'welcome/maker5'
   get 'welcome/maker6'
+  get 'welcome/maker2pruebaJulio'
   get 'welcome/textoDesplegable'
 
   # You can have the root of your site routed with "root"
@@ -79,6 +80,10 @@ Rails.application.routes.draw do
   #Additions
   get 'additions/create/:story_id' => 'additions#create'
   delete 'additions' => 'additions#delete'
+
+  #Comments
+  get 'comments/new/:id', to: 'comments#new'
+  resources :comments
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

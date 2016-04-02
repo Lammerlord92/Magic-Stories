@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20160330174119) do
     t.string   "icon_content_type"
     t.integer  "icon_file_size"
     t.datetime "icon_updated_at"
+    t.text     "icon"
   end
 
   create_table "chapters", force: :cascade do |t|
@@ -228,6 +229,7 @@ ActiveRecord::Schema.define(version: 20160330174119) do
     t.integer  "cover_file_size"
     t.datetime "cover_updated_at"
     t.integer  "profile_id"
+    t.text     "cover"
   end
 
   add_index "stories", ["profile_id"], name: "index_stories_on_profile_id", using: :btree

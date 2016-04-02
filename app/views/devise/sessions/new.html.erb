@@ -1,26 +1,65 @@
-<h2>Iniciar sesión</h2>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tree Story</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
+  <body id="welcome">
+    <div class="container" id="container1">
+      <br>
+      <div class="jumbotron col-md-6 col-md-offset-3 " id="backgroundcolor" >
+        
+            <div class="col-md-offset-3 centerfy">
+                <img  class="image-responsive text-center col-md-9" align="middle" src="/assets/logo definitivo.png">
+              
+              <br>
 
-  <div class="field">
-    <%= f.label :password, "Contraseña" %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
+              <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+              
+              <!-- TODO Boton Facebook -->
+              <!--<p>
+                  <button class="btn btn-facebook btn-lg col-md-9  " type="submmit" formaction="#"></button>
+              </p>-->
+                <p>
+                  <%= f.email_field :email, autofocus: true, :placeholder => "e-mail" %><br><br>
 
-  <% if devise_mapping.rememberable? -%>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me, "Recuérdame" %>
+                  <%= f.password_field :password, autocomplete: "off", :placeholder => "Contraseña" %>
+                </p>
+              
+                <% if devise_mapping.rememberable? -%>
+                  
+                    <%= f.check_box :remember_me %>
+                    <%= f.label :remember_me, "SESIÓN ACTIVA" %>
+                  
+                <% end -%>
+
+                <br>
+
+                
+                <p>
+                    <%= f.submit "Iniciar sesión" , class: 'btn btn-primary col-md-offset-3 ' %> <br>
+                </p>
+
+              <% end -%>
+                  
+              <p>
+                <%= button_to 'Regístrate', new_user_registration_path, class: 'btn btn-danger btn-lg col-md-9',method: :get %><br>
+              </p>
+                
+              <br> 
+                
+              <p>
+                <button class="btn btn-success btn-lg col-md-9  " formaction="#">DESCUBRE</button>
+              </p>
+              <%-# DEMO Por añadir -%>
+
+                
+            </div>
+
+      </div>  
     </div>
-  <% end -%>
-
-  <div class="actions">
-    <%= f.submit "Iniciar sesión" , class: 'btn btn-primary' %>
-  </div>
-<% end %>
-<br>
-<%= render "devise/shared/links" %>
+  </body>
+</html>  

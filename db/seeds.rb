@@ -33,27 +33,27 @@ puts "Success: Todas las tablas han sido borradas"
 ############################################################################
 #   Creación de categorías. TABLA: categories
 ############################################################################
-category1=Category.create!({name: "Drogas", description: "Historia sobre drogas",
-                            icon: File.new("public/categories/original/1/seta-icono-new-super-mario-bros-wii-articulo-videojuegos-zehngames.png")})
-category2=Category.create!({name: "Relleno", description: "Esta historia tiene tanto relleno que se convirtió en Hokage",
-                            icon: File.new("public/categories/original/2/MagekyouSharingan_Riku.png")})
-category3=Category.create!({name: "Postapocalíptica", description: "Historia postapocalíptica",
-                            icon: File.new("public/categories/original/3/icono_app_izombie.jpg")})
-category4=Category.create!({name: "Terror", description: "Historia de terror",
-                            icon: File.new("public/categories/original/4/original.jpeg")})
-category6=Category.create!({ name: "Ninjas", description: "Katanas y shurikens",
-                             icon: File.new("public/categories/original/5/Mangekyou_Sharingan.png")})
-category7=Category.create!({name: "Estafa", description: "Cuando lo compres, te darás cuenta",
-                            icon: File.new("public/categories/original/6/tumblr_o20wx97uhe1r868elo1_400.gif")})
-category8=Category.create!({name: "+18", description: "Ejem, ejem....",
-                            icon: File.new("public/categories/original/7/tumblr_inline_n0sh29l3aN1qhxoyk.gif")})
-category9=Category.create!({name: "Romántica", description: "Amoríos y demas",
-                            icon: File.new("public/categories/original/8/tumblr_mj0vgg5TKE1rz4ni1o1_400.gif")})
-category10=Category.create!({name: "Política", description: "Guía de latrocinio",
-                             icon: File.new("public/categories/original/9/tumblr_n2l8l5aVaN1rvner1o1_500.jpg")})
-category5=Category.create!({name: "Vergonzante", description: "Es un espectaculo vergonzante - Shogun 2",
-                            icon: File.new("public/categories/original/10/puedo-eliminar-icono-celular-facebook_1_1720410.jpg")})
-puts "Success: Creación de categorías"
+#category1=Category.create!({name: "Drogas", description: "Historia sobre drogas",
+#                            icon: File.new("public/categories/original/1/seta-icono-new-super-mario-bros-wii-articulo-videojuegos-zehngames.png")})
+#category2=Category.create!({name: "Relleno", description: "Esta historia tiene tanto relleno que se convirtió en Hokage",
+#                            icon: File.new("public/categories/original/2/MagekyouSharingan_Riku.png")})
+#category3=Category.create!({name: "Postapocalíptica", description: "Historia postapocalíptica",
+#                            icon: File.new("public/categories/original/3/icono_app_izombie.jpg")})
+#category4=Category.create!({name: "Terror", description: "Historia de terror",
+#                            icon: File.new("public/categories/original/4/original.jpeg")})
+#category6=Category.create!({ name: "Ninjas", description: "Katanas y shurikens",
+#                             icon: File.new("public/categories/original/5/Mangekyou_Sharingan.png")})
+#category7=Category.create!({name: "Estafa", description: "Cuando lo compres, te darás cuenta",
+#                            icon: File.new("public/categories/original/6/tumblr_o20wx97uhe1r868elo1_400.gif")})
+#category8=Category.create!({name: "+18", description: "Ejem, ejem....",
+#                            icon: File.new("public/categories/original/7/tumblr_inline_n0sh29l3aN1qhxoyk.gif")})
+#category9=Category.create!({name: "Romántica", description: "Amoríos y demas",
+#                            icon: File.new("public/categories/original/8/tumblr_mj0vgg5TKE1rz4ni1o1_400.gif")})
+#category10=Category.create!({name: "Política", description: "Guía de latrocinio",
+#                             icon: File.new("public/categories/original/9/tumblr_n2l8l5aVaN1rvner1o1_500.jpg")})
+#category5=Category.create!({name: "Vergonzante", description: "Es un espectaculo vergonzante - Shogun 2",
+#                            icon: File.new("public/categories/original/10/puedo-eliminar-icono-celular-facebook_1_1720410.jpg")})
+#puts "Success: Creación de categorías"
 
 ############################################################################
 #   Creación de usuarios. TABLA: users
@@ -326,20 +326,27 @@ option3 = Option.create!({option: 'Option3', parent: chapter1, child: chapter4})
 puts 'Success: Creación de Options'
 
 # Asignacion de categorias a historias
-storyCategory1 = StoryCategory.create!(story: story1, category: category1)
-storyCategory2 = StoryCategory.create!(story: story1, category: category2)
-story1.story_categories << storyCategory1
-story1.story_categories << storyCategory2
 story1.save!
 
-storyCategory3 = StoryCategory.create!(story: story2, category: category2)
-storyCategory4 = StoryCategory.create!(story: story2, category: category3)
-story2.story_categories << storyCategory3
-story2.story_categories << storyCategory4
+
 story3.save!
 
 puts 'Success: Asignacion de categorias a historias'
 
+<<<<<<< HEAD
 
 
 
+=======
+# Creacion de Comments'user7', surname1: 'surname71', surname2: 'suername72'
+comment1 = Comment.create({title: 'Title1', body: 'Body1', date: '01/01/2016', rating: 1, author: 'user2 surname21 surname22', profile: user1.profile})
+comment2 = Comment.create({title: 'Title2', body: 'Body2', date: '01/01/2016', rating: 10, author: 'user3 surname31 surname32', profile: user1.profile})
+comment3 = Comment.create({title: 'Title3', body: 'Body3', date: '03/01/2016', rating: 5, author: 'user3 surname31 surname32', profile: user1.profile})
+comment4 = Comment.create({title: 'Title4', body: 'Body4', date: '04/01/2016', rating: 8, author: 'user1 surname11 surname12', profile: user1.profile})
+comment5 = Comment.create({title: 'Title5', body: 'Body5', date: '05/01/2016', rating: 1, author: 'user2 surname21 surname22', profile: user2.profile})
+comment6 = Comment.create({title: 'Title6', body: 'Body6', date: '01/02/2016', rating: 7, author: 'user2 surname21 surname22', profile: user2.profile})
+comment7 = Comment.create({title: 'Title7', body: 'Body7', date: '03/02/2016', rating: 5, author: 'user5 surname51 surname52', profile: user3.profile})
+comment8 = Comment.create({title: 'Title8', body: 'Body8', date: '07/02/2016', rating: 8, author: 'user8 surname81 surname82', profile: user6.profile})
+
+puts 'Success: Creacion de comentarios'
+>>>>>>> d2875c1253d06c9a2a5fc0f1af910b7707e85e1d

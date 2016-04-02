@@ -31,16 +31,151 @@ input[readonly] {
   background-color: #ddd;
   margin: 1em 0;
   padding: 1em;
-  border: 1px solid grey;
+  border: 1px solid gray;
   border-radius: 5px;
-}
-
-.story{
-  border:  2px solid lightgrey;
-  padding: 1em;
-  margin:  1em;
 }
 
 .glyphicon-remove-circle{
   margin: 0.2em;
+}
+
+.center {
+  text-align: center !important;
+}
+
+.story {
+  text-align: center;
+  font-size: 95%;
+  background-color: white;
+  border: 1px solid gray;
+  box-shadow: 2px 2px 5px #888888;
+  display: inline-block;
+  margin-top: 20px;
+}
+
+.story p {
+  font: arial;
+  text-transform: uppercase;
+  text-align: left;
+  margin: 2px auto;
+  margin-left: 6px;
+}
+
+.story-info p {
+  font-size: 95%;
+}
+
+.cover-image {
+  height: auto;
+  width: auto;
+  max-width: 160px;
+  max-height: 300px;
+}
+
+.categories {
+  text-align: center;
+}
+
+.search {
+  text-align: center;
+  width: 90%;
+  margin: auto auto;
+}
+
+/* Relativo a story-metadata */
+
+.story-metadata {
+  border: 1px solid #ccc;
+}
+
+.story-metadata h2 {
+  margin-left: 3%;
+}
+
+.story-metadata p {
+  font-size: 135%;
+  margin-left: 3%;
+}
+
+.story-metadata .valoration {
+  text-align: center;
+  font-size: 130%;
+  color: gray;
+  margin-left: 0px;
+}
+
+.story-metadata .center .story {
+  margin-top: 0px;
+  margin-bottom: 1.2em;
+}
+
+/* Relativo a story-data */
+
+.story-data {
+  border: 1px solid #ccc;
+}
+
+.story-data .title {
+  text-align: center;
+}
+
+.story-data .synopsis {
+  margin-left: 15px;
+
+}
+
+.story-data hr {
+  margin-top: 0px !important;
+  width: 40% !important;
+}
+
+.story-data .buttons {
+  text-align: center;
+  margin-top: 7%;
+  margin-bottom: 2%;
+}
+
+.story-data .btn-primary {
+  color: black;
+	background-color: #ff9000 !important;
+	border: 0 !important;
+	border-radius: 0 !important;
+  width: 25% !important;
+}
+
+.story-data .btn-primary:hover {
+  color: black;
+	background-color: #ef8000 !important;
+}
+
+.story-data .btn-default {
+  color: black;
+	background-color: #b3bcff !important;
+	border: 0 !important;
+	border-radius: 0 !important;
+  width: 25% !important;
+}
+
+.story-data .btn-default:hover {
+  color: black;
+	background-color: #a3acef !important;
+}
+
+p.btn-label {
+  font-size: 1.4em;
+  margin-bottom: 0.1em;
+}
+
+p.price {
+  margin-bottom: 0px;
+}
+
+p.price span {
+  font-weight: bold;
+}
+
+/* Otras cosas */
+
+hr {
+  width: 60% !important;
 }

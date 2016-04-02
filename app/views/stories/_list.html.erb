@@ -1,16 +1,9 @@
-<% @stories.each do |story| %>
+<% @stories.each_slice(4) do |stories| %>
   <div class="row">
-    <div class="col-md-3">
-      <!-- Imagen de test -->
-      <% a = "http://photos1.meetupstatic.com/photos/event/2/a/6/a/global_11230858.jpeg" %>
-      <%= image_tag( a, class: "img-circle") %>
-    </div>
-    <div class="col-md-8 text-center pull-right story">
-      <h3><a href="/stories/<%=story.id %>"><%= story.title %></a></h3>
-      </br>
-      <%= story.description %>
-      <br/>
-    </div>
+    <% stories.each do |story| %>
+      <div class="col-md-3">
+        <%= render 'stories/story_slot', story: story %>
+      </div>
+    <% end %>
   </div>
-  <br>
 <% end %>

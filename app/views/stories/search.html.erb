@@ -1,10 +1,23 @@
-<h1>Resultados de la búsqueda</h1>
-
-<!-- Cuadro de búsqueda de historias -->
-<form action="/stories/search" method="get">
-  <input type="text" name="q" placeholder="Buscar historias">
-  <button type="submit">Buscar</button>
-</form>
-<br>
-
-<%= render 'stories/list' %>
+<div class="row">
+  <div class="col-md-9">
+      <%= render 'stories/list' %>
+  </div>
+  <div class="col-md-3">
+    <div class="categories">
+      <h3>Géneros</h3>
+      <hr/>
+      <p>Ficción</p>
+      <p>Drama</p>
+      <p>Épico</p>
+      <p>...</p>
+      <!-- TODO: Obtener las categorías desde el controlador cuando se puedan popular desde el seeds.rb -->
+    </div>
+    <hr/>
+    <form action="/stories/search" method="get" role="form">
+      <div class="input-group search">
+        <span class="input-group-addon">🔎</span>
+        <input class="form-control" type="text" name="q" placeholder="Buscar..." value="<%= @q %>" />
+      </div>
+    </form>
+  </div>
+</div>

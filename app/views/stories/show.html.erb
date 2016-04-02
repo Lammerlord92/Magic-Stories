@@ -1,18 +1,1 @@
-<h1>Story Details</h1>
-<div class="field">
-  <%= image_tag @story.cover.url(:thumb), alt: 'Missing cover' %>
-</div>
-<% unless current_user.nil? %>
-  <% unless @story.has_been_acquired_by_user?(current_user) %>
-    <form action="/additions/create/<%=@story.id%>" method="get">
-      <button type="submit">Adquirir</button>
-    </form>
-  <% else %>
-    <form action="/additions" method="post">
-      <input type="hidden" name="_method" value="delete" />
-      <input type="hidden" name="story_id" value="<%=@story.id%>" />
-      <button type="submit">Quitar</button>
-    </form>
-  <% end %>
-<% end %>
 <%= render @story %>

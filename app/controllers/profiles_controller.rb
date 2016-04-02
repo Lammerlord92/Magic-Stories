@@ -14,6 +14,7 @@ class ProfilesController < ApplicationController
     #unless @is_current_profile or @profile.profile_status == 'PUBLIC' or @is_friend_profile
     #  render 'errors/permission_denied'
     #end
+    @comments = @profile.comments
   end
 
   #GET /profiles/new
