@@ -8,56 +8,59 @@
   </head>
 
   <body id="welcome">
-    <div class="container">
+    <div class="container" id="container1">
       <br>
-      <div class="jumbotron">
-        <form action="" class="form-horizontal">
-          <div class="form-group">
-            <img  class="image-responsive col-md-2" src="/assets/logo definitivo.png">
-          </div>
-          <br>
-
-          <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-          <div class="form-group">
-
-            <p>
-              <%= f.email_field :email, autofocus: true, :placeholder => "e-mail" %><br><br>
-
-              <%= f.password_field :password, autocomplete: "off", :placeholder => "Contraseña" %>
-            </p>
-          </div>
-            
-            
-
-            
-            <% if devise_mapping.rememberable? -%>
-              <div class="form-group">
-                <%= f.check_box :remember_me %>
-                <%= f.label :remember_me, "SESIÓN ACTIVA" %>
-              </div>
-            <% end -%>
-
-            <br>
-
+      <div class="jumbotron col-md-6 " >
+        
+          <form action="" class="form-horizontal col-md-offset-3 centerfy">
             <div class="form-group">
-              <p>
-              <%= f.submit "Iniciar sesión" , class: 'btn btn-primary' %> <br>
-              </p>
+                <img  class="image-responsive text-center col-md-9" align="middle" src="/assets/logo definitivo.png">
+              
+              <br>
 
-              <p>
-              <button class="btn btn-danger btn-sm" type="submmit" formaction="/user/sign_up">Regístrate</button> <br>
-              </p>
+              <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+              
 
-              <p>
-              <button class="btn btn-success btn-lg" type="submmit" formaction="#">DESCUBRE</button>
-              </p>
-              <%-# DEMO Por añadir -%>
+                <p>
+                  <%= f.email_field :email, autofocus: true, :placeholder => "e-mail" %><br><br>
 
+                  <%= f.password_field :password, autocomplete: "off", :placeholder => "Contraseña" %>
+                </p>
+              
+                
+                
+
+                
+                <% if devise_mapping.rememberable? -%>
+                  
+                    <%= f.check_box :remember_me %>
+                    <%= f.label :remember_me, "SESIÓN ACTIVA" %>
+                  
+                <% end -%>
+
+                <br>
+
+                
+                  <p>
+                    <button class="btn btn-danger col-md-offset-3 centerfy " type="submmit" formaction="/user/sign_up">Regístrate</button> <br>
+                  </p>
+
+                  <p>
+                    <%= f.submit "Iniciar sesión" , class: 'btn btn-primary' %> <br>
+                  </p>
+                    
+                  <p>
+                  <button class="btn btn-success btn-lg col-md-9  " type="submmit" formaction="#">DESCUBRE</button>
+                  </p>
+                  <%-# DEMO Por añadir -%>
+
+                
             </div>
-            <% end %>
-          
+              <% end %>
             
-        </form>
+              
+          </form>
+        
       </div>  
     </div>
   <body>

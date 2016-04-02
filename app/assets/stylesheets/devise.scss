@@ -2,8 +2,18 @@
 #welcome{
   background-image: url("/assets/cataru.jpg");
   background-repeat: repeat-x;
+
 }
-.jumbotron {
+.jumbotron-section-1-bg {
   opacity: 0.75;
   color: white;
+  height: 768px;
+  background-size:100% 100%;
+ 
+        
 }
+.jumbotron-section-1 {
+   padding-top: 70px !important;
+}
+
+
