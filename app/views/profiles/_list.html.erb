@@ -8,7 +8,7 @@
   </div>
     
   <!-- Perfil -->
-  <div class="col-md-5">
+  <div class="col-md-4">
     
     <!-- Información -->
     <div class="row">
@@ -34,13 +34,13 @@
     <!-- Botón de amistad -->
     <% if user_signed_in? %>
     <div class="row container-fluid boton">
-    <% if current_user.profile == profile %>
-      <%= link_to "Editar mi perfil", "/profiles/#{profile.id}/edit", class: "btn btn-primary btn-block" %>
-    <% elsif current_user.profile.isFriend(profile) %>
-      <%= link_to "Solicitud de amistad", "/request_friendships/send_request/#{profile.user_id}", class: "btn btn-primary btn-block" %>
-    <% else %>
-      <%= link_to "Amigo", "#", class: "btn btn-primary btn-block disabled" %>
-    <% end %>
+      <% if current_user.profile == profile %>
+        <%= link_to "Editar mi perfil", "/profiles/#{profile.id}/edit", class: "btn btn-primary btn-block" %>
+      <% elsif current_user.profile.isFriend(profile) %>
+        <%= link_to "Solicitud de amistad", "/request_friendships/send_request/#{profile.user_id}", class: "btn btn-primary btn-block" %>
+      <% else %>
+        <%= link_to "Amigo", "#", class: "btn btn-primary btn-block disabled" %>
+      <% end %>
     </div>
     <% end %>
 
@@ -58,8 +58,21 @@
   </div>
 
   <!-- Historias -->
-  <div class="col-md-5">
-    <!-- TODO -->
+  <div class="col-md-6">
+    <div class="row">
+      <div class="col-md-1">
+        <!-- Relleno para grid de Bootstrap -->
+      </div>
+      <% profile.stories.last(4).each do |story| %>
+      <div class="col-md-2 stories">
+        <a href="/stories/<%= story.id %>">
+          <p><%= story.title.upcase %></p>
+          <img class="img-responsive" title="<%= story.title %>" src="/assets/temporal_cover.jpg" />
+          <p>VALORACIÓN</p>
+        </a>
+      </div>
+      <% end %>
+    </div>
   </div>
       
 </div>
