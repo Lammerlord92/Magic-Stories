@@ -12,7 +12,7 @@
       <br>
       <div class="jumbotron col-md-6 col-md-offset-3 " >
         
-            <div class="form-group form-horizontal col-md-offset-3 centerfy">
+            <div class="col-md-offset-3 centerfy">
                 <img  class="image-responsive text-center col-md-9" align="middle" src="/assets/logo definitivo.png">
               
               <br>
@@ -29,10 +29,6 @@
                   <%= f.password_field :password, autocomplete: "off", :placeholder => "Contraseña" %>
                 </p>
               
-                
-                
-
-                
                 <% if devise_mapping.rememberable? -%>
                   
                     <%= f.check_box :remember_me %>
@@ -43,24 +39,27 @@
                 <br>
 
                 
-                  <p>
+                <p>
                     <%= f.submit "Iniciar sesión" , class: 'btn btn-primary col-md-offset-3 ' %> <br>
-                    <% end %>
-                  </p>
+                </p>
 
-                  <p>
-                    <button class="btn btn-danger btn-lg col-md-9 " type="submmit" formaction="/user/sign_up">Regístrate</button> <br> 
-                  </p>
-                   <br> 
-                  <p>
-                    <button class="btn btn-success btn-lg col-md-9  " type="submmit" formaction="#">DESCUBRE</button>
-                  </p>
-                  <%-# DEMO Por añadir -%>
+              <% end -%>
+                  
+              <p>
+                <%= button_to 'Regístrate', new_user_registration_path, class: 'btn btn-danger btn-lg col-md-9',method: :get %><br>
+              </p>
+                
+              <br> 
+                
+              <p>
+                <button class="btn btn-success btn-lg col-md-9  " formaction="#">DESCUBRE</button>
+              </p>
+              <%-# DEMO Por añadir -%>
 
                 
             </div>
 
       </div>  
     </div>
-  <body>
+  </body>
 </html>  
