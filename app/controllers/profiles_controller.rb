@@ -161,6 +161,32 @@ class ProfilesController < ApplicationController
     redirect_to profile
   end
 
+  #GET /profiles/follow/:id
+  def follow
+    profile = Profile.find(params[:id])
+    current_user.follow!(profile)
+  #  flash.alert = "Perfil id: " + Profile.find(params[:id]).to_s + "  Perfil actual: " + current_profile.to_s
+    redirect_to profile
+  end
+
+  #GET /profiles/unfollow/:id
+  def unfollow
+    profile = Profile.find(params[:id])
+    current_user.unfollow!(profile)
+    #  flash.alert = "Perfil id: " + Profile.find(params[:id]).to_s + "  Perfil actual: " + current_profile.to_s
+    redirect_to profile
+  end
+
+  # Devuelve true si el 'profile' dado es seguido por el usuario
+  def is_follow_this_profile?(profile)
+    #   return current_user.profile.follows?(profile)
+
+    @current_profile = current_user.profile
+    return @current_profile.follows?(profile)
+#    return profile.id == @current_profile.id
+
+  end
+
   #GET /profiles/ban/:id
   def ban
     date = params[:date]

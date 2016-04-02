@@ -12,7 +12,13 @@
   <% unless @is_current_profile or @profile.profile_status == 'PUBLIC' or @is_friend_profile or current_user.role_type == 'Administrator' %>
     <p><em>Este perfil es privado y solo puede acceder a él si usted es amigo de este usuario.</em></p>
   <% else %>
+      <p><em>Descripción:</em></p>
     <p><%= @profile.description %></p>
+      <% if current_user.follows?(@profile) %>
+          <%= link_to "Dejar de seguir", "/profiles/unfollow/#{@profile.id}", class:"btn btn-default"  %>
+      <% else %>
+          <%= link_to "Seguir", "/profiles/follow/#{@profile.id}", class:"btn btn-default"  %>
+      <% end %>
   <% end %>
 
   <% if current_user.present? and @profile.user.banned_until.present? and (current_user.role_type == 'Administrator' || @profile.user == current_user) %>
@@ -27,6 +33,8 @@
   <% else %>
     <% unless @is_friend_profile or not current_user.present? %>
         <%= link_to "Enviar petición de amistad", "/request_friendships/send_request/#{@profile.user_id}", class: "btn btn-default"  %>
+
+
         </br>
     <% end %>
   <% end %>
