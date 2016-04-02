@@ -13,11 +13,45 @@
 }
 
 .boton .btn-primary{
-	background-color: green !important;
+	color: white !important;
+	background-color: #113e05 !important;
 	border: 0 !important;
 	border-radius: 0 !important;
 }
 
 .boton .btn-primary:hover{
 	background-color: darkgreen !important;
+}
+
+.escritura{
+	margin-top: 20px !important;
+}
+
+.gris{
+	color: #555555 !important;
+}
+
+.stories{
+	background-color: white;
+	border: 1px solid gray;
+	box-shadow: 2px 2px 5px #888888;
+	padding: 0 !important;
+	margin-top: 0 !important;
+	margin-left: 10px !important;
+	align-content: left;
+}
+
+.stories p{
+	margin: 0px !important;
+	margin-left: 2px !important;
+	font-size: 90%;
+}
+
+a, a:hover{
+	text-decoration: none !important;
+	color: black !important;
+}
+
+hr{
+	width: 100% !important;
 }
