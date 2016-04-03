@@ -51,7 +51,6 @@ ActiveRecord::Schema.define(version: 20160402190125) do
     t.string   "icon_content_type"
     t.integer  "icon_file_size"
     t.datetime "icon_updated_at"
-    t.text     "icon"
   end
 
   create_table "chapters", force: :cascade do |t|
@@ -61,6 +60,8 @@ ActiveRecord::Schema.define(version: 20160402190125) do
     t.datetime "updated_at", null: false
     t.integer  "story_id"
   end
+
+  add_index "chapters", ["story_id"], name: "index_chapters_on_story_id", using: :btree
 
   create_table "comments", force: :cascade do |t|
     t.string   "title"
@@ -230,6 +231,13 @@ ActiveRecord::Schema.define(version: 20160402190125) do
     t.string   "profile_status"
   end
 
+  create_table "readings", force: :cascade do |t|
+    t.integer  "story_id"
+    t.integer  "profile_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "reports", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "title"
@@ -264,7 +272,6 @@ ActiveRecord::Schema.define(version: 20160402190125) do
     t.integer  "cover_file_size"
     t.datetime "cover_updated_at"
     t.integer  "profile_id"
-    t.text     "cover"
   end
 
   add_index "stories", ["profile_id"], name: "index_stories_on_profile_id", using: :btree
@@ -319,6 +326,7 @@ ActiveRecord::Schema.define(version: 20160402190125) do
   add_foreign_key "additions", "discounts"
   add_foreign_key "additions", "profiles"
   add_foreign_key "additions", "stories"
+  add_foreign_key "chapters", "stories"
   add_foreign_key "comments", "profiles"
   add_foreign_key "comments", "stories"
   add_foreign_key "friendships", "request_friendships"

@@ -1,49 +1,95 @@
-<div>
+<div class="reader">
   <style>
-    .box{
-      border-bottom: 2px solid gray;
+    .glyphicon, .glyphicon:hover{
+      color: white;
+      font-size: 1em;
+    }
+    .reader{
+      display: flex;
+      align-items: center;
+    }
+    .back{
+      display: flex;
+      justify-content: flex-end;
+    }
+    .heading{
+      padding: .4em .5em;
+      background-color: #004800;
+      color: lightgray;
+      margin: 0;
+    }
+    .body{
+      padding: 0 .5em;
     }
     .chapter, .story{
       border: none;
       margin: .5em 0;
-      padding: .5em 0;
+      padding-bottom: .5em;
+      display: block;
+      text-align: justify;
+      box-shadow: 2px 2px 5px #888;
     }
-    .btn{
+    ul .btn{
       border-radius: 0;
     }
   </style>
-  <h1>Stories: DB read</h1>
-  <div class="box story">
-    <h2 class="box">Story</h2>
-    <h3><%= @story.title %> - <small><%= @story.release_date %></small></h3>
-    <p><em><%= @story.published ? 'P' : 'No p' %>ublicado</em></p>
-    <p><%= @story.description %></p>
+  <div class="col-sm-3 back">
+    <ul id="parent-list" class="list-unstyled">
+      <li>Sin padres</li>
+    </ul>
   </div>
-  <div class="chapter">
-    <h2 class="box">Chapter</h2>
-    <h3 id="chapter-title"></h3>
-    <p id="chapter-body"></p>
+  <div class="col-sm-6">
+    <h1>Stories: DB read</h1>
+    <div class="story">
+      <h2 class="heading">Story</h2>
+      <div class="body">
+        <h3><%= @story.title %> - <small><%= @story.release_date %></small></h3>
+        <p><em><%= @story.published ? 'P' : 'No p' %>ublicado</em></p>
+        <p><%= @story.description %></p>
+      </div>
+    </div>
+    <div class="chapter">
+      <h2 class="heading">Chapter</h2>
+      <div class="body">
+        <h3 id="chapter-title"></h3>
+        <p id="chapter-body"></p>
+      </div>
+    </div>
   </div>
-  <ul id="chapter-list" class="list-unstyled"></ul>
+  <ul id="children-list" class="col-sm-3 list-unstyled">
+    <li>Sin hjios</li>
+  </ul>
 </div>
 <script type="text/javascript" charset="utf-8">
 $("document").ready(function(){
   var self = window;
-  var ch_list = $("#chapter-list");
+  var children = $("#children-list");
+  var parents  = $("#parent-list");
   var ch = $(".chapter");
   ch.hide();
-  $.getJSON("/stories/<%= @story.id %>.json").then(function(json){
-    self.story = json;
-    if(json.chapter_ids){
-      json.chapter_ids.forEach(function(id){
-        var btn = $("<button class='btn btn-primary'>");
-        btn.html("Read chapter "+id);
-        btn.click(function(event){
-          getChapter(id);
-        }).bind(this);
-        var li = $("<li>");
-        li.append(btn);
-        ch_list.append(li);
+
+  window.insertChapterLink = function(id, isParent){
+    var chevron_dir = isParent? 'left': 'right';
+    var message     = isParent? 'Volver al capitulo ': 'Leer capitulo ';
+    var target      = isParent? parents: children;
+
+    var btn = $("<button class='btn btn-primary'>");
+    var span = $("<span class='glyphicon glyphicon-chevron-"+chevron_dir+"'>");
+    btn.append(span);
+    btn.append(message+id);
+    btn.click(function(event){
+      getChapter(id);
+    }).bind(this);
+    var li = $("<li>");
+    li.append(btn);
+    target.append(li);
+  };
+
+  $.getJSON("/stories/<%= @story.id %>.json").then(function(story){
+    self.story = story;
+    if(story && story.chapter_ids.length > 0){
+      story.chapter_ids.forEach(function(id){
+        insertChapterLink(id);
       });
     }else{
       target.append($("<li>").text("no chapters"))
@@ -58,6 +104,25 @@ $("document").ready(function(){
 
       ch_title.text(chapter.title);
       ch_body.text(chapter.body);
+
+      children.html("");
+      parents.html("");
+
+      if(chapter.child_options.length > 0){
+        chapter.child_options.forEach(function(child){
+          insertChapterLink(child.child_id);
+        });
+      }else{
+        children.html("<li>Sin hijos</li>");
+      }
+
+      if(chapter.parent_options.length > 0){
+        chapter.parent_options.forEach(function(parent){
+          insertChapterLink(parent.parent_id, true);
+        });
+      }else{
+        parents.html("<li>Sin padres</li>");
+      }
 
       ch.show();
 
