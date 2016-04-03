@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'membership_cards/exchange'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -35,7 +37,7 @@ Rails.application.routes.draw do
   #                               PUT	/users(.:format)	              devise/registrations#update
   #                               DELETE	/users(.:format)          	devise/registrations#destroy
   #########################################################################
-  
+
   get 'welcome/index'
   get 'welcome/maker'
   get 'welcome/maker2'
@@ -48,7 +50,7 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'welcome#index'
-  
+
   #categories
   resources :categories
 
@@ -84,6 +86,9 @@ Rails.application.routes.draw do
   #Comments
   get 'comments/new/:id', to: 'comments#new'
   resources :comments
+
+  post 'membership_cards/exchange', to: 'membership_cards#exchange'
+  get 'membership_cards/exchange', to: 'membership_cards#exchange'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

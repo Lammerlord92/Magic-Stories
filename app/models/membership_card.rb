@@ -1,8 +1,6 @@
 class MembershipCard < ActiveRecord::Base
-validates code, uniqueness: true
-validates expiration, presence: true
-validate expiration, validate_out_of_date: true
-validates premiumMonths, presence: true
+validates :premiumMonths, presence: true
+belongs_to :usage, class_name: "User", foreign_key: "usage"
 
 
   def validate_out_of_date
@@ -10,17 +8,17 @@ validates premiumMonths, presence: true
   end
 
 
-  def self.generateCode
+  def generateCode
     r = SecureRandom.urlsafe_base64(n= 16, false)
-    until MembershipCard.find_by_code(r) == nil
+    until(MembershipCard.find_by_code(r).eql?(nil))
       r = SecureRandom.urlsafe_base64(n= 16, false)
     end
-    return r
+    r
   end
 
-  after_create{
-    # La "tarjeta" expira  de la creación
-    self.update_attributes!({code: generateCode, expiration: Date.today + 15})
-    self.save
+  before_create{
+    self.code = generateCode
+    self.expiration =  Date.today + 15
+    self.usage =  nil
   }
 end
