@@ -88,6 +88,7 @@ $("document").ready(function(){
   $.getJSON("/stories/<%= @story.id %>.json").then(function(story){
     self.story = story;
     if(story && story.chapter_ids.length > 0){
+      children.html("");
       story.chapter_ids.forEach(function(id){
         insertChapterLink(id);
       });
