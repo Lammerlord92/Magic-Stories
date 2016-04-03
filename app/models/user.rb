@@ -5,11 +5,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   acts_as_messageable
-
   # Distinguiendo roles
 
   belongs_to :role, polymorphic: true
-
 
   # Tiene muchos reportes (Complaint and suggestion)
   has_many :reports
@@ -28,7 +26,7 @@ class User < ActiveRecord::Base
 
   has_many :actor_user_groups
   has_many :user_groups, :through => :actor_user_groups
-
+  acts_as_follower
 
   validates :username, :name, :surname1, :surname2, :email, :birthday, :sku, presence: true
   validates :username, :email, :sku, uniqueness: true

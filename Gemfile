@@ -20,6 +20,9 @@ gem 'coffee-rails', '~> 4.1.0'
 # Enlace para descasrgar ImageMagic -- Necesario para usar el comando: rake db:seed
 # http://www.imagemagick.org/script/binary-releases.php
 
+#gema socialicitaion para implementar los seguidores:
+gem "socialization"
+
 # Bootstrap
 gem 'bootstrap-sass', '~> 3.1.1'
 
