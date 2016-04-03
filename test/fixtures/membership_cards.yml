@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  expiration: 2016-03-30 19:41:19
+  premiumMonths: 1.5
+  message: MyText
+
+two:
+  code: MyString
+  expiration: 2016-03-30 19:41:19
+  premiumMonths: 1.5
+  message: MyText

@@ -9,24 +9,24 @@
 ############################################################################
 #   BORRADO DE TABLAS: HACER UN RAKE DB:RESET
 ############################################################################
-#Category.delete_all
-#Addition.delete_all
-#User.delete_all
-#PremiumUser.delete_all
-#Administrator.delete_all
-#Friendship.delete_all
-#RequestFriendship.delete_all
-#Chapter.delete_all
-#Story.delete_all
-#Profile.delete_all
-#UserGroup.delete_all
-#ActorUserGroup.delete_all
-#Comment.delete_all
-#DiscountUserGroup.delete_all
-#FreeUser.delete_all
-#Option.delete_all
-#Report.delete_all
-#
+Category.delete_all
+Addition.delete_all
+User.delete_all
+PremiumUser.delete_all
+Administrator.delete_all
+Friendship.delete_all
+RequestFriendship.delete_all
+Chapter.delete_all
+Story.delete_all
+Profile.delete_all
+UserGroup.delete_all
+ActorUserGroup.delete_all
+Comment.delete_all
+DiscountUserGroup.delete_all
+FreeUser.delete_all
+Option.delete_all
+Report.delete_all
+
 
 puts "Success: Todas las tablas han sido borradas"
 
@@ -108,9 +108,9 @@ puts "Success: Creación de usuarios"
 #   Creación de rols. TABLA:  premium_users
 ############################################################################
 
-userAcc1 = PremiumUser.create()
-userAcc2 = PremiumUser.create()
-userAcc3 = PremiumUser.create()
+userAcc1 = PremiumUser.create({expiration: Date.today + 600})
+userAcc2 = PremiumUser.create({expiration: Date.today + 600})
+userAcc3 = PremiumUser.create({expiration: Date.today + 600})
 puts "Success: Creación rol Premium"
 
 ############################################################################
@@ -332,7 +332,6 @@ story1.save!
 story3.save!
 
 puts 'Success: Asignacion de categorias a historias'
-
 # Creacion de Comments'user7', surname1: 'surname71', surname2: 'suername72'
 comment1 = Comment.create({title: 'Title1', body: 'Body1', date: '01/01/2016', rating: 1, author: 'user2 surname21 surname22', profile: user1.profile})
 comment2 = Comment.create({title: 'Title2', body: 'Body2', date: '01/01/2016', rating: 10, author: 'user3 surname31 surname32', profile: user1.profile})
@@ -344,3 +343,20 @@ comment7 = Comment.create({title: 'Title7', body: 'Body7', date: '03/02/2016', r
 comment8 = Comment.create({title: 'Title8', body: 'Body8', date: '07/02/2016', rating: 8, author: 'user8 surname81 surname82', profile: user6.profile})
 
 puts 'Success: Creacion de comentarios'
+
+
+
+membership_card1 = MembershipCard.create({premiumMonths: 3})
+membership_card2 = MembershipCard.create({premiumMonths: 6})
+membership_card3 = MembershipCard.create({premiumMonths: 6.5})
+membership_card4 = MembershipCard.create({premiumMonths: 9})
+membership_card5 = MembershipCard.create({premiumMonths: 11})
+membership_card6 = MembershipCard.create({premiumMonths: 12})
+membership_card7 = MembershipCard.create({premiumMonths: 9})
+
+
+puts 'Success: Creacion de tajetas premium'
+
+
+
+

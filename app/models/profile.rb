@@ -8,6 +8,11 @@ class Profile < ActiveRecord::Base
   has_many :stories
   has_many :comments
 
+# Permite que un perfil pueda seguir a otros y que pueda ser seguido:
+
+  acts_as_followable
+
+
   before_create {
     self.profile_status = "PUBLIC"
   }
