@@ -3,11 +3,13 @@ module ConnectionsHelper
 
   def searchFollowers(qu)
     current_user.profile.followers.where({name: "%#{qu}%"})
+
   end
 
 
   def searchFollowing(qu)
     current_user.profile.followees.where({name: "%#{qu}%"})
+  end
 
   def searchFriends(qu)
     queryUser = '(lower(name) like :q OR lower(surname1) like :q OR lower(surname2) like :q OR lower(email) like :q OR lower(username) like :q)'
