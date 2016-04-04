@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
 
   has_many :actor_user_groups
   has_many :user_groups, :through => :actor_user_groups
-  acts_as_follower
+
 
   validates :username, :name, :surname1, :surname2, :email, :birthday, :sku, presence: true
   validates :username, :email, :sku, uniqueness: true

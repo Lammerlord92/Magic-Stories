@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'connections/search'
+
   get 'membership_cards/exchange'
 
   # The priority is based upon order of creation: first created -> highest priority.
