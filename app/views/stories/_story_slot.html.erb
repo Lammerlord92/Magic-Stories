@@ -1,12 +1,12 @@
 <div class="center">
+  <a href="/stories/<%= story.id %>">
   <div class="story">
     <p class="title"><%= story.title %></p>
-    <a href="/stories/<%= story.id %>">
-      <img class="cover-image" title="<%= story.title %>" src="/assets/temporal_cover.jpg" />
-    </a>
+    <img class="cover-image" title="<%= story.title %>" src="/assets/temporal_cover.jpg" />
     <div class="story-info">
       <p class="author"><%= story.creatorProfile.name %></p>
       <p class="valoration">Valoración</p>
     </div>
   </div>
+  </a>
 </div>

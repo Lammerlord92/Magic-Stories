@@ -85,7 +85,7 @@
         relation.setAttribute('since', '1985');
 
         // Creates the graph inside the given container
-        var graph = new mxGraph(container);
+        window.graph = new mxGraph(container);
 
         // fuken: sacar el objeto graph como propiedad global
         //        para poder verlo en la consola del navegador
@@ -291,25 +291,31 @@
           savedCell = cell;
           savedGraph = graph;
 
-          //buttonAux.setAttribute("a1",cell);
-          //buttonAux.setAttribute("a2",graph);
-          //buttonAux.data("a1",JSON.stringify(cell));
-          //buttonAux.data("a2",JSON.stringify(graph));
+          if (cell.value.nodeName.toLowerCase() == 'chapter') {
+            $('#editor').show();
+            var attrs = cell.value.attributes;
 
-          var attrs = cell.value.attributes;
+            for (var i = 0; i < attrs.length; i++) {
+              if (i == 0) { //Obtains the title
+                setFormTitleValue(attrs[i], cell, graph);
+              } else { //Obtains the body
+                var data = attrs[i];
+                var titleValue = data.value;
 
-          for (var i = 0; i < attrs.length; i++) {
-            if (i == 0) { //Obtains the title
-              setFormTitleValue(attrs[i], cell, graph);
-            } else { //Obtains the body
-              var data = attrs[i];
-              var titleValue = data.value;
-
-              //widgEditor("my_textBody",titleValue);
-              setFormBodyValue(titleValue,cell,graph);
+                //widgEditor("my_textBody",titleValue);
+                setFormBodyValue(titleValue,cell,graph);
+              }
             }
+            //mxUtils.br(div);
           }
-          //mxUtils.br(div);
+          else {
+            console.log("DIme que entras anda....");
+            var attrs = cell.value.attributes;
+            setFormTitleValue(attrs[0], cell, graph);
+            $('#editor').hide();
+          }
+
+
         }
       }
 
@@ -339,16 +345,17 @@
           }
         };
 
+        /*
         mxEvent.addListener(inputTitle, 'keypress', function (evt) {
           // Needs to take shift into account for textareas
-          if (evt.keyCode == /*enter*/13 && !mxEvent.isShiftDown(evt)) {
+          if (evt.keyCode == /*enter*//*13 && !mxEvent.isShiftDown(evt)) {
             inputTitle.blur();
           }
         });
 
         mxEvent.addListener(inputTitle, 'blur', applyHandler);
 
-        //graph=null;
+        //graph=null;*/
       }
 
 
@@ -430,8 +437,13 @@
 <table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td id="toolbox" valign="top" width="70px" style="min-width:70px;background:#7F7F7F;padding:12px;">
-      <img src="http://etc.usf.edu/clipart/40600/40690/pb_sq_40690_lg.gif" width="70px" height="70px"><br/>
-      <img src="http://2.bp.blogspot.com/-MZAjo7HkgNE/TqUZQPShXQI/AAAAAAAAB9c/c5Xy3HBhk_g/s1600/GlobeCircle+copy.png" width="70px" height="70px"><br/>
+      <!--<img src="http://etc.usf.edu/clipart/40600/40690/pb_sq_40690_lg.gif" width="70px" height="70px"><br/>
+      <img src="http://2.bp.blogspot.com/-MZAjo7HkgNE/TqUZQPShXQI/AAAAAAAAB9c/c5Xy3HBhk_g/s1600/GlobeCircle+copy.png" width="70px" height="70px"><br/>-->
+      <button id="createNewNodeId" name="createNewNodeName" onclick="crearNuevoNodo()">Nuevo Nodo</button>
+      <button id="centrarId" name="centrarName" onclick="centrar()">Centrar</button>
+      <button id="derechaId" name="derechaName" onclick="derecha()">Derecha</button>
+      <button id="izquierdaId" name="izquierdaName" onclick="izquierda()">Izquierda</button>
+      <button id="justificarId" name="justificarName" onclick="justificar()">Justificar</button>
     </td>
     <td>
       <div id="graphContainer">
@@ -445,23 +457,25 @@
           <label for="noise">Title</label>
           <input type="text" id="my_textTitle" name="noise">
           <br/>
-          <label for="noise">Body</label>
-          <!--<div id="my_textBodyWidgContainer" class="widgContainer">
-            <iframe id="my_textBodyWidgIframe" class="widgIframe">
-              <input id="my_textBody" name="my_textBody">
+          <div id="editor">
+            <label for="noise">Body</label>
+            <!--<div id="my_textBodyWidgContainer" class="widgContainer">
+              <iframe id="my_textBodyWidgIframe" class="widgIframe">
+                <input id="my_textBody" name="my_textBody">
 
-              </input>
+                </input>
 
-            </iframe>
+              </iframe>
 
-          </div>-->
+            </div>-->
 
-          <input id="my_textBody" name="noise" class="widgEditor nothing"/>
-          <!--<textarea id="my_textBody" name="noise" class="widgEditor nothing"/>
-          <input id="theTextarea" name="noise" class="widgEditor nothing"/>-->
-          <br/>
+            <input id="my_textBody" name="noise" class="widgEditor nothing"/>
+            <!--<textarea id="my_textBody" name="noise" class="widgEditor nothing"/>
+            <input id="theTextarea" name="noise" class="widgEditor nothing"/>-->
+            <br/>
 
-          <button id="submitButtonId" name="submitButtonName" onclick="actualizaNodo()"> Guardar body</button>
+            <button id="submitButtonId" name="submitButtonName" onclick="actualizaNodo()"> Guardar</button>
+          </div>
          </div>
       </div>
 
