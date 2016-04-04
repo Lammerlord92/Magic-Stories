@@ -1794,6 +1794,8 @@ String.prototype.validTags = function()
 
 
 function actualizaNodo(){
+    var newEntryTitle = document.getElementById("my_textTitle").value || '';
+    var currentTitle = null;
     var iFrameAux = $("#my_textBodyWidgIframe").contents();
     var newEntryData = iFrameAux.find('body').html();
     var buttonAux = document.getElementById("submitButtonId");
@@ -1811,7 +1813,25 @@ function actualizaNodo(){
 
         for (var i = 0; i < attrs.length; i++) {
             if (i == 0) { //Obtains the title
-                console.log("Título del nodo "+attrs[i].value);
+                currentTitle = attrs[i].value;
+                console.log("Título del nodo = "+currentTitle);
+                console.log("Nuevo título = "+newEntryTitle);
+
+                graphBB.getModel().beginUpdate();
+                try {
+                    var edit = new mxCellAttributeChange(
+                        cellBB, attrs[0].nodeName,
+                        newEntryTitle);
+                    console.log("cellBB = "+cellBB);
+                    console.log("attrs[0].nodename = "+attrs[0].nodename);
+                    console.log("newEntryData = "+newEntryData);
+                    graphBB.getModel().execute(edit);
+                    graphBB.updateCellSize(cellBB);
+                }
+                finally {
+                    graphBB.getModel().endUpdate();
+                }
+
             } else { //Obtains the body
                 console.log("Valor a comparar 1 -> ",newEntryData);
                 console.log("Valor a comparar 2 -> ",attrs[1].value);
