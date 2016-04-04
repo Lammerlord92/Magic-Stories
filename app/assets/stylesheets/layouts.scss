@@ -1,7 +1,26 @@
-#cabecera{
+#lay{
   background-color: #002400;
   color: #FFFFFF
 }
 #barcon{
   color: #FFFFFF !Important;
+  text-align: center !Important;
+}
+#NH{
+	color: #002400;
+	background-color: #ECA701;
+
+}
+
+/* centered columns styles */
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
 }
