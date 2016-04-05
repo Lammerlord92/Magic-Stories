@@ -2,7 +2,7 @@
 <h1>Nuevo comentario</h1>
 
 
-<%= form_for([@profile, @comment])  do |f| %>
+<%= form_for([@comment])  do |f| %>
 
     <% if @comment.errors.full_messages.length > 0 %>
         <div class="errors">
@@ -41,6 +41,8 @@
     <br>
 
     <%= f.hidden_field :profile_id, :value => @idProfile %>
+    <%= f.hidden_field :story_id, :value => @idStory %>
+    <%= f.hidden_field :commentedClass, :value => @commentedClass %>
 
     <div class="field">
       <%= f.submit 'Publicar' %>

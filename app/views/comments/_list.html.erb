@@ -1,0 +1,45 @@
+<% name ||= "Comentarios" %>
+
+<% if @profile.present? && (@profile.profile_status == 'PUBLIC' ||  current_user.present? &&
+    (current_user.role_type == 'Administrator' || @is_friend_profile || @is_current_profile)) || @story.present? %>
+    <div>
+      <table border width="100%">
+        <tr>
+          <th>Titulo</th>
+          <th>Comentario</th>
+          <th>Rating</th>
+          <th>Fecha</th>
+          <th>Autor</th>
+        </tr>
+
+        <% @comments.each do |comment|%>
+            <tr>
+              <td>
+                <%= comment.title %>
+              </td>
+              <td>
+                <%= comment.body %>
+              </td>
+              <td>
+                <%= comment.rating %>
+              </td>
+              <td>
+                <%= comment.date %>
+              </td>
+              <td>
+                <%= comment.author %>
+              </td>
+            </tr>
+        <% end %>
+
+
+      </table>
+    </div>
+
+    </br>
+
+    <% if current_user.present? %>
+        <%= link_to "Nuevo comentario", new_comment_path(:id => id, :commentedClass => commentedClass), class:"btn btn-default", :method => :get %>
+    <% end %>
+
+<% end %>
