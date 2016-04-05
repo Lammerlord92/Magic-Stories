@@ -34,6 +34,11 @@ class StoriesController < ApplicationController
     # @story = Story.find(params[:id])
   end
 
+  def example
+    @story = Story.find_by_title('Caperucita Roja')
+    render 'stories/dbread'
+  end
+
   def dbread
     @story = Story.find(params[:id]);
   end

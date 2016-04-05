@@ -33,7 +33,10 @@
       </button>
       <br><br>
     </div>
+    <!--
     <p>{{ current_chapter? current_chapter.body : 'No hay cuerpo del capitulo/nodo' }}</p>
+    -->
+    <p ng-bind-html="current_chapter? current_chapter.body : 'No hay cuerpo del capitulo/nodo'"></p>
     <p ng-hide="options.length > 0" class="text-center">FIN</p>
     <ul id="options-list" class="text-center list-unstyled">
       <li ng-repeat="option in options">
@@ -45,10 +48,11 @@
   </article>
   <br>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular-sanitize.js"></script>
   <script type="text/javascript" charset="utf-8">
     (function(){
-      angular.module("reader", [])
-        .controller("ReaderController", function($scope){
+      angular.module("reader", ["ngSanitize"])
+        .controller("ReaderController", function($scope, $sanitize){
           $scope.loading = true;
           $scope.parent_id = null;
           $scope.options = [];
@@ -58,6 +62,8 @@
             $scope.loading = true;
             $.get("/chapters/"+id+".json", function(chapter){
               var first_parent = chapter.parent_options[0];
+              chapter.body = $sanitize(chapter.body);
+              console.log((chapter.body));
               $scope.options = chapter.child_options;
               $scope.parent_id = first_parent? first_parent.parent_id : null;
               $scope.current_chapter = chapter;
