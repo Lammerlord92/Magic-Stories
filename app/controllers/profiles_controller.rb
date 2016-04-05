@@ -168,7 +168,7 @@ class ProfilesController < ApplicationController
   #GET /profiles/follow/:id
   def follow
     profile = Profile.find(params[:id])
-    current_user.follow!(profile)
+    current_user.profile.follow!(Profile)
   #  flash.alert = "Perfil id: " + Profile.find(params[:id]).to_s + "  Perfil actual: " + current_profile.to_s
     redirect_to profile
   end
@@ -176,7 +176,7 @@ class ProfilesController < ApplicationController
   #GET /profiles/unfollow/:id
   def unfollow
     profile = Profile.find(params[:id])
-    current_user.unfollow!(profile)
+    current_user.profile.unfollow!(Profile)
     #  flash.alert = "Perfil id: " + Profile.find(params[:id]).to_s + "  Perfil actual: " + current_profile.to_s
     redirect_to profile
   end
