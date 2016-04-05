@@ -6,7 +6,7 @@ class StoriesController < ApplicationController
   end
 
   # Devuelve una lista con las historias adquiridas por
-  # el usuario logueado o un aviso si no tiene 
+  # el usuario logueado o un aviso si no tiene
   def acquired
     profile  = Profile.find_by(user: current_user)
     additions = Addition.where(profile_id: profile)
@@ -20,7 +20,7 @@ class StoriesController < ApplicationController
   end
 
   # Devuelve una lista con las historias creadas por
-  # el usuario logueado o un aviso si no tiene 
+  # el usuario logueado o un aviso si no tiene
   def created
     #profile  = Profile.find_by(user: current_user)
     @stories = current_user.profile.stories
@@ -78,6 +78,7 @@ class StoriesController < ApplicationController
     # Documentacion sobre queries aqui:
     # http://guides.rubyonrails.org/active_record_querying.html
     @q = params[:q].downcase
+    @categories = Category.all
     query = 'lower(title) like :q OR lower(description) like :q OR lower(language) like :q and published = true'
     if @q
       @stories = Story.where(query, {q: "%#{@q}%"})

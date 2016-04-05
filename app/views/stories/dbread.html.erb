@@ -1,67 +1,74 @@
-<div>
+<div ng-app="reader" ng-controller="ReaderController" class="col-sm-6 col-sm-offset-3">
   <style>
-    .box{
-      border-bottom: 2px solid gray;
+    .shadow{
+      box-shadow: 2px 2px 5px #888;
     }
-    .chapter, .story{
-      border: none;
-      margin: .5em 0;
-      padding: .5em 0;
+    header{
+      font-size: 2em;
+      padding: .2rem .4rem;
     }
-    .btn{
-      border-radius: 0;
+    article{
+      padding: 1rem;
+    }
+    .btn, .btn:hover{
+      color: white !important;
+    }
+    .glyphicon, .glyphicon:hover{
+      color: white;
+      font-size: 1em;
     }
   </style>
-  <h1>Stories: DB read</h1>
-  <div class="box story">
-    <h2 class="box">Story</h2>
-    <h3><%= @story.title %> - <small><%= @story.release_date %></small></h3>
-    <p><em><%= @story.published ? 'P' : 'No p' %>ublicado</em></p>
-    <p><%= @story.description %></p>
-  </div>
-  <div class="chapter">
-    <h2 class="box">Chapter</h2>
-    <h3 id="chapter-title"></h3>
-    <p id="chapter-body"></p>
-  </div>
-  <ul id="chapter-list" class="list-unstyled"></ul>
+  <header class="shadow">
+    <span class="story-title"><%= @story.title %></span>
+    <small class="story-date pull-right text-muted"><%= @story.release_date %></small>
+  </header>
+  <br>
+  <h2 class="text-center" ng-show="loading">
+    <img src="/ripple.svg" alt="Loading...">
+  </h2>
+  <article class="shadow" ng-hide="loading">
+    <div ng-show="parent_id">
+      <button class="btn btn-primary"  ng-click="setChapter(parent_id)">
+        <span class="glyphicon glyphicon-chevron-left"></span> Atrás
+      </button>
+      <br><br>
+    </div>
+    <p>{{ current_chapter? current_chapter.body : 'No hay cuerpo del capitulo/nodo' }}</p>
+    <p ng-hide="options.length > 0" class="text-center">FIN</p>
+    <ul id="options-list" class="text-center list-unstyled">
+      <li ng-repeat="option in options">
+        <button ng-click="setChapter(option.child_id)" class="btn btn-primary">
+          <span class="glyphicon glyphicon-chevron-right"></span> {{option.option}}
+        </button>
+      </li>
+    </ul>
+  </article>
+  <br>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.js"></script>
+  <script type="text/javascript" charset="utf-8">
+    (function(){
+      angular.module("reader", [])
+        .controller("ReaderController", function($scope){
+          $scope.loading = true;
+          $scope.parent_id = null;
+          $scope.options = [];
+          $scope.current_chapter = null;
+
+          $scope.setChapter = function setChapter(id){
+            $scope.loading = true;
+            $.get("/chapters/"+id+".json", function(chapter){
+              var first_parent = chapter.parent_options[0];
+              $scope.options = chapter.child_options;
+              $scope.parent_id = first_parent? first_parent.parent_id : null;
+              $scope.current_chapter = chapter;
+              $scope.loading = false;
+              $scope.$digest();
+            })
+          };
+
+          $scope.setChapter(<%= @story.chapters.first.id %>);
+
+        });
+    })();
+  </script>
 </div>
-<script type="text/javascript" charset="utf-8">
-$("document").ready(function(){
-  var self = window;
-  var ch_list = $("#chapter-list");
-  var ch = $(".chapter");
-  ch.hide();
-  $.getJSON("/stories/<%= @story.id %>.json").then(function(json){
-    self.story = json;
-    if(json.chapter_ids){
-      json.chapter_ids.forEach(function(id){
-        var btn = $("<button class='btn btn-primary'>");
-        btn.html("Read chapter "+id);
-        btn.click(function(event){
-          getChapter(id);
-        }).bind(this);
-        var li = $("<li>");
-        li.append(btn);
-        ch_list.append(li);
-      });
-    }else{
-      target.append($("<li>").text("no chapters"))
-    }
-  });
-
-  function getChapter(chapter_id){
-    var ch_title = $("#chapter-title");
-    var ch_body  = $("#chapter-body");
-    $.getJSON("/chapters/"+chapter_id+".json").then(function(chapter){
-      console.log(chapter);
-
-      ch_title.text(chapter.title);
-      ch_body.text(chapter.body);
-
-      ch.show();
-
-    });
-  }
-});
-</script>

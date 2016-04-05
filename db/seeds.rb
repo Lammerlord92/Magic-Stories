@@ -33,27 +33,38 @@ puts "Success: Todas las tablas han sido borradas"
 ############################################################################
 #   Creación de categorías. TABLA: categories
 ############################################################################
-#category1=Category.create!({name: "Drogas", description: "Historia sobre drogas",
-#                            icon: File.new("public/categories/original/1/seta-icono-new-super-mario-bros-wii-articulo-videojuegos-zehngames.png")})
-#category2=Category.create!({name: "Relleno", description: "Esta historia tiene tanto relleno que se convirtió en Hokage",
-#                            icon: File.new("public/categories/original/2/MagekyouSharingan_Riku.png")})
-#category3=Category.create!({name: "Postapocalíptica", description: "Historia postapocalíptica",
-#                            icon: File.new("public/categories/original/3/icono_app_izombie.jpg")})
-#category4=Category.create!({name: "Terror", description: "Historia de terror",
-#                            icon: File.new("public/categories/original/4/original.jpeg")})
-#category6=Category.create!({ name: "Ninjas", description: "Katanas y shurikens",
-#                             icon: File.new("public/categories/original/5/Mangekyou_Sharingan.png")})
-#category7=Category.create!({name: "Estafa", description: "Cuando lo compres, te darás cuenta",
-#                            icon: File.new("public/categories/original/6/tumblr_o20wx97uhe1r868elo1_400.gif")})
-#category8=Category.create!({name: "+18", description: "Ejem, ejem....",
-#                            icon: File.new("public/categories/original/7/tumblr_inline_n0sh29l3aN1qhxoyk.gif")})
-#category9=Category.create!({name: "Romántica", description: "Amoríos y demas",
-#                            icon: File.new("public/categories/original/8/tumblr_mj0vgg5TKE1rz4ni1o1_400.gif")})
-#category10=Category.create!({name: "Política", description: "Guía de latrocinio",
-#                             icon: File.new("public/categories/original/9/tumblr_n2l8l5aVaN1rvner1o1_500.jpg")})
-#category5=Category.create!({name: "Vergonzante", description: "Es un espectaculo vergonzante - Shogun 2",
-#                            icon: File.new("public/categories/original/10/puedo-eliminar-icono-celular-facebook_1_1720410.jpg")})
-#puts "Success: Creación de categorías"
+
+category1 = Category.create!({
+  name: 'Drama',
+  description: 'Género dramático'
+})
+
+category2 = Category.create!({
+  name: 'Cuento',
+  description: 'Género de cuentos'
+})
+
+category3 = Category.create!({
+  name: 'Ficción',
+  description: 'Género de ficción'
+})
+
+category4 = Category.create!({
+  name: 'Terror',
+  description: 'Género de terror'
+})
+
+category5 = Category.create!({
+  name: 'Épico',
+  description: 'Género épico'
+})
+
+category6 = Category.create!({
+  name: 'Aventura',
+  description: 'Género de aventuras'
+})
+
+puts "Success: Creación de categorías"
 
 ############################################################################
 #   Creación de usuarios. TABLA: users
@@ -359,6 +370,7 @@ puts 'Success: Creacion de tajetas premium'
 
 
 
+
 puts 'Siguiendo'
 user1.profile.toggle_follow!(user2.profile)
 user1.profile.toggle_follow!(user3.profile)
@@ -382,9 +394,4 @@ Profile.all.each do |f1|
     puts f1.user.name << ' es seguido por ' << f2.user.name
   end
 end
-
-
-
-
-
 

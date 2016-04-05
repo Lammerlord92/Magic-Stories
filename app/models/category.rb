@@ -6,7 +6,5 @@ class Category < ActiveRecord::Base
   validates :name, uniqueness: true
 
   validates :description, presence: true
-  validates :icon, presence: true
-
-
+  #validates :icon, presence: true # XXX: Modificado por el frontend; este campo ya no existe en schema
 end
