@@ -7,3 +7,23 @@
   margin-top: 0;
   margin-bottom: 0;
 }
+
+.trending-slot {
+  border: 1px solid black;
+  border-radius: 0px 0px 15px 15px;
+  margin-top: 10px;
+  padding-top: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.trending-slot .story {
+  margin-top: 0;
+}
+
+.trending-slot p.category {
+  font-size: 150%;
+  text-align: center;
+  margin-top: 7px;
+  margin-bottom: 4px;
+}
