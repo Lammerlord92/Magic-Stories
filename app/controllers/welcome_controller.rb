@@ -8,8 +8,8 @@ class WelcomeController < ApplicationController
       redirect_to "new_user_session_path"
     else
 =end
-      @trending_stories = Story.first(6) # Temporalmente para pruebas del index
+      @story = Story.first # Temporalmente para pruebas del index
+      @categories = Category.all
       render 'index'
-    #end
   end
 end

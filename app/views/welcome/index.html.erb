@@ -2,11 +2,11 @@
   <h3>Tendencias</h3>
   <hr/>
   <div class="row">
-    <% @trending_stories.each do |story| %>
+    <% @categories.each do |category| %>
     <div class="col-md-2">
       <div class="trending-slot">
-        <%= render 'stories/story_slot', story: story %>
-        <p class="category">Género</p> <!-- Poner aquí el género cuando las historias tengan género -->
+        <%= render 'stories/story_slot', story: @story %>
+        <p class="category"><%= category.name %></p>
       </div>
     </div>
     <% end %>
