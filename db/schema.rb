@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160402190125) do
+ActiveRecord::Schema.define(version: 20160405163804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20160402190125) do
     t.string   "icon_content_type"
     t.integer  "icon_file_size"
     t.datetime "icon_updated_at"
+    t.text     "icon"
   end
 
   create_table "chapters", force: :cascade do |t|
@@ -226,9 +227,11 @@ ActiveRecord::Schema.define(version: 20160402190125) do
     t.string   "description"
     t.string   "signature"
     t.integer  "user_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.string   "profile_status"
+    t.integer  "followees_count", default: 0
+    t.integer  "followers_count", default: 0
   end
 
   create_table "reports", force: :cascade do |t|
@@ -265,6 +268,7 @@ ActiveRecord::Schema.define(version: 20160402190125) do
     t.integer  "cover_file_size"
     t.datetime "cover_updated_at"
     t.integer  "profile_id"
+    t.text     "cover"
   end
 
   add_index "stories", ["profile_id"], name: "index_stories_on_profile_id", using: :btree

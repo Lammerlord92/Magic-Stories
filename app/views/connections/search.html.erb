@@ -1,0 +1,34 @@
+<h1>Mis conexiones - <%= @t1 %></h1>
+
+
+<form action="/connections/search" method="get">
+	
+	<div class="row">
+	  
+	  <!-- Búsqueda por amigos -->
+	  <% if user_signed_in? %>
+	  <div class="col-md-3">
+	    <input type="radio" name="choice" value="followers" id="followers">
+	    <label for="followers">Seguidores</label>
+	    <span>&nbsp</span>
+	    <input type="radio" name="choice" value="followees"id="followees">
+	    <label for="followees">Siguiendo</label>
+	    <input type="radio" name="choice" value="friends"id="friends">
+	    <label for="friends">Amigos</label>
+	  </div>
+	  <% end %>
+	  
+	  <!-- Cuadro de búsqueda -->
+	  <div class="col-md-4">
+		  <input type="text" name="q" placeholder="Buscar usuarios">
+		  <button type="submit">Buscar</button>
+		</div>
+
+  </div>
+
+</form>
+
+
+<%= render "profiles/list", name: "Mis conexiones" %>
+
+

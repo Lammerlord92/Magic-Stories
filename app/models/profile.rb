@@ -10,6 +10,7 @@ class Profile < ActiveRecord::Base
 
 # Permite que un perfil pueda seguir a otros y que pueda ser seguido:
 
+  acts_as_follower
   acts_as_followable
 
 

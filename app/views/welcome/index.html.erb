@@ -1,12 +1,14 @@
 <div class="trendings">
   <h3>Tendencias</h3>
   <hr/>
-
-    <div class="row">
-      <% @trending_stories.each do |story| %>
-      <div class="col-md-2">
-        <%= render 'stories/story_slot', story: story %>
+  <div class="row">
+    <% @categories.each do |category| %>
+    <div class="col-md-2">
+      <div class="trending-slot">
+        <%= render 'stories/story_slot', story: @story %>
+        <p class="category"><%= category.name %></p>
       </div>
-      <% end %>
     </div>
+    <% end %>
+  </div>
 </div>

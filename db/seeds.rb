@@ -33,27 +33,38 @@ puts "Success: Todas las tablas han sido borradas"
 ############################################################################
 #   Creación de categorías. TABLA: categories
 ############################################################################
-#category1=Category.create!({name: "Drogas", description: "Historia sobre drogas",
-#                            icon: File.new("public/categories/original/1/seta-icono-new-super-mario-bros-wii-articulo-videojuegos-zehngames.png")})
-#category2=Category.create!({name: "Relleno", description: "Esta historia tiene tanto relleno que se convirtió en Hokage",
-#                            icon: File.new("public/categories/original/2/MagekyouSharingan_Riku.png")})
-#category3=Category.create!({name: "Postapocalíptica", description: "Historia postapocalíptica",
-#                            icon: File.new("public/categories/original/3/icono_app_izombie.jpg")})
-#category4=Category.create!({name: "Terror", description: "Historia de terror",
-#                            icon: File.new("public/categories/original/4/original.jpeg")})
-#category6=Category.create!({ name: "Ninjas", description: "Katanas y shurikens",
-#                             icon: File.new("public/categories/original/5/Mangekyou_Sharingan.png")})
-#category7=Category.create!({name: "Estafa", description: "Cuando lo compres, te darás cuenta",
-#                            icon: File.new("public/categories/original/6/tumblr_o20wx97uhe1r868elo1_400.gif")})
-#category8=Category.create!({name: "+18", description: "Ejem, ejem....",
-#                            icon: File.new("public/categories/original/7/tumblr_inline_n0sh29l3aN1qhxoyk.gif")})
-#category9=Category.create!({name: "Romántica", description: "Amoríos y demas",
-#                            icon: File.new("public/categories/original/8/tumblr_mj0vgg5TKE1rz4ni1o1_400.gif")})
-#category10=Category.create!({name: "Política", description: "Guía de latrocinio",
-#                             icon: File.new("public/categories/original/9/tumblr_n2l8l5aVaN1rvner1o1_500.jpg")})
-#category5=Category.create!({name: "Vergonzante", description: "Es un espectaculo vergonzante - Shogun 2",
-#                            icon: File.new("public/categories/original/10/puedo-eliminar-icono-celular-facebook_1_1720410.jpg")})
-#puts "Success: Creación de categorías"
+
+category1 = Category.create!({
+  name: 'Drama',
+  description: 'Género dramático'
+})
+
+category2 = Category.create!({
+  name: 'Cuento',
+  description: 'Género de cuentos'
+})
+
+category3 = Category.create!({
+  name: 'Ficción',
+  description: 'Género de ficción'
+})
+
+category4 = Category.create!({
+  name: 'Terror',
+  description: 'Género de terror'
+})
+
+category5 = Category.create!({
+  name: 'Épico',
+  description: 'Género épico'
+})
+
+category6 = Category.create!({
+  name: 'Aventura',
+  description: 'Género de aventuras'
+})
+
+puts "Success: Creación de categorías"
 
 ############################################################################
 #   Creación de usuarios. TABLA: users
@@ -358,5 +369,204 @@ membership_card7 = MembershipCard.create({premiumMonths: 9})
 puts 'Success: Creacion de tajetas premium'
 
 
+
+
+puts 'Siguiendo'
+user1.profile.toggle_follow!(user2.profile)
+user1.profile.toggle_follow!(user3.profile)
+user1.profile.toggle_follow!(user4.profile)
+user1.profile.toggle_follow!(user5.profile)
+user2.profile.toggle_follow!(user1.profile)
+user2.profile.toggle_follow!(user3.profile)
+user2.profile.toggle_follow!(user3.profile)
+user3.profile.toggle_follow!(user1.profile)
+user4.profile.toggle_follow!(user5.profile)
+
+Profile.all.each do |f1|
+  f1.followers(Profile).each  do |f2|
+    puts f1.user.name << ' sigue a ' << f2.user.name
+  end
+end
+
+
+Profile.all.each do |f1|
+  f1.followees(Profile).each  do |f2|
+    puts f1.user.name << ' es seguido por ' << f2.user.name
+  end
+end
+
+node1 = <<-EOF
+
+<p>
+Habia una vez una ninya muy bonita. Su madre le habia hecho una capa roja y la muchachita la llevaba tan a menudo que todo el mundo la llamaba caperucita roja.
+</p>
+<p>
+Un dia, su madre le pidio que llevase unos pasteles a su abuela que vivia en el otro lado del bosque, recomendandole que no se entretuviese por el camino, pues cruzar el bosque era muy peligroso, ya que siempre andaba acechando por alli el lobo
+</p>
+<p>
+Caperucita Roja recogio la cesta con los pasteles y se puso en camino. La ninya tenia que atravesar el bosque para llegar a casa de la Abuelita, pero no le daba miedo porque alli siempre se encontraba con muchos amigos: los pajaros, las ardillas ...
+</p>
+<p>
+De repente, vio al lobo, enorme, delante de ella.
+</p>
+
+EOF
+
+node2 = <<-EOF
+
+<p> -
+¿A dónde vas, niña? - le preguntó el lobo con su voz ronca
+</p>
+<p>
+- A casa de mi Abuelita - le dijo Caperucita
+</p>
+<p>
+- No está lejos - pensó el lobo para sí, dándose media vuelta.
+</p>
+<p>
+Caperucita puso su cesta en la hierba y se entretuvo cogiendo flores: - El lobo se ha ido - pensó-, no tengo nada que temer. La abuela se pondrá muy contenta cuando le lleve un hermoso ramo de flores además de los pasteles
+</p>
+<p>
+Mientras tanto, el lobo se fue a casa de la Abuelita, llamó suavemente a la puerta y la anciana le abrió pensando que era Caperucita. Un cazador que pasaba por allí había observado la llegada del lobo
+</p>
+<p>
+El lobo devoró a la Abuelita y se puso el gorro rosa de la desdichada, se metió en la cama y cerró los ojos. No tuvo que esperar mucho, pues Caperucita Roja llegó enseguida, toda contenta.
+</p>
+<p>
+La niña se acercó a la cama y vio que su abuela estaba muy cambiada.
+</p>
+<p>
+- Abuelita, abuelita, ¡qué ojos más grandes tienes!
+</p>
+<p>
+- Son para verte mejor- dijo el lobo tratando de imitar la voz de la abuela.
+</p>
+<p>
+- Abuelita, abuelita, ¡qué orejas más grandes tienes!
+</p>
+<p>
+- Son para oírte mejor- siguió diciendo el lobo.
+</p>
+<p>
+- Abuelita, abuelita, ¡qué dientes más grandes tienes!
+</p>
+<p>
+- Son para...¡comerte mejoooor!- y diciendo esto, el lobo malvado se abalanzó sobre la niñita y la devoró, lo mismo que había hecho con la abuelita.
+</p>
+<p>
+Mientras tanto, el cazador se había quedado preocupado y creyendo adivinar las malas intenciones del lobo, decidió echar un vistazo a ver si todo iba bien en la casa de la Abuelita. Pidió ayuda a un segador y los dos juntos llegaron al lugar. Vieron la puerta de la casa abierta y al lobo tumbado en la cama, dormido de tan harto que estaba.
+</p>
+<p>
+El cazador sacó su cuchillo y rajó el vientre del lobo. La Abuelita y Caperucita estaban allí, ¡vivas!.
+</p>
+<p>
+Para castigar al lobo malo, el cazador le llenó el vientre de piedras y luego lo volvió a cerrar. Cuando el lobo despertó de su pesado sueño, sintió muchísima sed y se dirigió a un estanque próximo para beber. Como las piedras pesaban mucho, cayó en el estanque de cabeza y se ahogó.
+</p>
+<p>
+En cuanto a Caperucita y su abuela, no sufrieron más que un gran susto, pero Caperucita Roja había aprendido la lección. Prometió a su Abuelita no hablar con ningún desconocido que se encontrara en el camino. De ahora en adelante, seguiría las juiciosas recomendaciones de su Abuelita y de su Mamá.
+</p>
+
+EOF
+
+node3 = <<-EOF
+
+<p>
+- ¿A dónde vas, niña?- le preguntó el lobo con su voz ronca.
+</p>
+<p>
+- A ti que te importa- le espetó Caperucita.
+</p>
+<p>
+- Un poco borde para ser tan pequeña- le dijo el lobo, mientras se acercaba lentamente.
+</p>
+<p>
+Caperucita intentaba contener sus nervios, pero era imposible evitar temblar. El lobo le rozaba con la cola lentamente, mientras la rodeaba.
+</p>
+<p>
+-No me da miedo un lobo como tú. –gritó caperucita esperando que alguien la oyera.
+</p>
+<p>
+-¿Cómo yo?, –El lobo soltó una leve risa.-no existen lobos como yo.
+</p>
+<p>
+-Déjame en paz. –Caperucita mientras decía esto le lanzo la cesta a la cabeza, y salió huyendo de vuelta a su casa.
+</p>
+<p>
+El lobo se abalanzó sobre ella mordiéndola en el cuello, la sangre caía a borbotones, el lobo empezó su propio festín.
+</p>
+<p>
+Caperucita nunca llegó a casa de su abuela y el lobo volvió al bosque donde nunca se supo más de él.
+</p>
+<p>
+Días más tarde la madre denunció su desaparición y un cazador encontró el cadáver desfigurado de la niña. Fue un día triste para todos.
+</p>
+
+EOF
+
+node4 = <<-EOF
+
+<p>
+- ¿A dónde vas, niña?- le preguntó el lobo con su voz ronca.
+</p>
+<p>
+- A casa de mi Abuelita, a no ser que me salga un plan mejor- le dijo pícaramente caperucita.
+</p>
+<p>
+-Muy pequeña para esa mirada - El lobo se acercó lentamente - ¿Cuántos años tienes?
+</p>
+<p>
+
+- Lo dices como si con este cuerpo me fueran a preguntar en la discoteca.
+</p>
+<p>
+- ¿Quieres que nos vayamos de fiesta?
+</p>
+<p>
+- ¿Por qué no?
+</p>
+<p>
+El lobo se quedó pensativo, mientras observaba el cuerpo de caperucita parecía mayor para su edad, pero claro no sabía su edad, le daba miedo que fuera menor.
+</p>
+<p>
+- ¿nos vamos o qué? –caperucita estaba mascando un chicle y le daba vueltas a la cesta impaciente.
+</p>
+<p>
+- Espero que no me des problemas.
+</p>
+<p>
+    Ambos se fueron en una moto, cuando salieron del bosque llegaron a una discoteca, donde pasaron parte de la tarde. Caperucita bebió bastante alcohol. Más adelante la abuela de caperucita se presentó en la discoteca, ataviada con su bata de estar por casa, las sandalias y el pelo recogido con unos rulos.
+</p>
+<p>
+La abuela sacó su cuchillo y rajó el vientre del lobo. La Abuelita se llevó a Caperucita de las orejas.
+</p>
+<p>
+    Para castigar al lobo malo, el cazador que pasaba por allí le llenó el vientre de piedras y luego lo volvió a cerrar. Cuando el lobo despertó de su pesado sueño, sintió muchísima sed y se dirigió a un estanque próximo para beber. Como las piedras pesaban mucho, cayó en el estanque de cabeza y se ahogó.
+</p>
+<p>
+    En cuanto a Caperucita estuvo castigada sin salir varios meses.
+
+</p>
+
+EOF
+
+cr_story = Story.create!({title: 'Caperucita Roja', description: 'Description', language: 'ESP',
+                          price: 16.30, release_date: '20/10/2015',
+                          published: true, num_purchased: 0, creatorProfile: user2.profile})
+
+cr_ch1 = Chapter.create!({title: "CR Capitulo1", body: node1, story: story1})
+cr_ch2 = Chapter.create!({title: "CR Capitulo2", body: node2, story: story1})
+cr_ch3 = Chapter.create!({title: "CR Capitulo3", body: node3, story: story1})
+cr_ch4 = Chapter.create!({title: "CR Capitulo4", body: node4, story: story1})
+
+cr_story.chapters << cr_ch1
+cr_story.chapters << cr_ch2
+cr_story.chapters << cr_ch3
+cr_story.chapters << cr_ch4
+
+cr_story.save!
+
+cr_o12 = Option.create!({option: "Historia tradicional", parent: cr_ch1, child: cr_ch2})
+cr_o13 = Option.create!({option: "Caperucita valiente", parent: cr_ch1, child: cr_ch3})
+cr_o14 = Option.create!({option: "Caperucita fiestera", parent: cr_ch1, child: cr_ch4})
 
 

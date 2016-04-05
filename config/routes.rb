@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'connections/search'
+
   get 'membership_cards/exchange'
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -65,6 +67,7 @@ Rails.application.routes.draw do
   #Stories
   get 'stories/read'
   get 'stories/read/:id' => 'stories#dbread' # read from DB
+  get 'stories/example' => 'stories#example' # Caperucita Roja
   get 'stories/acquired' => 'stories#acquired'
   get 'stories/created' => 'stories#created'
   get 'stories/search', to: 'stories#search'
@@ -91,6 +94,9 @@ Rails.application.routes.draw do
 
   post 'membership_cards/exchange', to: 'membership_cards#exchange'
   get 'membership_cards/exchange', to: 'membership_cards#exchange'
+
+  get 'connections/search', to: 'connections#search'
+  get 'connections/index', to: 'connections#search'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

@@ -86,7 +86,6 @@ class ProfilesController < ApplicationController
     end
 
     queryUser = '(lower(name) like :q OR lower(surname1) like :q OR lower(surname2) like :q OR lower(email) like :q OR lower(username) like :q)'
-    users = User.where(queryUser, {q: "%#{@q}%"})
 
     # Si se quiere filtrar entre amigos
     if user_signed_in? and choice == "friends"
@@ -95,7 +94,9 @@ class ProfilesController < ApplicationController
       if @q
         subquery = '(friendships.user_id != :cu_id and friendships.friend_id = :cu_id)'
         #query = '(lower(profiles.name) like :q OR lower(signature) like :q OR lower(description) like :q)'
-        @profiles = Profile.distinct(:user_id).joins(:friendships).where(subquery, {cu_id: current_user.id}) & Profile.where(user_id: users)
+
+        # JUST A QUERY, antes había dos y se fusionaban gastando recursos de la aplicación, ahora la base de datos devuelve todo. Eso si, es una megaquery.
+        @profiles = Profile.distinct(:user_id).joins(:friendships).where(subquery, {cu_id: current_user.id}).where(user_id: User.where(queryUser, {q: "%#{@q}%"}))
 
 
         if @profiles.blank?
@@ -115,7 +116,8 @@ class ProfilesController < ApplicationController
       if @q
         query = '(lower(profiles.name) like :q OR lower(signature) like :q OR lower(description) like :q)'
         subquery = '(users.id != :cu_id and friendships.friend_id = :cu_id)'
-
+        users = User.where(queryUser, {q: "%#{@q}%"})
+        # FIXME - Cuando sobre tiempo hay que hacer más efeciente esta operación.
         @profiles = Profile.where(user_id: users) &
             (Profile.all - Profile.distinct(:user_id).joins(:friendships).where(subquery, {cu_id: current_user.id}))
 
@@ -147,7 +149,9 @@ class ProfilesController < ApplicationController
     #render 'index'
 
   end
-
+  #FIXME - Nos estamos hackeando a nosotros mismos. Pasar a un usuario premium así bytheface? Sin restringir quien puede acceder a esta URL?
+  #Además va a dar petidos pues el usuario premium ya tiene una fecha de expiración que es obligatoria. Si se quiere mantener este método
+  #habría que usar el upgradeUser de MembershipCardsHelper. Creando primero una membershipCard.
   #GET /profiles/premium/:id
   def premium
     profile = Profile.find(params[:id])
@@ -164,7 +168,7 @@ class ProfilesController < ApplicationController
   #GET /profiles/follow/:id
   def follow
     profile = Profile.find(params[:id])
-    current_user.follow!(profile)
+    current_user.profile.follow!(profile)
   #  flash.alert = "Perfil id: " + Profile.find(params[:id]).to_s + "  Perfil actual: " + current_profile.to_s
     redirect_to profile
   end
@@ -172,7 +176,7 @@ class ProfilesController < ApplicationController
   #GET /profiles/unfollow/:id
   def unfollow
     profile = Profile.find(params[:id])
-    current_user.unfollow!(profile)
+    current_user.profile.unfollow!(profile)
     #  flash.alert = "Perfil id: " + Profile.find(params[:id]).to_s + "  Perfil actual: " + current_profile.to_s
     redirect_to profile
   end

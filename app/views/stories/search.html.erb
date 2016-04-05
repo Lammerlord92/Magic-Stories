@@ -7,11 +7,9 @@
       <div class="categories">
         <h3>Géneros</h3>
         <hr/>
-        <p>Ficción</p>
-        <p>Drama</p>
-        <p>Épico</p>
-        <p>...</p>
-        <!-- TODO: Obtener las categorías desde el controlador cuando se puedan popular desde el seeds.rb -->
+        <% @categories.each do |category| %>
+          <p><%= category.name %></p>
+        <% end %>
       </div>
       <hr/>
       <form action="/stories/search" method="get" role="form">
