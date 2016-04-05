@@ -94,6 +94,9 @@ Rails.application.routes.draw do
   post 'membership_cards/exchange', to: 'membership_cards#exchange'
   get 'membership_cards/exchange', to: 'membership_cards#exchange'
 
+  get 'connections/search', to: 'connections#search'
+  get 'connections/index', to: 'connections#search'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

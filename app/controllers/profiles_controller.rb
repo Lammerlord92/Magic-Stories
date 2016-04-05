@@ -116,7 +116,7 @@ class ProfilesController < ApplicationController
       if @q
         query = '(lower(profiles.name) like :q OR lower(signature) like :q OR lower(description) like :q)'
         subquery = '(users.id != :cu_id and friendships.friend_id = :cu_id)'
-
+        users = User.where(queryUser, {q: "%#{@q}%"})
         # FIXME - Cuando sobre tiempo hay que hacer más efeciente esta operación.
         @profiles = Profile.where(user_id: users) &
             (Profile.all - Profile.distinct(:user_id).joins(:friendships).where(subquery, {cu_id: current_user.id}))

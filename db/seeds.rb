@@ -359,4 +359,32 @@ puts 'Success: Creacion de tajetas premium'
 
 
 
+puts 'Siguiendo'
+user1.profile.toggle_follow!(user2.profile)
+user1.profile.toggle_follow!(user3.profile)
+user1.profile.toggle_follow!(user4.profile)
+user1.profile.toggle_follow!(user5.profile)
+user2.profile.toggle_follow!(user1.profile)
+user2.profile.toggle_follow!(user3.profile)
+user2.profile.toggle_follow!(user3.profile)
+user3.profile.toggle_follow!(user1.profile)
+user4.profile.toggle_follow!(user5.profile)
+
+Profile.all.each do |f1|
+  f1.followers(Profile).each  do |f2|
+    puts f1.user.name << ' sigue a ' << f2.user.name
+  end
+end
+
+
+Profile.all.each do |f1|
+  f1.followees(Profile).each  do |f2|
+    puts f1.user.name << ' es seguido por ' << f2.user.name
+  end
+end
+
+
+
+
+
 
