@@ -24,3 +24,9 @@
     /* inline-block space fix */
     margin-right:-4px;
 }
+
+/* resize images */
+a.image_container img {
+  width: 20%;
+  height: 20%;
+}
