@@ -1,3 +1,13 @@
+/* Color de fondo de toda la aplicación */
+body {
+  background-color: #efefef !important;
+}
+
+/* Cambio del color de hr por defecto para que se aprecie con el nuevo fondo */
+hr {
+  border-color: darkgray !important;
+}
+
 #lay{
   background-color: #002400;
   color: #FFFFFF

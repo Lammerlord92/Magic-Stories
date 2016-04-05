@@ -86,10 +86,15 @@ input[readonly] {
 
 .story-metadata {
   border: 1px solid #ccc;
+  background-color: white;
 }
 
 .story-metadata h2 {
   margin-left: 3%;
+}
+
+.story-metadata hr {
+  width: 80% !important;
 }
 
 .story-metadata p {
@@ -113,6 +118,7 @@ input[readonly] {
 
 .story-data {
   border: 1px solid #ccc;
+  background-color: white;
 }
 
 .story-data .title {
