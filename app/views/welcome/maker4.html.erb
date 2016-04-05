@@ -58,6 +58,7 @@
         // Workaround for Internet Explorer ignoring certain styles
         if (mxClient.IS_QUIRKS)
         {
+          console.log("Entra aquí");
           document.body.style.overflow = 'hidden';
           new mxDivResizer(tbContainer);
           new mxDivResizer(container);
@@ -78,6 +79,7 @@
 
         var addVertex = function(icon, w, h, style)
         {
+          console.log("Entra aquí con addVertex");
           var vertex = new mxCell(null, new mxGeometry(0, 0, w, h), style);
           vertex.setVertex(true);
 
@@ -86,6 +88,7 @@
 
           graph.getSelectionModel().addListener(mxEvent.CHANGE, function()
           {
+            console.log("Entra aquí");
             var tmp = graph.isSelectionEmpty();
             mxUtils.setOpacity(img, (tmp) ? 100 : 20);
             img.enabled = tmp;

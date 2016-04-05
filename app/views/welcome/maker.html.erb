@@ -1,70 +1,491 @@
-<html>
+<!-- Page passes the container for the graph to the program -->
 <head>
-  <title>Hello, World! example for mxGraph</title>
+  <div>
 
-  <!-- Sets the basepath for the library if not in same directory -->
-  <script type="text/javascript">
-    mxBasePath = '../src';
-  </script>
-
-  <!-- Loads and initializes the library -->
-  <script type="text/javascript" src="http://jgraph.github.io/mxgraph/javascript/src/js/mxClient.js"></script>
-
-  <!-- Example code -->
-  <script type="text/javascript">
-    // Program starts here. Creates a sample graph in the
-    // DOM node with the specified ID. This function is invoked
-    // from the onLoad event handler of the document (see below).
-    function main(container)
-    {
-      // Checks if the browser is supported
-      if (!mxClient.isBrowserSupported())
-      {
-        // Displays an error message if the browser is not supported.
-        mxUtils.error('Browser is not supported!', 200, false);
+    <style>
+      #graphContainer{
+        position:relative;
+        overflow:auto;
+        left:0px;
+        bottom:0px;
+        right:0px;
+        width:100%;
+        height:100%;
+        border:solid 2px darkgrey;
+        cursor:default;
       }
-      else
-      {
-        // Disables the built-in context menu
-        mxEvent.disableContextMenu(container);
-
-        // Creates the graph inside the given container
-        var graph = new mxGraph(container);
-
-        // Enables rubberband selection
-        new mxRubberband(graph);
-
-        // Gets the default parent for inserting new cells. This
-        // is normally the first child of the root (ie. layer 0).
-        var parent = graph.getDefaultParent();
-
-        // Adds cells to the model in a single step
-        graph.getModel().beginUpdate();
-        try
-        {
-          var v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30);
-          var v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
-          var e1 = graph.insertEdge(parent, null, '', v1, v2);
-        }
-        finally
-        {
-          // Updates the display
-          graph.getModel().endUpdate();
-        }
+      #properties{
+        border:  solid 2px darkgrey;
+        padding: 10px;
       }
-    };
-  </script>
+    </style>
+
+    <!--
+    <table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td id="toolbox" valign="top" width="70px" style="min-width:70px;background:#7F7F7F;padding:12px;">
+          <img src="http://etc.usf.edu/clipart/40600/40690/pb_sq_40690_lg.gif" width="70px" height="70px"><br/>
+          <img src="http://2.bp.blogspot.com/-MZAjo7HkgNE/TqUZQPShXQI/AAAAAAAAB9c/c5Xy3HBhk_g/s1600/GlobeCircle+copy.png" width="70px" height="70px"><br/>
+        </td>
+        <td>
+          <div id="graphContainer"></div>
+          <br>
+          <div id="properties">
+            <input type="text" name="lastname" id="my_textTitle">
+          </div>
+        </td>
+      </tr>
+    </table> -->
+
+
+
+    <!-- Sets the basepath for the library if not in same directory -->
+    <script type="text/javascript">
+      mxBasePath = '../src';
+    </script>
+
+    <!-- Loads and initializes the library -->
+    <!--<script type="text/javascript" src="/assets/javascripts/mxClient.js"></script>-->
+    <script type="text/javascript" src="../../assets/javascripts/widgEditor.js"></script>
+
+    <!-- Example code -->
+    <script type="text/javascript">
+
+      // fuken: Esta funcion de jQuery carga la funcion main
+      //        cuando el html ha sido cargado entero
+      $(document).ready(function main() {
+        var container = document.getElementById('graphContainer');
+        // Checks if the browser is supported
+        if (!mxClient.isBrowserSupported()) {
+          // Displays an error message if the browser is not supported.
+          mxUtils.error('Browser is not supported!', 200, false);
+        }
+        else {
+          // Note that these XML nodes will be enclosing the
+          // mxCell nodes for the model cells in the output
+          var xml = mxUtils.createXmlDocument();
+
+          var chapter1 = xml.createElement('Chapter');
+          chapter1.setAttribute('title', 'Juanoide presenta');
+          chapter1.setAttribute('body', 'Juan ha ido a ISPP');
+
+          var chapter2 = xml.createElement('Chapter');
+          chapter2.setAttribute('title', 'Juanoide pone la numeración');
+          chapter2.setAttribute('body', 'Juanoide ha hecho las cosas bien');
+
+          var chapter3 = xml.createElement('Chapter');
+          chapter3.setAttribute('title', 'El grupo 1 se queja');
+          chapter3.setAttribute('body', 'Buuuuu');
+
+          var chapter4 = xml.createElement('Chapter');
+          chapter4.setAttribute('title', 'Juanoide no pone la numeración');
+          chapter4.setAttribute('body', 'Juanoide no ha hecho las cosas bien');
+
+          var relation = xml.createElement('sendTo');
+          relation.setAttribute('since', '1985');
+
+          // Creates the graph inside the given container
+          window.graph = new mxGraph(container);
+
+          // fuken: sacar el objeto graph como propiedad global
+          //        para poder verlo en la consola del navegador
+          window.gr = graph;
+
+          // Optional disabling of sizing
+          graph.setCellsResizable(false);
+
+          //Javi: No permite mover flechas
+          graph.setAllowDanglingEdges(false);
+
+
+          // Configures the graph contains to resize and
+          // add a border at the bottom, right
+          graph.setResizeContainer(true);
+          graph.minimumContainerSize = new mxRectangle(0, 0, 500, 380);
+          graph.setBorder(60);
+
+          // Stops editing on enter key, handles escape
+          new mxKeyHandler(graph);
+
+          // Overrides method to disallow edge label editing
+          graph.isCellEditable = function (cell) {
+            return !this.getModel().isEdge(cell);
+          };
+
+          // Overrides method to provide a cell label in the display
+          graph.convertValueToString = function (cell) {
+            if (mxUtils.isNode(cell.value)) {
+              if (cell.value.nodeName.toLowerCase() == 'chapter') {
+                var title = cell.getAttribute('title', '');
+                var body  = cell.getAttribute('body', '');
+
+                if (body != null && body.length > 0) {
+                  //return body + ', ' + title;
+                  return title;
+                }
+
+                return title;
+              }
+              else if (cell.value.nodeName.toLowerCase() == 'sendTo') {
+                return cell.value.nodeName + ' (Since '
+                    + cell.getAttribute('since', '') + ')';
+              }
+
+            }
+
+            return '';
+          };
+
+          // Overrides method to store a cell label in the model
+          var cellLabelChanged = graph.cellLabelChanged;
+          graph.cellLabelChanged = function (cell, newValue, autoSize) {
+            if (mxUtils.isNode(cell.value) &&
+                cell.value.nodeName.toLowerCase() == 'chapter') {
+              var pos = newValue.indexOf(' ');
+
+              var title = (pos > 0) ? newValue.substring(0,pos)                    : newValue;
+              var body  = (pos > 0) ? newValue.substring(pos + 1, newValue.length) : '';
+
+              // Clones the value for correct undo/redo
+              var elt = cell.value.cloneNode(true);
+
+              elt.setAttribute('title', title);
+              elt.setAttribute('body', body);
+
+              newValue = elt;
+              autoSize = true;
+            }
+
+            cellLabelChanged.apply(this, arguments);
+          };
+
+          // Overrides method to create the editing value
+          var getEditingValue = graph.getEditingValue;
+          graph.getEditingValue = function (cell) {
+            if (mxUtils.isNode(cell.value) &&
+                cell.value.nodeName.toLowerCase() == 'chapter') {
+              var title = cell.getAttribute('title', '');
+              var body = cell.getAttribute('body', '');
+
+              return title + ' ' + body;
+            }
+          };
+
+          // Adds a special tooltip for edges
+          graph.setTooltips(true);
+
+          var getTooltipForCell = graph.getTooltipForCell;
+          graph.getTooltipForCell = function (cell) {
+            // Adds some relation details for edges
+            if (graph.getModel().isEdge(cell)) {
+              var src = this.getLabel(this.getModel().getTerminal(cell, true));
+              var trg = this.getLabel(this.getModel().getTerminal(cell, false));
+
+              return src + ' ' + cell.value.nodeName + ' ' + trg;
+            }
+
+            return getTooltipForCell.apply(this, arguments);
+          };
+
+          // Enables rubberband selection
+          new mxRubberband(graph);
+
+          // Adds an option to view the XML of the graph
+          document.querySelector('#bodyCol').appendChild(mxUtils.button('View XML', function () {
+            var encoder = new mxCodec();
+            var node = encoder.encode(graph.getModel());
+            mxUtils.popup(mxUtils.getPrettyXml(node), true);
+          }));
+
+          // Changes the style for match the markup
+          // Creates the default style for vertices
+          var style = graph.getStylesheet().getDefaultVertexStyle();
+          style[mxConstants.STYLE_STROKECOLOR] = 'gray';
+          style[mxConstants.STYLE_ROUNDED] = true;
+          style[mxConstants.STYLE_SHADOW] = true;
+          style[mxConstants.STYLE_FILLCOLOR] = '#DFDFDF';
+          style[mxConstants.STYLE_GRADIENTCOLOR] = 'white';
+          style[mxConstants.STYLE_FONTCOLOR] = 'black';
+          style[mxConstants.STYLE_FONTSIZE] = '12';
+          style[mxConstants.STYLE_SPACING] = 4;
+
+          // Creates the default style for edges
+          style = graph.getStylesheet().getDefaultEdgeStyle();
+          style[mxConstants.STYLE_STROKECOLOR] = '#0C0C0C';
+          style[mxConstants.STYLE_LABEL_BACKGROUNDCOLOR] = 'white';
+          style[mxConstants.STYLE_EDGE] = mxEdgeStyle.ElbowConnector;
+          style[mxConstants.STYLE_ROUNDED] = true;
+          style[mxConstants.STYLE_FONTCOLOR] = 'black';
+          style[mxConstants.STYLE_FONTSIZE] = '10';
+
+          // Gets the default parent for inserting new cells. This
+          // is normally the first child of the root (ie. layer 0).
+          var parent = graph.getDefaultParent();
+
+          // Adds cells to the model in a single step
+          graph.getModel().beginUpdate();
+          try {
+            //var w = chapter1.getAttribute('title').length * 7;
+
+            var v1 = graph.insertVertex(parent, null, chapter1, 40, 40, chapter1.getAttribute('title').length * 7, 30);
+            var v2 = graph.insertVertex(parent, null, chapter2, 200, 150, chapter2.getAttribute('title').length * 7, 30);
+            var v3 = graph.insertVertex(parent, null, chapter3, 450, 125, chapter3.getAttribute('title').length * 7, 30);
+            var v4 = graph.insertVertex(parent, null, chapter4, 200, 100, chapter4.getAttribute('title').length * 7, 30);
+
+            var e1 = graph.insertEdge(parent, null, relation, v1, v2);
+            var e2 = graph.insertEdge(parent, null, relation, v2, v3);
+            var e3 = graph.insertEdge(parent, null, relation, v1, v4);
+            var e4 = graph.insertEdge(parent, null, relation, v4, v3);
+          }
+          finally {
+            // Updates the display
+            graph.getModel().endUpdate();
+          }
+
+          // Implements a properties panel that uses
+          // mxCellAttributeChange to change properties
+          graph.getSelectionModel().addListener(mxEvent.CHANGE, function (sender, evt) {
+            selectionChanged(graph);
+          });
+
+          selectionChanged(graph);
+        }
+
+        /**
+         * Updates the properties panel
+         */
+        function selectionChanged(graph) {
+          var cell = null;
+          //var div = document.getElementById('properties');
+
+          // Forces focusout in IE
+          graph.container.focus();
+
+          // Clears the DIV the non-DOM way
+          //div.innerHTML = '';
+
+          // Gets the selection cell
+          cell = graph.getSelectionCell();
+
+          //Global variables
+          window.savedCell = null;
+          window.savedGraph = null;
+
+          if (cell == null) {
+            //var changingObject = $("#my_textBodyWidgIframe").contents().set('body','aahahahaha');
+            $('#properties').hide();
+            //var changingBody = changingObject.find('body').html();
+            //console.log("linea de cambio = "+changingBody);
+
+            //mxUtils.writeln(div, 'Nothing selected.');
+            document.getElementById("my_textTitle").value = "Nothing selected";
+            //document.getElementById("my_textBodyWidgIframe").value = "Nothing selected 2";
+          }
+          else {
+            $('#properties').show();
+            console.log("ENTRA EN EL ELSE");
+            //var buttonAux = $("#submitButtonId");
+            var buttonAux = document.getElementById("submitButtonId");
+
+            //Change global variables
+            savedCell = cell;
+            savedGraph = graph;
+
+            if (cell.value.nodeName.toLowerCase() == 'chapter') {
+              $('#editor').show();
+              var attrs = cell.value.attributes;
+
+              for (var i = 0; i < attrs.length; i++) {
+                if (i == 0) { //Obtains the title
+                  setFormTitleValue(attrs[i], cell, graph);
+                } else { //Obtains the body
+                  var data = attrs[i];
+                  var titleValue = data.value;
+
+                  //widgEditor("my_textBody",titleValue);
+                  setFormBodyValue(titleValue,cell,graph);
+                }
+              }
+              //mxUtils.br(div);
+            }
+            else {
+              console.log("DIme que entras anda....");
+              var attrs = cell.value.attributes;
+              setFormTitleValue(attrs[0], cell, graph);
+              $('#editor').hide();
+            }
+
+
+          }
+        }
+
+
+        function setFormTitleValue(titleValue,cell,graph){
+          document.getElementById("my_textTitle").value = titleValue.nodeValue;
+          var inputTitle=document.getElementById("my_textTitle");
+
+          //Check if the title value is different from the previous one and changes it
+          var applyHandler = function () {
+            var newValue = inputTitle.value || '';
+            var oldValue = titleValue.nodeValue;
+
+            if (newValue != oldValue) {
+              graph.getModel().beginUpdate();
+              try {
+                var edit = new mxCellAttributeChange(
+                    cell, titleValue.nodeName,
+                    newValue);
+                graph.getModel().execute(edit);
+                graph.updateCellSize(cell);
+              }
+              finally {
+                graph.getModel().endUpdate();
+                graph=null;
+              }
+            }
+          };
+
+          /*
+           mxEvent.addListener(inputTitle, 'keypress', function (evt) {
+           // Needs to take shift into account for textareas
+           if (evt.keyCode == /*enter*//*13 && !mxEvent.isShiftDown(evt)) {
+           inputTitle.blur();
+           }
+           });
+
+           mxEvent.addListener(inputTitle, 'blur', applyHandler);
+
+           //graph=null;*/
+        }
+
+
+
+        function setFormBodyValue(bodyValue,cell,graph) {
+          //document.getElementById("my_textBody").value = bodyValue.nodeValue;
+          widgEditor("my_textBody",bodyValue);
+          var inputBody = document.getElementById("my_textBodyWidgIframe");
+          var iFrameContent = $("#my_textBodyWidgIframe").contents();
+          console.log("my_textBody ="+bodyValue);
+          console.log("inputBody = "+iFrameContent.find('body').html());
+
+          //Check if the body value is different from the previous one and changes it
+
+          var applyHandler = function () {
+            var newValue = inputBody.value || '';
+            var oldValue = bodyValue.nodeValue;
+            console.log("newValue = "+newValue);
+            console.log("oldValue ="+oldValue);
+
+            if (newValue != oldValue) {
+              graph.getModel().beginUpdate();
+              console.log("newValue y oldValue son distintos");
+              try {
+                var edit = new mxCellAttributeChange(
+                    cell, bodyValue.nodeName,
+                    newValue);
+                graph.getModel().execute(edit);
+                graph.updateCellSize(cell);
+              }
+              finally {
+                graph.getModel().endUpdate(); graph=null;
+              }
+            }
+            else{
+              console.log("newValue y oldValue son iguales");
+            }
+          };
+
+
+          mxEvent.addListener(inputBody, 'keypress', function (evt) {
+            // Needs to take shift into account for textareas
+            if (evt.keyCode == /*enter*/13 && !mxEvent.isShiftDown(evt)) {
+              inputTitle.blur();
+            }
+          });
+
+          if (mxClient.IS_IE) {
+            mxEvent.addListener(inputBody, 'focusout', applyHandler);
+          }
+          else {
+            // Note: Known problem is the blurring of fields in
+            // Firefox by changing the selection, in which case
+            // no event is fired in FF and the change is lost.
+            // As a workaround you should use a local variable
+            // that stores the focused field and invoke blur
+            // explicitely where we do the graph.focus above.
+            mxEvent.addListener(inputBody, 'blur', applyHandler);
+          }
+
+          //graph = null;
+
+        }
+
+      });
+    </script>
+
+  </div>
+
+
+
 </head>
 
-<!-- Page passes the container for the graph to the program -->
-<body onload="main(document.getElementById('graphContainer'))">
 
-<!-- Creates a container for the graph with a grid wallpaper
-<div id="graphContainer"
-     style="position:relative;overflow:hidden;width:321px;height:241px;background:url('http://etc.usf.edu/presentations/backgrounds/grid/grid_03/1201m.gif');cursor:default;">
-</div>-->
-<div id="graphContainer"
-     style="position:relative;overflow:auto;top:30px;left:0px;bottom:0px;right:0px;width:100%;height:100%;background:url('http://etc.usf.edu/presentations/backgrounds/grid/grid_03/1201m.gif');cursor:default;">
-</div>
+
+<body>
+
+
+<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td id="toolbox" valign="top" width="70px" style="min-width:70px;background:#7F7F7F;padding:12px;">
+      <!--<img src="http://etc.usf.edu/clipart/40600/40690/pb_sq_40690_lg.gif" width="70px" height="70px"><br/>
+      <img src="http://2.bp.blogspot.com/-MZAjo7HkgNE/TqUZQPShXQI/AAAAAAAAB9c/c5Xy3HBhk_g/s1600/GlobeCircle+copy.png" width="70px" height="70px"><br/>-->
+      <button id="createNewNodeId" name="createNewNodeName" onclick="crearNuevoNodo()">Nuevo Nodo</button>
+      <button id="creaetNewEdgeId" name="createNewEdgeName" onclick="crearNuevaArista()">Nueva Arista</button>
+      <button id="deleteId" name="deleteName" onclick="eliminar()">Eliminar</button>
+      <button id="centrarId" name="centrarName" onclick="centrar()">Centrar</button>
+      <button id="derechaId" name="derechaName" onclick="derecha()">Derecha</button>
+      <button id="izquierdaId" name="izquierdaName" onclick="izquierda()">Izquierda</button>
+      <button id="justificarId" name="justificarName" onclick="justificar()">Justificar</button>
+    </td>
+    <td>
+      <div id="graphContainer">
+      </div>
+      <br>
+
+      <div id="properties">
+
+        <!--<input type="button" value="B" onclick=""/>-->
+        <div id="container">
+          <label for="noise">Title</label>
+          <input type="text" id="my_textTitle" name="noise">
+          <br/>
+          <div id="editor">
+            <label for="noise">Body</label>
+            <!--<div id="my_textBodyWidgContainer" class="widgContainer">
+              <iframe id="my_textBodyWidgIframe" class="widgIframe">
+                <input id="my_textBody" name="my_textBody">
+
+                </input>
+
+              </iframe>
+
+            </div>-->
+
+            <input id="my_textBody" name="noise" class="widgEditor nothing"/>
+            <!--<textarea id="my_textBody" name="noise" class="widgEditor nothing"/>
+            <input id="theTextarea" name="noise" class="widgEditor nothing"/>-->
+            <br/>
+
+            <button id="submitButtonId" name="submitButtonName" onclick="actualizaNodo()"> Guardar</button>
+          </div>
+        </div>
+      </div>
+
+    </td>
+  </tr>
+</table>
+
+
+
 </body>
 </html>
