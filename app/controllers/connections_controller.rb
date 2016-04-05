@@ -25,16 +25,19 @@ class ConnectionsController < ApplicationController
     # 3  = Friends
     # else = All
 
-    @profiles = case choice
+    a = case choice
     when 'followers' then
-      searchFollowers(@q)
+      [searchFollowers(@q), 'Seguidores']
     when 'followees' then
-      searchFollowees(@q)
+      [searchFollowees(@q), 'Siguiendo']
     when 'friends' then
-      searchFriends(@q)
+      [searchFriends(@q), 'Amigos']
     else
-      current_user.profile.followees(Profile)
+      [current_user.profile.followees(Profile), 'Siguiendo']
     end
+
+    @profiles = a[0]
+    @t1 = a[1]
 
     if @profiles.blank?
       flash.alert = "Ningún perfil encontrado con sus parámetros de búsqueda"

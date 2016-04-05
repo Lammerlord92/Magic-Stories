@@ -197,6 +197,23 @@
           mxUtils.popup(mxUtils.getPrettyXml(node), true);
         }));
 
+
+
+
+        document.querySelector('#bodyCol').appendChild(mxUtils.button('View JSON', function () {
+          var encoder = new mxCodec();
+          var node = encoder.encode(graph.getModel());
+          //mxUtils.popup(mxUtils.getPrettyXml(node), true);
+
+          var vertices = graph.getChildVertices(graph.getDefaultParent());
+          var content = [];
+          for (i=0; i< vertices.length;i++){
+
+            content.push(vertices[i].value.attributes);
+          }
+          console.log(content);
+        }));
+
         // Changes the style for match the markup
         // Creates the default style for vertices
         var style = graph.getStylesheet().getDefaultVertexStyle();
