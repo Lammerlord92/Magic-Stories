@@ -1,98 +1,98 @@
 /*
-**    File: widgEdit.js
-**    Created by: Cameron Adams (http://www.themaninblue.com/)
-**    Created on: 2005-01-16
-**    Last modified: 2008-03-01
-**
-**
-**
-**
-**    License Information:
-**    -------------------------------------------------------------------------
-**    Copyright (C) 2008 Cameron Adams
-**
-**    This program is free software; you can redistribute it and/or modify it
-**    under the terms of the GNU General Public License as published by the
-**    Free Software Foundation; either version 2 of the License, or (at your
-**    option) any later version.
-**    
-**    This program is distributed in the hope that it will be useful, but
-**    WITHOUT ANY WARRANTY; without even the implied warranty of
-**    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-**    General Public License for more details.
-**    
-**    You should have received a copy of the GNU General Public License along
-**    with this program; if not, write to the Free Software Foundation, Inc.,
-**    59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-**    
-**    
-**    
-**    
-**    Purpose:
-**    -------------------------------------------------------------------------
-**
-**    Replaces all textareas (class="widgEditor") in a HTML document with
-**    enhanced editing windows to allow basic HTML formatting in a WYSIWYG
-**    manner.
-**
-**
-**
-**
-**    Function list:
-**    -------------------------------------------------------------------------
-**
-**    run()
-**
-**    widgInit()
-**
-**    widgEditor(replacedTextareaID)
-**    widtEditor.cleanPaste()
-**    widgEditor.cleanSource()
-**    widgEditor.convertSPANs(theSwitch)
-**    widgEditor.detectPaste(e)
-**    widgEditor.initEdit()
-**    widgEditor.insertNewParagraph()
-**    widgEditor.modifyFormSubmit()
-**    widgEditor.paragraphise()
-**    widgEditor.refreshDisplay()
-**    widgEditor.switchMode()
-**    widgEditor.updateWidgInput()
-**    widgEditor.writeDocument()
-**
-**    widgToolbar()
-**    widgToolbar.addButton(theID, theClass, theLabel, theAction)
-**    widgToolbar.addSelect(theID, theClass, theContentArray, theAction)
-**    widgToolbar.disable()
-**    widgToolbar.enable()
-**    widgToolbar.setState(theState, theStatus)
-**
-**    widgToolbarAction()
-**
-**    widgToolbarCheckState(theWidgEditor, resubmit)
-**
-**    widgToolbarMouseover()
-**
-**    acceptableChildren(theNode)
-**
-**    changeNodeType(theNode, nodeType)
-**
-**    replaceNodeWithChildren()
-**
-**    String.addClass(theClass)
-**    String.classExists(theClass)
-**    String.isAcceptedElementName()
-**    String.isInlineName()
-**    String.removeClass(theClass)
-**    String.reverse()
-**    String.validTags()
-*/
+ **    File: widgEdit.js
+ **    Created by: Cameron Adams (http://www.themaninblue.com/)
+ **    Created on: 2005-01-16
+ **    Last modified: 2008-03-01
+ **
+ **
+ **
+ **
+ **    License Information:
+ **    -------------------------------------------------------------------------
+ **    Copyright (C) 2008 Cameron Adams
+ **
+ **    This program is free software; you can redistribute it and/or modify it
+ **    under the terms of the GNU General Public License as published by the
+ **    Free Software Foundation; either version 2 of the License, or (at your
+ **    option) any later version.
+ **
+ **    This program is distributed in the hope that it will be useful, but
+ **    WITHOUT ANY WARRANTY; without even the implied warranty of
+ **    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ **    General Public License for more details.
+ **
+ **    You should have received a copy of the GNU General Public License along
+ **    with this program; if not, write to the Free Software Foundation, Inc.,
+ **    59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ **
+ **
+ **
+ **
+ **    Purpose:
+ **    -------------------------------------------------------------------------
+ **
+ **    Replaces all textareas (class="widgEditor") in a HTML document with
+ **    enhanced editing windows to allow basic HTML formatting in a WYSIWYG
+ **    manner.
+ **
+ **
+ **
+ **
+ **    Function list:
+ **    -------------------------------------------------------------------------
+ **
+ **    run()
+ **
+ **    widgInit()
+ **
+ **    widgEditor(replacedTextareaID)
+ **    widtEditor.cleanPaste()
+ **    widgEditor.cleanSource()
+ **    widgEditor.convertSPANs(theSwitch)
+ **    widgEditor.detectPaste(e)
+ **    widgEditor.initEdit()
+ **    widgEditor.insertNewParagraph()
+ **    widgEditor.modifyFormSubmit()
+ **    widgEditor.paragraphise()
+ **    widgEditor.refreshDisplay()
+ **    widgEditor.switchMode()
+ **    widgEditor.updateWidgInput()
+ **    widgEditor.writeDocument()
+ **
+ **    widgToolbar()
+ **    widgToolbar.addButton(theID, theClass, theLabel, theAction)
+ **    widgToolbar.addSelect(theID, theClass, theContentArray, theAction)
+ **    widgToolbar.disable()
+ **    widgToolbar.enable()
+ **    widgToolbar.setState(theState, theStatus)
+ **
+ **    widgToolbarAction()
+ **
+ **    widgToolbarCheckState(theWidgEditor, resubmit)
+ **
+ **    widgToolbarMouseover()
+ **
+ **    acceptableChildren(theNode)
+ **
+ **    changeNodeType(theNode, nodeType)
+ **
+ **    replaceNodeWithChildren()
+ **
+ **    String.addClass(theClass)
+ **    String.classExists(theClass)
+ **    String.isAcceptedElementName()
+ **    String.isInlineName()
+ **    String.removeClass(theClass)
+ **    String.reverse()
+ **    String.validTags()
+ */
 
 
 
 
 /******************************************************************************
-**    CONFIGURATION VARIABLES
-******************************************************************************/
+ **    CONFIGURATION VARIABLES
+ ******************************************************************************/
 
 /* Location of stylesheet file for editor content */
 /*var widgStylesheet = "widgContent.css";*/
@@ -127,23 +127,23 @@ widgSelectBlockOptions.push("<h6>", "Heading 6");
 widgSelectBlockOptions.push("<p>", "Paragraph");
 
 /* If widgInsertParagraphs = true, when content is submitted paragraphs will be
-** inserted around text without a parent element. Mozilla does not
-** automatically do this, so if this is set to false you will end up with some
-** plain text blocks. Uses a double <br /> as a pargraph marker.
-*/
+ ** inserted around text without a parent element. Mozilla does not
+ ** automatically do this, so if this is set to false you will end up with some
+ ** plain text blocks. Uses a double <br /> as a pargraph marker.
+ */
 
 var widgInsertParagraphs = true;
 
 /* If widgAutoClean = true, when content is pasted into the WYSIWYG view, it
-** will automatically be cleaned. If widgAutoClean = false, the user will be
-** prompted as to whether they wish to clean the content.
-*/
+ ** will automatically be cleaned. If widgAutoClean = false, the user will be
+ ** prompted as to whether they wish to clean the content.
+ */
 
 var widgAutoClean = false;
 
 /******************************************************************************
-**    END CONFIGURATION
-******************************************************************************/
+ **    END CONFIGURATION
+ ******************************************************************************/
 
 
 
@@ -155,20 +155,20 @@ run();
 
 function run()
 {
-	var oldOnload = window.onload;
+    var oldOnload = window.onload;
 
-	if (typeof(window.onload) != "function")
-	{
-		window.onload = widgInit;
-	}
-	else
-	{
-		window.onload = function()
-		{
-			oldOnload();
-			widgInit();
-		}
-	}
+    if (typeof(window.onload) != "function")
+    {
+        window.onload = widgInit;
+    }
+    else
+    {
+        window.onload = function()
+        {
+            oldOnload();
+            widgInit();
+        }
+    }
 }
 
 
@@ -176,34 +176,34 @@ function run()
 
 function widgInit()
 {
-	/* Detects if designMode is available, and also if browser is IE or Mozilla (excludes Safari) */
-	if (typeof(document.designMode) == "string" && (document.all || document.designMode == "off"))
-	{
-		//var theTextareas = document.getElementsByTagName("textarea");
-		var theTextareas = document.getElementsByClassName("widgEditor nothing");
-		
-		for (var i = 0; i < theTextareas.length; i++)
-		{
-			var theTextarea = theTextareas[i];
-			
-			if (theTextarea.className.classExists("widgEditor"))
-			{
-				if (theTextarea.id == "")
-				{
-					theTextarea.id = theTextarea.name;
-				}
-				
-				
-				setTimeout("new widgEditor('" + theTextarea.id + "')", 500 * (i));
-			}
-		}
-	}
-	else
-	{
-		return false;
-	}
-	
-	return true;
+    /* Detects if designMode is available, and also if browser is IE or Mozilla (excludes Safari) */
+    if (typeof(document.designMode) == "string" && (document.all || document.designMode == "off"))
+    {
+        //var theTextareas = document.getElementsByTagName("textarea");
+        var theTextareas = document.getElementsByClassName("widgEditor nothing");
+
+        for (var i = 0; i < theTextareas.length; i++)
+        {
+            var theTextarea = theTextareas[i];
+
+            if (theTextarea.className.classExists("widgEditor"))
+            {
+                if (theTextarea.id == "")
+                {
+                    theTextarea.id = theTextarea.name;
+                }
+
+
+                setTimeout("new widgEditor('" + theTextarea.id + "')", 500 * (i));
+            }
+        }
+    }
+    else
+    {
+        return false;
+    }
+
+    return true;
 }
 
 
@@ -211,8 +211,6 @@ function widgEditor(replacedTextareaID,titleValue)
 {
 
     var self = this;
-    console.log("Dentro del widgEditor(), replacedTextAreaID = "+replacedTextareaID);
-    console.log("Dentro del widgEditor(), titleValue = "+titleValue);
     //Variable para comprobar de si existe o no ya un container
     var alreadyContainer = document.getElementById("my_textBodyWidgContainer");
 
@@ -292,7 +290,6 @@ function widgEditor(replacedTextareaID,titleValue)
     /* Fill editor with old textarea content */
     var ifr = this;
     writeDocument(this.theInput.value,ifr);
-    console.log("this.theInput.value = "+this.theInput.value);
     /* Make editor editable */
     initEdit(ifr);
 
@@ -305,123 +302,123 @@ function widgEditor(replacedTextareaID,titleValue)
 /* Clean pasted content */
 widgEditor.prototype.cleanPaste = function()
 {
-	if (widgAutoClean || confirm("Do you wish to clean the HTML source of the content you just pasted?"))
-	{
-		var matchedHead = "";
-		var matchedTail = "";
-		var newContent = this.theIframe.contentWindow.document.getElementsByTagName("body")[0].innerHTML;
-		var newContentStart = 0;
-		var newContentFinish = 0;
-		var newSnippet = "";
-		var tempNode = document.createElement("div");
+    if (widgAutoClean || confirm("Do you wish to clean the HTML source of the content you just pasted?"))
+    {
+        var matchedHead = "";
+        var matchedTail = "";
+        var newContent = this.theIframe.contentWindow.document.getElementsByTagName("body")[0].innerHTML;
+        var newContentStart = 0;
+        var newContentFinish = 0;
+        var newSnippet = "";
+        var tempNode = document.createElement("div");
 
-		/* Find start of both strings that matches */
-		for (newContentStart = 0; newContent.charAt(newContentStart) == this.pasteCache.charAt(newContentStart); newContentStart++)
-		{
-			matchedHead += this.pasteCache.charAt(newContentStart);
-		}
-		
-		/* If newContentStart is inside a HTML tag, move to opening brace of tag */
-		for (var i = newContentStart; i >= 0; i--)
-		{
-			if (this.pasteCache.charAt(i) == "<")
-			{
-				newContentStart = i;
-				matchedHead = this.pasteCache.substring(0, newContentStart);
-				
-				break;
-			}
-			else if(this.pasteCache.charAt(i) == ">")
-			{
-				break;
-			}
-		}
+        /* Find start of both strings that matches */
+        for (newContentStart = 0; newContent.charAt(newContentStart) == this.pasteCache.charAt(newContentStart); newContentStart++)
+        {
+            matchedHead += this.pasteCache.charAt(newContentStart);
+        }
 
-		newContent = newContent.reverse();
-		this.pasteCache = this.pasteCache.reverse();
+        /* If newContentStart is inside a HTML tag, move to opening brace of tag */
+        for (var i = newContentStart; i >= 0; i--)
+        {
+            if (this.pasteCache.charAt(i) == "<")
+            {
+                newContentStart = i;
+                matchedHead = this.pasteCache.substring(0, newContentStart);
 
-		/* Find end of both strings that matches */
-		for (newContentFinish = 0; newContent.charAt(newContentFinish) == this.pasteCache.charAt(newContentFinish); newContentFinish++)
-		{
-			matchedTail += this.pasteCache.charAt(newContentFinish);
-		}
+                break;
+            }
+            else if(this.pasteCache.charAt(i) == ">")
+            {
+                break;
+            }
+        }
 
-		/* If newContentFinish is inside a HTML tag, move to closing brace of tag */
-		for (var i = newContentFinish; i >= 0; i--)
-		{
-			if (this.pasteCache.charAt(i) == ">")
-			{
-				newContentFinish = i;
-				matchedTail = this.pasteCache.substring(0, newContentFinish);
-				
-				break;
-			}
-			else if(this.pasteCache.charAt(i) == "<")
-			{
-				break;
-			}
-		}
+        newContent = newContent.reverse();
+        this.pasteCache = this.pasteCache.reverse();
 
-		matchedTail = matchedTail.reverse();
+        /* Find end of both strings that matches */
+        for (newContentFinish = 0; newContent.charAt(newContentFinish) == this.pasteCache.charAt(newContentFinish); newContentFinish++)
+        {
+            matchedTail += this.pasteCache.charAt(newContentFinish);
+        }
 
-		/* If there's no difference in pasted content */
-		if (newContentStart == newContent.length - newContentFinish)
-		{
-			return false;
-		}
+        /* If newContentFinish is inside a HTML tag, move to closing brace of tag */
+        for (var i = newContentFinish; i >= 0; i--)
+        {
+            if (this.pasteCache.charAt(i) == ">")
+            {
+                newContentFinish = i;
+                matchedTail = this.pasteCache.substring(0, newContentFinish);
 
-		newContent = newContent.reverse();
-		newSnippet = newContent.substring(newContentStart, newContent.length - newContentFinish);
-		newSnippet = newSnippet.validTags();
+                break;
+            }
+            else if(this.pasteCache.charAt(i) == "<")
+            {
+                break;
+            }
+        }
 
-		/* Replace opening bold tags with strong */
-		newSnippet = newSnippet.replace(/<b(\s+|>)/g, "<strong$1");
-		/* Replace closing bold tags with closing strong */
-		newSnippet = newSnippet.replace(/<\/b(\s+|>)/g, "</strong$1");
+        matchedTail = matchedTail.reverse();
 
-		/* Replace italic tags with em */
-		newSnippet = newSnippet.replace(/<i(\s+|>)/g, "<em$1");
-		/* Replace closing italic tags with closing em */
-		newSnippet = newSnippet.replace(/<\/i(\s+|>)/g, "</em$1");
+        /* If there's no difference in pasted content */
+        if (newContentStart == newContent.length - newContentFinish)
+        {
+            return false;
+        }
 
-		/* Strip out unaccepted attributes */
-		newSnippet = newSnippet.replace(/<[^>]*>/g, function(match)
-			{
-				match = match.replace(/ ([^=]+)="[^"]*"/g, function(match2, attributeName)
-					{
-						if (attributeName == "alt" || attributeName == "href" || attributeName == "src" || attributeName == "title")
-						{
-							return match2;
-						}
+        newContent = newContent.reverse();
+        newSnippet = newContent.substring(newContentStart, newContent.length - newContentFinish);
+        newSnippet = newSnippet.validTags();
 
-						return "";
-					});
+        /* Replace opening bold tags with strong */
+        newSnippet = newSnippet.replace(/<b(\s+|>)/g, "<strong$1");
+        /* Replace closing bold tags with closing strong */
+        newSnippet = newSnippet.replace(/<\/b(\s+|>)/g, "</strong$1");
 
-				return match;
-			}
-			);
+        /* Replace italic tags with em */
+        newSnippet = newSnippet.replace(/<i(\s+|>)/g, "<em$1");
+        /* Replace closing italic tags with closing em */
+        newSnippet = newSnippet.replace(/<\/i(\s+|>)/g, "</em$1");
 
-		tempNode.innerHTML = newSnippet;
+        /* Strip out unaccepted attributes */
+        newSnippet = newSnippet.replace(/<[^>]*>/g, function(match)
+            {
+                match = match.replace(/ ([^=]+)="[^"]*"/g, function(match2, attributeName)
+                {
+                    if (attributeName == "alt" || attributeName == "href" || attributeName == "src" || attributeName == "title")
+                    {
+                        return match2;
+                    }
 
-		acceptableChildren(tempNode);
-		
-		this.theInput.value = matchedHead + tempNode.innerHTML + matchedTail;
+                    return "";
+                });
 
-		/* Final cleanout for MS Word cruft */
-		this.theInput.value = this.theInput.value.replace(/<\?xml[^>]*>/g, "");
-		this.theInput.value = this.theInput.value.replace(/<[^ >]+:[^>]*>/g, "");
-		this.theInput.value = this.theInput.value.replace(/<\/[^ >]+:[^>]*>/g, "");
+                return match;
+            }
+        );
 
-		this.refreshDisplay();
-		
-		/* Convert semantics to spans in Mozilla */
-		if (!this.IE)
-		{
-			this.convertSPANs();
-		}
-	}
-	
-	return true;
+        tempNode.innerHTML = newSnippet;
+
+        acceptableChildren(tempNode);
+
+        this.theInput.value = matchedHead + tempNode.innerHTML + matchedTail;
+
+        /* Final cleanout for MS Word cruft */
+        this.theInput.value = this.theInput.value.replace(/<\?xml[^>]*>/g, "");
+        this.theInput.value = this.theInput.value.replace(/<[^ >]+:[^>]*>/g, "");
+        this.theInput.value = this.theInput.value.replace(/<\/[^ >]+:[^>]*>/g, "");
+
+        this.refreshDisplay();
+
+        /* Convert semantics to spans in Mozilla */
+        if (!this.IE)
+        {
+            this.convertSPANs();
+        }
+    }
+
+    return true;
 }
 
 
@@ -430,50 +427,50 @@ widgEditor.prototype.cleanPaste = function()
 /* Clean the HTML code of the content area */
 widgEditor.prototype.cleanSource = function()
 {
-	var theHTML = "";
-	
-	if (this.wysiwyg)
-	{
-		theHTML = this.theIframe.contentWindow.document.getElementsByTagName("body")[0].innerHTML;
-	}
-	else
-	{
-		theHTML = this.theTextarea.value;
-	}
+    var theHTML = "";
 
-	theHTML = theHTML.validTags();
-	
-	/* Remove leading and trailing whitespace */
-	theHTML = theHTML.replace(/^\s+/, "");
-	theHTML = theHTML.replace(/\s+$/, "");
-	
-	/* Remove style attribute inside any tag */
-	theHTML = theHTML.replace(/ style="[^"]*"/g, "");
+    if (this.wysiwyg)
+    {
+        theHTML = this.theIframe.contentWindow.document.getElementsByTagName("body")[0].innerHTML;
+    }
+    else
+    {
+        theHTML = this.theTextarea.value;
+    }
 
-	/* Replace improper BRs */
-	theHTML = theHTML.replace(/<br>/g, "<br />");
-	
-	/* Remove BRs right before the end of blocks */
-	theHTML = theHTML.replace(/<br \/>\s*<\/(h1|h2|h3|h4|h5|h6|li|p)/g, "</$1");
-	
-	/* Replace improper IMGs */
-	theHTML = theHTML.replace(/(<img [^>]+[^\/])>/g, "$1 />");
-	
-	/* Remove empty tags */
-	theHTML = theHTML.replace(/(<[^\/]>|<[^\/][^>]*[^\/]>)\s*<\/[^>]*>/g, "");
-	
-	if (this.wysiwyg)
-	{
-		this.theIframe.contentWindow.document.getElementsByTagName("body")[0].innerHTML = theHTML;
-	}
-	else
-	{
-		this.theTextarea.value = theHTML;
-	}
-	
-	this.theInput.value = theHTML;
-	
-	return true;
+    theHTML = theHTML.validTags();
+
+    /* Remove leading and trailing whitespace */
+    theHTML = theHTML.replace(/^\s+/, "");
+    theHTML = theHTML.replace(/\s+$/, "");
+
+    /* Remove style attribute inside any tag */
+    theHTML = theHTML.replace(/ style="[^"]*"/g, "");
+
+    /* Replace improper BRs */
+    theHTML = theHTML.replace(/<br>/g, "<br />");
+
+    /* Remove BRs right before the end of blocks */
+    theHTML = theHTML.replace(/<br \/>\s*<\/(h1|h2|h3|h4|h5|h6|li|p)/g, "</$1");
+
+    /* Replace improper IMGs */
+    theHTML = theHTML.replace(/(<img [^>]+[^\/])>/g, "$1 />");
+
+    /* Remove empty tags */
+    theHTML = theHTML.replace(/(<[^\/]>|<[^\/][^>]*[^\/]>)\s*<\/[^>]*>/g, "");
+
+    if (this.wysiwyg)
+    {
+        this.theIframe.contentWindow.document.getElementsByTagName("body")[0].innerHTML = theHTML;
+    }
+    else
+    {
+        this.theTextarea.value = theHTML;
+    }
+
+    this.theInput.value = theHTML;
+
+    return true;
 }
 
 
@@ -482,128 +479,128 @@ widgEditor.prototype.cleanSource = function()
 //widgEditor.prototype.convertSPANs = function(theSwitch)
 function convertSPANs(ifr,theSwitch)
 {
-	if (theSwitch)
-	{
-		/* Replace styled spans with their semantic equivalent */
-		var theSPANs = ifr.theIframe.contentWindow.document.getElementsByTagName("span");
-	
-		while(theSPANs.length > 0)
-		{
-			var theChildren = new Array();
-			var theReplacementElement = null;
-			var theParentElement = null;
-			
-			for (var j = 0; j < theSPANs[0].childNodes.length; j++)
-			{
-				theChildren.push(theSPANs[0].childNodes[j].cloneNode(true));
-			}
-			
-			/* Detect type of span style */
-			switch (theSPANs[0].getAttribute("style"))
-			{
-				case "font-weight: bold;":
-					theReplacementElement = ifr.theIframe.contentWindow.document.createElement("strong");
-					theParentElement = theReplacementElement;
-					
-					break;
-				
-				case "font-style: italic;":
-					theReplacementElement = ifr.theIframe.contentWindow.document.createElement("em");
-					theParentElement = theReplacementElement;
-					
-					break;
-					
-				case "font-weight: bold; font-style: italic;":
-					theParentElement = ifr.theIframe.contentWindow.document.createElement("em");
-					theReplacementElement = ifr.theIframe.contentWindow.document.createElement("strong");
-					theReplacementElement.appendChild(theParentElement);
-					
-					break;
-					
-				case "font-style: italic; font-weight: bold;":
-					theParentElement = ifr.theIframe.contentWindow.document.createElement("strong");
-					theReplacementElement = ifr.theIframe.contentWindow.document.createElement("em");
-					theReplacementElement.appendChild(theParentElement);
-					
-					break;
+    if (theSwitch)
+    {
+        /* Replace styled spans with their semantic equivalent */
+        var theSPANs = ifr.theIframe.contentWindow.document.getElementsByTagName("span");
 
-                /*TODO case "text-align: center;":
-                    window.alert("ja jaja estoy aqui!!");
-                    theParentElement = ifr.theIframe.contentWindow.document.createElement("center");
+        while(theSPANs.length > 0)
+        {
+            var theChildren = new Array();
+            var theReplacementElement = null;
+            var theParentElement = null;
+
+            for (var j = 0; j < theSPANs[0].childNodes.length; j++)
+            {
+                theChildren.push(theSPANs[0].childNodes[j].cloneNode(true));
+            }
+
+            /* Detect type of span style */
+            switch (theSPANs[0].getAttribute("style"))
+            {
+                case "font-weight: bold;":
+                    theReplacementElement = ifr.theIframe.contentWindow.document.createElement("strong");
+                    theParentElement = theReplacementElement;
+
+                    break;
+
+                case "font-style: italic;":
+                    theReplacementElement = ifr.theIframe.contentWindow.document.createElement("em");
+                    theParentElement = theReplacementElement;
+
+                    break;
+
+                case "font-weight: bold; font-style: italic;":
+                    theParentElement = ifr.theIframe.contentWindow.document.createElement("em");
+                    theReplacementElement = ifr.theIframe.contentWindow.document.createElement("strong");
                     theReplacementElement.appendChild(theParentElement);
 
-                    break;*/
-					
-				default:
-					replaceNodeWithChildren(theSPANs[0]);
-				
-					break;
-			}
-			
-			if (theReplacementElement != null)
-			{
-				for (var j = 0; j < theChildren.length; j++)
-				{
-					theParentElement.appendChild(theChildren[j]);
-				}
+                    break;
 
-				theSPANs[0].parentNode.replaceChild(theReplacementElement, theSPANs[0]);
-			}
-			
-			theSPANs = ifr.theIframe.contentWindow.document.getElementsByTagName("span");
-		}
-	}
-	else
-	{
-		/* Replace em and strong tags with styled spans */
-		var theEMs = ifr.theIframe.contentWindow.document.getElementsByTagName("em");
-		
-		while(theEMs.length > 0)
-		{
-			var theChildren = new Array();
-			var theSpan = ifr.theIframe.contentWindow.document.createElement("span");
-			
-			theSpan.setAttribute("style", "font-style: italic;");
-			
-			for (var j = 0; j < theEMs[0].childNodes.length; j++)
-			{
-				theChildren.push(theEMs[0].childNodes[j].cloneNode(true));
-			}
-			
-			for (var j = 0; j < theChildren.length; j++)
-			{
-				theSpan.appendChild(theChildren[j]);
-			}
+                case "font-style: italic; font-weight: bold;":
+                    theParentElement = ifr.theIframe.contentWindow.document.createElement("strong");
+                    theReplacementElement = ifr.theIframe.contentWindow.document.createElement("em");
+                    theReplacementElement.appendChild(theParentElement);
 
-			theEMs[0].parentNode.replaceChild(theSpan, theEMs[0]);
-			theEMs = ifr.theIframe.contentWindow.document.getElementsByTagName("em");
-		}
-		
-		var theSTRONGs = ifr.theIframe.contentWindow.document.getElementsByTagName("strong");
-		
-		while(theSTRONGs.length > 0)
-		{
-			var theChildren = new Array();
-			var theSpan = ifr.theIframe.contentWindow.document.createElement("span");
-			
-			theSpan.setAttribute("style", "font-weight: bold;");
-			
-			for (var j = 0; j < theSTRONGs[0].childNodes.length; j++)
-			{
-				theChildren.push(theSTRONGs[0].childNodes[j].cloneNode(true));
-			}
-			
-			for (var j = 0; j < theChildren.length; j++)
-			{
-				theSpan.appendChild(theChildren[j]);
-			}
+                    break;
 
-			theSTRONGs[0].parentNode.replaceChild(theSpan, theSTRONGs[0]);
-			theSTRONGs = ifr.theIframe.contentWindow.document.getElementsByTagName("strong");
-		}
-	}
-	
-	return true;
+                /*TODO case "text-align: center;":
+                 window.alert("ja jaja estoy aqui!!");
+                 theParentElement = ifr.theIframe.contentWindow.document.createElement("center");
+                 theReplacementElement.appendChild(theParentElement);
+
+                 break;*/
+
+                default:
+                    replaceNodeWithChildren(theSPANs[0]);
+
+                    break;
+            }
+
+            if (theReplacementElement != null)
+            {
+                for (var j = 0; j < theChildren.length; j++)
+                {
+                    theParentElement.appendChild(theChildren[j]);
+                }
+
+                theSPANs[0].parentNode.replaceChild(theReplacementElement, theSPANs[0]);
+            }
+
+            theSPANs = ifr.theIframe.contentWindow.document.getElementsByTagName("span");
+        }
+    }
+    else
+    {
+        /* Replace em and strong tags with styled spans */
+        var theEMs = ifr.theIframe.contentWindow.document.getElementsByTagName("em");
+
+        while(theEMs.length > 0)
+        {
+            var theChildren = new Array();
+            var theSpan = ifr.theIframe.contentWindow.document.createElement("span");
+
+            theSpan.setAttribute("style", "font-style: italic;");
+
+            for (var j = 0; j < theEMs[0].childNodes.length; j++)
+            {
+                theChildren.push(theEMs[0].childNodes[j].cloneNode(true));
+            }
+
+            for (var j = 0; j < theChildren.length; j++)
+            {
+                theSpan.appendChild(theChildren[j]);
+            }
+
+            theEMs[0].parentNode.replaceChild(theSpan, theEMs[0]);
+            theEMs = ifr.theIframe.contentWindow.document.getElementsByTagName("em");
+        }
+
+        var theSTRONGs = ifr.theIframe.contentWindow.document.getElementsByTagName("strong");
+
+        while(theSTRONGs.length > 0)
+        {
+            var theChildren = new Array();
+            var theSpan = ifr.theIframe.contentWindow.document.createElement("span");
+
+            theSpan.setAttribute("style", "font-weight: bold;");
+
+            for (var j = 0; j < theSTRONGs[0].childNodes.length; j++)
+            {
+                theChildren.push(theSTRONGs[0].childNodes[j].cloneNode(true));
+            }
+
+            for (var j = 0; j < theChildren.length; j++)
+            {
+                theSpan.appendChild(theChildren[j]);
+            }
+
+            theSTRONGs[0].parentNode.replaceChild(theSpan, theSTRONGs[0]);
+            theSTRONGs = ifr.theIframe.contentWindow.document.getElementsByTagName("strong");
+        }
+    }
+
+    return true;
 }
 
 
@@ -612,29 +609,29 @@ function convertSPANs(ifr,theSwitch)
 /* Check for pasted content */
 widgEditor.prototype.detectPaste = function(e)
 {
-	var keyPressed = null;
-	var theEvent = null;
-	
-	if (e)
-	{
-		theEvent = e;
-	}
-	else
-	{
-		theEvent = event;
-	}
-	
-	if (theEvent.ctrlKey && theEvent.keyCode == 86 && this.wysiwyg)
-	{
-		var self = this;
-		
-		this.pasteCache = this.theIframe.contentWindow.document.getElementsByTagName("body")[0].innerHTML;
+    var keyPressed = null;
+    var theEvent = null;
 
-		/* Because Mozilla can't access the clipboard directly, must rely on timeout to check pasted differences in main content */
-		setTimeout(function(){self.cleanPaste(); return true;}, 100);
-	}
+    if (e)
+    {
+        theEvent = e;
+    }
+    else
+    {
+        theEvent = event;
+    }
 
-	return true;
+    if (theEvent.ctrlKey && theEvent.keyCode == 86 && this.wysiwyg)
+    {
+        var self = this;
+
+        this.pasteCache = this.theIframe.contentWindow.document.getElementsByTagName("body")[0].innerHTML;
+
+        /* Because Mozilla can't access the clipboard directly, must rely on timeout to check pasted differences in main content */
+        setTimeout(function(){self.cleanPaste(); return true;}, 100);
+    }
+
+    return true;
 }
 
 
@@ -644,46 +641,46 @@ widgEditor.prototype.detectPaste = function(e)
 //widgEditor.prototype.initEdit = function()
 function initEdit(ifr)
 {
-	var self = ifr;
-	
-	try
-	{
+    var self = ifr;
+
+    try
+    {
         ifr.theIframe.contentWindow.document.designMode = "on";
-	}
-	catch (e)
-	{
-		/* setTimeout needed to counteract Mozilla bug whereby you can't immediately change designMode on newly created iframes */
-		setTimeout(function(){self.initEdit()}, 250);
-			
-		return false;
-	}
-	
-	if (!ifr.IE)
-	{
+    }
+    catch (e)
+    {
+        /* setTimeout needed to counteract Mozilla bug whereby you can't immediately change designMode on newly created iframes */
+        setTimeout(function(){self.initEdit()}, 250);
+
+        return false;
+    }
+
+    if (!ifr.IE)
+    {
         convertSPANs(ifr,false);
-	}
+    }
 
     ifr.theContainer.style.visibility = "visible";
     ifr.theTextarea.style.visibility = "visible";
-	
-	/* Mozilla event capturing */
-	if (typeof document.addEventListener == "function")
-	{
+
+    /* Mozilla event capturing */
+    if (typeof document.addEventListener == "function")
+    {
         ifr.theIframe.contentWindow.document.addEventListener("mouseup", function(){widgToolbarCheckState(self); return true;}, false);
         ifr.theIframe.contentWindow.document.addEventListener("keyup", function(){widgToolbarCheckState(self); return true;}, false);
         ifr.theIframe.contentWindow.document.addEventListener("keydown", function(e){self.detectPaste(e); return true;}, false);
-	}
-	/* IE event capturing */
-	else
-	{
+    }
+    /* IE event capturing */
+    else
+    {
         ifr.theIframe.contentWindow.document.attachEvent("onmouseup", function(){widgToolbarCheckState(self); return true;});
         ifr.theIframe.contentWindow.document.attachEvent("onkeyup", function(){widgToolbarCheckState(self); return true;});
         ifr.theIframe.contentWindow.document.attachEvent("onkeydown", function(e){self.detectPaste(e); return true;}, false);
-	}
+    }
 
     ifr.locked = false;
 
-	return true;	
+    return true;
 }
 
 
@@ -692,24 +689,24 @@ function initEdit(ifr)
 /* Add elements to a paragraph and inserts the paragraph before a given element in the body */
 widgEditor.prototype.insertNewParagraph = function(elementArray, succeedingElement)
 {
-	var theBody = this.theIframe.contentWindow.document.getElementsByTagName("body")[0];
-	var theParagraph = this.theIframe.contentWindow.document.createElement("p");
-	
-	for (var i = 0; i < elementArray.length; i++)
-	{
-		theParagraph.appendChild(elementArray[i]);
-	}
-	
-	if (typeof(succeedingElement) != "undefined")
-	{
-		theBody.insertBefore(theParagraph, succeedingElement);
-	}
-	else
-	{
-		theBody.appendChild(theParagraph);
-	}
-	
-	return true;
+    var theBody = this.theIframe.contentWindow.document.getElementsByTagName("body")[0];
+    var theParagraph = this.theIframe.contentWindow.document.createElement("p");
+
+    for (var i = 0; i < elementArray.length; i++)
+    {
+        theParagraph.appendChild(elementArray[i]);
+    }
+
+    if (typeof(succeedingElement) != "undefined")
+    {
+        theBody.insertBefore(theParagraph, succeedingElement);
+    }
+    else
+    {
+        theBody.appendChild(theParagraph);
+    }
+
+    return true;
 }
 
 
@@ -717,41 +714,41 @@ widgEditor.prototype.insertNewParagraph = function(elementArray, succeedingEleme
 
 /* Add submit listener to parent form */
 /*widgEditor.prototype.modifyFormSubmit = function()
-{
-	var self = this;
-	var theForm = this.theContainer.parentNode;
-	var oldOnsubmit = null;
+ {
+ var self = this;
+ var theForm = this.theContainer.parentNode;
+ var oldOnsubmit = null;
 
-	window.alert(theForm.nodeName);
-	/* Find the parent form element
-	while (theForm.nodeName.toLowerCase() != "form")
-	{
-		window.alert(theForm.nodeName);
-		theForm = theForm.parentNode;
-	}
+ window.alert(theForm.nodeName);
+ /* Find the parent form element
+ while (theForm.nodeName.toLowerCase() != "form")
+ {
+ window.alert(theForm.nodeName);
+ theForm = theForm.parentNode;
+ }
 
-	/* Add onsubmit without overwriting existing function calls
-	oldOnsubmit = theForm.onsubmit;
+ /* Add onsubmit without overwriting existing function calls
+ oldOnsubmit = theForm.onsubmit;
 
-	if (typeof theForm.onsubmit != "function")
-	{
-		theForm.onsubmit = function()
-		{
-			return self.updateWidgInput();
-		}
-	}
-	else
-	{
-		theForm.onsubmit = function()
-		{
-			self.updateWidgInput();
+ if (typeof theForm.onsubmit != "function")
+ {
+ theForm.onsubmit = function()
+ {
+ return self.updateWidgInput();
+ }
+ }
+ else
+ {
+ theForm.onsubmit = function()
+ {
+ self.updateWidgInput();
 
-			return oldOnsubmit();			
-		}
-	}
+ return oldOnsubmit();
+ }
+ }
 
-	return true;
-}*/
+ return true;
+ }*/
 
 
 
@@ -759,92 +756,92 @@ widgEditor.prototype.insertNewParagraph = function(elementArray, succeedingEleme
 /* Format the HTML with paragraphs. Any parentless text is enclosed in a paragraph, double breaks are paragraph markers */
 widgEditor.prototype.paragraphise = function()
 {
-	if (widgInsertParagraphs && this.wysiwyg)
-	{
-		var theBody = this.theIframe.contentWindow.document.getElementsByTagName("body")[0];
+    if (widgInsertParagraphs && this.wysiwyg)
+    {
+        var theBody = this.theIframe.contentWindow.document.getElementsByTagName("body")[0];
 
-		/* Remove all text nodes containing just whitespace */
-		for (var i = 0; i < theBody.childNodes.length; i++)
-		{
-			if (theBody.childNodes[i].nodeName.toLowerCase() == "#text" &&
-				theBody.childNodes[i].data.search(/^\s*$/) != -1)
-			{
-				theBody.removeChild(theBody.childNodes[i]);
+        /* Remove all text nodes containing just whitespace */
+        for (var i = 0; i < theBody.childNodes.length; i++)
+        {
+            if (theBody.childNodes[i].nodeName.toLowerCase() == "#text" &&
+                theBody.childNodes[i].data.search(/^\s*$/) != -1)
+            {
+                theBody.removeChild(theBody.childNodes[i]);
 
-				i--;
-			}
-		}
+                i--;
+            }
+        }
 
-		var removedElements = new Array();
+        var removedElements = new Array();
 
-		for (var i = 0; i < theBody.childNodes.length; i++)
-		{
-			if (theBody.childNodes[i].nodeName.isInlineName())
-			{
-				removedElements.push(theBody.childNodes[i].cloneNode(true));
+        for (var i = 0; i < theBody.childNodes.length; i++)
+        {
+            if (theBody.childNodes[i].nodeName.isInlineName())
+            {
+                removedElements.push(theBody.childNodes[i].cloneNode(true));
 
-				theBody.removeChild(theBody.childNodes[i]);
+                theBody.removeChild(theBody.childNodes[i]);
 
-				i--;
-			}
-			else if (theBody.childNodes[i].nodeName.toLowerCase() == "br")
-			{
-				if (i + 1 < theBody.childNodes.length)
-				{
-					/* If the current break tag is followed by another break tag */
-					if (theBody.childNodes[i + 1].nodeName.toLowerCase() == "br")
-					{
-						/* Remove consecutive break tags */
-						while (i < theBody.childNodes.length && theBody.childNodes[i].nodeName.toLowerCase() == "br")
-						{
-							theBody.removeChild(theBody.childNodes[i]);
-						}
+                i--;
+            }
+            else if (theBody.childNodes[i].nodeName.toLowerCase() == "br")
+            {
+                if (i + 1 < theBody.childNodes.length)
+                {
+                    /* If the current break tag is followed by another break tag */
+                    if (theBody.childNodes[i + 1].nodeName.toLowerCase() == "br")
+                    {
+                        /* Remove consecutive break tags */
+                        while (i < theBody.childNodes.length && theBody.childNodes[i].nodeName.toLowerCase() == "br")
+                        {
+                            theBody.removeChild(theBody.childNodes[i]);
+                        }
 
-						if (removedElements.length > 0)
-						{
-							this.insertNewParagraph(removedElements, theBody.childNodes[i]);
+                        if (removedElements.length > 0)
+                        {
+                            this.insertNewParagraph(removedElements, theBody.childNodes[i]);
 
-							removedElements = new Array();
-						}
-					}
-					/* If the break tag appears before a block element */
-					else if (!theBody.childNodes[i + 1].nodeName.isInlineName())
-					{
-						theBody.removeChild(theBody.childNodes[i]);
-					}
-					else if (removedElements.length > 0)
-					{
-						removedElements.push(theBody.childNodes[i].cloneNode(true));
+                            removedElements = new Array();
+                        }
+                    }
+                    /* If the break tag appears before a block element */
+                    else if (!theBody.childNodes[i + 1].nodeName.isInlineName())
+                    {
+                        theBody.removeChild(theBody.childNodes[i]);
+                    }
+                    else if (removedElements.length > 0)
+                    {
+                        removedElements.push(theBody.childNodes[i].cloneNode(true));
 
-						theBody.removeChild(theBody.childNodes[i]);
-					}
-					else
-					{
-						theBody.removeChild(theBody.childNodes[i]);
-					}
+                        theBody.removeChild(theBody.childNodes[i]);
+                    }
+                    else
+                    {
+                        theBody.removeChild(theBody.childNodes[i]);
+                    }
 
-					i--;
-				}
-				else
-				{
-					theBody.removeChild(theBody.childNodes[i]);
-				}
-			}
-			else if (removedElements.length > 0)
-			{
-				this.insertNewParagraph(removedElements, theBody.childNodes[i]);
+                    i--;
+                }
+                else
+                {
+                    theBody.removeChild(theBody.childNodes[i]);
+                }
+            }
+            else if (removedElements.length > 0)
+            {
+                this.insertNewParagraph(removedElements, theBody.childNodes[i]);
 
-				removedElements = new Array();
-			}
-		}
+                removedElements = new Array();
+            }
+        }
 
-		if (removedElements.length > 0)
-		{
-			this.insertNewParagraph(removedElements);
-		}
-	}
-	
-	return true;
+        if (removedElements.length > 0)
+        {
+            this.insertNewParagraph(removedElements);
+        }
+    }
+
+    return true;
 }
 
 
@@ -853,16 +850,16 @@ widgEditor.prototype.paragraphise = function()
 /* Update hidden input to reflect editor contents, for submission */
 widgEditor.prototype.refreshDisplay = function()
 {
-	if (this.wysiwyg)
-	{
-		this.theIframe.contentWindow.document.getElementsByTagName("body")[0].innerHTML	= this.theInput.value;
-	}
-	else
-	{
-		this.theTextarea.value = this.theInput.value;
-	}
+    if (this.wysiwyg)
+    {
+        this.theIframe.contentWindow.document.getElementsByTagName("body")[0].innerHTML	= this.theInput.value;
+    }
+    else
+    {
+        this.theTextarea.value = this.theInput.value;
+    }
 
-	return true;
+    return true;
 }
 
 
@@ -871,33 +868,33 @@ widgEditor.prototype.refreshDisplay = function()
 /* Switch between WYSIWYG and HTML source */
 widgEditor.prototype.switchMode = function()
 {
-	if (!this.locked)
-	{
-		this.locked = true;
-		
-		/* Switch to HTML source */
-		if (this.wysiwyg)
-		{
-			this.updateWidgInput();
-			this.theTextarea.value = this.theInput.value;	
-			this.theContainer.replaceChild(this.theTextarea, this.theIframe);
-			this.theToolbar.disable();
-			this.wysiwyg = false;
-			this.locked = false;
-		}
-		/* Switch to WYSIWYG */
-		else
-		{
-			this.updateWidgInput();
-			this.theContainer.replaceChild(this.theIframe, this.theTextarea);
-			this.writeDocument(this.theInput.value);
-			this.theToolbar.enable();
-			this.initEdit();
-			this.wysiwyg = true;
-		}
-	}
-			
-	return true;
+    if (!this.locked)
+    {
+        this.locked = true;
+
+        /* Switch to HTML source */
+        if (this.wysiwyg)
+        {
+            this.updateWidgInput();
+            this.theTextarea.value = this.theInput.value;
+            this.theContainer.replaceChild(this.theTextarea, this.theIframe);
+            this.theToolbar.disable();
+            this.wysiwyg = false;
+            this.locked = false;
+        }
+        /* Switch to WYSIWYG */
+        else
+        {
+            this.updateWidgInput();
+            this.theContainer.replaceChild(this.theIframe, this.theTextarea);
+            this.writeDocument(this.theInput.value);
+            this.theToolbar.enable();
+            this.initEdit();
+            this.wysiwyg = true;
+        }
+    }
+
+    return true;
 }
 
 
@@ -906,23 +903,23 @@ widgEditor.prototype.switchMode = function()
 /* Update hidden input to reflect editor contents, for submission */
 widgEditor.prototype.updateWidgInput = function()
 {
-	if (this.wysiwyg)
-	{
-		/* Convert spans to semantics in Mozilla */
-		if (!this.IE)
-		{
-			this.convertSPANs(true);
-		}
-		
-		this.paragraphise();		
-		this.cleanSource();
-	}
-	else
-	{
-		this.theInput.value = this.theTextarea.value;
-	}
+    if (this.wysiwyg)
+    {
+        /* Convert spans to semantics in Mozilla */
+        if (!this.IE)
+        {
+            this.convertSPANs(true);
+        }
 
-	return true;
+        this.paragraphise();
+        this.cleanSource();
+    }
+    else
+    {
+        this.theInput.value = this.theTextarea.value;
+    }
+
+    return true;
 }
 
 
@@ -931,8 +928,8 @@ widgEditor.prototype.updateWidgInput = function()
 /* Write initial content to editor */
 function writeDocument (documentContent,auxThis)
 {
-	/* HTML template into which the HTML Editor content is inserted */
-	var documentTemplate = '\
+    /* HTML template into which the HTML Editor content is inserted */
+    var documentTemplate = '\
 		<html>\
 			<head>\
 				INSERT:STYLESHEET:END\
@@ -942,36 +939,36 @@ function writeDocument (documentContent,auxThis)
 			</body>\
 		</html>\
 		';
-	
-	/* Insert dynamic variables/content into document */
-	/* IE needs stylesheet to be written inline */
-	if (typeof document.all != "undefined")
-	{
-		documentTemplate = documentTemplate.replace(/INSERT:STYLESHEET:END/, '<link rel="stylesheet" type="text/css" href="' + widgStylesheet + '"/>');
-	}
-	/* Firefox can't have stylesheet written inline */
-	else
-	{
-		documentTemplate = documentTemplate.replace(/INSERT:STYLESHEET:END/, "");
-	}
-	
-	documentTemplate = documentTemplate.replace(/INSERT:CONTENT:END/, documentContent);
+
+    /* Insert dynamic variables/content into document */
+    /* IE needs stylesheet to be written inline */
+    if (typeof document.all != "undefined")
+    {
+        documentTemplate = documentTemplate.replace(/INSERT:STYLESHEET:END/, '<link rel="stylesheet" type="text/css" href="' + widgStylesheet + '"/>');
+    }
+    /* Firefox can't have stylesheet written inline */
+    else
+    {
+        documentTemplate = documentTemplate.replace(/INSERT:STYLESHEET:END/, "");
+    }
+
+    documentTemplate = documentTemplate.replace(/INSERT:CONTENT:END/, documentContent);
 
     auxThis.theIframe.contentWindow.document.open();
     auxThis.theIframe.contentWindow.document.write(documentTemplate);
     auxThis.theIframe.contentWindow.document.close();
 
-	/* In Firefox stylesheet needs to be loaded separate to other HTML, because if it's loaded inline it causes Firefox to have problems with an empty document */
-	if (typeof document.all == "undefined")
-	{
-		var stylesheet = auxThis.theIframe.contentWindow.document.createElement("link");
-		stylesheet.setAttribute("rel", "stylesheet");
-		stylesheet.setAttribute("type", "text/css");
-		stylesheet.setAttribute("href", "../stylesheets/widgContent.css");
+    /* In Firefox stylesheet needs to be loaded separate to other HTML, because if it's loaded inline it causes Firefox to have problems with an empty document */
+    if (typeof document.all == "undefined")
+    {
+        var stylesheet = auxThis.theIframe.contentWindow.document.createElement("link");
+        stylesheet.setAttribute("rel", "stylesheet");
+        stylesheet.setAttribute("type", "text/css");
+        stylesheet.setAttribute("href", "../stylesheets/widgContent.css");
         auxThis.theIframe.contentWindow.document.getElementsByTagName("head")[0].appendChild(stylesheet);
-	}
-	
-	return true;
+    }
+
+    return true;
 }
 
 
@@ -980,60 +977,60 @@ function writeDocument (documentContent,auxThis)
 /* Toolbar items */
 function widgToolbar(theEditor)
 {
-	var self = this;
-	
-	this.widgEditorObject = theEditor;
-	
-	/* Create toolbar ul element */
-	this.theList = document.createElement("ul");
-	this.theList.id = "my_TextBodyWidgToolbar";
-	this.theList.className = "widgToolbar";
-	this.theList.widgToolbarObject = this;
+    var self = this;
 
-	/* Create toolbar items */
-	for (var i = 0; i < widgToolbarItems.length; i++)
-	{
-		switch (widgToolbarItems[i])
-		{
-			case "bold":
-				this.addButton(this.theList.id + "ButtonBold", "widgButtonBold", "Bold", "bold");
-				
-				break;
-				
-			case "italic":
-				this.addButton(this.theList.id + "ButtonItalic", "widgButtonItalic", "Italic", "italic");
-				
-				break;
-				
-			case "hyperlink":
-				this.addButton(this.theList.id + "ButtonLink", "widgButtonLink", "Hyperlink", "link");
-				
-				break;
-				
-			case "unorderedlist":
-				this.addButton(this.theList.id + "ButtonUnordered", "widgButtonUnordered", "Unordered List", "insertunorderedlist");
-				
-				break;
-				
-			case "orderedlist":
-				this.addButton(this.theList.id + "ButtonOrdered", "widgButtonOrdered", "Ordered List", "insertorderedlist");
-				
-				break;
-				
-			case "image":
-				this.addButton(this.theList.id + "ButtonImage", "widgButtonImage", "Insert Image", "image");
-				
-				break;
-				
-			case "htmlsource":
-				this.addButton(this.theList.id + "ButtonHTML", "widgButtonHTML", "HTML Source", "html");
-				
-				break;
-				
-			case "blockformat":
-				this.addSelect(this.theList.id + "SelectBlock", "widgSelectBlock", widgSelectBlockOptions, "formatblock");
-				
-				break;
+    this.widgEditorObject = theEditor;
+
+    /* Create toolbar ul element */
+    this.theList = document.createElement("ul");
+    this.theList.id = "my_TextBodyWidgToolbar";
+    this.theList.className = "widgToolbar";
+    this.theList.widgToolbarObject = this;
+
+    /* Create toolbar items */
+    for (var i = 0; i < widgToolbarItems.length; i++)
+    {
+        switch (widgToolbarItems[i])
+        {
+            case "bold":
+                this.addButton(this.theList.id + "ButtonBold", "widgButtonBold", "Bold", "bold");
+
+                break;
+
+            case "italic":
+                this.addButton(this.theList.id + "ButtonItalic", "widgButtonItalic", "Italic", "italic");
+
+                break;
+
+            case "hyperlink":
+                this.addButton(this.theList.id + "ButtonLink", "widgButtonLink", "Hyperlink", "link");
+
+                break;
+
+            case "unorderedlist":
+                this.addButton(this.theList.id + "ButtonUnordered", "widgButtonUnordered", "Unordered List", "insertunorderedlist");
+
+                break;
+
+            case "orderedlist":
+                this.addButton(this.theList.id + "ButtonOrdered", "widgButtonOrdered", "Ordered List", "insertorderedlist");
+
+                break;
+
+            case "image":
+                this.addButton(this.theList.id + "ButtonImage", "widgButtonImage", "Insert Image", "image");
+
+                break;
+
+            case "htmlsource":
+                this.addButton(this.theList.id + "ButtonHTML", "widgButtonHTML", "HTML Source", "html");
+
+                break;
+
+            case "blockformat":
+                this.addSelect(this.theList.id + "SelectBlock", "widgSelectBlock", widgSelectBlockOptions, "formatblock");
+
+                break;
 
             case "alignRight":
                 this.addButton(this.theList.id + "ButtonAlignRight", "widgButtonAlignRight", "Align Right", "right");
@@ -1059,10 +1056,10 @@ function widgToolbar(theEditor)
                 this.addButton(this.theList.id + "ButtonUnderline", "widgButtonUnderline", "Underline", "underline");
 
                 break;
-		}
-	}
+        }
+    }
 
-	return true;
+    return true;
 }
 
 
@@ -1072,26 +1069,26 @@ function widgToolbar(theEditor)
 /* Add button to toolbar */
 widgToolbar.prototype.addButton = function(theID, theClass, theLabel, theAction)
 {
-	var menuItem = document.createElement("li");
-	var theLink = document.createElement("a");
-	var theText = document.createTextNode(theLabel);
-	
-	menuItem.id = theID;
-	menuItem.className = "widgEditButton";
+    var menuItem = document.createElement("li");
+    var theLink = document.createElement("a");
+    var theText = document.createTextNode(theLabel);
 
-	theLink.href = "#";
-	theLink.title = theLabel;
-	theLink.className = theClass;
-	theLink.action = theAction;
-	theLink.onclick = widgToolbarAction;
-	theLink.onmouseover = widgToolbarMouseover;
+    menuItem.id = theID;
+    menuItem.className = "widgEditButton";
+
+    theLink.href = "#";
+    theLink.title = theLabel;
+    theLink.className = theClass;
+    theLink.action = theAction;
+    theLink.onclick = widgToolbarAction;
+    theLink.onmouseover = widgToolbarMouseover;
 
 
-	theLink.appendChild(theText);
-	menuItem.appendChild(theLink);
-	this.theList.appendChild(menuItem);
+    theLink.appendChild(theText);
+    menuItem.appendChild(theLink);
+    this.theList.appendChild(menuItem);
 
-	return true;
+    return true;
 }
 
 
@@ -1100,32 +1097,32 @@ widgToolbar.prototype.addButton = function(theID, theClass, theLabel, theAction)
 /* Add select box to toolbar. theContentArray is an array of string pairs (option value, option label) */
 widgToolbar.prototype.addSelect = function(theID, theClass, theContentArray, theAction)
 {
-	var menuItem = document.createElement("li");
-	var theSelect = document.createElement("select");
-	
-	menuItem.className = "widgEditSelect";
-	
-	theSelect.id = theID;
-	theSelect.name = theID;
-	theSelect.className = theClass;
-	theSelect.action = theAction;
-	theSelect.onchange = widgToolbarAction;
+    var menuItem = document.createElement("li");
+    var theSelect = document.createElement("select");
 
-	for (var i = 0; i < theContentArray.length; i += 2)
-	{
-		var theOption = document.createElement("option");
-		var theText = document.createTextNode(theContentArray[i + 1]);
-		
-		theOption.value = theContentArray[i];
+    menuItem.className = "widgEditSelect";
 
-		theOption.appendChild(theText);
-		theSelect.appendChild(theOption);
-	}
-	
-	menuItem.appendChild(theSelect);
-	this.theList.appendChild(menuItem);
+    theSelect.id = theID;
+    theSelect.name = theID;
+    theSelect.className = theClass;
+    theSelect.action = theAction;
+    theSelect.onchange = widgToolbarAction;
 
-	return true;
+    for (var i = 0; i < theContentArray.length; i += 2)
+    {
+        var theOption = document.createElement("option");
+        var theText = document.createTextNode(theContentArray[i + 1]);
+
+        theOption.value = theContentArray[i];
+
+        theOption.appendChild(theText);
+        theSelect.appendChild(theOption);
+    }
+
+    menuItem.appendChild(theSelect);
+    this.theList.appendChild(menuItem);
+
+    return true;
 }
 
 
@@ -1134,30 +1131,30 @@ widgToolbar.prototype.addSelect = function(theID, theClass, theContentArray, the
 /* Turn off toolbar items */
 widgToolbar.prototype.disable = function()
 {
-	/* Change class to disable buttons using CSS */
-	this.theList.className += " widgSource";
+    /* Change class to disable buttons using CSS */
+    this.theList.className += " widgSource";
 
-	/* Loop through lis */
-	for (var i = 0; i < this.theList.childNodes.length; i++)
-	{
-		var theChild = this.theList.childNodes[i];
-		
-		if (theChild.nodeName.toLowerCase() == "li" && theChild.className == "widgEditSelect")
-		{
-			/* Loop through li children to find select */
-			for (j = 0; j < theChild.childNodes.length; j++)
-			{
-				if (theChild.childNodes[j].nodeName.toLowerCase() == "select")
-				{
-					theChild.childNodes[j].disabled = "disabled";
-					
-					break;
-				}
-			}
-		}
-	}
-	
-	return true;
+    /* Loop through lis */
+    for (var i = 0; i < this.theList.childNodes.length; i++)
+    {
+        var theChild = this.theList.childNodes[i];
+
+        if (theChild.nodeName.toLowerCase() == "li" && theChild.className == "widgEditSelect")
+        {
+            /* Loop through li children to find select */
+            for (j = 0; j < theChild.childNodes.length; j++)
+            {
+                if (theChild.childNodes[j].nodeName.toLowerCase() == "select")
+                {
+                    theChild.childNodes[j].disabled = "disabled";
+
+                    break;
+                }
+            }
+        }
+    }
+
+    return true;
 }
 
 
@@ -1166,30 +1163,30 @@ widgToolbar.prototype.disable = function()
 /* Turn on toolbar items */
 widgToolbar.prototype.enable = function()
 {
-	/* Change class to enable buttons using CSS */
-	this.theList.className = this.theList.className.replace(/ widgSource/, "");
-	
-	/* Loop through lis */
-	for (var i = 0; i < this.theList.childNodes.length; i++)
-	{
-		var theChild = this.theList.childNodes[i];
-		
-		if (theChild.nodeName.toLowerCase() == "li" && theChild.className == "widgEditSelect")
-		{
-			/* Loop through li children to find select */
-			for (j = 0; j < theChild.childNodes.length; j++)
-			{
-				if (theChild.childNodes[j].nodeName.toLowerCase() == "select")
-				{
-					theChild.childNodes[j].disabled = "";
-					
-					break;
-				}
-			}
-		}
-	}
-	
-	return true;
+    /* Change class to enable buttons using CSS */
+    this.theList.className = this.theList.className.replace(/ widgSource/, "");
+
+    /* Loop through lis */
+    for (var i = 0; i < this.theList.childNodes.length; i++)
+    {
+        var theChild = this.theList.childNodes[i];
+
+        if (theChild.nodeName.toLowerCase() == "li" && theChild.className == "widgEditSelect")
+        {
+            /* Loop through li children to find select */
+            for (j = 0; j < theChild.childNodes.length; j++)
+            {
+                if (theChild.childNodes[j].nodeName.toLowerCase() == "select")
+                {
+                    theChild.childNodes[j].disabled = "";
+
+                    break;
+                }
+            }
+        }
+    }
+
+    return true;
 }
 
 
@@ -1198,34 +1195,34 @@ widgToolbar.prototype.enable = function()
 /* Change the status of the selected toolbar item */
 widgToolbar.prototype.setState = function(theState, theStatus)
 {
-	if (theState != "SelectBlock")
-	{
-		var theButton = document.getElementById(this.theList.id + "Button" + theState);
-	
-		if (theButton != null)
-		{
-			if (theStatus == "on")
-			{
-				theButton.className = theButton.className.addClass("on");
-			}
-			else
-			{
-				theButton.className = theButton.className.removeClass("on");
-			}
-		}
-	}
-	else
-	{
-		var theSelect = document.getElementById(this.theList.id + "SelectBlock");
-		
-		if (theSelect != null)
-		{
-			theSelect.value = "";
-			theSelect.value = theStatus;
-		}
-	}
-			
-	return true;	
+    if (theState != "SelectBlock")
+    {
+        var theButton = document.getElementById(this.theList.id + "Button" + theState);
+
+        if (theButton != null)
+        {
+            if (theStatus == "on")
+            {
+                theButton.className = theButton.className.addClass("on");
+            }
+            else
+            {
+                theButton.className = theButton.className.removeClass("on");
+            }
+        }
+    }
+    else
+    {
+        var theSelect = document.getElementById(this.theList.id + "SelectBlock");
+
+        if (theSelect != null)
+        {
+            theSelect.value = "";
+            theSelect.value = theStatus;
+        }
+    }
+
+    return true;
 }
 
 
@@ -1235,165 +1232,165 @@ widgToolbar.prototype.setState = function(theState, theStatus)
 /* Action taken when toolbar item activated */
 function widgToolbarAction()
 {
-	var theToolbar = this.parentNode.parentNode.widgToolbarObject;
-	var theWidgEditor = theToolbar.widgEditorObject;
-	var theIframe = theWidgEditor.theIframe;
-	var theSelection = "";
+    var theToolbar = this.parentNode.parentNode.widgToolbarObject;
+    var theWidgEditor = theToolbar.widgEditorObject;
+    var theIframe = theWidgEditor.theIframe;
+    var theSelection = "";
 
-	/* If somehow a button other than "HTML source" is clicked while viewing HTML source, ignore click */	
-	if (!theWidgEditor.wysiwyg && this.action != "html")
-	{
-		return false;
-	}
-	
-	switch (this.action)
-	{
-		case "formatblock":
-			theIframe.contentWindow.document.execCommand(this.action, false, this.value);
-			
-			theWidgEditor.theToolbar.setState("SelectBlock", this.value);
-			
-			break;
-			
-		case "html":
-			theWidgEditor.switchMode();
-			
-			break;
-			
-		case "link":
-			if (this.parentNode.className.classExists("on"))
-			{
-				theIframe.contentWindow.document.execCommand("Unlink", false, null);
-				theWidgEditor.theToolbar.setState("Link", "off");
-			}
-			else
-			{
-				if (theIframe.contentWindow.document.selection)
-				{
-					theSelection = theIframe.contentWindow.document.selection.createRange().text;
+    /* If somehow a button other than "HTML source" is clicked while viewing HTML source, ignore click */
+    if (!theWidgEditor.wysiwyg && this.action != "html")
+    {
+        return false;
+    }
 
-					if (theSelection == "")
-					{
-						alert("Please select the text you wish to hyperlink.");
+    switch (this.action)
+    {
+        case "formatblock":
+            theIframe.contentWindow.document.execCommand(this.action, false, this.value);
 
-						break;
-					}
-				}
-				else
-				{
-					theSelection = theIframe.contentWindow.getSelection();
+            theWidgEditor.theToolbar.setState("SelectBlock", this.value);
 
-					if (theSelection == "")
-					{
-						alert("Please select the text you wish to hyperlink.");
+            break;
 
-						break;
-					}
-				}
+        case "html":
+            theWidgEditor.switchMode();
 
-				var theURL = prompt("Enter the URL for this link:", "http://");
+            break;
 
-				if (theURL != null)
-				{			
-					theIframe.contentWindow.document.execCommand("CreateLink", false, theURL);
-					theWidgEditor.theToolbar.setState("Link", "on");
-				}
-			}
-			
-			break;
-			
-		case "image":
-			var theImage = prompt("Enter the location for this image:", "");
-			
-			if (theImage != null && theImage != "")
-			{
-				var theAlt = prompt("Enter the alternate text for this image:", "");
-				var theSelection = null;
-				var theRange = null;
-				
-				/* IE selections */
-				if (theIframe.contentWindow.document.selection)
-				{
-					/* Escape quotes in alt text */
-					theAlt = theAlt.replace(/"/g, "'");
-			
-					theSelection = theIframe.contentWindow.document.selection;
-					theRange = theSelection.createRange();
-					theRange.collapse(false);
-					theRange.pasteHTML("<img alt=\"" + theAlt + "\" src=\"" + theImage + "\" />");
-					
-					break;
-				}
-				/* Mozilla selections */
-				else
-				{
-					try
-					{
-						theSelection = theIframe.contentWindow.getSelection();
-					}
-					catch (e)
-					{
-						return false;
-					}
+        case "link":
+            if (this.parentNode.className.classExists("on"))
+            {
+                theIframe.contentWindow.document.execCommand("Unlink", false, null);
+                theWidgEditor.theToolbar.setState("Link", "off");
+            }
+            else
+            {
+                if (theIframe.contentWindow.document.selection)
+                {
+                    theSelection = theIframe.contentWindow.document.selection.createRange().text;
 
-					theRange = theSelection.getRangeAt(0);
-					theRange.collapse(false);
-					
-					var theImageNode = theIframe.contentWindow.document.createElement("img");
-					
-					theImageNode.src = theImage;
-					theImageNode.alt = theAlt;
-					
-					theRange.insertNode(theImageNode);
-					
-					break;
-				}
-			}
-			else
-			{
-				return false;
-			}
-		
-		default:
-			theIframe.contentWindow.document.execCommand(this.action, false, null);
-			
-			var theAction = this.action.replace(/^./, function(match){return match.toUpperCase();});
+                    if (theSelection == "")
+                    {
+                        alert("Please select the text you wish to hyperlink.");
 
-			/* Turn off unordered toolbar item if ordered toolbar item was activated */	
-			if (this.action == "insertorderedlist")
-			{
-				theAction = "Ordered";
-				theWidgEditor.theToolbar.setState("Unordered", "off");
-			}
-			
-			/* Turn off ordered toolbar item if unordered toolbar item was activated */	
-			if (this.action == "insertunorderedlist")
-			{
-				theAction = "Unordered";
-				theWidgEditor.theToolbar.setState("Ordered", "off");
-			}
-			
-			/* If toolbar item was turned on */
-			if (theIframe.contentWindow.document.queryCommandState(this.action, false, null))
-			{
-				theWidgEditor.theToolbar.setState(theAction, "on");
-			}
-			else
-			{
-				theWidgEditor.theToolbar.setState(theAction, "off");
-			}
-	}
-	
-	if (theWidgEditor.wysiwyg == true)
-	{
-		theIframe.contentWindow.focus();
-	}
-	else
-	{
-		theWidgEditor.theTextarea.focus();
-	}
-	
-	return false;	
+                        break;
+                    }
+                }
+                else
+                {
+                    theSelection = theIframe.contentWindow.getSelection();
+
+                    if (theSelection == "")
+                    {
+                        alert("Please select the text you wish to hyperlink.");
+
+                        break;
+                    }
+                }
+
+                var theURL = prompt("Enter the URL for this link:", "http://");
+
+                if (theURL != null)
+                {
+                    theIframe.contentWindow.document.execCommand("CreateLink", false, theURL);
+                    theWidgEditor.theToolbar.setState("Link", "on");
+                }
+            }
+
+            break;
+
+        case "image":
+            var theImage = prompt("Enter the location for this image:", "");
+
+            if (theImage != null && theImage != "")
+            {
+                var theAlt = prompt("Enter the alternate text for this image:", "");
+                var theSelection = null;
+                var theRange = null;
+
+                /* IE selections */
+                if (theIframe.contentWindow.document.selection)
+                {
+                    /* Escape quotes in alt text */
+                    theAlt = theAlt.replace(/"/g, "'");
+
+                    theSelection = theIframe.contentWindow.document.selection;
+                    theRange = theSelection.createRange();
+                    theRange.collapse(false);
+                    theRange.pasteHTML("<img alt=\"" + theAlt + "\" src=\"" + theImage + "\" />");
+
+                    break;
+                }
+                /* Mozilla selections */
+                else
+                {
+                    try
+                    {
+                        theSelection = theIframe.contentWindow.getSelection();
+                    }
+                    catch (e)
+                    {
+                        return false;
+                    }
+
+                    theRange = theSelection.getRangeAt(0);
+                    theRange.collapse(false);
+
+                    var theImageNode = theIframe.contentWindow.document.createElement("img");
+
+                    theImageNode.src = theImage;
+                    theImageNode.alt = theAlt;
+
+                    theRange.insertNode(theImageNode);
+
+                    break;
+                }
+            }
+            else
+            {
+                return false;
+            }
+
+        default:
+            theIframe.contentWindow.document.execCommand(this.action, false, null);
+
+            var theAction = this.action.replace(/^./, function(match){return match.toUpperCase();});
+
+            /* Turn off unordered toolbar item if ordered toolbar item was activated */
+            if (this.action == "insertorderedlist")
+            {
+                theAction = "Ordered";
+                theWidgEditor.theToolbar.setState("Unordered", "off");
+            }
+
+            /* Turn off ordered toolbar item if unordered toolbar item was activated */
+            if (this.action == "insertunorderedlist")
+            {
+                theAction = "Unordered";
+                theWidgEditor.theToolbar.setState("Ordered", "off");
+            }
+
+            /* If toolbar item was turned on */
+            if (theIframe.contentWindow.document.queryCommandState(this.action, false, null))
+            {
+                theWidgEditor.theToolbar.setState(theAction, "on");
+            }
+            else
+            {
+                theWidgEditor.theToolbar.setState(theAction, "off");
+            }
+    }
+
+    if (theWidgEditor.wysiwyg == true)
+    {
+        theIframe.contentWindow.focus();
+    }
+    else
+    {
+        theWidgEditor.theTextarea.focus();
+    }
+
+    return false;
 }
 
 
@@ -1402,127 +1399,127 @@ function widgToolbarAction()
 /* Check the nesting of the current cursor position/selection */
 function widgToolbarCheckState(theWidgEditor, resubmit)
 {
-	if (!resubmit)
-	{
-		/* Allow browser to update selection before using the selection */
-		setTimeout(function(){widgToolbarCheckState(theWidgEditor, true); return true;}, 500);
-	}
-	
-	var theSelection = null;
-	var theRange = null;
-	var theParentNode = null;
-	var theLevel = 0;
-	
-	/* Turn off all the buttons */
-	var menuListItems = theWidgEditor.theToolbar.theList.childNodes;
-	for (var i = 0; i < menuListItems.length; i++)
-	{
-		menuListItems[i].className = menuListItems[i].className.removeClass("on");
-	}
-	
-	/* IE selections */
-	if (theWidgEditor.theIframe.contentWindow.document.selection)
-	{
-		theSelection = theWidgEditor.theIframe.contentWindow.document.selection;
-		theRange = theSelection.createRange();
-		try
-		{
-			theParentNode = theRange.parentElement();
-		}
-		catch (e)
-		{
-			return false;
-		}
-	}
-	/* Mozilla selections */
-	else
-	{
-		try
-		{
-			theSelection = theWidgEditor.theIframe.contentWindow.getSelection();
-		}
-		catch (e)
-		{
-			return false;
-		}
-		
-		theRange = theSelection.getRangeAt(0);
-		theParentNode = theRange.commonAncestorContainer;
-	}
-	
-	while (theParentNode.nodeType == 3)
-	{
-		theParentNode = theParentNode.parentNode;
-	}
-	
-	while (theParentNode.nodeName.toLowerCase() != "body")
-	{
-		switch (theParentNode.nodeName.toLowerCase())
-		{
-			case "a":
-				theWidgEditor.theToolbar.setState("Link", "on");
-				
-				break;
-				
-			case "em":
-				theWidgEditor.theToolbar.setState("Italic", "on");
-				
-				break;
+    if (!resubmit)
+    {
+        /* Allow browser to update selection before using the selection */
+        setTimeout(function(){widgToolbarCheckState(theWidgEditor, true); return true;}, 500);
+    }
+
+    var theSelection = null;
+    var theRange = null;
+    var theParentNode = null;
+    var theLevel = 0;
+
+    /* Turn off all the buttons */
+    var menuListItems = theWidgEditor.theToolbar.theList.childNodes;
+    for (var i = 0; i < menuListItems.length; i++)
+    {
+        menuListItems[i].className = menuListItems[i].className.removeClass("on");
+    }
+
+    /* IE selections */
+    if (theWidgEditor.theIframe.contentWindow.document.selection)
+    {
+        theSelection = theWidgEditor.theIframe.contentWindow.document.selection;
+        theRange = theSelection.createRange();
+        try
+        {
+            theParentNode = theRange.parentElement();
+        }
+        catch (e)
+        {
+            return false;
+        }
+    }
+    /* Mozilla selections */
+    else
+    {
+        try
+        {
+            theSelection = theWidgEditor.theIframe.contentWindow.getSelection();
+        }
+        catch (e)
+        {
+            return false;
+        }
+
+        theRange = theSelection.getRangeAt(0);
+        theParentNode = theRange.commonAncestorContainer;
+    }
+
+    while (theParentNode.nodeType == 3)
+    {
+        theParentNode = theParentNode.parentNode;
+    }
+
+    while (theParentNode.nodeName.toLowerCase() != "body")
+    {
+        switch (theParentNode.nodeName.toLowerCase())
+        {
+            case "a":
+                theWidgEditor.theToolbar.setState("Link", "on");
+
+                break;
+
+            case "em":
+                theWidgEditor.theToolbar.setState("Italic", "on");
+
+                break;
 
             /*TODO case "center":
-                window.alert("Entra en center!!");
-                theWidgEditor.theToolbar.setState("Center", "on");
+             window.alert("Entra en center!!");
+             theWidgEditor.theToolbar.setState("Center", "on");
 
-                break;*/
-				
-			case "li":
-			
-				break;
-				
-			case "ol":
-				theWidgEditor.theToolbar.setState("Ordered", "on");
-				theWidgEditor.theToolbar.setState("Unordered", "off");
-				
-				break;
-				
-			case "span":
-				if (theParentNode.getAttribute("style") == "font-weight: bold;")
-				{
-					theWidgEditor.theToolbar.setState("Bold", "on");
-				}
-				else if (theParentNode.getAttribute("style") == "font-style: italic;")
-				{
-					theWidgEditor.theToolbar.setState("Italic", "on");
-				}
-				else if (theParentNode.getAttribute("style") == "font-weight: bold; font-style: italic;")
-				{
-					theWidgEditor.theToolbar.setState("Bold", "on");
-					theWidgEditor.theToolbar.setState("Italic", "on");
-				}
-				else if (theParentNode.getAttribute("style") == "font-style: italic; font-weight: bold;")
-				{
-					theWidgEditor.theToolbar.setState("Bold", "on");
-					theWidgEditor.theToolbar.setState("Italic", "on");
-				}
+             break;*/
+
+            case "li":
+
+                break;
+
+            case "ol":
+                theWidgEditor.theToolbar.setState("Ordered", "on");
+                theWidgEditor.theToolbar.setState("Unordered", "off");
+
+                break;
+
+            case "span":
+                if (theParentNode.getAttribute("style") == "font-weight: bold;")
+                {
+                    theWidgEditor.theToolbar.setState("Bold", "on");
+                }
+                else if (theParentNode.getAttribute("style") == "font-style: italic;")
+                {
+                    theWidgEditor.theToolbar.setState("Italic", "on");
+                }
+                else if (theParentNode.getAttribute("style") == "font-weight: bold; font-style: italic;")
+                {
+                    theWidgEditor.theToolbar.setState("Bold", "on");
+                    theWidgEditor.theToolbar.setState("Italic", "on");
+                }
+                else if (theParentNode.getAttribute("style") == "font-style: italic; font-weight: bold;")
+                {
+                    theWidgEditor.theToolbar.setState("Bold", "on");
+                    theWidgEditor.theToolbar.setState("Italic", "on");
+                }
 
                 /*TODO else if(theParentNode.getAttribute("style") == "text-align: center;")
-                {
-                    window.alert("ENtra aqui2!!!");
-                    theWidgEditor.theToolbar.setState("Center", "on");
-                }*/
-				
-				break;
-			
-			case "strong":
-				theWidgEditor.theToolbar.setState("Bold", "on");
-				
-				break;
-			
-			case "ul":
-				theWidgEditor.theToolbar.setState("Unordered", "on");
-				theWidgEditor.theToolbar.setState("Ordered", "off");
-				
-				break;
+                 {
+                 window.alert("ENtra aqui2!!!");
+                 theWidgEditor.theToolbar.setState("Center", "on");
+                 }*/
+
+                break;
+
+            case "strong":
+                theWidgEditor.theToolbar.setState("Bold", "on");
+
+                break;
+
+            case "ul":
+                theWidgEditor.theToolbar.setState("Unordered", "on");
+                theWidgEditor.theToolbar.setState("Ordered", "off");
+
+                break;
 
             case "u":
                 theWidgEditor.theToolbar.setState("Underline", "on");
@@ -1530,21 +1527,21 @@ function widgToolbarCheckState(theWidgEditor, resubmit)
                 break;
 
             /*TODO case "p":
-                theWidgEditor.theToolbar.setState("Center", "on");
-                window.alert("WIIII");
-                break;*/
-			
-			default:
-				theWidgEditor.theToolbar.setState("SelectBlock", "<" + theParentNode.nodeName.toLowerCase() + ">");
-			
-				break;
-		}
-		
-		theParentNode = theParentNode.parentNode;
-		theLevel++;
-	}
-	
-	return true;			
+             theWidgEditor.theToolbar.setState("Center", "on");
+             window.alert("WIIII");
+             break;*/
+
+            default:
+                theWidgEditor.theToolbar.setState("SelectBlock", "<" + theParentNode.nodeName.toLowerCase() + ">");
+
+                break;
+        }
+
+        theParentNode = theParentNode.parentNode;
+        theLevel++;
+    }
+
+    return true;
 }
 
 
@@ -1553,9 +1550,9 @@ function widgToolbarCheckState(theWidgEditor, resubmit)
 /* Turn off browser status display for toolbar items */
 function widgToolbarMouseover()
 {
-	window.status = "";
-	
-	return true;
+    window.status = "";
+
+    return true;
 }
 
 
@@ -1563,38 +1560,38 @@ function widgToolbarMouseover()
 
 function acceptableChildren(theNode)
 {
-	var theChildren = theNode.childNodes;
-	
-	for (var i = 0; i < theChildren.length; i++)
-	{
-		if (!theChildren[i].nodeName.isAcceptedElementName())
-		{
-			if (!theChildren[i].nodeName.isInlineName())
-			{
-				if (theNode.nodeName.toLowerCase() == "p")
-				{
-					acceptableChildren(replaceNodeWithChildren(theNode));
-					
-					return true;
-				}
-				
-				changeNodeType(theChildren[i], "p");
-			}
-			else
-			{
-				replaceNodeWithChildren(theChildren[i]);
-			}
-				
-			i = -1;
-		}
-	}
-	
-	for (var i = 0; i < theChildren.length; i++)
-	{
-		acceptableChildren(theChildren[i]);
-	}
-	
-	return true;
+    var theChildren = theNode.childNodes;
+
+    for (var i = 0; i < theChildren.length; i++)
+    {
+        if (!theChildren[i].nodeName.isAcceptedElementName())
+        {
+            if (!theChildren[i].nodeName.isInlineName())
+            {
+                if (theNode.nodeName.toLowerCase() == "p")
+                {
+                    acceptableChildren(replaceNodeWithChildren(theNode));
+
+                    return true;
+                }
+
+                changeNodeType(theChildren[i], "p");
+            }
+            else
+            {
+                replaceNodeWithChildren(theChildren[i]);
+            }
+
+            i = -1;
+        }
+    }
+
+    for (var i = 0; i < theChildren.length; i++)
+    {
+        acceptableChildren(theChildren[i]);
+    }
+
+    return true;
 }
 
 
@@ -1603,26 +1600,26 @@ function acceptableChildren(theNode)
 /* Change the type of a node, e.g. h3 to p */
 function changeNodeType(theNode, nodeType)
 {
-	var theChildren = new Array();
-	var theNewNode = document.createElement(nodeType);
-	var theParent = theNode.parentNode;
-	
-	if (theParent != null)
-	{
-		for (var i = 0; i < theNode.childNodes.length; i++)
-		{
-			theChildren.push(theNode.childNodes[i].cloneNode(true));
-		}
-		
-		for (var i = 0; i < theChildren.length; i++)
-		{
-			theNewNode.appendChild(theChildren[i]);
-		}
-		
-		theParent.replaceChild(theNewNode, theNode);
-	}
-	
-	return true;
+    var theChildren = new Array();
+    var theNewNode = document.createElement(nodeType);
+    var theParent = theNode.parentNode;
+
+    if (theParent != null)
+    {
+        for (var i = 0; i < theNode.childNodes.length; i++)
+        {
+            theChildren.push(theNode.childNodes[i].cloneNode(true));
+        }
+
+        for (var i = 0; i < theChildren.length; i++)
+        {
+            theNewNode.appendChild(theChildren[i]);
+        }
+
+        theParent.replaceChild(theNewNode, theNode);
+    }
+
+    return true;
 }
 
 
@@ -1631,27 +1628,27 @@ function changeNodeType(theNode, nodeType)
 /* Replace a node with its children -- delete the item and move its children up one level in the hierarchy */
 function replaceNodeWithChildren(theNode)
 {
-	var theChildren = new Array();
-	var theParent = theNode.parentNode;
-	
-	if (theParent != null)
-	{
-		for (var i = 0; i < theNode.childNodes.length; i++)
-		{
-			theChildren.push(theNode.childNodes[i].cloneNode(true));
-		}
-		
-		for (var i = 0; i < theChildren.length; i++)
-		{
-			theParent.insertBefore(theChildren[i], theNode);
-		}
-		
-		theParent.removeChild(theNode);
-		
-		return theParent;
-	}
-	
-	return true;
+    var theChildren = new Array();
+    var theParent = theNode.parentNode;
+
+    if (theParent != null)
+    {
+        for (var i = 0; i < theNode.childNodes.length; i++)
+        {
+            theChildren.push(theNode.childNodes[i].cloneNode(true));
+        }
+
+        for (var i = 0; i < theChildren.length; i++)
+        {
+            theParent.insertBefore(theChildren[i], theNode);
+        }
+
+        theParent.removeChild(theNode);
+
+        return theParent;
+    }
+
+    return true;
 }
 
 
@@ -1660,19 +1657,19 @@ function replaceNodeWithChildren(theNode)
 /* Add a class to a string */
 String.prototype.addClass = function(theClass)
 {
-	if (this != "")
-	{
-		if (!this.classExists(theClass))
-		{
-			return this + " " + theClass;
-		}
-	}
-	else
-	{
-		return theClass;
-	}
-	
-	return this;
+    if (this != "")
+    {
+        if (!this.classExists(theClass))
+        {
+            return this + " " + theClass;
+        }
+    }
+    else
+    {
+        return theClass;
+    }
+
+    return this;
 }
 
 
@@ -1681,15 +1678,15 @@ String.prototype.addClass = function(theClass)
 /* Check if a class exists in a string */
 String.prototype.classExists = function(theClass)
 {
-	var regString = "(^| )" + theClass + "\W*";
-	var regExpression = new RegExp(regString);
-	
-	if (regExpression.test(this))
-	{
-		return true;
-	}
-	
-	return false;
+    var regString = "(^| )" + theClass + "\W*";
+    var regExpression = new RegExp(regString);
+
+    if (regExpression.test(this))
+    {
+        return true;
+    }
+
+    return false;
 }
 
 
@@ -1698,18 +1695,18 @@ String.prototype.classExists = function(theClass)
 /* Check if a string is the nodeName of an accepted element */
 String.prototype.isAcceptedElementName = function()
 {
-	var elementList = new Array("#text", "a", "em", "h1", "h2", "h3", "h4", "h5", "h6", "img", "li", "ol", "p", "strong", "ul");
-	var theName = this.toLowerCase();
-	
-	for (var i = 0; i < elementList.length; i++)
-	{
-		if (theName == elementList[i])
-		{
-			return true;
-		}
-	}
-	
-	return false;
+    var elementList = new Array("#text", "a", "em", "h1", "h2", "h3", "h4", "h5", "h6", "img", "li", "ol", "p", "strong", "ul");
+    var theName = this.toLowerCase();
+
+    for (var i = 0; i < elementList.length; i++)
+    {
+        if (theName == elementList[i])
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 
@@ -1718,18 +1715,18 @@ String.prototype.isAcceptedElementName = function()
 /* Check if a string is the nodeName of an inline element */
 String.prototype.isInlineName = function()
 {
-	var inlineList = new Array("#text", "a", "em", "font", "span", "strong", "u", "p");
-	var theName = this.toLowerCase();
-	
-	for (var i = 0; i < inlineList.length; i++)
-	{
-		if (theName == inlineList[i])
-		{
-			return true;
-		}
-	}
-	
-	return false;
+    var inlineList = new Array("#text", "a", "em", "font", "span", "strong", "u", "p");
+    var theName = this.toLowerCase();
+
+    for (var i = 0; i < inlineList.length; i++)
+    {
+        if (theName == inlineList[i])
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 
@@ -1738,10 +1735,10 @@ String.prototype.isInlineName = function()
 /* Remove a class from a string */
 String.prototype.removeClass = function(theClass)
 {
-	var regString = "(^| )" + theClass + "\W*";
-	var regExpression = new RegExp(regString);
-	
-	return this.replace(regExpression, "");
+    var regString = "(^| )" + theClass + "\W*";
+    var regExpression = new RegExp(regString);
+
+    return this.replace(regExpression, "");
 }
 
 
@@ -1750,14 +1747,14 @@ String.prototype.removeClass = function(theClass)
 /* Reverse a string */
 String.prototype.reverse = function()
 {
-	var theString = "";
-	
-	for (var i = this.length - 1; i >= 0; i--)
-	{
-		theString += this.charAt(i);
-	}
-	
-	return theString;
+    var theString = "";
+
+    for (var i = this.length - 1; i >= 0; i--)
+    {
+        theString += this.charAt(i);
+    }
+
+    return theString;
 }
 
 
@@ -1766,28 +1763,28 @@ String.prototype.reverse = function()
 /* Make tags valid by converting uppercase element and attribute names to lowercase and quoting attributes */
 String.prototype.validTags = function()
 {
-	var theString = this;
-	
-	/* Replace uppercase element names with lowercase */
-	theString = theString.replace(/<[^> ]*/g, function(match){return match.toLowerCase();});
-	
-	/* Replace uppercase attribute names with lowercase */
-	theString = theString.replace(/<[^>]*>/g, function(match)
-		{
-			match = match.replace(/ [^=]+=/g, function(match2){return match2.toLowerCase();});
+    var theString = this;
 
-			return match;
-		});
-			
-	/* Put quotes around unquoted attributes */
-	theString = theString.replace(/<[^>]*>/g, function(match)
-		{
-			match = match.replace(/( [^=]+=)([^"][^ >]*)/g, "$1\"$2\"");
-			
-			return match;
-		});
-		
-	return theString;
+    /* Replace uppercase element names with lowercase */
+    theString = theString.replace(/<[^> ]*/g, function(match){return match.toLowerCase();});
+
+    /* Replace uppercase attribute names with lowercase */
+    theString = theString.replace(/<[^>]*>/g, function(match)
+    {
+        match = match.replace(/ [^=]+=/g, function(match2){return match2.toLowerCase();});
+
+        return match;
+    });
+
+    /* Put quotes around unquoted attributes */
+    theString = theString.replace(/<[^>]*>/g, function(match)
+    {
+        match = match.replace(/( [^=]+=)([^"][^ >]*)/g, "$1\"$2\"");
+
+        return match;
+    });
+
+    return theString;
 }
 
 
@@ -1802,11 +1799,10 @@ function actualizaNodo(){
 
 
     if(savedCell== null || savedGraph == null){
-        console.log("Entra en el IF tras click");
+
     }
 
     else{
-        console.log("Entra en el ELSE tras click");
         var cellBB = savedCell;
         var graphBB = savedGraph;
         var attrs = cellBB.value.attributes;
@@ -1814,17 +1810,12 @@ function actualizaNodo(){
         for (var i = 0; i < attrs.length; i++) {
             if (i == 0) { //Obtains the title
                 currentTitle = attrs[i].value;
-                console.log("Título del nodo = "+currentTitle);
-                console.log("Nuevo título = "+newEntryTitle);
 
                 graphBB.getModel().beginUpdate();
                 try {
                     var edit = new mxCellAttributeChange(
                         cellBB, attrs[0].nodeName,
                         newEntryTitle);
-                    console.log("cellBB = "+cellBB);
-                    console.log("attrs[0].nodename = "+attrs[0].nodename);
-                    console.log("newEntryData = "+newEntryData);
                     graphBB.getModel().execute(edit);
                     graphBB.updateCellSize(cellBB);
                 }
@@ -1833,23 +1824,20 @@ function actualizaNodo(){
                 }
 
             } else { //Obtains the body
-                console.log("Valor a comparar 1 -> ",newEntryData);
-                console.log("Valor a comparar 2 -> ",attrs[1].value);
                 //TODO if (newEntryData != attrs[1].value) {
-                    graphBB.getModel().beginUpdate();
-                     try {
-                     var edit = new mxCellAttributeChange(
-                     cellBB, attrs[1].nodeName,
-                     newEntryData);
-                     graphBB.getModel().execute(edit);
-                     graphBB.updateCellSize(cellBB);
-                     }
-                     finally {
-                     graphBB.getModel().endUpdate();
-                     graphBB=null;
-                     }
+                graphBB.getModel().beginUpdate();
+                try {
+                    var edit = new mxCellAttributeChange(
+                        cellBB, attrs[1].nodeName,
+                        newEntryData);
+                    graphBB.getModel().execute(edit);
+                    graphBB.updateCellSize(cellBB);
+                }
+                finally {
+                    graphBB.getModel().endUpdate();
+                    graphBB=null;
+                }
                 //TODO }
-                console.log("Body del nodo"+attrs[i].value);
             }
         }
 
@@ -1860,29 +1848,25 @@ function actualizaNodo(){
 
 function crearNuevoNodo(){
     //var container = document.getElementById("graphContainer");
-    console.log(graph);
     var xml = mxUtils.createXmlDocument();
     var countVertex = graph.getChildVertices(graph.getDefaultParent()).length;
-    console.log(countVertex);
     var count = countVertex+1;
     var chapterX = xml.createElement('Chapter');
     var newId = 'Chapter' + count;
-    console.log(newId);
     chapterX.setAttribute('title', 'Example Title for the Chapter' + count);
     chapterX.setAttribute('body', 'Example body for the Chapter' + count);
+    chapterX.setAttribute('graphIndex', 'newChapter' + count);
 
     var parent = graph.getDefaultParent();
 
     graph.getModel().beginUpdate();
     try {
         graph.insertVertex(parent, null, chapterX, 40, 200, chapterX.getAttribute('title').length * 7, 30);
-        console.log("Lo hace");
     }
     finally {
         // Updates the display
         graph.getModel().endUpdate();
         var count2 = graph.getChildVertices(graph.getDefaultParent()).length;
-        console.log(count2);
     }
 }
 
@@ -1891,9 +1875,14 @@ function eliminar(){
     graph.container.focus();
     selectedThing = graph.getSelectionCell();
 
-    if(selectedThing!=null){
-        graph.getModel().remove(selectedThing);
+    if (selectedThing.getAttribute('graphIndex') == 'initialChapter01'){
     }
+    else{
+        if(selectedThing!=null){
+            graph.getModel().remove(selectedThing);
+        }
+    }
+
 }
 
 
@@ -1902,18 +1891,14 @@ function centrar(){
     var newEntryData = iFrameAux.find('body');
 
     if(savedCell== null || savedGraph == null){
-        console.log("Entra en el IF tras click en la funcion centrar");
     }
 
     else{
-        console.log("Entra en el ELSE tras click en la funcion centrar");
         var cellBB = savedCell;
         var graphBB = savedGraph;
         var attrs = cellBB.value.attributes;
 
         newEntryData.append($("<style type='text/css'>  body{text-align: center}  </style>"));;
-
-        console.log(newEntryData);
 
         graphBB.getModel().beginUpdate();
         try {
@@ -1939,18 +1924,14 @@ function derecha(){
     var newEntryData = iFrameAux.find('body');
 
     if(savedCell== null || savedGraph == null){
-        console.log("Entra en el IF tras click en la funcion centrar");
     }
 
     else{
-        console.log("Entra en el ELSE tras click en la funcion centrar");
         var cellBB = savedCell;
         var graphBB = savedGraph;
         var attrs = cellBB.value.attributes;
 
         newEntryData.append($("<style type='text/css'>  body{text-align: right}  </style>"));;
-
-        console.log(newEntryData);
 
         graphBB.getModel().beginUpdate();
         try {
@@ -1976,18 +1957,14 @@ function izquierda(){
     var newEntryData = iFrameAux.find('body');
 
     if(savedCell== null || savedGraph == null){
-        console.log("Entra en el IF tras click en la funcion centrar");
     }
 
     else{
-        console.log("Entra en el ELSE tras click en la funcion centrar");
         var cellBB = savedCell;
         var graphBB = savedGraph;
         var attrs = cellBB.value.attributes;
 
         newEntryData.append($("<style type='text/css'>  body{text-align: left}  </style>"));;
-
-        console.log(newEntryData);
 
         graphBB.getModel().beginUpdate();
         try {
@@ -2013,18 +1990,14 @@ function justificar(){
     var newEntryData = iFrameAux.find('body');
 
     if(savedCell== null || savedGraph == null){
-        console.log("Entra en el IF tras click en la funcion centrar");
     }
 
     else{
-        console.log("Entra en el ELSE tras click en la funcion centrar");
         var cellBB = savedCell;
         var graphBB = savedGraph;
         var attrs = cellBB.value.attributes;
 
         newEntryData.append($("<style type='text/css'>  body{text-align: justify}  </style>"));;
-
-        console.log(newEntryData);
 
         graphBB.getModel().beginUpdate();
         try {
@@ -2041,14 +2014,253 @@ function justificar(){
 
         var graphBB = savedCell;
     }
+}
 
+function crearNuevaArista(){
+    var xml = mxUtils.createXmlDocument();
+    var parent = graph.getDefaultParent();
+
+    //TODO COPIETEO FEO
+
+    /*var chapter10 = xml.createElement('Chapter');
+     chapter10.setAttribute('title', 'Caperucita 01');
+     chapter10.setAttribute('body', 'Texto de Caperucita 01');*/
+
+    var chapter11 = xml.createElement('Chapter');
+    chapter11.setAttribute('title', 'Caperucita 02');
+    chapter11.setAttribute('body', 'Texto de Caperucita 02');
+
+    var relationAux = xml.createElement('sendTo');
+    relationAux.setAttribute('since', '1985');
+
+    //TODO FIN COPIETEO
+
+    graph.getModel().beginUpdate();
+    try {
+        //TODO COPIETEO 2
+        var arrVarAux = chapterArray[0];
+        var arrVarAux2 = chapterArray[1];
+        var v10 = graph.insertVertex(parent, null, arrVarAux, 40, 40, arrVarAux.getAttribute('title').length * 7, 30);
+        //var v10 = graph.insertVertex(parent, null, chapter10, 150, 150, chapter10.getAttribute('title').length * 7, 30);
+        var v11 = graph.insertVertex(parent, null, arrVarAux2, 200, 200, arrVarAux2.getAttribute('title').length * 7, 30);
+        //TODO FIN COPIETEO 2
+        graph.insertEdge(parent, null, relationAux, v10, v11);
+    }
+    finally {
+        // Updates the display
+        graph.getModel().endUpdate();
+    }
 }
 
 
-/*function handleDown(event:MouseEvent){
-    console.log("handDown");
+/* When the user clicks on the button,
+ toggle between hiding and showing the dropdown content */
+function myDropdownFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
 }
 
-function handleUp(event:MouseEvent){
-    console.log("handUp");
-}*/
+// Close the dropdown menu if the user clicks outside of it
+/*window.onclick = function(event) {
+ if (!event.target.matches('.dropbtn')) {
+
+ var dropdowns = document.getElementsByClassName("dropdown-content");
+ var i;
+ for (i = 0; i < dropdowns.length; i++) {
+ var openDropdown = dropdowns[i];
+ if (openDropdown.classList.contains('show')) {
+ openDropdown.classList.remove('show');
+ }
+ }
+ }
+ }*/
+
+
+
+function crearNuevaArista2(){
+    console.log("Entra en crearNuevaArista2");
+    edit2Bool = true;
+    console.log("valor tras entrar en nuevaArista2 = "+edit2Bool);
+}
+
+function crearNuevaArista3(params){
+    console.log("Entra en crearNuevaArista3 tras recibir el array");
+    var parentChapter = null;
+    var childChapter = null;
+
+    parentChapter = params[0];
+    childChapter = params[1];
+
+    var xml = mxUtils.createXmlDocument();
+    var parent = graph.getDefaultParent();
+    var relationAux = xml.createElement('sendTo');
+    relationAux.setAttribute('since', '1985');
+
+    var parentVertex = null;
+    var childVertex = null;
+    for (var i = 0; i < graph.getChildVertices(graph.getDefaultParent()).length; i++) {
+        var attrsAux = graph.getChildVertices(graph.getDefaultParent())[i].getAttribute('graphIndex');
+        console.log("Recorriendo el array: "+attrsAux);
+        if (parentChapter==attrsAux){
+            parentVertex = graph.getChildVertices(graph.getDefaultParent())[i];
+        }
+        if (childChapter==attrsAux){
+            childVertex = graph.getChildVertices(graph.getDefaultParent())[i];
+        }
+    }
+
+    graph.insertEdge(parent, null, relationAux, parentVertex, childVertex);
+
+    edit2Bool = false;
+    chapterArray = [];
+}
+
+
+
+
+
+
+
+function pasarAJSON(vertice, hijos){
+
+    var verticeId = vertice.id;
+    var verticeTitle = vertice.value.attributes[0].nodeValue;
+    var verticeBody = vertice.value.attributes[1].nodeValue;
+
+    //window.alert("Sigue bien1!!");
+    console.log(vertice);
+    //JSON inicial
+    var json = '{"id":' + verticeId + ',"title":' + verticeTitle + ',"body":' + verticeBody +
+        ',"child_options":[';
+
+    //console.log("Todos los hijos " + hijos[0].source.id);
+    // window.alert("Sigue bien1!!");
+
+    try{
+        if(hijos==null){
+            //window.alert("Es cero");
+            json+= '],';
+        }else{
+            for(j=0;j<hijos.length;j++) {
+                if (j != hijos.length - 1) {
+                    // window.alert("Entra aqui bien 2!!");
+                    //Hay que comprobar que el id del hijo no sea el mismo del padre
+                    console.log("J" + j);
+                    var sourceId = hijos[j].source.id;
+                    var targetId = hijos[j].target.id;
+
+                    console.log("SourceId" + sourceId);
+                    console.log("TargetId" + targetId);
+
+                    //Compruebo que el vertice origen sea yo mismo, eso quiere decir que la arista sale de mi, soy el padre
+                    if(sourceId==verticeId){
+                        console.log("SourceIdDentro" + sourceId);
+                        console.log("VerticeActualId" + verticeId);
+
+                        //TODO NO ME LO PILLA PORQUE EL EDGES SON DOS (0,1)
+                        var optionTitle = hijos[j].value.attributes[0].nodeValue;
+                        console.log(optionTitle);
+
+                        //var hijoTitle = vertices[targetId].value.attributes[0].nodeValue;
+
+                        json += '{"child_id":' + targetId + ',"parent_id":' + sourceId + ',"option":' + optionTitle + '"}';
+                        console.log("1" + json);
+                    }else{
+                        if(targetId==verticeId){
+                            //No hace nada porque ya esta presente en el JSON
+                            //json += '{"child_id":' + targetId + ',"parent_id":' + sourceId + ',"option":' + hijoTitle + '"},';
+                        }else{ //Soy el padre del nodo cuyo id sea el targetId
+                            var optionTitle = hijos[j].value.attributes[0].nodeValue;
+                            console.log(optionTitle);
+                            //var hijoTitle = vertices[targetId].value.attributes[0].nodeValue;
+                            json += '{"child_id":' + targetId + ',"parent_id":' + sourceId + ',"option":' + optionTitle + '"}';
+                            console.log("2" + json);
+                        }
+                    }
+                } else {
+                    //window.alert("Entra aqui en el 3!!!");
+                    //Hay que comprobar que el id del hijo no sea el mismo del padre
+                    var sourceId = hijos[j].source.id;
+                    var targetId = hijos[j].target.id;
+
+                    console.log("SourceId" + sourceId);
+                    console.log("TargetId" + targetId);
+
+                    //Compruebo que el vertice origen sea yo mismo, eso quiere decir que la arista sale de mi, soy el padre
+                    if(sourceId==verticeId){
+                        // window.alert("Entra aqui 4!!");
+                        //var hijoTitle = vertices[targetId].value.attributes[0].nodeValue;
+                        var optionTitle = hijos[j].value.attributes[0].nodeValue;
+                        console.log(optionTitle);
+                        json += '{"child_id":' + targetId + ',"parent_id":' + sourceId + ',"option":' + optionTitle + '"}],';
+                        console.log("3" + json);
+                    }else{
+                        if(targetId==verticeId){
+                            //No hace nada porque ya esta presente en el JSON
+                            json += '],';
+                            //json += '{"child_id":' + targetId + ',"parent_id":' + sourceId + ',"option":' + hijoTitle + '"},';
+                        }else{ //Soy el padre del nodo cuyo id sea el targetId
+                            var hijoTitle = vertices[targetId].value.attributes[0].nodeValue;
+                            json += '{"child_id":' + targetId + ',"parent_id":' + sourceId + ',"option":' + hijoTitle + '"}],';
+                            console.log("4" + json);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    finally {
+        if(hijos==null){
+            json+= '"parent_options":[]}';
+        }else{
+            if(hijos.length==1){
+                var sourceId = hijos[0].source.id;
+                var targetId = hijos[0].target.id;
+
+                console.log("SourceId" + sourceId);
+                console.log("TargetId" + targetId);
+
+                //Me queda comprobar mirar apuntes y borrar de arriba el parent_options
+                if(targetId==verticeId){
+                    json += '"parent_options":[{' + sourceId + '}]}';
+                }else{
+                    json += '"parent_options":[]}';
+                }
+            }else{
+                json += '"parent_options":[';
+                for(j=0;j<hijos.length;j++) {
+                    if (j != hijos.length - 1) {
+                        var sourceId = hijos[j].source.id;
+                        var targetId = hijos[j].target.id;
+
+                        console.log("SourceId" + sourceId);
+                        console.log("TargetId" + targetId);
+                        if(targetId==verticeId){
+                            json += '{' + sourceId + '}';
+                        }
+
+                    }else{
+                        var sourceId = hijos[j].source.id;
+                        var targetId = hijos[j].target.id;
+
+                        console.log("SourceId" + sourceId);
+                        console.log("TargetId" + targetId);
+
+                        //Me queda comprobar mirar apuntes y borrar de arriba el parent_options
+                        if(sourceId==verticeId){
+                            json += ']}';
+                        }else{
+                            json += '{' + sourceId + '}]}';
+                        }
+
+                    }
+                }
+            }
+
+        }
+
+    }
+    return json;
+    //window.alert("ESte es el json " + json);
+    //console.log("Este es el json " + json);
+
+}
