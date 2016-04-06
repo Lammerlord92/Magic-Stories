@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20160405163804) do
+=======
+ActiveRecord::Schema.define(version: 20160406123153) do
+>>>>>>> 049663ebeb78b3f186d753c9e1ffdb68f9af9d09
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -206,6 +210,16 @@ ActiveRecord::Schema.define(version: 20160405163804) do
 
   add_index "mentions", ["mentionable_id", "mentionable_type"], name: "fk_mentionables", using: :btree
   add_index "mentions", ["mentioner_id", "mentioner_type"], name: "fk_mentions", using: :btree
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer  "feed_id"
+    t.string   "feed_type"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "checked",    default: false
+    t.integer  "source_id"
+    t.integer  "outcome_id"
+  end
 
   create_table "options", force: :cascade do |t|
     t.string   "option"

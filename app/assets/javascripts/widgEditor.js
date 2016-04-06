@@ -1875,6 +1875,10 @@ function eliminar(){
     graph.container.focus();
     selectedThing = graph.getSelectionCell();
 
+    if (selectedThing.getAttribute('graphId') == 'initialChapter01'){
+        console.log('Vas a borrar el capítulo inicial');
+    }
+
     if(selectedThing!=null){
         graph.getModel().remove(selectedThing);
     }

@@ -30,6 +30,7 @@
         // not supported.
         mxUtils.error('Browser is not supported!', 200, false);
       }
+<<<<<<< HEAD
       else
       {
         // Defines an icon for creating new connections in the connection handler.
@@ -71,6 +72,245 @@
           document.body.style.overflow = 'hidden';
           new mxDivResizer(tbContainer);
           new mxDivResizer(container);
+=======
+      else {
+        // Note that these XML nodes will be enclosing the
+        // mxCell nodes for the model cells in the output
+        var xml = mxUtils.createXmlDocument();
+
+        var chapter1 = xml.createElement('Chapter');
+        chapter1.setAttribute('title', 'Juanoide presenta');
+        chapter1.setAttribute('body', 'Juan ha ido a ISPP');
+
+        var chapter2 = xml.createElement('Chapter');
+        chapter2.setAttribute('title', 'Juanoide pone la numeración');
+        chapter2.setAttribute('body', 'Juanoide ha hecho las cosas bien');
+
+        var chapter3 = xml.createElement('Chapter');
+        chapter3.setAttribute('title', 'El grupo 1 se queja');
+        chapter3.setAttribute('body', 'Buuuuu');
+
+        var chapter4 = xml.createElement('Chapter');
+        chapter4.setAttribute('title', 'Juanoide no pone la numeración');
+        chapter4.setAttribute('body', 'Juanoide no ha hecho las cosas bien');
+
+        var relation = xml.createElement('sendTo');
+        relation.setAttribute('since', '1985');
+
+        // Creates the graph inside the given container
+        window.graph = new mxGraph(container);
+
+        // fuken: sacar el objeto graph como propiedad global
+        //        para poder verlo en la consola del navegador
+        window.gr = graph;
+
+        // Optional disabling of sizing
+        graph.setCellsResizable(false);
+
+        //Javi: No permite mover flechas
+        graph.setAllowDanglingEdges(false);
+
+
+        // Configures the graph contains to resize and
+        // add a border at the bottom, right
+        graph.setResizeContainer(true);
+        graph.minimumContainerSize = new mxRectangle(0, 0, 500, 380);
+        graph.setBorder(60);
+
+        // Stops editing on enter key, handles escape
+        new mxKeyHandler(graph);
+
+        // Overrides method to disallow edge label editing
+        graph.isCellEditable = function (cell) {
+          return !this.getModel().isEdge(cell);
+        };
+
+        // Overrides method to provide a cell label in the display
+        graph.convertValueToString = function (cell) {
+          if (mxUtils.isNode(cell.value)) {
+            if (cell.value.nodeName.toLowerCase() == 'chapter') {
+              var title = cell.getAttribute('title', '');
+              var body  = cell.getAttribute('body', '');
+
+              if (body != null && body.length > 0) {
+                //return body + ', ' + title;
+                return title;
+              }
+
+              return title;
+            }
+            else if (cell.value.nodeName.toLowerCase() == 'sendTo') {
+              return cell.value.nodeName + ' (Since '
+                  + cell.getAttribute('since', '') + ')';
+            }
+
+          }
+
+          return '';
+        };
+
+        // Overrides method to store a cell label in the model
+        var cellLabelChanged = graph.cellLabelChanged;
+        graph.cellLabelChanged = function (cell, newValue, autoSize) {
+          if (mxUtils.isNode(cell.value) &&
+              cell.value.nodeName.toLowerCase() == 'chapter') {
+            var pos = newValue.indexOf(' ');
+
+            var title = (pos > 0) ? newValue.substring(0,pos)                    : newValue;
+            var body  = (pos > 0) ? newValue.substring(pos + 1, newValue.length) : '';
+
+            // Clones the value for correct undo/redo
+            var elt = cell.value.cloneNode(true);
+
+            elt.setAttribute('title', title);
+            elt.setAttribute('body', body);
+
+            newValue = elt;
+            autoSize = true;
+          }
+
+          cellLabelChanged.apply(this, arguments);
+        };
+
+        // Overrides method to create the editing value
+        var getEditingValue = graph.getEditingValue;
+        graph.getEditingValue = function (cell) {
+          if (mxUtils.isNode(cell.value) &&
+              cell.value.nodeName.toLowerCase() == 'chapter') {
+            var title = cell.getAttribute('title', '');
+            var body = cell.getAttribute('body', '');
+
+            return title + ' ' + body;
+          }
+        };
+
+        // Adds a special tooltip for edges
+        graph.setTooltips(true);
+
+        var getTooltipForCell = graph.getTooltipForCell;
+        graph.getTooltipForCell = function (cell) {
+          // Adds some relation details for edges
+          if (graph.getModel().isEdge(cell)) {
+            var src = this.getLabel(this.getModel().getTerminal(cell, true));
+            var trg = this.getLabel(this.getModel().getTerminal(cell, false));
+
+            return src + ' ' + cell.value.nodeName + ' ' + trg;
+          }
+
+          return getTooltipForCell.apply(this, arguments);
+        };
+
+        // Enables rubberband selection
+        new mxRubberband(graph);
+
+        // Adds an option to view the XML of the graph
+        document.querySelector('#bodyCol').appendChild(mxUtils.button('View XML', function () {
+          var encoder = new mxCodec();
+          var node = encoder.encode(graph.getModel());
+          mxUtils.popup(mxUtils.getPrettyXml(node), true);
+        }));
+
+
+
+
+        document.querySelector('#bodyCol').appendChild(mxUtils.button('View JSON', function () {
+          var encoder = new mxCodec();
+          var node = encoder.encode(graph.getModel());
+          //mxUtils.popup(mxUtils.getPrettyXml(node), true);
+
+          var vertices = graph.getChildVertices(graph.getDefaultParent());
+          var content = [];
+          for (i=0; i< vertices.length;i++){
+
+            content.push(vertices[i].value.attributes);
+          }
+          console.log(content);
+        }));
+
+        // Changes the style for match the markup
+        // Creates the default style for vertices
+        var style = graph.getStylesheet().getDefaultVertexStyle();
+        style[mxConstants.STYLE_STROKECOLOR] = 'gray';
+        style[mxConstants.STYLE_ROUNDED] = true;
+        style[mxConstants.STYLE_SHADOW] = true;
+        style[mxConstants.STYLE_FILLCOLOR] = '#DFDFDF';
+        style[mxConstants.STYLE_GRADIENTCOLOR] = 'white';
+        style[mxConstants.STYLE_FONTCOLOR] = 'black';
+        style[mxConstants.STYLE_FONTSIZE] = '12';
+        style[mxConstants.STYLE_SPACING] = 4;
+
+        // Creates the default style for edges
+        style = graph.getStylesheet().getDefaultEdgeStyle();
+        style[mxConstants.STYLE_STROKECOLOR] = '#0C0C0C';
+        style[mxConstants.STYLE_LABEL_BACKGROUNDCOLOR] = 'white';
+        style[mxConstants.STYLE_EDGE] = mxEdgeStyle.ElbowConnector;
+        style[mxConstants.STYLE_ROUNDED] = true;
+        style[mxConstants.STYLE_FONTCOLOR] = 'black';
+        style[mxConstants.STYLE_FONTSIZE] = '10';
+
+        // Gets the default parent for inserting new cells. This
+        // is normally the first child of the root (ie. layer 0).
+        var parent = graph.getDefaultParent();
+
+        // Adds cells to the model in a single step
+        graph.getModel().beginUpdate();
+        try {
+          //var w = chapter1.getAttribute('title').length * 7;
+
+          var v1 = graph.insertVertex(parent, null, chapter1, 40, 40, chapter1.getAttribute('title').length * 7, 30);
+          var v2 = graph.insertVertex(parent, null, chapter2, 200, 150, chapter2.getAttribute('title').length * 7, 30);
+          var v3 = graph.insertVertex(parent, null, chapter3, 450, 125, chapter3.getAttribute('title').length * 7, 30);
+          var v4 = graph.insertVertex(parent, null, chapter4, 200, 100, chapter4.getAttribute('title').length * 7, 30);
+
+          var e1 = graph.insertEdge(parent, null, relation, v1, v2);
+          var e2 = graph.insertEdge(parent, null, relation, v2, v3);
+          var e3 = graph.insertEdge(parent, null, relation, v1, v4);
+          var e4 = graph.insertEdge(parent, null, relation, v4, v3);
+        }
+        finally {
+          // Updates the display
+          graph.getModel().endUpdate();
+        }
+
+        // Implements a properties panel that uses
+        // mxCellAttributeChange to change properties
+       graph.getSelectionModel().addListener(mxEvent.CHANGE, function (sender, evt) {
+          selectionChanged(graph);
+        });
+
+        selectionChanged(graph);
+      }
+
+      /**
+       * Updates the properties panel
+       */
+      function selectionChanged(graph) {
+        var cell = null;
+        //var div = document.getElementById('properties');
+
+        // Forces focusout in IE
+        graph.container.focus();
+
+        // Clears the DIV the non-DOM way
+        //div.innerHTML = '';
+
+        // Gets the selection cell
+        cell = graph.getSelectionCell();
+
+        //Global variables
+        window.savedCell = null;
+        window.savedGraph = null;
+
+        if (cell == null) {
+          //var changingObject = $("#my_textBodyWidgIframe").contents().set('body','aahahahaha');
+          $('#properties').hide();
+          //var changingBody = changingObject.find('body').html();
+          //console.log("linea de cambio = "+changingBody);
+
+          //mxUtils.writeln(div, 'Nothing selected.');
+          document.getElementById("my_textTitle").value = "Nothing selected";
+          //document.getElementById("my_textBodyWidgIframe").value = "Nothing selected 2";
+>>>>>>> 049663ebeb78b3f186d753c9e1ffdb68f9af9d09
         }
 
         // Creates the model and the graph inside the container

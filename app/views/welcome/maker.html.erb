@@ -110,11 +110,11 @@
           var xml = mxUtils.createXmlDocument();
 
           var chapter1 = xml.createElement('Chapter');
-          chapter1.setAttribute('title', 'Juanoide presenta');
-          chapter1.setAttribute('body', 'Juan ha ido a ISPP');
-          chapter1.setAttribute('graphIndex','chapter01');
+          chapter1.setAttribute('title', 'Capítulo 01');
+          chapter1.setAttribute('body', 'Este es el texto del capítulo 01');
+          chapter1.setAttribute('graphIndex','initialChapter01');
 
-          var chapter2 = xml.createElement('Chapter');
+          /*var chapter2 = xml.createElement('Chapter');
           chapter2.setAttribute('title', 'Juanoide pone la numeración');
           chapter2.setAttribute('body', 'Juanoide ha hecho las cosas bien');
           chapter2.setAttribute('graphIndex','chapter02');
@@ -130,7 +130,7 @@
           chapter4.setAttribute('graphIndex','chapter04');
 
           var relation = xml.createElement('sendTo');
-          relation.setAttribute('since', '1985');
+          relation.setAttribute('since', '1985');*/
 
           //Creates a list of chapters
           window.chapterArray = [];
@@ -279,14 +279,14 @@
             //var w = chapter1.getAttribute('title').length * 7;
 
             var v1 = graph.insertVertex(parent, null, chapter1, 40, 40, chapter1.getAttribute('title').length * 7, 30);
-            var v2 = graph.insertVertex(parent, null, chapter2, 200, 150, chapter2.getAttribute('title').length * 7, 30);
+            /*var v2 = graph.insertVertex(parent, null, chapter2, 200, 150, chapter2.getAttribute('title').length * 7, 30);
             var v3 = graph.insertVertex(parent, null, chapter3, 450, 125, chapter3.getAttribute('title').length * 7, 30);
             var v4 = graph.insertVertex(parent, null, chapter4, 200, 100, chapter4.getAttribute('title').length * 7, 30);
 
             var e1 = graph.insertEdge(parent, null, relation, v1, v2);
             var e2 = graph.insertEdge(parent, null, relation, v2, v3);
             var e3 = graph.insertEdge(parent, null, relation, v1, v4);
-            var e4 = graph.insertEdge(parent, null, relation, v4, v3);
+            var e4 = graph.insertEdge(parent, null, relation, v4, v3);*/
           }
           finally {
             // Updates the display
