@@ -18,6 +18,49 @@
         border:  solid 2px darkgrey;
         padding: 10px;
       }
+      /* Dropdown Button */
+      .dropbtn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+      }
+
+      /* Dropdown button on hover & focus */
+      .dropbtn:hover, .dropbtn:focus {
+        background-color: #3e8e41;
+      }
+
+      /* The container <div> - needed to position the dropdown content */
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+
+      /* Dropdown Content (Hidden by Default) */
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      }
+
+      /* Links inside the dropdown */
+      .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+      }
+
+      /* Change color of dropdown links on hover */
+      .dropdown-content a:hover {background-color: #f1f1f1}
+
+      /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+      .show {display:block;}
     </style>
 
     <!--
@@ -54,6 +97,7 @@
       // fuken: Esta funcion de jQuery carga la funcion main
       //        cuando el html ha sido cargado entero
       $(document).ready(function main() {
+        window.edit2Bool = false;
         var container = document.getElementById('graphContainer');
         // Checks if the browser is supported
         if (!mxClient.isBrowserSupported()) {
@@ -66,23 +110,30 @@
           var xml = mxUtils.createXmlDocument();
 
           var chapter1 = xml.createElement('Chapter');
-          chapter1.setAttribute('title', 'Juanoide presenta');
-          chapter1.setAttribute('body', 'Juan ha ido a ISPP');
+          chapter1.setAttribute('title', 'Capítulo 01');
+          chapter1.setAttribute('body', 'Este es el texto del capítulo 01. Este capítulo no puede borrarse, ya que es el primer capítulo de tu historia. Puedes crear nuevos capítulos y enlaces mediante los botones de la izquierda.');
+          chapter1.setAttribute('graphIndex','initialChapter01');
 
-          var chapter2 = xml.createElement('Chapter');
+          /*var chapter2 = xml.createElement('Chapter');
           chapter2.setAttribute('title', 'Juanoide pone la numeración');
           chapter2.setAttribute('body', 'Juanoide ha hecho las cosas bien');
+          chapter2.setAttribute('graphIndex','chapter02');
 
           var chapter3 = xml.createElement('Chapter');
           chapter3.setAttribute('title', 'El grupo 1 se queja');
           chapter3.setAttribute('body', 'Buuuuu');
+          chapter3.setAttribute('graphIndex','chapter03');
 
           var chapter4 = xml.createElement('Chapter');
           chapter4.setAttribute('title', 'Juanoide no pone la numeración');
           chapter4.setAttribute('body', 'Juanoide no ha hecho las cosas bien');
+          chapter4.setAttribute('graphIndex','chapter04');
 
           var relation = xml.createElement('sendTo');
-          relation.setAttribute('since', '1985');
+          relation.setAttribute('since', '1985');*/
+
+          //Creates a list of chapters
+          window.chapterArray = [];
 
           // Creates the graph inside the given container
           window.graph = new mxGraph(container);
@@ -228,14 +279,14 @@
             //var w = chapter1.getAttribute('title').length * 7;
 
             var v1 = graph.insertVertex(parent, null, chapter1, 40, 40, chapter1.getAttribute('title').length * 7, 30);
-            var v2 = graph.insertVertex(parent, null, chapter2, 200, 150, chapter2.getAttribute('title').length * 7, 30);
+            /*var v2 = graph.insertVertex(parent, null, chapter2, 200, 150, chapter2.getAttribute('title').length * 7, 30);
             var v3 = graph.insertVertex(parent, null, chapter3, 450, 125, chapter3.getAttribute('title').length * 7, 30);
             var v4 = graph.insertVertex(parent, null, chapter4, 200, 100, chapter4.getAttribute('title').length * 7, 30);
 
             var e1 = graph.insertEdge(parent, null, relation, v1, v2);
             var e2 = graph.insertEdge(parent, null, relation, v2, v3);
             var e3 = graph.insertEdge(parent, null, relation, v1, v4);
-            var e4 = graph.insertEdge(parent, null, relation, v4, v3);
+            var e4 = graph.insertEdge(parent, null, relation, v4, v3);*/
           }
           finally {
             // Updates the display
@@ -267,6 +318,7 @@
           // Gets the selection cell
           cell = graph.getSelectionCell();
 
+          graph.edge
           //Global variables
           window.savedCell = null;
           window.savedGraph = null;
@@ -274,49 +326,69 @@
           if (cell == null) {
             //var changingObject = $("#my_textBodyWidgIframe").contents().set('body','aahahahaha');
             $('#properties').hide();
-            //var changingBody = changingObject.find('body').html();
-            //console.log("linea de cambio = "+changingBody);
 
-            //mxUtils.writeln(div, 'Nothing selected.');
             document.getElementById("my_textTitle").value = "Nothing selected";
-            //document.getElementById("my_textBodyWidgIframe").value = "Nothing selected 2";
+            edit2Bool = false;
+            console.log("Al no tener seleccionado nada, edit2Bool = "+edit2Bool);
           }
           else {
-            $('#properties').show();
-            console.log("ENTRA EN EL ELSE");
-            //var buttonAux = $("#submitButtonId");
-            var buttonAux = document.getElementById("submitButtonId");
+            console.log("Tras seleccionar un nodo, edit2Bool = "+edit2Bool);
+            if (edit2Bool == true) {
+              console.log("Entra en edit2Bool == true");
+              $('#properties').hide();
 
-            //Change global variables
-            savedCell = cell;
-            savedGraph = graph;
-
-            if (cell.value.nodeName.toLowerCase() == 'chapter') {
-              $('#editor').show();
               var attrs = cell.value.attributes;
-
-              for (var i = 0; i < attrs.length; i++) {
-                if (i == 0) { //Obtains the title
-                  setFormTitleValue(attrs[i], cell, graph);
-                } else { //Obtains the body
-                  var data = attrs[i];
-                  var titleValue = data.value;
-
-                  //widgEditor("my_textBody",titleValue);
-                  setFormBodyValue(titleValue,cell,graph);
-                }
+              console.log("attrs(2) del nodo clickeado es = "+attrs[2].nodeValue);
+              if (chapterArray[0] == null || chapterArray[0] != attrs[2].nodeValue){
+                chapterArray.push(attrs[2].nodeValue);
               }
-              //mxUtils.br(div);
+
+              if(chapterArray.length === 2){
+                console.log("El array ya tiene 2 elementos");
+                crearNuevaArista3(chapterArray);
+              }
+
+              console.log("Valor del array = "+chapterArray);
             }
-            else {
-              console.log("DIme que entras anda....");
-              var attrs = cell.value.attributes;
-              setFormTitleValue(attrs[0], cell, graph);
-              $('#editor').hide();
+            else{
+              $('#properties').show();
+              //var buttonAux = $("#submitButtonId");
+              var buttonAux = document.getElementById("submitButtonId");
+              //Change global variables
+              savedCell = cell;
+              savedGraph = graph;
+
+              if (cell.value.nodeName.toLowerCase() == 'chapter') {
+                $('#editor').show();
+                var attrs = cell.value.attributes;
+
+                for (var i = 0; i < attrs.length; i++) {
+                  if (i == 0) { //Obtains the title
+                    setFormTitleValue(attrs[i], cell, graph);
+                  } else if(i==1){ //Obtains the body
+                    var data = attrs[i];
+                    var titleValue = data.value;
+
+                    //widgEditor("my_textBody",titleValue);
+                    setFormBodyValue(titleValue,cell,graph);
+                  }
+                  else if(i==2){
+                    document.getElementById("my_ownId").value = attrs[i].nodeValue;
+                  }
+                }
+                //mxUtils.br(div);
+              }
+              else {
+                var attrs = cell.value.attributes;
+                setFormTitleValue(attrs[0], cell, graph);
+                $('#editor').hide();
+              }
             }
 
 
-          }
+
+
+          } //BABLBALBAB
 
 
         }
@@ -367,20 +439,15 @@
           widgEditor("my_textBody",bodyValue);
           var inputBody = document.getElementById("my_textBodyWidgIframe");
           var iFrameContent = $("#my_textBodyWidgIframe").contents();
-          console.log("my_textBody ="+bodyValue);
-          console.log("inputBody = "+iFrameContent.find('body').html());
 
           //Check if the body value is different from the previous one and changes it
 
           var applyHandler = function () {
             var newValue = inputBody.value || '';
             var oldValue = bodyValue.nodeValue;
-            console.log("newValue = "+newValue);
-            console.log("oldValue ="+oldValue);
 
             if (newValue != oldValue) {
               graph.getModel().beginUpdate();
-              console.log("newValue y oldValue son distintos");
               try {
                 var edit = new mxCellAttributeChange(
                     cell, bodyValue.nodeName,
@@ -393,7 +460,6 @@
               }
             }
             else{
-              console.log("newValue y oldValue son iguales");
             }
           };
 
@@ -442,7 +508,7 @@
       <!--<img src="http://etc.usf.edu/clipart/40600/40690/pb_sq_40690_lg.gif" width="70px" height="70px"><br/>
       <img src="http://2.bp.blogspot.com/-MZAjo7HkgNE/TqUZQPShXQI/AAAAAAAAB9c/c5Xy3HBhk_g/s1600/GlobeCircle+copy.png" width="70px" height="70px"><br/>-->
       <button id="createNewNodeId" name="createNewNodeName" onclick="crearNuevoNodo()">Nuevo Nodo</button>
-      <button id="creaetNewEdgeId" name="createNewEdgeName" onclick="crearNuevaArista()">Nueva Arista</button>
+      <button id="creaetNewEdgeId" name="createNewEdgeName" onclick="crearNuevaArista2()">Nueva Arista</button>
       <button id="deleteId" name="deleteName" onclick="eliminar()">Eliminar</button>
       <button id="centrarId" name="centrarName" onclick="centrar()">Centrar</button>
       <button id="derechaId" name="derechaName" onclick="derecha()">Derecha</button>
@@ -463,20 +529,21 @@
           <br/>
           <div id="editor">
             <label for="noise">Body</label>
-            <!--<div id="my_textBodyWidgContainer" class="widgContainer">
-              <iframe id="my_textBodyWidgIframe" class="widgIframe">
-                <input id="my_textBody" name="my_textBody">
-
-                </input>
-
-              </iframe>
-
-            </div>-->
 
             <input id="my_textBody" name="noise" class="widgEditor nothing"/>
-            <!--<textarea id="my_textBody" name="noise" class="widgEditor nothing"/>
-            <input id="theTextarea" name="noise" class="widgEditor nothing"/>-->
+
+            <!-- Esto sería para guardar la id del nodo actual, que nos servirá para crear los enlaces necesarios -->
+            <input id="my_ownId" name="my_ownId">
+            <input id="my_ownId2" name="my_ownId2">
             <br/>
+            <div class="dropdown">
+              <button onclick="myDropdownFunction()" class="dropbtn">Add child</button>
+              <div id="myDropdown" class="dropdown-content">
+                <a><label>Hola</label></a>
+                <a><label>Medio</label></a>
+                <a><label>Adiós</label></a>
+              </div>
+            </div>
 
             <button id="submitButtonId" name="submitButtonName" onclick="actualizaNodo()"> Guardar</button>
           </div>

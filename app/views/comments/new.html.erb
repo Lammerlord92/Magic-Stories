@@ -33,10 +33,21 @@
 
     <br>
 
-    <div class="field">
-      <%= f.label :rating, 'Rating' %>
-      <%= f.number_field :rating, placeholder: 'Rating' %>
+    <div>
+      <fieldset class="rating">
+        <legend>Valoración:</legend>
+        <%= f.radio_button :rating, '1'%> &#9733
+        <br>
+        <%= f.radio_button :rating, '2'%> &#9733 &#9733
+        <br>
+        <%= f.radio_button :rating, '3'%> &#9733 &#9733 &#9733
+        <br>
+        <%= f.radio_button :rating, '4'%> &#9733 &#9733 &#9733 &#9733
+        <br>
+        <%= f.radio_button :rating, '5'%> &#9733 &#9733 &#9733 &#9733 &#9733
+      </fieldset>
     </div>
+
 
     <br>
 

@@ -14,10 +14,12 @@
   <% else %>
       <p><em>Descripción:</em></p>
     <p><%= @profile.description %></p>
-      <% if current_user.profile.follows?(@profile) %>
-          <%= link_to "Dejar de seguir", "/profiles/unfollow/#{@profile.id}", class:"btn btn-default"  %>
-      <% else %>
-          <%= link_to "Seguir", "/profiles/follow/#{@profile.id}", class:"btn btn-default"  %>
+      <% unless @is_current_profile %>
+        <% if current_user.profile.follows?(@profile) %>
+           <%= link_to "Dejar de seguir", "/profiles/unfollow/#{@profile.id}", class:"btn btn-default"  %>
+        <% else %>
+           <%= link_to "Seguir", "/profiles/follow/#{@profile.id}", class:"btn btn-default"  %>
+        <% end %>
       <% end %>
   <% end %>
 
