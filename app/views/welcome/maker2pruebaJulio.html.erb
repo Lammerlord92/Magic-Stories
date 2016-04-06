@@ -1,43 +1,12 @@
-<!-- Page passes the container for the graph to the program -->
+<!--
+  Copyright (c) 2006-2013, JGraph Ltd
+
+  Dynamic toolbar example for mxGraph. This example demonstrates changing the
+  state of the toolbar at runtime.
+-->
+<html>
 <head>
-<div>
-
-  <style>
-    #graphContainer{
-      position:relative;
-      overflow:auto;
-      left:0px;
-      bottom:0px;
-      right:0px;
-      width:100%;
-      height:100%;
-      border:solid 2px darkgrey;
-      cursor:default;
-    }
-    #properties{
-      border:  solid 2px darkgrey;
-      padding: 10px;
-    }
-  </style>
-
-  <!--
-  <table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
-    <tr>
-      <td id="toolbox" valign="top" width="70px" style="min-width:70px;background:#7F7F7F;padding:12px;">
-        <img src="http://etc.usf.edu/clipart/40600/40690/pb_sq_40690_lg.gif" width="70px" height="70px"><br/>
-        <img src="http://2.bp.blogspot.com/-MZAjo7HkgNE/TqUZQPShXQI/AAAAAAAAB9c/c5Xy3HBhk_g/s1600/GlobeCircle+copy.png" width="70px" height="70px"><br/>
-      </td>
-      <td>
-        <div id="graphContainer"></div>
-        <br>
-        <div id="properties">
-          <input type="text" name="lastname" id="my_textTitle">
-        </div>
-      </td>
-    </tr>
-  </table> -->
-
-
+  <title>Toolbar example for mxGraph</title>
 
   <!-- Sets the basepath for the library if not in same directory -->
   <script type="text/javascript">
@@ -45,21 +14,65 @@
   </script>
 
   <!-- Loads and initializes the library -->
-  <!--<script type="text/javascript" src="/assets/javascripts/mxClient.js"></script>-->
-  <script type="text/javascript" src="../../assets/javascripts/widgEditor.js"></script>
+  <script type="text/javascript" src="../src/js/mxClient.js"></script>
 
   <!-- Example code -->
   <script type="text/javascript">
-
-    // fuken: Esta funcion de jQuery carga la funcion main
-    //        cuando el html ha sido cargado entero
-    $(document).ready(function main() {
-      var container = document.getElementById('graphContainer');
-      // Checks if the browser is supported
-      if (!mxClient.isBrowserSupported()) {
-        // Displays an error message if the browser is not supported.
+    // Program starts here. Creates a sample graph in the
+    // DOM node with the specified ID. This function is invoked
+    // from the onLoad event handler of the document (see below).
+    function main()
+    {
+      // Checks if browser is supported
+      if (!mxClient.isBrowserSupported())
+      {
+        // Displays an error message if the browser is
+        // not supported.
         mxUtils.error('Browser is not supported!', 200, false);
       }
+<<<<<<< HEAD
+      else
+      {
+        // Defines an icon for creating new connections in the connection handler.
+        // This will automatically disable the highlighting of the source vertex.
+        mxConnectionHandler.prototype.connectImage = new mxImage('images/connector.gif', 16, 16);
+
+        // Creates the div for the toolbar
+        var tbContainer = document.createElement('div');
+        tbContainer.style.position = 'absolute';
+        tbContainer.style.overflow = 'hidden';
+        tbContainer.style.padding = '2px';
+        tbContainer.style.left = '0px';
+        tbContainer.style.top = '0px';
+        tbContainer.style.width = '24px';
+        tbContainer.style.bottom = '0px';
+
+        document.body.appendChild(tbContainer);
+
+        // Creates new toolbar without event processing
+        var toolbar = new mxToolbar(tbContainer);
+        toolbar.enabled = false
+
+        // Creates the div for the graph
+        var container = document.createElement('div');
+        container.style.position = 'absolute';
+        container.style.overflow = 'hidden';
+        container.style.left = '24px';
+        container.style.top = '0px';
+        container.style.right = '0px';
+        container.style.bottom = '0px';
+        container.style.background = 'url("editors/images/grid.gif")';
+
+        document.body.appendChild(container);
+
+        // Workaround for Internet Explorer ignoring certain styles
+        if (mxClient.IS_QUIRKS)
+        {
+          console.log("Entra en IS_QUIRKS");
+          document.body.style.overflow = 'hidden';
+          new mxDivResizer(tbContainer);
+          new mxDivResizer(container);
+=======
       else {
         // Note that these XML nodes will be enclosing the
         // mxCell nodes for the model cells in the output
@@ -431,212 +444,100 @@
           //mxUtils.writeln(div, 'Nothing selected.');
           document.getElementById("my_textTitle").value = "Nothing selected";
           //document.getElementById("my_textBodyWidgIframe").value = "Nothing selected 2";
+>>>>>>> 049663ebeb78b3f186d753c9e1ffdb68f9af9d09
         }
-        else {
-          $('#properties').show();
-          console.log("ENTRA EN EL ELSE");
-          //var buttonAux = $("#submitButtonId");
-          var buttonAux = document.getElementById("submitButtonId");
 
-          //Change global variables
-          savedCell = cell;
-          savedGraph = graph;
+        // Creates the model and the graph inside the container
+        // using the fastest rendering available on the browser
+        var model = new mxGraphModel();
+        var graph = new mxGraph(container, model);
 
-          if (cell.value.nodeName.toLowerCase() == 'chapter') {
-            $('#editor').show();
-            var attrs = cell.value.attributes;
+        // Enables new connections in the graph
+        graph.setConnectable(true);
+        graph.setMultigraph(false);
 
-            for (var i = 0; i < attrs.length; i++) {
-              if (i == 0) { //Obtains the title
-                setFormTitleValue(attrs[i], cell, graph);
-              } else { //Obtains the body
-                var data = attrs[i];
-                var titleValue = data.value;
+        // Stops editing on enter or escape keypress
+        var keyHandler = new mxKeyHandler(graph);
+        var rubberband = new mxRubberband(graph);
 
-                //widgEditor("my_textBody",titleValue);
-                setFormBodyValue(titleValue,cell,graph);
-              }
-            }
-            //mxUtils.br(div);
-          }
-          else {
-            console.log("DIme que entras anda....");
-            var attrs = cell.value.attributes;
-            setFormTitleValue(attrs[0], cell, graph);
-            $('#editor').hide();
-          }
+        var addVertex = function(icon, w, h, style)
+        {
+          console.log("Entra en addVertex");
+          var vertex = new mxCell(null, new mxGeometry(0, 0, w, h), style);
+          vertex.setVertex(true);
 
+          var img = addToolbarItem(graph, toolbar, vertex, icon);
+          img.enabled = true;
 
-        }
-      }
-
-
-      function setFormTitleValue(titleValue,cell,graph){
-        document.getElementById("my_textTitle").value = titleValue.nodeValue;
-        var inputTitle=document.getElementById("my_textTitle");
-
-        //Check if the title value is different from the previous one and changes it
-        var applyHandler = function () {
-          var newValue = inputTitle.value || '';
-          var oldValue = titleValue.nodeValue;
-
-          if (newValue != oldValue) {
-            graph.getModel().beginUpdate();
-            try {
-              var edit = new mxCellAttributeChange(
-                  cell, titleValue.nodeName,
-                  newValue);
-              graph.getModel().execute(edit);
-              graph.updateCellSize(cell);
-            }
-            finally {
-              graph.getModel().endUpdate();
-              graph=null;
-            }
-          }
+          graph.getSelectionModel().addListener(mxEvent.CHANGE, function()
+          {
+            var tmp = graph.isSelectionEmpty();
+            mxUtils.setOpacity(img, (tmp) ? 100 : 20);
+            img.enabled = tmp;
+          });
         };
 
-        /*
-        mxEvent.addListener(inputTitle, 'keypress', function (evt) {
-          // Needs to take shift into account for textareas
-          if (evt.keyCode == /*enter*//*13 && !mxEvent.isShiftDown(evt)) {
-            inputTitle.blur();
-          }
-        });
+        addVertex('editors/images/rectangle.gif', 100, 40, '');
+        addVertex('editors/images/rounded.gif', 100, 40, 'shape=rounded');
+        addVertex('editors/images/ellipse.gif', 40, 40, 'shape=ellipse');
+        addVertex('editors/images/rhombus.gif', 40, 40, 'shape=rhombus');
+        addVertex('editors/images/triangle.gif', 40, 40, 'shape=triangle');
+        addVertex('editors/images/cylinder.gif', 40, 40, 'shape=cylinder');
+        addVertex('editors/images/actor.gif', 30, 40, 'shape=actor');
+      }
+    }
 
-        mxEvent.addListener(inputTitle, 'blur', applyHandler);
+    function addToolbarItem(graph, toolbar, prototype, image)
+    {
+      // Function that is executed when the image is dropped on
+      // the graph. The cell argument points to the cell under
+      // the mousepointer if there is one.
+      var funct = function(graph, evt, cell, x, y)
+      {
+        graph.stopEditing(false);
 
-        //graph=null;*/
+        var vertex = graph.getModel().cloneCell(prototype);
+        vertex.geometry.x = x;
+        vertex.geometry.y = y;
+
+        graph.addCell(vertex);
+        graph.setSelectionCell(vertex);
       }
 
+      // Creates the image which is used as the drag icon (preview)
+      var img = toolbar.addMode(null, image, function(evt, cell)
+      {
+        var pt = this.graph.getPointForEvent(evt);
+        funct(graph, evt, cell, pt.x, pt.y);
+      });
 
+      // Disables dragging if element is disabled. This is a workaround
+      // for wrong event order in IE. Following is a dummy listener that
+      // is invoked as the last listener in IE.
+      mxEvent.addListener(img, 'mousedown', function(evt)
+      {
+        // do nothing
+      });
 
-      function setFormBodyValue(bodyValue,cell,graph) {
-        //document.getElementById("my_textBody").value = bodyValue.nodeValue;
-        widgEditor("my_textBody",bodyValue);
-        var inputBody = document.getElementById("my_textBodyWidgIframe");
-        var iFrameContent = $("#my_textBodyWidgIframe").contents();
-        console.log("my_textBody ="+bodyValue);
-        console.log("inputBody = "+iFrameContent.find('body').html());
-
-        //Check if the body value is different from the previous one and changes it
-
-        var applyHandler = function () {
-          var newValue = inputBody.value || '';
-          var oldValue = bodyValue.nodeValue;
-          console.log("newValue = "+newValue);
-          console.log("oldValue ="+oldValue);
-
-          if (newValue != oldValue) {
-            graph.getModel().beginUpdate();
-            console.log("newValue y oldValue son distintos");
-            try {
-              var edit = new mxCellAttributeChange(
-                  cell, bodyValue.nodeName,
-                  newValue);
-              graph.getModel().execute(edit);
-              graph.updateCellSize(cell);
-            }
-            finally {
-              graph.getModel().endUpdate(); graph=null;
-            }
-          }
-         else{
-            console.log("newValue y oldValue son iguales");
-          }
-        };
-
-
-        mxEvent.addListener(inputBody, 'keypress', function (evt) {
-          // Needs to take shift into account for textareas
-          if (evt.keyCode == /*enter*/13 && !mxEvent.isShiftDown(evt)) {
-            inputTitle.blur();
-          }
-        });
-
-        if (mxClient.IS_IE) {
-          mxEvent.addListener(inputBody, 'focusout', applyHandler);
+      // This listener is always called first before any other listener
+      // in all browsers.
+      mxEvent.addListener(img, 'mousedown', function(evt)
+      {
+        if (img.enabled == false)
+        {
+          mxEvent.consume(evt);
         }
-        else {
-          // Note: Known problem is the blurring of fields in
-          // Firefox by changing the selection, in which case
-          // no event is fired in FF and the change is lost.
-          // As a workaround you should use a local variable
-          // that stores the focused field and invoke blur
-          // explicitely where we do the graph.focus above.
-          mxEvent.addListener(inputBody, 'blur', applyHandler);
-        }
+      });
 
-        //graph = null;
+      mxUtils.makeDraggable(img, graph, funct);
 
-      }
+      return img;
+    }
 
-    });
   </script>
-
-</div>
-
-
-
 </head>
 
-
-
-<body>
-
-
-<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td id="toolbox" valign="top" width="70px" style="min-width:70px;background:#7F7F7F;padding:12px;">
-      <!--<img src="http://etc.usf.edu/clipart/40600/40690/pb_sq_40690_lg.gif" width="70px" height="70px"><br/>
-      <img src="http://2.bp.blogspot.com/-MZAjo7HkgNE/TqUZQPShXQI/AAAAAAAAB9c/c5Xy3HBhk_g/s1600/GlobeCircle+copy.png" width="70px" height="70px"><br/>-->
-      <button id="createNewNodeId" name="createNewNodeName" onclick="crearNuevoNodo()">Nuevo Nodo</button>
-      <button id="creaetNewEdgeId" name="createNewEdgeName" onclick="crearNuevaArista()">Nueva Arista</button>
-      <button id="deleteId" name="deleteName" onclick="eliminar()">Eliminar</button>
-      <button id="centrarId" name="centrarName" onclick="centrar()">Centrar</button>
-      <button id="derechaId" name="derechaName" onclick="derecha()">Derecha</button>
-      <button id="izquierdaId" name="izquierdaName" onclick="izquierda()">Izquierda</button>
-      <button id="justificarId" name="justificarName" onclick="justificar()">Justificar</button>
-    </td>
-    <td>
-      <div id="graphContainer">
-      </div>
-      <br>
-
-      <div id="properties">
-
-        <!--<input type="button" value="B" onclick=""/>-->
-        <div id="container">
-          <label for="noise">Title</label>
-          <input type="text" id="my_textTitle" name="noise">
-          <br/>
-          <div id="editor">
-            <label for="noise">Body</label>
-            <!--<div id="my_textBodyWidgContainer" class="widgContainer">
-              <iframe id="my_textBodyWidgIframe" class="widgIframe">
-                <input id="my_textBody" name="my_textBody">
-
-                </input>
-
-              </iframe>
-
-            </div>-->
-
-            <input id="my_textBody" name="noise" class="widgEditor nothing"/>
-            <!--<textarea id="my_textBody" name="noise" class="widgEditor nothing"/>
-            <input id="theTextarea" name="noise" class="widgEditor nothing"/>-->
-            <br/>
-
-            <button id="submitButtonId" name="submitButtonName" onclick="actualizaNodo()"> Guardar</button>
-          </div>
-         </div>
-      </div>
-
-    </td>
-  </tr>
-</table>
-
-
-
+<!-- Calls the main function after the page has loaded. Container is dynamically created. -->
+<body onload="main();">
 </body>
 </html>

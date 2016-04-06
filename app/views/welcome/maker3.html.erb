@@ -1,72 +1,295 @@
-<html style="height:100%;">
+<html>
 <head>
-  <title>UIConfig example</title>
+    <style type="text/css">
+        html, body {
+            font: 11pt arial;
+        }
 
-  <!-- Sets the basepath for the library if not in same directory
+        h1 {
+            font-size: 150%;
+            margin: 5px 0;
+        }
+
+        h2 {
+            font-size: 100%;
+            margin: 5px 0;
+        }
+
+        table.view {
+            width: 100%;
+        }
+
+        table td {
+            vertical-align: top;
+        }
+
+        table table {
+            background-color: #f5f5f5;
+            border: 1px solid #e5e5e5;
+        }
+
+        table table td {
+            vertical-align: middle;
+        }
+
+        input[type=text], pre {
+            border: 1px solid lightgray;
+        }
+
+        pre {
+            margin: 0;
+            padding: 5px;
+            font-size: 10pt;
+        }
+
+        #network {
+            width: 100%;
+            height: 400px;
+            border: 1px solid lightgray;
+        }
+  </style>
   <script type="text/javascript">
-    mxBasePath = '../src';
-  </script>-->
+    var nodes, edges, network;
 
-  <!-- Loads and initializes the library -->
-  <script type="text/javascript" src="http://jgraph.github.io/mxgraph/javascript/src/js/mxClient.js"></script>
+    // convenience method to stringify a JSON object
+    function toJSON(obj) {
+      return JSON.stringify(obj, null, 4);
+    }
 
-  <!-- Example code -->
-  <script type="text/javascript">
-
-    // Program starts here. Creates a sample graph in the
-    // DOM node with the specified ID. This function is invoked
-    // from the onLoad event handler of the document (see below).
-    function main()
-    {
-      // Checks if the browser is supported
-      if (!mxClient.isBrowserSupported())
-      {
-        // Displays an error message if the browser is not supported.
-        mxUtils.error('Browser is not supported!', 200, false);
+    function addNode() {
+      try {
+        nodes.add({
+          id: document.getElementById('node-id').value,
+          label: document.getElementById('node-label').value,
+          text: document.getElementById('node-text').value
+        });
       }
-      else
-      {
-        // Creates the graph inside the given container. The
-        // editor is used to create certain functionality for the
-        // graph, such as the rubberband selection, but most parts
-        // of the UI are custom in this example.
-        var editor = new mxEditor();
-
-        // Configures the editor's UI, the toolbar and the popupmenu.
-        // Note that the element with the id toolbox is used in the
-        // config file, the toolbar element (top element) is used below
-        // to create a second toolbar programmatically.
-        // The cells to be created via drag and drop are added
-        // in the templates array in mxEditor, and a custom action is
-        // added to the built-in actions in the editor, as well.
-        // The ui section maps the existing DOM elements to the graph
-        // and toolbar objects, respectively.
-        // Keep in mind that the as-attributes of the add-items in the
-        // toolbar and popupmenu sections refer to keys in mxResources.
-        var config = mxUtils.load('uiconfig.xml').getDocumentElement();
-        editor.configure(config);
-
-        // Enables new connections in the graph
-        editor.graph.setConnectable(true);
-
+      catch (err) {
+        alert(err);
       }
     }
+
+    function updateNode() {
+      try {
+        nodes.update({
+          id: document.getElementById('node-id').value,
+          label: document.getElementById('node-label').value,
+          text: document.getElementById('node-text').value
+        });
+      }
+      catch (err) {
+        alert(err);
+      }
+    }
+    function removeNode() {
+      try {
+        nodes.remove({id: document.getElementById('node-id').value});
+      }
+      catch (err) {
+        alert(err);
+      }
+    }
+
+    function addEdge() {
+      try {
+        edges.add({
+          id: document.getElementById('edge-id').value,
+          from: document.getElementById('edge-from').value,
+          to: document.getElementById('edge-to').value,
+          text: document.getElementById('edge-text').value
+        });
+      }
+      catch (err) {
+        alert(err);
+      }
+    }
+    function updateEdge() {
+      try {
+        edges.update({
+          id: document.getElementById('edge-id').value,
+          from: document.getElementById('edge-from').value,
+          to: document.getElementById('edge-to').value,
+          text: document.getElementById('edge-text').value
+        });
+      }
+      catch (err) {
+        alert(err);
+      }
+    }
+    function removeEdge() {
+      try {
+        edges.remove({id: document.getElementById('edge-id').value});
+      }
+      catch (err) {
+        alert(err);
+      }
+    }
+
+    function draw() {
+      // create an array with nodes
+      nodes = new vis.DataSet();
+      nodes.on('*', function () {
+        document.getElementById('nodes').innerHTML = JSON.stringify(nodes.get(), null, 4);
+      });
+      nodes.add([
+        {id: '1', label: 'Node 1' , text:'iiojhdwhd' },
+        {id: '2', label: 'Node 2' , text:'mjbkjbkjbk' },
+        {id: '3', label: 'Node 3' , text:'ajlashdsa' },
+        {id: '4', label: 'Node 4' , text:'sadasdasdawsd' },
+        {id: '5', label: 'Node 5',  text:'askldnskladn' }
+      ]);
+
+      // create an array with edges
+      edges = new vis.DataSet();
+      edges.on('*', function () {
+        document.getElementById('edges').innerHTML = JSON.stringify(edges.get(), null, 4);
+      });
+      edges.add([
+        {id: '1', from: '1', to: '2', text:'aaaaaaa' },
+        {id: '2', from: '1', to: '3', text:'bbbbbb' },
+        {id: '3', from: '2', to: '4', text:'bbbsadbasdk' },
+        {id: '4', from: '2', to: '5', text:'abdkjbwasdbka' }
+      ]);
+
+      // create a network
+      var container = document.getElementById('network');
+      var data = {
+        nodes: nodes,
+        edges: edges
+      };
+      var options = {};
+      // these are all options in full.
+      var options = {
+        interaction:{
+          dragNodes:true,
+          dragView: true,
+          hideEdgesOnDrag: false,
+          hideNodesOnDrag: false,
+          hover: true,
+          hoverConnectedEdges: true,
+          keyboard: {
+            enabled: false,
+            speed: {x: 10, y: 10, zoom: 0.02},
+            bindToWindow: true
+          },
+          multiselect: false,
+          navigationButtons: false,
+          selectable: true,
+          selectConnectedEdges: true,
+          tooltipDelay: 300,
+          zoomView: true
+        }
+      }
+
+      network = new vis.Network(container, data, options);
+
+    }
+
   </script>
 </head>
 
-<!-- Page passes the container for the graph to the program -->
-<body onload="main();" style="margin:0px;height:100%; width: auto;">
-<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
+<body onload="draw();">
+
+<p>
+  This example demonstrates dynamically adding, updating and removing nodes
+  and edges using a DataSet.
+</p>
+
+<h1>Adjust</h1>
+<table>
   <tr>
-    <td id="toolbox" valign="top" width="70px" style="min-width:70px;background:#7F7F7F;padding:12px;">
-      <img src="http://etc.usf.edu/clipart/40600/40690/pb_sq_40690_lg.gif" width="70px" height="70px"><br/>
-      <img src="http://2.bp.blogspot.com/-MZAjo7HkgNE/TqUZQPShXQI/AAAAAAAAB9c/c5Xy3HBhk_g/s1600/GlobeCircle+copy.png" width="70px" height="70px"><br/>
+    <td>
+      <h2>Node</h2>
+      <table>
+        <tr>
+          <td></td>
+          <td><label for="node-id">Id</label></td>
+          <td><input id="node-id" type="text" value="6"></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><label for="node-label">Label</label></td>
+          <td><input id="node-label" type="text" value="Node 6"></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><label for="node-text">Text</label></td>
+          <td><input id="node-text" type="text" value="Text 6"></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>Action</td>
+          <td>
+            <button id="node-add" onclick="addNode();">Add</button>
+            <button id="node-update" onclick="updateNode();">Update</button>
+            <button id="node-remove" onclick="removeNode();">Remove</button>
+          </td>
+        </tr>
+      </table>
     </td>
-    <td width="100%" style="background:url('http://etc.usf.edu/presentations/backgrounds/grid/grid_03/1201m.gif');border: solid gray 1px;height:700px;">
-      <div id="graph" style="overflow:auto;width:100%;height:100%;">
-      </div>
+    <td>
+      <h2>Edge</h2>
+      <table>
+        <tr>
+          <td></td>
+          <td><label for="edge-id">Id</label></td>
+          <td><input id="edge-id" type="text" value="5"></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><label for="edge-from">From</label></td>
+          <td><input id="edge-from" type="text" value="3"></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><label for="edge-to">To</label></td>
+          <td><input id="edge-to" type="text" value="4"></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><label for="edge-text">Text</label></td>
+          <td><input id="edge-text" type="text" value="Texto 4"></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>Action</td>
+          <td>
+            <button id="edge-add" onclick="addEdge();">Add</button>
+            <button id="edge-update" onclick="updateEdge();">Update</button>
+            <button id="edge-remove" onclick="removeEdge();">Remove</button>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+</table>
+
+<h1>View</h1>
+<table class="view">
+  <colgroup>
+    <col width="25%">
+    <col width="25%">
+    <col width="50%">
+  </colgroup>
+  <tr>
+    <td>
+      <h2>Nodes</h2>
+      <pre id="nodes"></pre>
+    </td>
+
+    <td>
+      <h2>Edges</h2>
+      <pre id="edges"></pre>
+    </td>
+
+    <td>
+      <h2>Network</h2>
+
+      <div id="network"></div>
     </td>
   </tr>
 </table>
+
 </body>
 </html>

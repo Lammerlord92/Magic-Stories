@@ -2,7 +2,7 @@
 <h1>Nuevo comentario</h1>
 
 
-<%= form_for([@profile, @comment])  do |f| %>
+<%= form_for([@comment])  do |f| %>
 
     <% if @comment.errors.full_messages.length > 0 %>
         <div class="errors">
@@ -33,14 +33,27 @@
 
     <br>
 
-    <div class="field">
-      <%= f.label :rating, 'Rating' %>
-      <%= f.number_field :rating, placeholder: 'Rating' %>
+    <div>
+      <fieldset class="rating">
+        <legend>Valoración:</legend>
+        <%= f.radio_button :rating, '1'%> &#9733
+        <br>
+        <%= f.radio_button :rating, '2'%> &#9733 &#9733
+        <br>
+        <%= f.radio_button :rating, '3'%> &#9733 &#9733 &#9733
+        <br>
+        <%= f.radio_button :rating, '4'%> &#9733 &#9733 &#9733 &#9733
+        <br>
+        <%= f.radio_button :rating, '5'%> &#9733 &#9733 &#9733 &#9733 &#9733
+      </fieldset>
     </div>
+
 
     <br>
 
     <%= f.hidden_field :profile_id, :value => @idProfile %>
+    <%= f.hidden_field :story_id, :value => @idStory %>
+    <%= f.hidden_field :commentedClass, :value => @commentedClass %>
 
     <div class="field">
       <%= f.submit 'Publicar' %>

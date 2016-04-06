@@ -1,15 +1,15 @@
 <% @profiles.each do |profile| %>
 <div class="row">
-    
+
   <!-- Avatar -->
   <!-- TODO imágenes cuadradas -->
   <div class="col-md-2">
     <%= image_tag(profile.avatar, class: "img-circle img-responsive") %>
   </div>
-    
+
   <!-- Perfil -->
   <div class="col-md-4">
-    
+
     <!-- Información -->
     <div class="row">
       <div class="col-md-7">
@@ -35,7 +35,7 @@
     <div class="row container-fluid boton">
       <% if current_user.profile == profile %>
         <%= link_to "Editar mi perfil", "/profiles/#{profile.id}/edit", class: "btn btn-primary btn-block" %>
-      <% elsif current_user.profile.isFriend(profile) %>
+      <% elsif !current_user.profile.isFriend(profile) %>
         <%= link_to "Solicitud de amistad", "/request_friendships/send_request/#{profile.user_id}", class: "btn btn-primary btn-block" %>
       <% else %>
         <%= link_to "Amigo", "#", class: "btn btn-primary btn-block disabled" %>
@@ -47,10 +47,10 @@
     <!-- TODO Cambiar atributos de amistad -->
     <div class="row gris">
       <div class="col-md-3 col-md-offset-3 text-center">
-        100<br/>seguidores
+        <%= profile.followers_count %><br/>seguidores
       </div>
       <div class="col-md-3 text-center left-divider">
-        100<br/>siguiendo
+        <%= profile.followees_count %><br/>siguiendo
       </div>
     </div>
 
@@ -63,18 +63,15 @@
         <!-- Relleno para grid de Bootstrap -->
       </div>
       <% profile.stories.last(4).each do |story| %>
-      <div class="col-md-2 stories">
+      <div class="col-md-2">
         <a href="/stories/<%= story.id %>">
-          <p><%= story.title.upcase %></p>
-          <img class="img-responsive" title="<%= story.title %>" src="/assets/temporal_cover.jpg" />
-          <!-- TODO Añadir atributo de valoración -->
-          <p>NOTA: 9</p>
+          <%= render 'stories/story_slot', story: story %>
         </a>
       </div>
       <% end %>
     </div>
   </div>
-      
+
 </div>
 <hr/>
 <% end %>

@@ -1,6 +1,6 @@
-<header class="navbar navbar-default" id="lay">
+<header class="navbar navbar-default">
   <div class="container" id="barcon" >
-    <div class="navbar-header row row-centered  col-md-4 col-centered">
+    <div class="navbar-header row row-centered  col-md-4 col-centered logo">
 
       <a href="/">
         <img class="image-responsive  col-md-4 col-centered" src="/assets/logo fondo.png" alt="Tree Story">
@@ -12,9 +12,10 @@
 
     </div>
     <ul class="nav navbar-nav" id="barcon">
-      <li><a href="/stories" id="barcon">Descubrir</a></li>
-
+      <li><a data-no-turbolink="true" href="/stories/example" id="barcon">Descubrir</a></li>
+      <li><a href="/stories" id="barcon">Historias</a></li>
       <li><a href="/categories" id="barcon">Géneros</a></li>
+      <li><a href="/membership_cards/exchange" id="barcon">Subscripción Premium</a></li>
 
       <% if user_signed_in? %>
         <% if current_user.role_type == 'PremiumUser' %>
@@ -47,7 +48,8 @@
 
 
           <li><a href="/profiles">Comunidad</a></li>
-          <li><a href="/profiles/search?choice=friends">Mis conexiones</a></li>
+            <li><a href="/connections/search">Mis conexiones</a></li>
+              <li><a href="/membership_cards/exchange">Subscripción premium</a></li>
           <li role="separator" class="divider"></li>
           <li>
                <%= link_to "Cerrar sesión", destroy_user_session_path, :method => :delete %>

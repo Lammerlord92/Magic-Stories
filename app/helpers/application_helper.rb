@@ -56,4 +56,10 @@ Los métodos con exclamación lanzan un RuntimeError.
     checkRole?("PremiumUser", user)
   end
 
+  def unsigned_index
+    if !user_signed_in?
+      redirect_to "/user/"
+    end
+  end
+
 end
