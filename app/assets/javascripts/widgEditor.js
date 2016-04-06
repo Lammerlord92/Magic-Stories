@@ -2045,10 +2045,10 @@ function justificar(){
 }
 
 
-function handleDown(event:MouseEvent){
+/*function handleDown(event:MouseEvent){
     console.log("handDown");
 }
 
 function handleUp(event:MouseEvent){
     console.log("handUp");
-}
+}*/
