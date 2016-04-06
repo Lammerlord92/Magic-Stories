@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160405162559) do
+ActiveRecord::Schema.define(version: 20160405163804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -268,6 +268,7 @@ ActiveRecord::Schema.define(version: 20160405162559) do
     t.integer  "cover_file_size"
     t.datetime "cover_updated_at"
     t.integer  "profile_id"
+    t.text     "cover"
   end
 
   add_index "stories", ["profile_id"], name: "index_stories_on_profile_id", using: :btree

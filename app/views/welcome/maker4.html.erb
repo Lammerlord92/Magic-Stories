@@ -86,13 +86,13 @@
           var img = addToolbarItem(graph, toolbar, vertex, icon);
           img.enabled = true;
 
-          graph.getSelectionModel().addListener(mxEvent.CHANGE, function()
+          /*graph.getSelectionModel().addListener(mxEvent.CHANGE, function()
           {
             console.log("Entra aquí ajajajajaajaaj");
             var tmp = graph.isSelectionEmpty();
             mxUtils.setOpacity(img, (tmp) ? 100 : 20);
             img.enabled = tmp;
-          });
+          });*/
         };
 
         addVertex('http://findicons.com/files/icons/1686/led/16/shape_square.png', 100, 40, '');
@@ -105,6 +105,7 @@
       // Function that is executed when the image is dropped on
       // the graph. The cell argument points to the cell under
       // the mousepointer if there is one.
+      console.log("AAAAAAAAAAAAAAAAAAAA");
       var funct = function(graph, evt, cell, x, y)
       {
         graph.stopEditing(false);
@@ -130,15 +131,17 @@
       // is invoked as the last listener in IE.
       mxEvent.addListener(img, 'mousedown', function(evt)
       {
-        // do nothing
+        console.log("BBBBBBBBBBBBBBBBBBBBBBBB");// do nothing
       });
 
       // This listener is always called first before any other listener
       // in all browsers.
       mxEvent.addListener(img, 'mousedown', function(evt)
       {
+        console.log("CCCCCCCCCCCCCCCCCCCCCCCc");
         if (img.enabled == false)
         {
+          console.log("DDDDDDDDDDDDDDDDDDDDDDDDDDD");
           mxEvent.consume(evt);
         }
       });
