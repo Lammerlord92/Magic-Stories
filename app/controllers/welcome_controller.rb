@@ -1,4 +1,5 @@
 class WelcomeController < ApplicationController
+  before_action :authenticate_user!
   def index
 =begin
      HAY QUE CONTROLAR QUE SI NO ESTA ACTIVA UNA SESIÓN SE MUESTRE EXCLUSIVAMENTE EL LOGIN
@@ -6,14 +7,9 @@ class WelcomeController < ApplicationController
 
 
 =end
-
-  if !user_signed_in?
-    redirect_to "/user/sign_in"
-  else
     @story = Story.first # Temporalmente para pruebas del index
     @categories = Category.all
     render 'index'
-  end
 
   # private
 

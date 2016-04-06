@@ -2,6 +2,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<h1 class="text-center">Canjea tu código</h1>
+    <p class="text-center">Canjea tu código para ser usuario <b>premium </b> o para extender la <b>subscripción</b>:</p>
 	</div>
 </div> 
 <div class="row">
@@ -10,10 +11,10 @@
 			<tbody>
 				<tr>
 					<div class="form-inputs">
-						<td><%=text_field_tag :c1,'' , size: 4, autocomplete: "off" %></td>
-						<td><%=text_field_tag :c2,'' , size: 4, autocomplete: "off" %></td>
-						<td><%=text_field_tag :c3,'' , size: 4, autocomplete: "off"%></td>
-						<td><%=text_field_tag :c4,'' , size: 4, autocomplete: "off"%></td>
+						<td><%=text_field_tag :c1,'' , size: 4, autocomplete: "off", maxlength: 4%></td>
+						<td><%=text_field_tag :c2,'' , size: 4, autocomplete: "off", maxlength: 4%></td>
+						<td><%=text_field_tag :c3,'' , size: 4, autocomplete: "off", maxlength: 4%></td>
+						<td><%=text_field_tag :c4,'' , size: 4, autocomplete: "off", maxlength: 4%></td>
 					</div>
 				</tr>
 			</tbody>
