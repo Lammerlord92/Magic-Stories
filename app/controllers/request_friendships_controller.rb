@@ -1,5 +1,6 @@
 class RequestFriendshipsController < ApplicationController
   before_action :set_request_friendship, only: [:show, :edit, :update, :destroy, :cancel_friendship]
+  before_action :authenticate_user!
 
   # GET /request_friendships
   # GET /request_friendships.json

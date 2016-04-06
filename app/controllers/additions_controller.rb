@@ -1,5 +1,5 @@
 class AdditionsController < ActionController::Base
-before_action :authenticate!
+before_action :authenticate_user!
   def create
     id = params[:story_id]
 
