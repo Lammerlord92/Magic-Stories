@@ -35,34 +35,34 @@ puts "Success: Todas las tablas han sido borradas"
 ############################################################################
 
 category1 = Category.create!({
-  name: 'Drama',
-  description: 'Género dramático'
-})
+                                 name: 'Drama',
+                                 description: 'Género dramático'
+                             })
 
 category2 = Category.create!({
-  name: 'Cuento',
-  description: 'Género de cuentos'
-})
+                                 name: 'Cuento',
+                                 description: 'Género de cuentos'
+                             })
 
 category3 = Category.create!({
-  name: 'Ficción',
-  description: 'Género de ficción'
-})
+                                 name: 'Ficción',
+                                 description: 'Género de ficción'
+                             })
 
 category4 = Category.create!({
-  name: 'Terror',
-  description: 'Género de terror'
-})
+                                 name: 'Terror',
+                                 description: 'Género de terror'
+                             })
 
 category5 = Category.create!({
-  name: 'Épico',
-  description: 'Género épico'
-})
+                                 name: 'Épico',
+                                 description: 'Género épico'
+                             })
 
 category6 = Category.create!({
-  name: 'Aventura',
-  description: 'Género de aventuras'
-})
+                                 name: 'Aventura',
+                                 description: 'Género de aventuras'
+                             })
 
 puts "Success: Creación de categorías"
 
@@ -72,8 +72,8 @@ puts "Success: Creación de categorías"
 
 
 user1 = User.create!({email: 'user1@mail.com', password: '123456789', password_confirmation: '123456789',
-         username: 'user1', name: 'user1', surname1: 'surname11', surname2: 'suername12', phone: 619663023,
-         birthday: '30/10/1993', sku: '132563'})
+                      username: 'user1', name: 'user1', surname1: 'surname11', surname2: 'suername12', phone: 619663023,
+                      birthday: '30/10/1993', sku: '132563'})
 
 user2 = User.create!({email: 'user2@mail.com', password: '123456789', password_confirmation: '123456789',
                       username: 'user2', name: 'user2', surname1: 'surname21', surname2: 'suername22', phone: 619663023,
@@ -108,8 +108,8 @@ user9 = User.create!({email: 'user9@mail.com', password: '123456789', password_c
                       birthday: '17/02/1993', sku: '352698'})
 
 user10 = User.create!({email: 'user10@mail.com', password: '123456789', password_confirmation: '123456789',
-                      username: 'user10', name: 'user10', surname1: 'surname101', surname2: 'suername102', phone: 619663023,
-                      birthday: '29/02/2004', sku: '159856'})
+                       username: 'user10', name: 'user10', surname1: 'surname101', surname2: 'suername102', phone: 619663023,
+                       birthday: '29/02/2004', sku: '159856'})
 user11 = User.create!({email: 'winslopu@hotmail.com', password: 'Pegaso33', password_confirmation: 'Pegaso33',
                        username: 'Winslou', name: 'David', surname1: 'Rubio', surname2: 'Lucas', phone: 645544778,
                        birthday: '29/02/2004', sku: '159857'})
@@ -233,7 +233,7 @@ puts "Success: Creación de ActorUserGroup"
 # Creacion de Story  -- Unión a profile
 
 story1 = Story.create!({title: 'Title1', description: 'Description', language: 'SPANISH', price: 16.30, release_date: '20/10/2015',
-              published: true, num_purchased: 0, creatorProfile: user1.profile})
+                        published: true, num_purchased: 0, creatorProfile: user1.profile})
 
 story2 = Story.create!({title: 'Title2', description: 'Description', language: 'SPANISH', price: 16.30, release_date: '20/10/2015',
                         published: true, num_purchased: 0, creatorProfile: user1.profile})
@@ -260,13 +260,13 @@ story9 = Story.create!({title: 'Title9', description: 'Description', language: '
                         published: true, num_purchased: 0, creatorProfile: user3.profile})
 
 story10 = Story.create!({title: 'Title10', description: 'Description', language: 'SPANISH', price: 16.30, release_date: '21/10/2015',
-                        published: true, num_purchased: 0, creatorProfile: user3.profile})
+                         published: true, num_purchased: 0, creatorProfile: user3.profile})
 
 story11 = Story.create!({title: 'Title11', description: 'Description', language: 'SPANISH', price: 16.30, release_date: '21/10/2015',
-                        published: true, num_purchased: 0, creatorProfile: user3.profile})
+                         published: true, num_purchased: 0, creatorProfile: user3.profile})
 
 story12 = Story.create!({title: 'Title12', description: 'Description', language: 'SPANISH', price: 16.30, release_date: '21/10/2015',
-                        published: true, num_purchased: 0, creatorProfile: user3.profile})
+                         published: true, num_purchased: 0, creatorProfile: user3.profile})
 puts "Success: Creación de historias"
 
 user1.profile.stories << story1
