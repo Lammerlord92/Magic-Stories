@@ -56,4 +56,23 @@ Los métodos con exclamación lanzan un RuntimeError.
     checkRole?("PremiumUser", user)
   end
 
+  def unsigned_index
+    if !user_signed_in?
+      @resource =
+      render "devise/sessions/new"
+    end
+  end
+
+   def resource_name
+    :user
+  end
+
+  def resource
+    @resource ||= User.new
+  end
+
+  def devise_mapping
+    @devise_mapping ||= Devise.mappings[:user]
+  end
+
 end
