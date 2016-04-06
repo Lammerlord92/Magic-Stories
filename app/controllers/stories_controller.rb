@@ -60,19 +60,19 @@ class StoriesController < ApplicationController
     @story = Story.new(story_params)
     @story.num_purchased = 0
     @story.published = false
+    @story.creatorProfile = current_user.profile
+    @categories = Category.all
 
-    if @story.check_date
-      if @story.save
-        redirect_to @story
-      else
-        flash[:alert] = 'Error almacenando historia'
-        @categories = Category.all
-        render :new
-      end
+
+
+    if @story.save
+      redirect_to @story
     else
-      flash[:notice] = 'Formato de fecha invalido'
+      flash[:alert] = 'Error almacenando historia'
+      @categories = Category.all
       render :new
-    end
+      end
+
   end
 
   def story_params

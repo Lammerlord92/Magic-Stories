@@ -63,10 +63,7 @@
       <label for="price">Precio</label><br>
       <%= f.number_field :price, placeholder: "Precio", min: 0, step: 0.1  %>
     </div>
-    <div class="field">
-      <label for="release_date">Fecha de salida</label><br>
-      <%= f.date_select :release_date, placeholder: "Fecha de salida" %>
-    </div>
+
 
     <button type="button" id="buttonStory" class="btn btn-primary">Select category...</button>
 
@@ -100,7 +97,12 @@
           $("#close").on('click',function(){
             $("#modal").modal('hide');
           });
+          $("#button").on('click',function(){
+            console.log('aaaaaaaaaaaaaaa');
+            $("#modal").modal('hide');
+          });
         })
       })
     </script>
+
 <%end%>
