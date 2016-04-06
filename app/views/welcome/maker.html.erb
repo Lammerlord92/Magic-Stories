@@ -134,10 +134,6 @@
 
           //Creates a list of chapters
           window.chapterArray = [];
-          //chapterArray.push(chapter1);
-          //chapterArray.push(chapter2);
-          //chapterArray.push(chapter3);
-          //chapterArray.push(chapter4);
 
           // Creates the graph inside the given container
           window.graph = new mxGraph(container);
@@ -343,7 +339,9 @@
 
               var attrs = cell.value.attributes;
               console.log("attrs(2) del nodo clickeado es = "+attrs[2].nodeValue);
-              chapterArray.push(attrs[2].nodeValue);
+              if (chapterArray[0] == null || chapterArray[0] != attrs[2].nodeValue){
+                chapterArray.push(attrs[2].nodeValue);
+              }
 
               if(chapterArray.length === 2){
                 console.log("El array ya tiene 2 elementos");

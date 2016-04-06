@@ -1855,6 +1855,7 @@ function crearNuevoNodo(){
     var newId = 'Chapter' + count;
     chapterX.setAttribute('title', 'Example Title for the Chapter' + count);
     chapterX.setAttribute('body', 'Example body for the Chapter' + count);
+    chapterX.setAttribute('graphIndex', 'newChapter' + count);
 
     var parent = graph.getDefaultParent();
 
@@ -2084,15 +2085,25 @@ function crearNuevaArista3(params){
     parentChapter = params[0];
     childChapter = params[1];
 
-    console.log("parentChapter = "+parentChapter);
-    console.log("childChapter = "+childChapter);
-    console.log("-------------------------------------------------");
-
     var xml = mxUtils.createXmlDocument();
     var parent = graph.getDefaultParent();
     var relationAux = xml.createElement('sendTo');
     relationAux.setAttribute('since', '1985');
-    graph.insertEdge(parent, null, relationAux, parentChapter, childChapter);
+
+    var parentVertex = null;
+    var childVertex = null;
+    for (var i = 0; i < graph.getChildVertices(graph.getDefaultParent()).length; i++) {
+        var attrsAux = graph.getChildVertices(graph.getDefaultParent())[i].getAttribute('graphIndex');
+        console.log("Recorriendo el array: "+attrsAux);
+        if (parentChapter==attrsAux){
+            parentVertex = graph.getChildVertices(graph.getDefaultParent())[i];
+        }
+        if (childChapter==attrsAux){
+            childVertex = graph.getChildVertices(graph.getDefaultParent())[i];
+        }
+    }
+
+    graph.insertEdge(parent, null, relationAux, parentVertex, childVertex);
 
     edit2Bool = false;
     chapterArray = [];
