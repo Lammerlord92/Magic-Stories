@@ -1,160 +1,172 @@
+<!doctype html>
 <html>
 <head>
-  <title>Toolbar example for mxGraph</title>
+  <title>Network | Manipulation</title>
 
-  <!-- Sets the basepath for the library if not in same directory -->
-  <script type="text/javascript">
-    mxBasePath = '../src';
-  </script>
-
-  <!-- Loads and initializes the library -->
-  <script type="text/javascript" src="http://jgraph.github.io/mxgraph/javascript/src/js/mxClient.js"></script>
-
-  <!-- Example code -->
-  <script type="text/javascript">
-    // Program starts here. Creates a sample graph in the
-    // DOM node with the specified ID. This function is invoked
-    // from the onLoad event handler of the document (see below).
-    function main() {
-      // Checks if browser is supported
-      if (!mxClient.isBrowserSupported()) {
-        // Displays an error message if the browser is
-        // not supported.
-        mxUtils.error('Browser is not supported!', 200, false);
-      }
-      else {
-        // Defines an icon for creating new connections in the connection handler.
-        // This will automatically disable the highlighting of the source vertex.
-        mxConnectionHandler.prototype.connectImage = new mxImage('images/connector.gif', 16, 16);
-
-        // Creates the div for the toolbar
-        var tbContainer = document.createElement('div');
-        tbContainer.style.position = 'absolute';
-        tbContainer.style.overflow = 'hidden';
-        tbContainer.style.padding = '2px';
-        tbContainer.style.left = '0px';
-        tbContainer.style.top = '0px';
-        tbContainer.style.width = '24px';
-        tbContainer.style.height= '20px';
-        tbContainer.style.bottom = '0px';
-
-        document.body.appendChild(tbContainer);
-
-        // Creates new toolbar without event processing
-        var toolbar = new mxToolbar(tbContainer);
-        toolbar.enabled = false
-
-        // Creates the div for the graph
-        var container = document.createElement('div');
-        container.style.position = 'absolute';
-        container.style.overflow = 'hidden';
-        container.style.left = '24px';
-        container.style.top = '0px';
-        container.style.right = '0px';
-        container.style.bottom = '0px';
-        container.style.background = 'url("editors/images/grid.gif")';
-
-        document.body.appendChild(container);
-        // Workaround for Internet Explorer ignoring certain styles
-        if (mxClient.IS_QUIRKS)
-        {
-          console.log("Entra aquí muy fuerte");
-          document.body.style.overflow = 'hidden';
-          new mxDivResizer(tbContainer);
-          new mxDivResizer(container);
-        }
-
-        // Creates the model and the graph inside the container
-        // using the fastest rendering available on the browser
-        var model = new mxGraphModel();
-        var graph = new mxGraph(container, model);
-
-        // Enables new connections in the graph
-        graph.setConnectable(true);
-        graph.setMultigraph(false);
-
-        // Stops editing on enter or escape keypress
-        var keyHandler = new mxKeyHandler(graph);
-        var rubberband = new mxRubberband(graph);
-
-        var addVertex = function(icon, w, h, style)
-        {
-          console.log("Entra aquí con addVertex");
-          var vertex = new mxCell(null, new mxGeometry(0, 0, w, h), style);
-          vertex.setVertex(true);
-
-          var img = addToolbarItem(graph, toolbar, vertex, icon);
-          img.enabled = true;
-
-          /*graph.getSelectionModel().addListener(mxEvent.CHANGE, function()
-          {
-            console.log("Entra aquí ajajajajaajaaj");
-            var tmp = graph.isSelectionEmpty();
-            mxUtils.setOpacity(img, (tmp) ? 100 : 20);
-            img.enabled = tmp;
-          });*/
-        };
-
-        addVertex('http://findicons.com/files/icons/1686/led/16/shape_square.png', 100, 40, '');
-        //addVertex('http://2.bp.blogspot.com/-MZAjo7HkgNE/TqUZQPShXQI/AAAAAAAAB9c/c5Xy3HBhk_g/s1600/GlobeCircle+copy.png', 100, 40, '');
-      }
+  <style type="text/css">
+    body, select {
+      font: 10pt sans;
+    }
+    #mynetwork {
+      position:relative;
+      width: 800px;
+      height: 600px;
+      border: 1px solid lightgray;
+    }
+    table.legend_table {
+      font-size: 11px;
+      border-width:1px;
+      border-color:#d3d3d3;
+      border-style:solid;
+    }
+    table.legend_table,td {
+      border-width:1px;
+      border-color:#d3d3d3;
+      border-style:solid;
+      padding: 2px;
+    }
+    div.table_content {
+      width:80px;
+      text-align:center;
+    }
+    div.table_description {
+      width:100px;
     }
 
-    function addToolbarItem(graph, toolbar, prototype, image)
-    {
-      // Function that is executed when the image is dropped on
-      // the graph. The cell argument points to the cell under
-      // the mousepointer if there is one.
-      console.log("AAAAAAAAAAAAAAAAAAAA");
-      var funct = function(graph, evt, cell, x, y)
-      {
-        graph.stopEditing(false);
-
-        var vertex = graph.getModel().cloneCell(prototype);
-        vertex.geometry.x = x;
-        vertex.geometry.y = y;
-
-        graph.addCell(vertex);
-        graph.setSelectionCell(vertex);
-      }
-
-      // Creates the image which is used as the drag icon (preview)
-      var img = toolbar.addMode(null, image, function(evt, cell)
-      {
-        console.log("Probando");
-        var pt = this.graph.getPointForEvent(evt);
-        funct(graph, evt, cell, pt.x, pt.y);
-      });
-
-      // Disables dragging if element is disabled. This is a workaround
-      // for wrong event order in IE. Following is a dummy listener that
-      // is invoked as the last listener in IE.
-      mxEvent.addListener(img, 'mousedown', function(evt)
-      {
-        console.log("BBBBBBBBBBBBBBBBBBBBBBBB");// do nothing
-      });
-
-      // This listener is always called first before any other listener
-      // in all browsers.
-      mxEvent.addListener(img, 'mousedown', function(evt)
-      {
-        console.log("CCCCCCCCCCCCCCCCCCCCCCCc");
-        if (img.enabled == false)
-        {
-          console.log("DDDDDDDDDDDDDDDDDDDDDDDDDDD");
-          mxEvent.consume(evt);
-        }
-      });
-
-      mxUtils.makeDraggable(img, graph, funct);
-
-      return img;
+    #operation {
+      font-size:28px;
     }
+    #network-popUp {
+      display:none;
+      position:absolute;
+      top:350px;
+      left:170px;
+      z-index:299;
+      width:250px;
+      height:120px;
+      background-color: #f9f9f9;
+      border-style:solid;
+      border-width:3px;
+      border-color: #5394ed;
+      padding:10px;
+      text-align: center;
+    }
+  </style>
 
-  </script>
+
 </head>
+<script type="text/javascript">
+  var nodes = null;
+  var edges = null;
+  var network = null;
+  nodes = new vis.DataSet();
+  edges = new vis.DataSet();
+  var data = {
+    nodes: nodes,
+    edges: edges
+  };
+  // randomly create some nodes and edges
+  var seed = 2;
 
-<!-- Calls the main function after the page has loaded. Container is dynamically created. -->
-<body onload="main();">
+
+  function destroy() {
+    if (network !== null) {
+      network.destroy();
+      network = null;
+    }
+  }
+
+  function draw() {
+    destroy();
+    nodes = [];
+    edges = [];
+
+    // create a network
+    var container = document.getElementById('mynetwork');
+    var options = {
+      layout: {randomSeed:seed}, // just to make sure the layout is the same when the locale is changed
+      locale: document.getElementById('locale').value,
+      manipulation: {
+        addNode: function (data, callback) {
+          // filling in the popup DOM elements
+          document.getElementById('operation').innerHTML = "Add Node";
+          document.getElementById('node-id').value = data.id;
+          document.getElementById('node-label').value = data.label;
+          document.getElementById('saveButton').onclick = saveData.bind(this, data, callback);
+          document.getElementById('cancelButton').onclick = clearPopUp.bind();
+          document.getElementById('network-popUp').style.display = 'block';
+        },
+        editNode: function (data, callback) {
+          // filling in the popup DOM elements
+          document.getElementById('operation').innerHTML = "Edit Node";
+          document.getElementById('node-id').value = data.id;
+          document.getElementById('node-label').value = data.label;
+          document.getElementById('saveButton').onclick = saveData.bind(this, data, callback);
+          document.getElementById('cancelButton').onclick = cancelEdit.bind(this,callback);
+          document.getElementById('network-popUp').style.display = 'block';
+        },
+        addEdge: function (data, callback) {
+          if (data.from == data.to) {
+            var r = confirm("Do you want to connect the node to itself?");
+            if (r == true) {
+              callback(data);
+            }
+          }
+          else {
+            callback(data);
+          }
+        }
+      }
+    };
+    network = new vis.Network(container, data, options);
+  }
+
+  function clearPopUp() {
+    document.getElementById('saveButton').onclick = null;
+    document.getElementById('cancelButton').onclick = null;
+    document.getElementById('network-popUp').style.display = 'none';
+  }
+
+  function cancelEdit(callback) {
+    clearPopUp();
+    callback(null);
+  }
+
+  function saveData(data,callback) {
+    data.id = document.getElementById('node-id').value;
+    data.label = document.getElementById('node-label').value;
+    clearPopUp();
+    callback(data);
+  }
+
+</script>
+<body onload="draw();">
+<h2>Editing the nodes and edges (localized)</h2>
+<p style="width: 700px; font-size:14px; text-align: justify;">
+  The localization is only relevant to the manipulation buttons.
+</p>
+
+<p>
+  <label for="locale">Select a locale:</label>
+  <select id="locale" onchange="draw();">
+    <option value="en" selected>en</option>
+    <option value="nl">nl</option>
+  </select>
+</p>
+
+<div id="network-popUp">
+  <span id="operation">node</span> <br>
+  <table style="margin:auto;"><tr>
+    <td>id</td><td><input id="node-id" value="new value" /></td>
+  </tr>
+    <tr>
+      <td>label</td><td><input id="node-label" value="new value" /></td>
+    </tr></table>
+  <input type="button" value="save" id="saveButton" />
+  <input type="button" value="cancel" id="cancelButton" />
+</div>
+<br />
+<div id="mynetwork"></div>
+
 </body>
 </html>
