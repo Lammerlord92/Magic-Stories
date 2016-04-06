@@ -15,6 +15,7 @@
       <li><a data-no-turbolink="true" href="/stories/example" id="barcon">Descubrir</a></li>
       <li><a href="/stories" id="barcon">Historias</a></li>
       <li><a href="/categories" id="barcon">Géneros</a></li>
+      <li><a href="/membership_cards/exchange" id="barcon">Subscripción Premium</a></li>
 
       <% if user_signed_in? %>
         <% if current_user.role_type == 'PremiumUser' %>
@@ -47,7 +48,8 @@
 
 
           <li><a href="/profiles">Comunidad</a></li>
-          <li><a href="/connections/search">Mis conexiones</a></li>
+            <li><a href="/connections/search">Mis conexiones</a></li>
+              <li><a href="/membership_cards/exchange">Subscripción premium</a></li>
           <li role="separator" class="divider"></li>
           <li>
                <%= link_to "Cerrar sesión", destroy_user_session_path, :method => :delete %>
