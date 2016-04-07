@@ -108,10 +108,6 @@ widgToolbarItems.push("orderedlist");
 widgToolbarItems.push("image");
 widgToolbarItems.push("htmlsource");
 widgToolbarItems.push("blockformat");
-widgToolbarItems.push("alignRight");
-widgToolbarItems.push("alignLeft");
-widgToolbarItems.push("center");
-widgToolbarItems.push("justify");
 widgToolbarItems.push("underline");
 
 /* Options on block format select element. Consists of string pairs (option value, option label) */
@@ -1029,26 +1025,6 @@ function widgToolbar(theEditor)
 
             case "blockformat":
                 this.addSelect(this.theList.id + "SelectBlock", "widgSelectBlock", widgSelectBlockOptions, "formatblock");
-
-                break;
-
-            case "alignRight":
-                this.addButton(this.theList.id + "ButtonAlignRight", "widgButtonAlignRight", "Align Right", "right");
-
-                break;
-
-            case "alignLeft":
-                this.addButton(this.theList.id + "ButtonAlignLeft", "widgButtonAlignLeft", "Align Left", "left");
-
-                break;
-
-            case "center":
-                this.addButton(this.theList.id + "ButtonCenter", "widgButtonCenter", "Center", "center");
-
-                break;
-
-            case "justify":
-                this.addButton(this.theList.id + "ButtonJustify", "widgButtonJustify", "Justify", "justify");
 
                 break;
 
@@ -2129,8 +2105,8 @@ function pasarAJSON(vertice, hijos){
     //window.alert("Sigue bien1!!");
     console.log(vertice);
     //JSON inicial
-    var json = '{"id":' + verticeId + ',"title":' + verticeTitle + ',"body":' + verticeBody +
-        ',"child_options":[';
+    var json = '{"id":' + verticeId + ',"title":"' + verticeTitle + '","body":"' + verticeBody +
+        '","child_options":[';
 
     //console.log("Todos los hijos " + hijos[0].source.id);
     // window.alert("Sigue bien1!!");
@@ -2162,7 +2138,7 @@ function pasarAJSON(vertice, hijos){
 
                         //var hijoTitle = vertices[targetId].value.attributes[0].nodeValue;
 
-                        json += '{"child_id":' + targetId + ',"parent_id":' + sourceId + ',"option":' + optionTitle + '"}';
+                        json += '{"child_id":' + targetId + ',"parent_id":' + sourceId + ',"option":"' + optionTitle + '"}';
                         console.log("1" + json);
                     }else{
                         if(targetId==verticeId){
@@ -2172,7 +2148,7 @@ function pasarAJSON(vertice, hijos){
                             var optionTitle = hijos[j].value.attributes[0].nodeValue;
                             console.log(optionTitle);
                             //var hijoTitle = vertices[targetId].value.attributes[0].nodeValue;
-                            json += '{"child_id":' + targetId + ',"parent_id":' + sourceId + ',"option":' + optionTitle + '"}';
+                            json += '{"child_id":' + targetId + ',"parent_id":' + sourceId + ',"option":"' + optionTitle + '"}';
                             console.log("2" + json);
                         }
                     }
@@ -2191,7 +2167,7 @@ function pasarAJSON(vertice, hijos){
                         //var hijoTitle = vertices[targetId].value.attributes[0].nodeValue;
                         var optionTitle = hijos[j].value.attributes[0].nodeValue;
                         console.log(optionTitle);
-                        json += '{"child_id":' + targetId + ',"parent_id":' + sourceId + ',"option":' + optionTitle + '"}],';
+                        json += '{"child_id":' + targetId + ',"parent_id":' + sourceId + ',"option":"' + optionTitle + '"}],';
                         console.log("3" + json);
                     }else{
                         if(targetId==verticeId){
