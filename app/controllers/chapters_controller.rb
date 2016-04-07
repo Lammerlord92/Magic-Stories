@@ -8,7 +8,8 @@ class ChaptersController < ApplicationController
   end
 
   def create
-    @chapter = Chapter.new(chapter_params)
+    @chapter = Chapter.find_or_create_by({id: chapter_params.id})
+    @chapter.assign_attributes chapter_params
 
     respond_to do |format|
       if @chapter.save

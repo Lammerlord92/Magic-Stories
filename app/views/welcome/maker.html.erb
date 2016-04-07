@@ -209,7 +209,7 @@
            }));*/
 
 
-          document.querySelector('#bodyCol').appendChild(mxUtils.button('View JSON', function () {
+          document.querySelector('#bodyCol').appendChild(mxUtils.button('Guardar', function () {
             var encoder = new mxCodec();
             var node = encoder.encode(graph.getModel());
             //mxUtils.popup(mxUtils.getPrettyXml(node), true);
@@ -243,8 +243,9 @@
             console.log("Var nodos " +jsonFinalLast);
             //console.log("Este es el jsonFinal" + jsonFinal);
 
-            $.post('/chapters.json', {chapter:j[0]}, function(res){console.log(res)})
-
+            jsonFinalLast.forEach(function(nodo){
+               $.post('/chapters.json', {chapter:nodo}, function(res){console.log(res)})
+            })
           }));
 
 
