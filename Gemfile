@@ -36,6 +36,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'rails-i18n'
+gem 'bootstrap-wysihtml5-rails'
 
 gem 'mailboxer'
 gem 'devise'
