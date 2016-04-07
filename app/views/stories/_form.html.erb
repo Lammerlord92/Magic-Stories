@@ -1,108 +1,94 @@
 <script>
-  document.onload=function(){
+  document.onload=function() {
     previewFile();  //calls the function named previewFile()
   }
-  function previewFile(){
+
+  function previewFile() {
     var preview = document.querySelector('img'); //selects the query named img
     var file    = document.querySelector('input[type=file]').files[0]; //sames as here
     var reader  = new FileReader();
-
     reader.onloadend = function () {
       preview.src = reader.result;
       document.getElementById("story_cover").setAttribute("value",reader.result);
     }
-
     if (file) {
       reader.readAsDataURL(file); //reads the data as a URL
-
     } else {
       preview.src = "";
     }
   }
-
-
 </script>
 
 <% name ||= "Crear" %>
 
 <h1>Crear historia</h1>
 
-<%=form_for(@story) do |f|%>
-    <% if @story.errors.full_messages.length > 0 %>
-      <div class="errors">
-        <p>
-          Se encontraron los siguientes errores al guardar la historia:
-        </p>
-        <% @story.errors.full_messages.each do |message| %>
-            <p class="error">
-              *<%= message  %>
-            </p>
-        <% end %>
-      </div>
-    <% end %>
-
-    <div class="field">
-      <input type="file" onchange="previewFile()"><br>
-      <img src="<%=@story.cover %>" height="200" alt="Imagen actual">
-
+<%= form_for(@story) do |f|%>
+  <% if @story.errors.full_messages.length > 0 %>
+    <div class="errors">
+      <p>Se encontraron los siguientes errores al guardar la historia:</p>
+      <% @story.errors.full_messages.each do |message| %>
+        <p class="error">*<%= message  %></p>
+      <% end %>
     </div>
-    <%=hidden_field(:story,:cover)%>
-    <div class="field">
-      <label for="title">Titulo</label><br>
-      <%= f.text_field :title, placeholder: "Título" %>
+  <% end %>
+
+  <div class="form-group">
+    <label for="title">Portada</label><br>
+    <%= f.text_field :cover, placeholder: "URL de la portada", class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <label for="title">Título</label><br>
+    <%= f.text_field :title, placeholder: "Título", class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <label for="description">Sinopsis</label><br>
+    <%= f.text_area :description, placeholder: "Sinopsis", class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <label for="language">Idioma</label><br>
+    <%= f.text_field :language, placeholder: "Idioma", class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <label for="price">Precio</label><br>
+    <%= f.number_field :price, placeholder: "Precio", class: "form-control"  %>
+  </div>
+
+  <button type="button" id="buttonStory" class="btn btn-default">Seleccionar géneros...</button>
+
+  <div class="field">
+    <%= f.submit "Guardar", class: "btn btn-primary" %>
+  </div>
+
+  <section id="modal" class="modal fade">
+    <div class="modal-body">
+      <form action="buttonStory.php" method="post" role="form">
+        <span id="close" class="glyphicon glyphicon-remove-circle pull-right"></span>
+        <div class="form-group">
+          <% @categories.each do |category|%>
+            <%= check_box_tag 'name'%>&nbsp;<%= h category.name %><br/>
+          <% end %>
+          <br/>
+          <button type="button" id="confirmCategory" class="btn btn-primary">Confirm</button>
+        </div>
+      </form>
     </div>
-    <div class="field">
-      <label for="description">Descripcion</label><br>
-      <%= f.text_area :description, placeholder: "Descripción" %>
-    </div>
-    <div class="field">
-      <label for="language">Idioma</label><br>
-      <%= f.text_field :language, placeholder: "Idioma" %>
-    </div>
-    <div class="field">
-      <label for="price">Precio</label><br>
-      <%= f.number_field :price, placeholder: "Precio", min: 0, step: 0.1  %>
-    </div>
+  </section>
 
-
-    <button type="button" id="buttonStory" class="btn btn-primary">Select category...</button>
-
-    <div class="field">
-      <%= f.submit "Guardar" %>
-    </div>
-
-    <section id="modal" class="modal fade">
-      <div class="modal-body">
-        <form action="buttonStory.php" method="post" role="form">
-          <span id="close" class="glyphicon glyphicon-remove-circle pull-right"></span>
-
-          <div class="form-group">
-            <% @categories.each do |category|%>
-                <%= check_box_tag 'name'%>&nbsp;<%= h category.name %><br/>
-            <% end %>
-            <br>
-            <button type="button" id="confirmCategory" class="btn btn-primary">Confirm</button>
-          </div>
-
-        </form>
-      </div>
-    </section>
-
-    <script type="text/javascript">
-      $(document).ready(function() {
-        $("#buttonStory").on('click',function(){
-          $("#modal").modal({
-            show:true
-          });
-          $("#close").on('click',function(){
-            $("#modal").modal('hide');
-          });
-          $("#button").on('click',function(){
-            console.log('aaaaaaaaaaaaaaa');
-            $("#modal").modal('hide');
-          });
-        })
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#buttonStory").on('click',function(){
+        $("#modal").modal({
+          show:true
+        });
+        $("#close").on('click',function() {
+          $("#modal").modal('hide');
+        });
+        $("#button").on('click',function() {
+          console.log('aaaaaaaaaaaaaaa');
+          $("#modal").modal('hide');
+        });
       })
-    </script>
-
+    })
+  </script>
 <%end%>

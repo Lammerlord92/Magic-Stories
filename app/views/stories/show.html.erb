@@ -1,7 +1,3 @@
 <%= render @story %>
-
-<a href="/welcome/maker/<%= @story.id %>">
-  Editar historia
-</a>
 <h3>Comentarios</h3>
 <%= render 'comments/list', id: @story.id, commentedClass: 'story' %>

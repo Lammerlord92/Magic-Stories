@@ -70,8 +70,8 @@ hr{
   color: #FFFFFF !important;
   text-align: left !important;
   font-size: 14px;
-    position: relative;
-    left: 0px;
+  position: relative;
+  left: 0px;
 }
 
 /* Parche provisional */
@@ -128,6 +128,7 @@ footer a:hover{
 }
 
 .navbar-footer {
-    margin: 0 !important;
-    border: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  padding-top: 15px;
 }
