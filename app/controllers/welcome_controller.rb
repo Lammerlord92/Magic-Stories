@@ -1,24 +1,16 @@
 class WelcomeController < ApplicationController
   before_action :authenticate_user!
   def index
-=begin
-     HAY QUE CONTROLAR QUE SI NO ESTA ACTIVA UNA SESIÓN SE MUESTRE EXCLUSIVAMENTE EL LOGIN
-          QUE ES LA VISTA DEL sessions/new.html.erb DEL DEVISE
+    # TODO: Provisional. El backend tiene que insertar la historia tendencia de cada género
+    @trending_stories = Hash.new
+    @trending_stories[Category.find(1)] = Story.find(1)
+    @trending_stories[Category.find(2)] = Story.find(13)
+    @trending_stories[Category.find(3)] = Story.find(3)
+    @trending_stories[Category.find(4)] = Story.find(4)
+    @trending_stories[Category.find(5)] = Story.find(5)
+    @trending_stories[Category.find(6)] = Story.find(6)
 
-
-=end
-    @story = Story.first # Temporalmente para pruebas del index
     @categories = Category.all
     render 'index'
-
-  # private
-
-  # def require_login
-  #   unless current_user
-  #     redirect_to "/user/sign_in
-  #   end
-  # end
-
   end
 end
-

@@ -5,7 +5,7 @@
     <% @categories.each do |category| %>
     <div class="col-md-2">
       <div class="trending-slot">
-        <%= render 'stories/story_slot', story: @story %>
+        <%= render 'stories/story_slot', story: @trending_stories[category] %>
         <p class="category"><%= category.name %></p>
       </div>
     </div>
