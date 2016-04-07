@@ -19,6 +19,10 @@ class WelcomeController < ApplicationController
   #   end
   # end
 
+    def maker_fuken
+      render file: '/app/views/welcome/maker_fuken', layout: false
+    end
+
   end
 end
 
