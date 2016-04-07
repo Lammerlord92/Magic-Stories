@@ -4,7 +4,7 @@
       <div class="center">
         <div class="story">
           <!-- TODO: Hacer que la imagen se posicione igual que como en las imágenes del diseñador -->
-          <img class="cover-image" title="<%= story.title %>" src="/assets/temporal_cover.jpg" />
+          <%= render 'stories/story_cover', story: story %>
         </div>
       </div>
       <p class="valoration">Valoración</p>
