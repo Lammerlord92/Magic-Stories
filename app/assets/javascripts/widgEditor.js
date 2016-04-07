@@ -2202,7 +2202,9 @@ function pasarAJSON(storyid,vertice, hijos){
                     json += '"parent_options":[]}';
                 }
             }else{
-                json += '"parent_options":[';
+
+                var padres = [];
+
                 for(j=0;j<hijos.length;j++) {
                     if (j != hijos.length - 1) {
                         var sourceId = hijos[j].source.id;
@@ -2211,7 +2213,7 @@ function pasarAJSON(storyid,vertice, hijos){
                         console.log("SourceId" + sourceId);
                         console.log("TargetId" + targetId);
                         if(targetId==verticeId){
-                            json += '{' + sourceId + '}';
+                            padres.push(sourceId);
                         }
 
                     }else{
@@ -2223,13 +2225,17 @@ function pasarAJSON(storyid,vertice, hijos){
 
                         //Me queda comprobar mirar apuntes y borrar de arriba el parent_options
                         if(sourceId==verticeId){
-                            json += ']}';
+                            //json += ']}';
                         }else{
-                            json += '{' + sourceId + '}]}';
+                            padres.push(sourceId);
                         }
 
                     }
                 }
+
+                var parent_options = JSON.stringify(padres);
+
+                json+= '"parent_options":' + parent_options + '}';
             }
 
         }
