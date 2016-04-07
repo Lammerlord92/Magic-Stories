@@ -2102,7 +2102,7 @@ function pasarAJSON(storyid,vertice, hijos){
     var verticeTitle = vertice.value.attributes[0].nodeValue;
     var verticeBody = vertice.value.attributes[1].nodeValue;
 
-    var veticeNodeId = storyid + "" + verticeId;
+    var veticeNodeId = storyid + "" + verticeId + "000";
     //window.alert("veticeNodeId " + veticeNodeId);
 
     //window.alert("Sigue bien1!!");
@@ -2127,8 +2127,8 @@ function pasarAJSON(storyid,vertice, hijos){
                     var sourceId = hijos[j].source.id;
                     var targetId = hijos[j].target.id;
 
-                    var sourceNodeId = storyid + "" + sourceId;
-                    var targetNodeId = storyid + "" + targetId;
+                    var sourceNodeId = storyid + "" + sourceId + "000";
+                    var targetNodeId = storyid + "" + targetId + "000";
 
                     console.log("SourceId" + sourceId);
                     console.log("TargetId" + targetId);
@@ -2144,7 +2144,7 @@ function pasarAJSON(storyid,vertice, hijos){
 
                         //var hijoTitle = vertices[targetId].value.attributes[0].nodeValue;
 
-                        json += '{"child_id":' + targetNodeId + ',"parent_id":' + sourceNodeId + ',"option":"' + optionTitle + '"}';
+                        json += '{"child_id":' + targetNodeId + ',"parent_id":' + sourceNodeId + ',"option":"' + optionTitle + '"},';
                         console.log("1" + json);
                     }else{
                         if(targetId==verticeId){
@@ -2154,7 +2154,7 @@ function pasarAJSON(storyid,vertice, hijos){
                             var optionTitle = hijos[j].value.attributes[0].nodeValue;
                             console.log(optionTitle);
                             //var hijoTitle = vertices[targetId].value.attributes[0].nodeValue;
-                            json += '{"child_id":' + targetNodeId + ',"parent_id":' + sourceNodeId + ',"option":"' + optionTitle + '"}';
+                            json += '{"child_id":' + targetNodeId + ',"parent_id":' + sourceNodeId + ',"option":"' + optionTitle + '"},';
                             console.log("2" + json);
                         }
                     }
@@ -2167,8 +2167,8 @@ function pasarAJSON(storyid,vertice, hijos){
                     console.log("SourceId" + sourceId);
                     console.log("TargetId" + targetId);
 
-                    var sourceNodeId = storyid + "" + sourceId;
-                    var targetNodeId = storyid + "" + targetId;
+                    var sourceNodeId = storyid + "" + sourceId + "000";
+                    var targetNodeId = storyid + "" + targetId + "000";
 
                     //Compruebo que el vertice origen sea yo mismo, eso quiere decir que la arista sale de mi, soy el padre
                     if(sourceId==verticeId){
@@ -2204,7 +2204,7 @@ function pasarAJSON(storyid,vertice, hijos){
                 console.log("SourceId" + sourceId);
                 console.log("TargetId" + targetId);
 
-                var sourceNodeId = storyid + "" + sourceId;
+                var sourceNodeId = storyid + "" + sourceId + "000";
 
                 //Me queda comprobar mirar apuntes y borrar de arriba el parent_options
                 if(targetId==verticeId){
@@ -2224,8 +2224,8 @@ function pasarAJSON(storyid,vertice, hijos){
                         console.log("SourceId" + sourceId);
                         console.log("TargetId" + targetId);
 
-                        var sourceNodeId = storyid + "" + sourceId;
-                        var targetNodeId = storyid + "" + targetId;
+                        var sourceNodeId = storyid + "" + sourceId + "000";
+                        var targetNodeId = storyid + "" + targetId + "000";
 
                         if(targetId==verticeId){
                             padres.push(sourceNodeId);
@@ -2238,7 +2238,7 @@ function pasarAJSON(storyid,vertice, hijos){
                         console.log("SourceId" + sourceId);
                         console.log("TargetId" + targetId);
 
-                        var sourceNodeId = storyid + "" + sourceId;
+                        var sourceNodeId = storyid + "" + sourceId + "000";
 
                         //Me queda comprobar mirar apuntes y borrar de arriba el parent_options
                         if(sourceId==verticeId){

@@ -238,32 +238,12 @@
               nodos.push(jsonFinal);
             }
 
-            //TODO FUken no estamos seguro de lo que hace esto al 100%
-            //TODO hemos creado el nuevo id para cada uno de los nodos del grafo dentro de la funcion
-            //TODO parsearAJSON
-            /*var num_nodos = nodos.length+1;
-            var new_ids = range(num_nodos).map(function(n){
-              return new Date().getTime()+n;
-            });
-            nodos = nodos.map(function(nodo){ return JSON.parse(nodo) });
-            nodos = nodos.map(function(nodo){
-              nodo.id = new_ids[nodo.id];
-              if(nodo.child_options) nodo.child_options = nodo.child_options.map(function(child){
-                child.child_id = new_ids[child.child_id];
-                child.parent_id = new_ids[child.parent_id];
-                return child;
-              });
-              if(nodo.parent_options) nodo.parent_options = nodo.parent_options.map(function(parent){
-                parent.parent_id = new_ids[parent.parent_id];
-                parent.child_id = new_ids[parent.child_id];
-                return parent;
-              });
-              return nodo;
-            });
-            console.log("nodo parseado: \n"+JSON.stringify(nodos, null, 4));*/
+            var jsonFinalLast = '[' + nodos + ']';
 
-            console.log("Var nodos " + nodos);
-            console.log("Este es el jsonFinal" + jsonFinal);
+            console.log("Var nodos " +jsonFinalLast);
+            //console.log("Este es el jsonFinal" + jsonFinal);
+
+            $.post('/chapters.json', {chapter:j[0]}, function(res){console.log(res)})
 
           }));
 
