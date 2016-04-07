@@ -211,6 +211,8 @@ function widgEditor(replacedTextareaID,titleValue)
 {
 
     var self = this;
+    console.log("Dentro del widgEditor(), replacedTextAreaID = "+replacedTextareaID);
+    console.log("Dentro del widgEditor(), titleValue = "+titleValue);
     //Variable para comprobar de si existe o no ya un container
     var alreadyContainer = document.getElementById("my_textBodyWidgContainer");
 
@@ -290,6 +292,7 @@ function widgEditor(replacedTextareaID,titleValue)
     /* Fill editor with old textarea content */
     var ifr = this;
     writeDocument(this.theInput.value,ifr);
+    console.log("this.theInput.value = "+this.theInput.value);
     /* Make editor editable */
     initEdit(ifr);
 
@@ -1799,10 +1802,11 @@ function actualizaNodo(){
 
 
     if(savedCell== null || savedGraph == null){
-
+        console.log("Entra en el IF tras click");
     }
 
     else{
+        console.log("Entra en el ELSE tras click");
         var cellBB = savedCell;
         var graphBB = savedGraph;
         var attrs = cellBB.value.attributes;
@@ -1810,12 +1814,17 @@ function actualizaNodo(){
         for (var i = 0; i < attrs.length; i++) {
             if (i == 0) { //Obtains the title
                 currentTitle = attrs[i].value;
+                console.log("Título del nodo = "+currentTitle);
+                console.log("Nuevo título = "+newEntryTitle);
 
                 graphBB.getModel().beginUpdate();
                 try {
                     var edit = new mxCellAttributeChange(
                         cellBB, attrs[0].nodeName,
                         newEntryTitle);
+                    console.log("cellBB = "+cellBB);
+                    console.log("attrs[0].nodename = "+attrs[0].nodename);
+                    console.log("newEntryData = "+newEntryData);
                     graphBB.getModel().execute(edit);
                     graphBB.updateCellSize(cellBB);
                 }
@@ -1824,6 +1833,8 @@ function actualizaNodo(){
                 }
 
             } else { //Obtains the body
+                console.log("Valor a comparar 1 -> ",newEntryData);
+                console.log("Valor a comparar 2 -> ",attrs[1].value);
                 //TODO if (newEntryData != attrs[1].value) {
                     graphBB.getModel().beginUpdate();
                      try {
@@ -1838,6 +1849,7 @@ function actualizaNodo(){
                      graphBB=null;
                      }
                 //TODO }
+                console.log("Body del nodo"+attrs[i].value);
             }
         }
 
@@ -1848,25 +1860,29 @@ function actualizaNodo(){
 
 function crearNuevoNodo(){
     //var container = document.getElementById("graphContainer");
+    console.log(graph);
     var xml = mxUtils.createXmlDocument();
     var countVertex = graph.getChildVertices(graph.getDefaultParent()).length;
+    console.log(countVertex);
     var count = countVertex+1;
     var chapterX = xml.createElement('Chapter');
     var newId = 'Chapter' + count;
+    console.log(newId);
     chapterX.setAttribute('title', 'Example Title for the Chapter' + count);
     chapterX.setAttribute('body', 'Example body for the Chapter' + count);
-    chapterX.setAttribute('graphIndex', 'newChapter' + count);
 
     var parent = graph.getDefaultParent();
 
     graph.getModel().beginUpdate();
     try {
         graph.insertVertex(parent, null, chapterX, 40, 200, chapterX.getAttribute('title').length * 7, 30);
+        console.log("Lo hace");
     }
     finally {
         // Updates the display
         graph.getModel().endUpdate();
         var count2 = graph.getChildVertices(graph.getDefaultParent()).length;
+        console.log(count2);
     }
 }
 
@@ -1875,14 +1891,9 @@ function eliminar(){
     graph.container.focus();
     selectedThing = graph.getSelectionCell();
 
-    if (selectedThing.getAttribute('graphIndex') == 'initialChapter01'){
+    if(selectedThing!=null){
+        graph.getModel().remove(selectedThing);
     }
-    else{
-        if(selectedThing!=null){
-            graph.getModel().remove(selectedThing);
-        }
-    }
-
 }
 
 
@@ -1891,14 +1902,18 @@ function centrar(){
     var newEntryData = iFrameAux.find('body');
 
     if(savedCell== null || savedGraph == null){
+        console.log("Entra en el IF tras click en la funcion centrar");
     }
 
     else{
+        console.log("Entra en el ELSE tras click en la funcion centrar");
         var cellBB = savedCell;
         var graphBB = savedGraph;
         var attrs = cellBB.value.attributes;
 
         newEntryData.append($("<style type='text/css'>  body{text-align: center}  </style>"));;
+
+        console.log(newEntryData);
 
         graphBB.getModel().beginUpdate();
         try {
@@ -1924,14 +1939,18 @@ function derecha(){
     var newEntryData = iFrameAux.find('body');
 
     if(savedCell== null || savedGraph == null){
+        console.log("Entra en el IF tras click en la funcion centrar");
     }
 
     else{
+        console.log("Entra en el ELSE tras click en la funcion centrar");
         var cellBB = savedCell;
         var graphBB = savedGraph;
         var attrs = cellBB.value.attributes;
 
         newEntryData.append($("<style type='text/css'>  body{text-align: right}  </style>"));;
+
+        console.log(newEntryData);
 
         graphBB.getModel().beginUpdate();
         try {
@@ -1957,14 +1976,18 @@ function izquierda(){
     var newEntryData = iFrameAux.find('body');
 
     if(savedCell== null || savedGraph == null){
+        console.log("Entra en el IF tras click en la funcion centrar");
     }
 
     else{
+        console.log("Entra en el ELSE tras click en la funcion centrar");
         var cellBB = savedCell;
         var graphBB = savedGraph;
         var attrs = cellBB.value.attributes;
 
         newEntryData.append($("<style type='text/css'>  body{text-align: left}  </style>"));;
+
+        console.log(newEntryData);
 
         graphBB.getModel().beginUpdate();
         try {
@@ -1990,14 +2013,18 @@ function justificar(){
     var newEntryData = iFrameAux.find('body');
 
     if(savedCell== null || savedGraph == null){
+        console.log("Entra en el IF tras click en la funcion centrar");
     }
 
     else{
+        console.log("Entra en el ELSE tras click en la funcion centrar");
         var cellBB = savedCell;
         var graphBB = savedGraph;
         var attrs = cellBB.value.attributes;
 
         newEntryData.append($("<style type='text/css'>  body{text-align: justify}  </style>"));;
+
+        console.log(newEntryData);
 
         graphBB.getModel().beginUpdate();
         try {
@@ -2014,72 +2041,12 @@ function justificar(){
 
         var graphBB = savedCell;
     }
-}
 
-function crearNuevaArista(){
-    var xml = mxUtils.createXmlDocument();
-    var parent = graph.getDefaultParent();
-
-    //TODO COPIETEO FEO
-
-    /*var chapter10 = xml.createElement('Chapter');
-    chapter10.setAttribute('title', 'Caperucita 01');
-    chapter10.setAttribute('body', 'Texto de Caperucita 01');*/
-
-    var chapter11 = xml.createElement('Chapter');
-    chapter11.setAttribute('title', 'Caperucita 02');
-    chapter11.setAttribute('body', 'Texto de Caperucita 02');
-
-    var relationAux = xml.createElement('sendTo');
-    relationAux.setAttribute('since', '1985');
-
-    //TODO FIN COPIETEO
-
-    graph.getModel().beginUpdate();
-    try {
-        //TODO COPIETEO 2
-        var arrVarAux = chapterArray[0];
-        var arrVarAux2 = chapterArray[1];
-        var v10 = graph.insertVertex(parent, null, arrVarAux, 40, 40, arrVarAux.getAttribute('title').length * 7, 30);
-        //var v10 = graph.insertVertex(parent, null, chapter10, 150, 150, chapter10.getAttribute('title').length * 7, 30);
-        var v11 = graph.insertVertex(parent, null, arrVarAux2, 200, 200, arrVarAux2.getAttribute('title').length * 7, 30);
-        //TODO FIN COPIETEO 2
-        graph.insertEdge(parent, null, relationAux, v10, v11);
-    }
-    finally {
-        // Updates the display
-        graph.getModel().endUpdate();
-    }
 }
 
 
-/* When the user clicks on the button,
- toggle between hiding and showing the dropdown content */
-function myDropdownFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
-}
-
-// Close the dropdown menu if the user clicks outside of it
-/*window.onclick = function(event) {
-    if (!event.target.matches('.dropbtn')) {
-
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
-            }
-        }
-    }
-}*/
-
-
-
-function crearNuevaArista2(){
-    console.log("Entra en crearNuevaArista2");
-    edit2Bool = true;
-    console.log("valor tras entrar en nuevaArista2 = "+edit2Bool);
+/*function handleDown(event:MouseEvent){
+    console.log("handDown");
 }
 
 function crearNuevaArista3(params){
@@ -2245,3 +2212,6 @@ function pasarAJSON(vertice, hijos){
     //console.log("Este es el json " + json);
 
 }
+function handleUp(event:MouseEvent){
+    console.log("handUp");
+}*/
