@@ -2096,7 +2096,7 @@ function crearNuevaArista3(params){
 
 
 
-function pasarAJSON(vertice, hijos){
+function pasarAJSON(storyid,vertice, hijos){
 
     var verticeId = vertice.id;
     var verticeTitle = vertice.value.attributes[0].nodeValue;
@@ -2105,7 +2105,7 @@ function pasarAJSON(vertice, hijos){
     //window.alert("Sigue bien1!!");
     console.log(vertice);
     //JSON inicial
-    var json = '{"id":' + verticeId + ',"title":"' + verticeTitle + '","body":"' + verticeBody +
+    var json = '{"story_id":' + storyid + ',"id":' + verticeId + ',"title":"' + verticeTitle + '","body":"' + verticeBody +
         '","child_options":[';
 
     //console.log("Todos los hijos " + hijos[0].source.id);

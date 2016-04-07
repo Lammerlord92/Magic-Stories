@@ -219,6 +219,8 @@
             var content = [];
             //var hijos = [];
             var padres = [];
+            var storyid = <%= @id %>;
+            window.alert("StoryId :" + storyid);
             for (i=0; i< vertices.length;i++) {
 
               //Sacamos todos los hijos de cada uno de los vertices del grafo
@@ -227,7 +229,7 @@
               //window.alert("Empieza el parseo!!");
               //window.alert("Numero de vertices actual " + vertices.length);
               //window.alert("Esta es la i actual " +i);
-              var jsonFinal = pasarAJSON(vertices[i], hijos);
+              var jsonFinal = pasarAJSON(storyid,vertices[i], hijos);
               window.alert("TErmina parseo")
 
               mxUtils.popup(jsonFinal, true);
