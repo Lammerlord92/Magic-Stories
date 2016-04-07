@@ -242,10 +242,37 @@
           new mxRubberband(graph);
 
           // Adds an option to view the XML of the graph
-          document.querySelector('#bodyCol').appendChild(mxUtils.button('View XML', function () {
+          /*document.querySelector('#bodyCol').appendChild(mxUtils.button('View XML', function () {
             var encoder = new mxCodec();
             var node = encoder.encode(graph.getModel());
             mxUtils.popup(mxUtils.getPrettyXml(node), true);
+          }));*/
+
+
+          document.querySelector('#bodyCol').appendChild(mxUtils.button('View JSON', function () {
+            var encoder = new mxCodec();
+            var node = encoder.encode(graph.getModel());
+            //mxUtils.popup(mxUtils.getPrettyXml(node), true);
+
+            //Esto nos coge todos los vertices del grafo
+            var vertices = graph.getChildVertices(graph.getDefaultParent());
+            var content = [];
+            //var hijos = [];
+            var padres = [];
+            for (i=0; i< vertices.length;i++) {
+
+              //Sacamos todos los hijos de cada uno de los vertices del grafo
+              var hijos = vertices[i].edges;
+
+              //window.alert("Empieza el parseo!!");
+              //window.alert("Numero de vertices actual " + vertices.length);
+              //window.alert("Esta es la i actual " +i);
+              var jsonFinal = pasarAJSON(vertices[i], hijos);
+              window.alert("TErmina parseo")
+
+              mxUtils.popup(jsonFinal, true);
+            }
+            console.log("Este es el jsonFinal" + jsonFinal);
           }));
 
           // Changes the style for match the markup

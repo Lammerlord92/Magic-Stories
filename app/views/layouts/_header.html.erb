@@ -1,12 +1,12 @@
 <header class="navbar navbar-default">
-  <div class="container" id="barcon" >
+  <div class="container " id="barcon" >
     <div class="navbar-header row row-centered  col-md-4 col-centered logo">
 
       <a href="/">
         <img class="image-responsive  col-md-4 col-centered" src="/assets/logo fondo.png" alt="Tree Story">
       </a>
 
-      <a id="barcon" href="/comments/new">
+      <a id="barcon" href="/">
         <img class="image-responsive  col-md-2 col-centered" src="/assets/msj blanco.png" alt="Comentarios">
       </a>
 
@@ -32,12 +32,11 @@
         <a href="#" class="dropdown-toggle" data-toggle="dropdown"
             role="button" aria-haspopup="true" aria-expanded="false" id="barcon">
           <% if user_signed_in? %>
-          <%= current_user.username %>
-          <% else %>
-          Usuario
+            <%= image_tag current_user.profile.avatar, class: "img-circle image-responsive  col-md-3" %>
+
           <% end %>
         <span class="caret"></span></a>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu ">
           <% if user_signed_in? %>
               <% if current_user.profile %>
                 <li><a href="/profiles/<%= current_user.profile.id %>">Mi perfil</a></li>
@@ -55,14 +54,8 @@
                <%= link_to "Cerrar sesión", destroy_user_session_path, :method => :delete %>
           </li>
 
-          <% else %>
-          <li>
-              <%= link_to "Iniciar sesión", new_user_session_path %>
 
-          </li>
-          <li>
-               <%= link_to "Registrarse", new_user_registration_path %>
-          </li>
+
           <% end %>
 
         </ul>
