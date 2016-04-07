@@ -76,6 +76,7 @@ Rails.application.routes.draw do
 
   #Chapters
   get 'chapters/:id' => 'chapters#show'
+  post 'chapters' => 'chapters#create'
 
   #Profiles
   get 'profiles/search', to: 'profiles#search'
