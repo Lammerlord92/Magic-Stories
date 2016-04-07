@@ -13,29 +13,33 @@
 </head>
 <body>
 
-  <%= render 'layouts/header' %>
+  <div class="header-content">
 
+    <%= render 'layouts/header' %>
 
-
-  <!-- Begin Body -->
-  <div class="container">
-    <div class="row">
-
-      <div class="col-sm-12" id="bodyCol">
-        <%= yield %>
-        <br>
-        <% if flash.alert %>
+    <!-- Content -->
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12" id="bodyCol">
+          <%= yield %>
+          <br>
+          <% if flash.alert %>
           <p class="alert-notice"><%= flash.alert %></p>
-        <% end %>
-        <% if flash.notice %>
+          <% end %>
+          <% if flash.notice %>
           <p class="alert-alert"><%= flash.notice %></p>
-        <% end %>
+          <% end %>
+        </div>
       </div>
-
     </div>
+
   </div>
 
-  <%= render 'layouts/footer' %>
+  <div class="footer">
+
+    <%= render 'layouts/footer' %>
+    
+  </div>
 
 </body>
 </html>
