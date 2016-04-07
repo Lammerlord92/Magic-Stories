@@ -69,6 +69,11 @@ hr{
   font-size: 14px;
 }
 
+/* Parche provisional */
+.logo{
+  margin-top: 10px;
+}
+
 #NH{
   color: #002400;
   background-color: #ECA701;
