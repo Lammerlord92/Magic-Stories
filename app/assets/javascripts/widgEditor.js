@@ -2208,7 +2208,7 @@ function pasarAJSON(storyid,vertice, hijos){
 
                 //Me queda comprobar mirar apuntes y borrar de arriba el parent_options
                 if(targetId==verticeId){
-                    json += '"parent_options":[{' + sourceNodeId + '}]}';
+                    json += '"parent_options":[' + sourceNodeId + ']}';
                 }else{
                     json += '"parent_options":[]}';
                 }

@@ -243,6 +243,8 @@
             console.log("Var nodos " +jsonFinalLast);
             //console.log("Este es el jsonFinal" + jsonFinal);
 
+            jsonFinalLast = JSON.parse(jsonFinalLast);
+
             jsonFinalLast.forEach(function(nodo){
                $.post('/chapters.json', {chapter:nodo}, function(res){console.log(res)})
             })
