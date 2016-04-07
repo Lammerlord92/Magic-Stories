@@ -2,7 +2,7 @@
   <a href="/stories/<%= story.id %>">
   <div class="story">
     <p class="title"><%= story.title %></p>
-    <img class="cover-image" title="<%= story.title %>" src="/assets/temporal_cover.jpg" />
+      <%= render 'stories/story_cover', story: story %>
     <div class="story-info">
       <p class="author"><%= story.creatorProfile.name %></p>
       <p class="valoration">Valoración</p>

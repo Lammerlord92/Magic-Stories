@@ -1,15 +1,15 @@
 <% @profiles.each do |profile| %>
 <div class="row">
-    
+
   <!-- Avatar -->
   <!-- TODO imágenes cuadradas -->
   <div class="col-md-2">
     <%= image_tag(profile.avatar, class: "img-circle img-responsive") %>
   </div>
-    
+
   <!-- Perfil -->
   <div class="col-md-4">
-    
+
     <!-- Información -->
     <div class="row">
       <div class="col-md-7">
@@ -63,18 +63,15 @@
         <!-- Relleno para grid de Bootstrap -->
       </div>
       <% profile.stories.last(4).each do |story| %>
-      <div class="col-md-2 stories">
+      <div class="col-md-2">
         <a href="/stories/<%= story.id %>">
-          <p><%= story.title.upcase %></p>
-          <img class="img-responsive" title="<%= story.title %>" src="/assets/temporal_cover.jpg" />
-          <!-- TODO Añadir atributo de valoración -->
-          <p>NOTA: 9</p>
+          <%= render 'stories/story_slot', story: story %>
         </a>
       </div>
       <% end %>
     </div>
   </div>
-      
+
 </div>
 <hr/>
 <% end %>

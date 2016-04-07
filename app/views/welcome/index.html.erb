@@ -5,10 +5,24 @@
     <% @categories.each do |category| %>
     <div class="col-md-2">
       <div class="trending-slot">
-        <%= render 'stories/story_slot', story: @story %>
+        <%= render 'stories/story_slot', story: @trending_stories[category] %>
         <p class="category"><%= category.name %></p>
       </div>
     </div>
     <% end %>
   </div>
 </div>
+
+<% @categories.each do |category| %>
+  <div class="trendings">
+    <h3><%= category.name %></h3>
+    <hr/>
+    <div class="row">
+      <% @first_six_trending_stories[category].each do |story| %>
+      <div class="col-md-2">
+        <%= render 'stories/story_slot', story: story %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
