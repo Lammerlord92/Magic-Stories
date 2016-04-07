@@ -238,7 +238,10 @@
               nodos.push(jsonFinal);
             }
 
-            var num_nodos = nodos.length+1;
+            //TODO FUken no estamos seguro de lo que hace esto al 100%
+            //TODO hemos creado el nuevo id para cada uno de los nodos del grafo dentro de la funcion
+            //TODO parsearAJSON
+            /*var num_nodos = nodos.length+1;
             var new_ids = range(num_nodos).map(function(n){
               return new Date().getTime()+n;
             });
@@ -257,8 +260,10 @@
               });
               return nodo;
             });
-            console.log("nodo parseado: \n"+JSON.stringify(nodos, null, 4));
-            //console.log("Este es el jsonFinal" + jsonFinal);
+            console.log("nodo parseado: \n"+JSON.stringify(nodos, null, 4));*/
+
+            console.log("Var nodos " + nodos);
+            console.log("Este es el jsonFinal" + jsonFinal);
 
           }));
 

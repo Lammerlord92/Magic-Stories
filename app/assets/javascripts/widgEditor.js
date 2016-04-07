@@ -2102,10 +2102,13 @@ function pasarAJSON(storyid,vertice, hijos){
     var verticeTitle = vertice.value.attributes[0].nodeValue;
     var verticeBody = vertice.value.attributes[1].nodeValue;
 
+    var veticeNodeId = storyid + "" + verticeId;
+    //window.alert("veticeNodeId " + veticeNodeId);
+
     //window.alert("Sigue bien1!!");
     console.log(vertice);
     //JSON inicial
-    var json = '{"story_id":' + storyid + ',"id":' + verticeId + ',"title":"' + verticeTitle + '","body":"' + verticeBody +
+    var json = '{"story_id":' + storyid + ',"id":' + veticeNodeId + ',"title":"' + verticeTitle + '","body":"' + verticeBody +
         '","child_options":[';
 
     //console.log("Todos los hijos " + hijos[0].source.id);
@@ -2124,6 +2127,9 @@ function pasarAJSON(storyid,vertice, hijos){
                     var sourceId = hijos[j].source.id;
                     var targetId = hijos[j].target.id;
 
+                    var sourceNodeId = storyid + "" + sourceId;
+                    var targetNodeId = storyid + "" + targetId;
+
                     console.log("SourceId" + sourceId);
                     console.log("TargetId" + targetId);
 
@@ -2138,7 +2144,7 @@ function pasarAJSON(storyid,vertice, hijos){
 
                         //var hijoTitle = vertices[targetId].value.attributes[0].nodeValue;
 
-                        json += '{"child_id":' + targetId + ',"parent_id":' + sourceId + ',"option":"' + optionTitle + '"}';
+                        json += '{"child_id":' + targetNodeId + ',"parent_id":' + sourceNodeId + ',"option":"' + optionTitle + '"}';
                         console.log("1" + json);
                     }else{
                         if(targetId==verticeId){
@@ -2148,7 +2154,7 @@ function pasarAJSON(storyid,vertice, hijos){
                             var optionTitle = hijos[j].value.attributes[0].nodeValue;
                             console.log(optionTitle);
                             //var hijoTitle = vertices[targetId].value.attributes[0].nodeValue;
-                            json += '{"child_id":' + targetId + ',"parent_id":' + sourceId + ',"option":"' + optionTitle + '"}';
+                            json += '{"child_id":' + targetNodeId + ',"parent_id":' + sourceNodeId + ',"option":"' + optionTitle + '"}';
                             console.log("2" + json);
                         }
                     }
@@ -2161,13 +2167,16 @@ function pasarAJSON(storyid,vertice, hijos){
                     console.log("SourceId" + sourceId);
                     console.log("TargetId" + targetId);
 
+                    var sourceNodeId = storyid + "" + sourceId;
+                    var targetNodeId = storyid + "" + targetId;
+
                     //Compruebo que el vertice origen sea yo mismo, eso quiere decir que la arista sale de mi, soy el padre
                     if(sourceId==verticeId){
                         // window.alert("Entra aqui 4!!");
                         //var hijoTitle = vertices[targetId].value.attributes[0].nodeValue;
                         var optionTitle = hijos[j].value.attributes[0].nodeValue;
                         console.log(optionTitle);
-                        json += '{"child_id":' + targetId + ',"parent_id":' + sourceId + ',"option":"' + optionTitle + '"}],';
+                        json += '{"child_id":' + targetNodeId + ',"parent_id":' + sourceNodeId + ',"option":"' + optionTitle + '"}],';
                         console.log("3" + json);
                     }else{
                         if(targetId==verticeId){
@@ -2176,7 +2185,7 @@ function pasarAJSON(storyid,vertice, hijos){
                             //json += '{"child_id":' + targetId + ',"parent_id":' + sourceId + ',"option":' + hijoTitle + '"},';
                         }else{ //Soy el padre del nodo cuyo id sea el targetId
                             var hijoTitle = vertices[targetId].value.attributes[0].nodeValue;
-                            json += '{"child_id":' + targetId + ',"parent_id":' + sourceId + ',"option":' + hijoTitle + '"}],';
+                            json += '{"child_id":' + targetNodeId + ',"parent_id":' + sourceNodeId + ',"option":' + hijoTitle + '"}],';
                             console.log("4" + json);
                         }
                     }
@@ -2195,9 +2204,11 @@ function pasarAJSON(storyid,vertice, hijos){
                 console.log("SourceId" + sourceId);
                 console.log("TargetId" + targetId);
 
+                var sourceNodeId = storyid + "" + sourceId;
+
                 //Me queda comprobar mirar apuntes y borrar de arriba el parent_options
                 if(targetId==verticeId){
-                    json += '"parent_options":[{' + sourceId + '}]}';
+                    json += '"parent_options":[{' + sourceNodeId + '}]}';
                 }else{
                     json += '"parent_options":[]}';
                 }
@@ -2212,8 +2223,12 @@ function pasarAJSON(storyid,vertice, hijos){
 
                         console.log("SourceId" + sourceId);
                         console.log("TargetId" + targetId);
+
+                        var sourceNodeId = storyid + "" + sourceId;
+                        var targetNodeId = storyid + "" + targetId;
+
                         if(targetId==verticeId){
-                            padres.push(sourceId);
+                            padres.push(sourceNodeId);
                         }
 
                     }else{
@@ -2223,11 +2238,13 @@ function pasarAJSON(storyid,vertice, hijos){
                         console.log("SourceId" + sourceId);
                         console.log("TargetId" + targetId);
 
+                        var sourceNodeId = storyid + "" + sourceId;
+
                         //Me queda comprobar mirar apuntes y borrar de arriba el parent_options
                         if(sourceId==verticeId){
                             //json += ']}';
                         }else{
-                            padres.push(sourceId);
+                            padres.push(sourceNodeId);
                         }
 
                     }
