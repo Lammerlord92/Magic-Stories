@@ -1783,40 +1783,55 @@ function actualizaNodo(){
         var graphBB = savedGraph;
         var attrs = cellBB.value.attributes;
 
-        for (var i = 0; i < attrs.length; i++) {
-            if (i == 0) { //Obtains the title
-                currentTitle = attrs[i].value;
+        if(attrs.length==1){
+            currentTitle = attrs[0].value;
 
-                graphBB.getModel().beginUpdate();
-                try {
-                    var edit = new mxCellAttributeChange(
-                        cellBB, attrs[0].nodeName,
-                        newEntryTitle);
-                    graphBB.getModel().execute(edit);
-                    graphBB.updateCellSize(cellBB);
-                }
-                finally {
-                    graphBB.getModel().endUpdate();
-                }
+            graphBB.getModel().beginUpdate();
+            try {
+                var edit = new mxCellAttributeChange(
+                    cellBB, attrs[0].nodeName,
+                    newEntryTitle);
+                graphBB.getModel().execute(edit);
+                graphBB.updateCellSize(cellBB);
+            }
+            finally {
+                graphBB.getModel().endUpdate();
+            }
+        }else{
+            for (var i = 0; i < attrs.length; i++) {
+                if (i == 0) { //Obtains the title
+                    currentTitle = attrs[i].value;
 
-            } else { //Obtains the body
-                //TODO if (newEntryData != attrs[1].value) {
-                graphBB.getModel().beginUpdate();
-                try {
-                    var edit = new mxCellAttributeChange(
-                        cellBB, attrs[1].nodeName,
-                        newEntryData);
-                    graphBB.getModel().execute(edit);
-                    graphBB.updateCellSize(cellBB);
+                    graphBB.getModel().beginUpdate();
+                    try {
+                        var edit = new mxCellAttributeChange(
+                            cellBB, attrs[0].nodeName,
+                            newEntryTitle);
+                        graphBB.getModel().execute(edit);
+                        graphBB.updateCellSize(cellBB);
+                    }
+                    finally {
+                        graphBB.getModel().endUpdate();
+                    }
+
+                } else { //Obtains the body
+                    //TODO if (newEntryData != attrs[1].value) {
+                    graphBB.getModel().beginUpdate();
+                    try {
+                        var edit = new mxCellAttributeChange(
+                            cellBB, attrs[1].nodeName,
+                            newEntryData);
+                        graphBB.getModel().execute(edit);
+                        graphBB.updateCellSize(cellBB);
+                    }
+                    finally {
+                        graphBB.getModel().endUpdate();
+                        graphBB=null;
+                    }
+                    //TODO }
                 }
-                finally {
-                    graphBB.getModel().endUpdate();
-                    graphBB=null;
-                }
-                //TODO }
             }
         }
-
         var graphBB = savedCell;
     }
 
