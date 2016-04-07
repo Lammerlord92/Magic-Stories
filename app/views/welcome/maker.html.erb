@@ -220,7 +220,7 @@
             //var hijos = [];
             var padres = [];
             var storyid = <%= @id %>;
-            window.alert("StoryId :" + storyid);
+            //window.alert("StoryId :" + storyid);
             for (i=0; i< vertices.length;i++) {
 
               //Sacamos todos los hijos de cada uno de los vertices del grafo
@@ -230,11 +230,11 @@
               //window.alert("Numero de vertices actual " + vertices.length);
               //window.alert("Esta es la i actual " +i);
               var jsonFinal = pasarAJSON(storyid,vertices[i], hijos);
-              window.alert("TErmina parseo")
+              //window.alert("TErmina parseo")
 
               mxUtils.popup(jsonFinal, true);
             }
-            console.log("Este es el jsonFinal" + jsonFinal);
+            //console.log("Este es el jsonFinal" + jsonFinal);
           }));
 
           // Changes the style for match the markup
