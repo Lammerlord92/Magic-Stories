@@ -65,8 +65,10 @@ hr{
 
 #barcon{
   color: #FFFFFF !important;
-  text-align: center !important;
+  text-align: left !important;
   font-size: 14px;
+    position: relative;
+    left: 0px;
 }
 
 /* Parche provisional */
