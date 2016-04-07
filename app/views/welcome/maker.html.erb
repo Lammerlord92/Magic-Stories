@@ -18,7 +18,7 @@
         border:  solid 2px darkgrey;
         padding: 10px;
       }
-      /* Dropdown Button */
+      /* Dropdown Button
       .dropbtn {
         background-color: #4CAF50;
         color: white;
@@ -26,41 +26,41 @@
         font-size: 16px;
         border: none;
         cursor: pointer;
-      }
+      }*/
 
-      /* Dropdown button on hover & focus */
+      /* Dropdown button on hover & focus
       .dropbtn:hover, .dropbtn:focus {
         background-color: #3e8e41;
-      }
+      }*/
 
-      /* The container <div> - needed to position the dropdown content */
+      /* The container <div> - needed to position the dropdown content
       .dropdown {
         position: relative;
         display: inline-block;
-      }
+      }*/
 
-      /* Dropdown Content (Hidden by Default) */
+      /* Dropdown Content (Hidden by Default)
       .dropdown-content {
         display: none;
         position: absolute;
         background-color: #f9f9f9;
         min-width: 160px;
         box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-      }
+      }*/
 
-      /* Links inside the dropdown */
+      /* Links inside the dropdown
       .dropdown-content a {
         color: black;
         padding: 12px 16px;
         text-decoration: none;
         display: block;
-      }
+      }*/
 
-      /* Change color of dropdown links on hover */
-      .dropdown-content a:hover {background-color: #f1f1f1}
+      /* Change color of dropdown links on hover
+      .dropdown-content a:hover {background-color: #f1f1f1}*/
 
-      /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-      .show {display:block;}
+      /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button)
+      .show {display:block;}*/
     </style>
 
     <!--
@@ -242,13 +242,42 @@
           new mxRubberband(graph);
 
           // Adds an option to view the XML of the graph
-          document.querySelector('#bodyCol').appendChild(mxUtils.button('View XML', function () {
+          /*document.querySelector('#bodyCol').appendChild(mxUtils.button('View XML', function () {
             var encoder = new mxCodec();
             var node = encoder.encode(graph.getModel());
             mxUtils.popup(mxUtils.getPrettyXml(node), true);
+          }));*/
+
+          document.querySelector('#bodyCol').appendChild(mxUtils.button('View JSON', function () {
+            var encoder = new mxCodec();
+            var node = encoder.encode(graph.getModel());
+            //mxUtils.popup(mxUtils.getPrettyXml(node), true);
+
+            //Esto nos coge todos los vertices del grafo
+            var vertices = graph.getChildVertices(graph.getDefaultParent());
+            var content = [];
+            //var hijos = [];
+            var padres = [];
+            for (i = 0; i < vertices.length; i++) {
+
+              //Sacamos todos los hijos de cada uno de los vertices del grafo
+              var hijos = vertices[i].edges;
+
+              //window.alert("Empieza el parseo!!");
+              //window.alert("Numero de vertices actual " + vertices.length);
+              //window.alert("Esta es la i actual " +i);
+              var jsonFinal = pasarAJSON(vertices[i], hijos);
+              window.alert("TErmina parseo")
+
+              //mxUtils.popup(jsonFinal, true);
+
+
+              console.log("Este es el jsonFinal" + jsonFinal);
+            }
           }));
 
-          // Changes the style for match the markup
+
+            // Changes the style for match the markup
           // Creates the default style for vertices
           var style = graph.getStylesheet().getDefaultVertexStyle();
           style[mxConstants.STYLE_STROKECOLOR] = 'gray';
@@ -533,17 +562,7 @@
             <input id="my_textBody" name="noise" class="widgEditor nothing"/>
 
             <!-- Esto sería para guardar la id del nodo actual, que nos servirá para crear los enlaces necesarios -->
-            <input id="my_ownId" name="my_ownId">
-            <input id="my_ownId2" name="my_ownId2">
             <br/>
-            <div class="dropdown">
-              <button onclick="myDropdownFunction()" class="dropbtn">Add child</button>
-              <div id="myDropdown" class="dropdown-content">
-                <a><label>Hola</label></a>
-                <a><label>Medio</label></a>
-                <a><label>Adiós</label></a>
-              </div>
-            </div>
 
             <button id="submitButtonId" name="submitButtonName" onclick="actualizaNodo()"> Guardar</button>
           </div>

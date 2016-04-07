@@ -2113,3 +2113,135 @@ function crearNuevaArista3(params){
     edit2Bool = false;
     chapterArray = [];
 }
+
+
+
+
+
+
+
+function pasarAJSON(vertice, hijos){
+
+    var verticeId = vertice.id;
+    var verticeTitle = vertice.value.attributes[0].nodeValue;
+    var verticeBody = vertice.value.attributes[1].nodeValue;
+
+    window.alert("Sigue bien1!!");
+    console.log(vertice);
+    //JSON inicial
+    var json = '{"id":' + verticeId + ',"title":' + verticeTitle + ',"body":' + verticeBody +
+        ',"child_options":[';
+
+    console.log("Todos los hijos " + hijos[0].source.id);
+   // window.alert("Sigue bien1!!");
+
+    try{
+        if(hijos.length==0){
+            json+= '],';
+        }else{
+            for(j=0;j<hijos.length;j++) {
+                if (j != hijos.length - 1) {
+                   // window.alert("Entra aqui bien 2!!");
+                    //Hay que comprobar que el id del hijo no sea el mismo del padre
+                    console.log("J" + j);
+                    var sourceId = hijos[j].source.id;
+                    var targetId = hijos[j].target.id;
+
+                    console.log("SourceId" + sourceId);
+                    console.log("TargetId" + targetId);
+
+                    //Compruebo que el vertice origen sea yo mismo, eso quiere decir que la arista sale de mi, soy el padre
+                    if(sourceId==verticeId){
+                        console.log("SourceIdDentro" + sourceId);
+                        console.log("VerticeActualId" + verticeId);
+
+                        //TODO NO ME LO PILLA PORQUE EL EDGES SON DOS (0,1)
+                        var optionTitle = hijos[j].value.attributes[0].nodeValue;
+                        console.log(optionTitle);
+
+                        //var hijoTitle = vertices[targetId].value.attributes[0].nodeValue;
+
+                        json += '{"child_id":' + targetId + ',"parent_id":' + sourceId + ',"option":' + optionTitle + '"},';
+                        console.log("1" + json);
+                    }else{
+                        if(targetId==verticeId){
+                            //No hace nada porque ya esta presente en el JSON
+                            //json += '{"child_id":' + targetId + ',"parent_id":' + sourceId + ',"option":' + hijoTitle + '"},';
+                        }else{ //Soy el padre del nodo cuyo id sea el targetId
+                            var optionTitle = hijos[j].value.attributes[0].nodeValue;
+                            console.log(optionTitle);
+                            //var hijoTitle = vertices[targetId].value.attributes[0].nodeValue;
+                            json += '{"child_id":' + targetId + ',"parent_id":' + sourceId + ',"option":' + optionTitle + '"},';
+                            console.log("2" + json);
+                        }
+                    }
+                } else {
+                    //window.alert("Entra aqui en el 3!!!");
+                    //Hay que comprobar que el id del hijo no sea el mismo del padre
+                    var sourceId = hijos[j].source.id;
+                    var targetId = hijos[j].target.id;
+
+                    console.log("SourceId" + sourceId);
+                    console.log("TargetId" + targetId);
+
+                    //Compruebo que el vertice origen sea yo mismo, eso quiere decir que la arista sale de mi, soy el padre
+                    if(sourceId==verticeId){
+                       // window.alert("Entra aqui 4!!");
+                        //var hijoTitle = vertices[targetId].value.attributes[0].nodeValue;
+                        var optionTitle = hijos[j].value.attributes[0].nodeValue;
+                        console.log(optionTitle);
+                        json += '{"child_id":' + targetId + ',"parent_id":' + sourceId + ',"option":' + optionTitle + '"}],';
+                        console.log("3" + json);
+                    }else{
+                        if(targetId==verticeId){
+                            //No hace nada porque ya esta presente en el JSON
+                            json += '],';
+                            //json += '{"child_id":' + targetId + ',"parent_id":' + sourceId + ',"option":' + hijoTitle + '"},';
+                        }else{ //Soy el padre del nodo cuyo id sea el targetId
+                            var hijoTitle = vertices[targetId].value.attributes[0].nodeValue;
+                            json += '{"child_id":' + targetId + ',"parent_id":' + sourceId + ',"option":' + hijoTitle + '"}],';
+                            console.log("4" + json);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    finally {
+        for(j=0;j<hijos.length;j++) {
+            if (j != hijos.length - 1) {
+                var sourceId = hijos[j].source.id;
+                var targetId = hijos[j].target.id;
+
+                console.log("SourceId" + sourceId);
+                console.log("TargetId" + targetId);
+
+                //Me queda comprobar mirar apuntes y borrar de arriba el parent_options
+                if(targetId==verticeId){
+                    json += '"parent_options":[{' + sourceId + '}';
+                }else{
+                    json += '"parent_options":[';
+                }
+
+            }else{
+                var sourceId = hijos[j].source.id;
+                var targetId = hijos[j].target.id;
+
+                console.log("SourceId" + sourceId);
+                console.log("TargetId" + targetId);
+
+                //Me queda comprobar mirar apuntes y borrar de arriba el parent_options
+                if(sourceId==verticeId){
+                    json += ']}';
+                }else{
+                    json += ',{' + sourceId + '}]}';
+                }
+
+            }
+        }
+    }
+    return json;
+    //window.alert("ESte es el json " + json);
+    //console.log("Este es el json " + json);
+
+}
