@@ -96,9 +96,6 @@
           // filling in the popup DOM elements
           document.getElementById('operation').innerHTML = "Editar capítulo";
           document.getElementById('node-id').value = data.id;
-          document.getElementById('node-title').value = data.title;
-          document.getElementById('node-text').value = data.text;
-          document.getElementById('saveButton').onclick = saveData.bind(this, data, callback);
           document.getElementById('cancelButton').onclick = cancelEdit.bind(this,callback);
          document.getElementById('network-popUp').style.display = 'block';
         },

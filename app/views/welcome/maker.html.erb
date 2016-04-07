@@ -18,49 +18,9 @@
         border:  solid 2px darkgrey;
         padding: 10px;
       }
-      /* Dropdown Button
-      .dropbtn {
-        background-color: #4CAF50;
-        color: white;
-        padding: 16px;
-        font-size: 16px;
-        border: none;
-        cursor: pointer;
-      }*/
 
-      /* Dropdown button on hover & focus
-      .dropbtn:hover, .dropbtn:focus {
-        background-color: #3e8e41;
-      }*/
-
-      /* The container <div> - needed to position the dropdown content
-      .dropdown {
-        position: relative;
-        display: inline-block;
-      }*/
-
-      /* Dropdown Content (Hidden by Default)
-      .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: #f9f9f9;
-        min-width: 160px;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-      }*/
-
-      /* Links inside the dropdown
-      .dropdown-content a {
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-      }*/
-
-      /* Change color of dropdown links on hover
-      .dropdown-content a:hover {background-color: #f1f1f1}*/
-
-      /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button)
-      .show {display:block;}*/
+      /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+      .show {display:block;}
     </style>
 
     <!--
@@ -115,22 +75,22 @@
           chapter1.setAttribute('graphIndex','initialChapter01');
 
           /*var chapter2 = xml.createElement('Chapter');
-          chapter2.setAttribute('title', 'Juanoide pone la numeración');
-          chapter2.setAttribute('body', 'Juanoide ha hecho las cosas bien');
-          chapter2.setAttribute('graphIndex','chapter02');
+           chapter2.setAttribute('title', 'Juanoide pone la numeración');
+           chapter2.setAttribute('body', 'Juanoide ha hecho las cosas bien');
+           chapter2.setAttribute('graphIndex','chapter02');
 
-          var chapter3 = xml.createElement('Chapter');
-          chapter3.setAttribute('title', 'El grupo 1 se queja');
-          chapter3.setAttribute('body', 'Buuuuu');
-          chapter3.setAttribute('graphIndex','chapter03');
+           var chapter3 = xml.createElement('Chapter');
+           chapter3.setAttribute('title', 'El grupo 1 se queja');
+           chapter3.setAttribute('body', 'Buuuuu');
+           chapter3.setAttribute('graphIndex','chapter03');
 
-          var chapter4 = xml.createElement('Chapter');
-          chapter4.setAttribute('title', 'Juanoide no pone la numeración');
-          chapter4.setAttribute('body', 'Juanoide no ha hecho las cosas bien');
-          chapter4.setAttribute('graphIndex','chapter04');
+           var chapter4 = xml.createElement('Chapter');
+           chapter4.setAttribute('title', 'Juanoide no pone la numeración');
+           chapter4.setAttribute('body', 'Juanoide no ha hecho las cosas bien');
+           chapter4.setAttribute('graphIndex','chapter04');
 
-          var relation = xml.createElement('sendTo');
-          relation.setAttribute('since', '1985');*/
+           var relation = xml.createElement('sendTo');
+           relation.setAttribute('since', '1985');*/
 
           //Creates a list of chapters
           window.chapterArray = [];
@@ -243,10 +203,11 @@
 
           // Adds an option to view the XML of the graph
           /*document.querySelector('#bodyCol').appendChild(mxUtils.button('View XML', function () {
-            var encoder = new mxCodec();
-            var node = encoder.encode(graph.getModel());
-            mxUtils.popup(mxUtils.getPrettyXml(node), true);
-          }));*/
+           var encoder = new mxCodec();
+           var node = encoder.encode(graph.getModel());
+           mxUtils.popup(mxUtils.getPrettyXml(node), true);
+           }));*/
+
 
           document.querySelector('#bodyCol').appendChild(mxUtils.button('View JSON', function () {
             var encoder = new mxCodec();
@@ -258,7 +219,7 @@
             var content = [];
             //var hijos = [];
             var padres = [];
-            for (i = 0; i < vertices.length; i++) {
+            for (i=0; i< vertices.length;i++) {
 
               //Sacamos todos los hijos de cada uno de los vertices del grafo
               var hijos = vertices[i].edges;
@@ -269,15 +230,12 @@
               var jsonFinal = pasarAJSON(vertices[i], hijos);
               window.alert("TErmina parseo")
 
-              //mxUtils.popup(jsonFinal, true);
-
-
-              console.log("Este es el jsonFinal" + jsonFinal);
+              mxUtils.popup(jsonFinal, true);
             }
+            console.log("Este es el jsonFinal" + jsonFinal);
           }));
 
-
-            // Changes the style for match the markup
+          // Changes the style for match the markup
           // Creates the default style for vertices
           var style = graph.getStylesheet().getDefaultVertexStyle();
           style[mxConstants.STYLE_STROKECOLOR] = 'gray';
@@ -309,13 +267,13 @@
 
             var v1 = graph.insertVertex(parent, null, chapter1, 40, 40, chapter1.getAttribute('title').length * 7, 30);
             /*var v2 = graph.insertVertex(parent, null, chapter2, 200, 150, chapter2.getAttribute('title').length * 7, 30);
-            var v3 = graph.insertVertex(parent, null, chapter3, 450, 125, chapter3.getAttribute('title').length * 7, 30);
-            var v4 = graph.insertVertex(parent, null, chapter4, 200, 100, chapter4.getAttribute('title').length * 7, 30);
+             var v3 = graph.insertVertex(parent, null, chapter3, 450, 125, chapter3.getAttribute('title').length * 7, 30);
+             var v4 = graph.insertVertex(parent, null, chapter4, 200, 100, chapter4.getAttribute('title').length * 7, 30);
 
-            var e1 = graph.insertEdge(parent, null, relation, v1, v2);
-            var e2 = graph.insertEdge(parent, null, relation, v2, v3);
-            var e3 = graph.insertEdge(parent, null, relation, v1, v4);
-            var e4 = graph.insertEdge(parent, null, relation, v4, v3);*/
+             var e1 = graph.insertEdge(parent, null, relation, v1, v2);
+             var e2 = graph.insertEdge(parent, null, relation, v2, v3);
+             var e3 = graph.insertEdge(parent, null, relation, v1, v4);
+             var e4 = graph.insertEdge(parent, null, relation, v4, v3);*/
           }
           finally {
             // Updates the display
