@@ -12,7 +12,7 @@
       <hr/>
       <p>Géneros: <%= story.categories %></p> <!-- TODO: Probar que las categorías se muestren cuando se arregle el problema de BD -->
       <p>Idioma: <%= story.language %></p> <!-- TODO: Mejorar la forma en la que se muestra el idioma -->
-      <p>Fecha de publicación: <%= story.release_date %></p> <!-- TODO: Mejorar la forma en la que se muestra la fecha -->
+      <p>Fecha de publicación: <%= story.release_date.strftime('%d/%m/%Y') %></p>
       <% if current_user.present? %> <!-- Evitar "NilException" -->
         <% if story.creatorProfile.id == current_user.profile.id %>
           <div class="center" style="margin-bottom: 10px;">

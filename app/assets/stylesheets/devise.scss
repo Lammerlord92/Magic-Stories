@@ -1,15 +1,40 @@
-
 #welcome{
   background-image: url("/assets/cataru.jpg");
   background-repeat: repeat-x repeat-y;
-
-
 }
-#backgroundcolor{
+
+.jumbotron{
   background: rgba(255, 255, 255, 0.75) !important;
-
- 
-        
+  padding-top: 20px !important;
+  margin-top: 30px !important;
 }
 
+.logo{
+	height: 250px;
+}
 
+.entrada{
+	margin: 15px 0 15px 0;
+}
+
+.form-control{
+	margin-bottom: 10px !important;
+	border-radius: 0 !important;
+}
+
+.btn{
+	border-radius: 0 !important;
+}
+
+.btn-danger{
+	margin-bottom: 20px !important;
+}
+
+.btn-success{
+	color: white !important;
+}
+
+.centered{
+  float: none;
+  margin: 0 auto;
+}
