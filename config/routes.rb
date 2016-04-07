@@ -41,7 +41,7 @@ Rails.application.routes.draw do
   #########################################################################
 
   get 'welcome/index'
-  get 'welcome/maker'
+  get 'welcome/maker/:id' => 'maker#show'
   get 'welcome/maker2'
   get 'welcome/maker3'
   get 'welcome/maker4'
@@ -76,6 +76,7 @@ Rails.application.routes.draw do
 
   #Chapters
   get 'chapters/:id' => 'chapters#show'
+  post 'chapters' => 'chapters#create'
 
   #Profiles
   get 'profiles/search', to: 'profiles#search'

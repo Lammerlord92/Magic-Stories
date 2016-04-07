@@ -75,22 +75,22 @@
           chapter1.setAttribute('graphIndex','initialChapter01');
 
           /*var chapter2 = xml.createElement('Chapter');
-          chapter2.setAttribute('title', 'Juanoide pone la numeración');
-          chapter2.setAttribute('body', 'Juanoide ha hecho las cosas bien');
-          chapter2.setAttribute('graphIndex','chapter02');
+           chapter2.setAttribute('title', 'Juanoide pone la numeración');
+           chapter2.setAttribute('body', 'Juanoide ha hecho las cosas bien');
+           chapter2.setAttribute('graphIndex','chapter02');
 
-          var chapter3 = xml.createElement('Chapter');
-          chapter3.setAttribute('title', 'El grupo 1 se queja');
-          chapter3.setAttribute('body', 'Buuuuu');
-          chapter3.setAttribute('graphIndex','chapter03');
+           var chapter3 = xml.createElement('Chapter');
+           chapter3.setAttribute('title', 'El grupo 1 se queja');
+           chapter3.setAttribute('body', 'Buuuuu');
+           chapter3.setAttribute('graphIndex','chapter03');
 
-          var chapter4 = xml.createElement('Chapter');
-          chapter4.setAttribute('title', 'Juanoide no pone la numeración');
-          chapter4.setAttribute('body', 'Juanoide no ha hecho las cosas bien');
-          chapter4.setAttribute('graphIndex','chapter04');
+           var chapter4 = xml.createElement('Chapter');
+           chapter4.setAttribute('title', 'Juanoide no pone la numeración');
+           chapter4.setAttribute('body', 'Juanoide no ha hecho las cosas bien');
+           chapter4.setAttribute('graphIndex','chapter04');
 
-          var relation = xml.createElement('sendTo');
-          relation.setAttribute('since', '1985');*/
+           var relation = xml.createElement('sendTo');
+           relation.setAttribute('since', '1985');*/
 
           //Creates a list of chapters
           window.chapterArray = [];
@@ -203,10 +203,10 @@
 
           // Adds an option to view the XML of the graph
           /*document.querySelector('#bodyCol').appendChild(mxUtils.button('View XML', function () {
-            var encoder = new mxCodec();
-            var node = encoder.encode(graph.getModel());
-            mxUtils.popup(mxUtils.getPrettyXml(node), true);
-          }));*/
+           var encoder = new mxCodec();
+           var node = encoder.encode(graph.getModel());
+           mxUtils.popup(mxUtils.getPrettyXml(node), true);
+           }));*/
 
 
           document.querySelector('#bodyCol').appendChild(mxUtils.button('View JSON', function () {
@@ -267,13 +267,13 @@
 
             var v1 = graph.insertVertex(parent, null, chapter1, 40, 40, chapter1.getAttribute('title').length * 7, 30);
             /*var v2 = graph.insertVertex(parent, null, chapter2, 200, 150, chapter2.getAttribute('title').length * 7, 30);
-            var v3 = graph.insertVertex(parent, null, chapter3, 450, 125, chapter3.getAttribute('title').length * 7, 30);
-            var v4 = graph.insertVertex(parent, null, chapter4, 200, 100, chapter4.getAttribute('title').length * 7, 30);
+             var v3 = graph.insertVertex(parent, null, chapter3, 450, 125, chapter3.getAttribute('title').length * 7, 30);
+             var v4 = graph.insertVertex(parent, null, chapter4, 200, 100, chapter4.getAttribute('title').length * 7, 30);
 
-            var e1 = graph.insertEdge(parent, null, relation, v1, v2);
-            var e2 = graph.insertEdge(parent, null, relation, v2, v3);
-            var e3 = graph.insertEdge(parent, null, relation, v1, v4);
-            var e4 = graph.insertEdge(parent, null, relation, v4, v3);*/
+             var e1 = graph.insertEdge(parent, null, relation, v1, v2);
+             var e2 = graph.insertEdge(parent, null, relation, v2, v3);
+             var e3 = graph.insertEdge(parent, null, relation, v1, v4);
+             var e4 = graph.insertEdge(parent, null, relation, v4, v3);*/
           }
           finally {
             // Updates the display
@@ -531,7 +531,9 @@
   </tr>
 </table>
 
-
+<script>
+  alert("Estas editando la historia con id "+<%= @id %>)
+</script>
 
 </body>
 </html>

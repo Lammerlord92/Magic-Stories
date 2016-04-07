@@ -14,6 +14,9 @@
 //= require jquery_ujs
 
 //= require bootstrap
+//= require bootstrap-wysihtml5
 
 //= require turbolinks
 //= require_tree .
+
+

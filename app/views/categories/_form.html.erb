@@ -36,12 +36,11 @@
       <%= cat.text_field :name, placeholder: "Nombre de categoría", class:"form-field" %>
     </div>
     <div class="field">
-        <%= cat.text_area :description, placeholder: "Descripción de categoría", class:"form-field" %>
+        <%= cat.text_area :description, placeholder: "Descripción de categoría" %>
     </div>
     <div class="field">
       <input type="file" onchange="previewFile()"><br>
       <img src="<%=@category.icon %>" height="200" alt="Imagen actual">
-
     </div>
     <%=hidden_field(:category,:icon)%>
     <div class="buttons">
