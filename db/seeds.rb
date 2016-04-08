@@ -367,11 +367,11 @@ membership_card7 = MembershipCard.create({premiumMonths: 9})
 
 
 
-membership_card1.update({premiumMonths: 3, expiration:  Date.today + 15, usage: nil, code: '0123456789abcde01' })
-membership_card2.update({premiumMonths: 3, expiration:  Date.today + 15, usage: nil, code: '0123456789abcde02' })
-membership_card3.update({premiumMonths: 3, expiration:  Date.today + 15, usage: nil, code: '0123456789abcde03' })
-membership_card4.update({premiumMonths: 3, expiration:  Date.today + 15, usage: nil, code: '0123456789abcde04' })
-membership_card5.update({premiumMonths: 3, expiration:  Date.today + 15, usage: nil, code: '0123456789abcde05' })
+membership_card1.update({premiumMonths: 3, expiration:  Date.today + 15, usage: nil, code: '0123456789abcde1' })
+membership_card2.update({premiumMonths: 3, expiration:  Date.today + 15, usage: nil, code: '0123456789abcde2' })
+membership_card3.update({premiumMonths: 3, expiration:  Date.today + 15, usage: nil, code: '0123456789abcde3' })
+membership_card4.update({premiumMonths: 3, expiration:  Date.today + 15, usage: nil, code: '0123456789abcde4' })
+membership_card5.update({premiumMonths: 3, expiration:  Date.today + 15, usage: nil, code: '0123456789abcde5' })
 
 puts 'Success: Creacion de tajetas premium'
 
