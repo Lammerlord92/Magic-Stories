@@ -13,6 +13,13 @@
       <p>Géneros: <%= story.categories %></p> <!-- TODO: Probar que las categorías se muestren cuando se arregle el problema de BD -->
       <p>Idioma: <%= story.language %></p> <!-- TODO: Mejorar la forma en la que se muestra el idioma -->
       <p>Fecha de publicación: <%= story.release_date %></p> <!-- TODO: Mejorar la forma en la que se muestra la fecha -->
+      <% if current_user.present? %> <!-- Evitar "NilException" -->
+        <% if story.creatorProfile.id == current_user.profile.id %>
+          <div class="center" style="margin-bottom: 10px;">
+            <%= button_to 'Ir al editor de historias', "/welcome/maker/#{story.id}",  class: 'btn btn-default', method: :get %>
+          </div>
+        <% end %>
+      <% end %>
     </div>
   </div>
   <div class="col-md-8">
