@@ -5,7 +5,7 @@
       <%= render 'stories/story_cover', story: story %>
     <div class="story-info">
       <p class="author"><%= story.creatorProfile.name %></p>
-      <p class="valoration">Valoración</p>
+      <%= render 'stories/valoration', valoration: 8 %>
     </div>
   </div>
   </a>

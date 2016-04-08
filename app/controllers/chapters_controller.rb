@@ -8,7 +8,8 @@ class ChaptersController < ApplicationController
   end
 
   def create
-    @chapter = Chapter.new(chapter_params)
+    @chapter = Chapter.find_or_create_by(chapter_params)
+    @chapter.assign_attributes chapter_params
 
     respond_to do |format|
       if @chapter.save
@@ -22,7 +23,7 @@ class ChaptersController < ApplicationController
 
   private
     def chapter_params
-      params.require(:chapter).permit('child_options', 'body', 'title', 'id', 'parent_options')
+      params.require(:chapter).permit('child_options', 'story_id', 'body', 'title', 'id', 'parent_options')
     end
 
 end
