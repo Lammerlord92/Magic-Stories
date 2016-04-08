@@ -214,6 +214,8 @@
             var node = encoder.encode(graph.getModel());
             //mxUtils.popup(mxUtils.getPrettyXml(node), true);
 
+            var nodos = [];
+
             //Esto nos coge todos los vertices del grafo
             var vertices = graph.getChildVertices(graph.getDefaultParent());
             var content = [];
@@ -232,10 +234,39 @@
               var jsonFinal = pasarAJSON(storyid,vertices[i], hijos);
               //window.alert("TErmina parseo")
 
-              mxUtils.popup(jsonFinal, true);
+              //mxUtils.popup(jsonFinal, true);
+              nodos.push(jsonFinal);
             }
+
+            var num_nodos = nodos.length+1;
+            var new_ids = range(num_nodos).map(function(n){
+              return new Date().getTime()+n;
+            });
+            nodos = nodos.map(function(nodo){ return JSON.parse(nodo) });
+            nodos = nodos.map(function(nodo){
+              nodo.id = new_ids[nodo.id];
+              if(nodo.child_options) nodo.child_options = nodo.child_options.map(function(child){
+                child.child_id = new_ids[child.child_id];
+                child.parent_id = new_ids[child.parent_id];
+                return child;
+              });
+              if(nodo.parent_options) nodo.parent_options = nodo.parent_options.map(function(parent){
+                parent.parent_id = new_ids[parent.parent_id];
+                parent.child_id = new_ids[parent.child_id];
+                return parent;
+              });
+              return nodo;
+            });
+            console.log("nodo parseado: \n"+JSON.stringify(nodos, null, 4));
             //console.log("Este es el jsonFinal" + jsonFinal);
+
           }));
+
+
+          var range = function(len){
+            return Array.apply(null, Array(len)).map(function (_, i) {return i;});
+          };
+
 
           // Changes the style for match the markup
           // Creates the default style for vertices
