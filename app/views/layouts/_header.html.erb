@@ -1,64 +1,48 @@
-<header class="navbar navbar-default">
-  <div class="container " id="barcon" >
-    <div class="navbar-header row row-centered  col-md-4 col-centered logo">
-
-      <a href="/">
-        <img class="image-responsive  col-md-4 col-centered" src="/assets/logo fondo.png" alt="Tree Story">
-      </a>
-
-      <a id="barcon" href="/">
-        <img class="image-responsive  col-md-2 col-centered" src="/assets/msj blanco.png" alt="Comentarios">
-      </a>
-
-    </div>
-    <ul class="nav navbar-nav" id="barcon">
-      <li><a data-no-turbolink="true" href="/stories/example" id="barcon">Descubrir</a></li>
-      <li><a href="/stories" id="barcon">Historias</a></li>
-      <li><a href="/categories" id="barcon">Géneros</a></li>
-      <li><a href="/membership_cards/exchange" id="barcon">Subscripción Premium</a></li>
-
-      <% if user_signed_in? %>
-        <% if current_user.role_type == 'PremiumUser' %>
-
-          <li><%= button_to '+ Nueva Historia',"/stories/new",  class: 'btn',method: :get, id: 'NH' %></li>
-        
-        <% end %>
-      <% end %>
-    
-    </ul>
-    
-    <ul class="nav navbar-nav navbar-right" id="barcon">  
-      <li class="dropdown" id="barcon">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-            role="button" aria-haspopup="true" aria-expanded="false" id="barcon">
+<header>
+  <nav class="navbar navbar-default navbar-static-top">
+    <div class="container">
+      <div class="navbar-header col-md-3">
+        <a class="navbar-brand img-container" href="/">
+          <img alt="Tree Story" src="/assets/logo fondo.png">
+        </a>
+        <a class="navbar-brand img-container" href="#">
+          <img alt="Comentarios" src="/assets/msj blanco.png">
+        </a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="/stories/example">Descubrir</a></li>
+          <li><a href="/stories">Historias</a></li>
+          <li><a href="/categories">Géneros</a></li>
+          <li><a href="/membership_cards/exchange">Suscripción premium</a></li>
+          <li><a href="#">Escritores que seguir</a></li>
           <% if user_signed_in? %>
-            <%= image_tag current_user.profile.avatar, class: "img-circle image-responsive", style: "width: 30px"%>
+          <% if current_user.role_type == 'PremiumUser' %>
+          <li><%= link_to "+ Nueva Historia", "/stories/new", class: "btn newstory", method: :get %></li>
           <% end %>
-        <span class="caret"></span></a>
-        <ul class="dropdown-menu ">
-          <% if user_signed_in? %>
-              <% if current_user.profile %>
-                <li><a href="/profiles/<%= current_user.profile.id %>">Mi perfil</a></li>
-              <% end %>
-              <% if current_user.role_type == 'Administrator' %>
-                  <li><a href="/categories/new">Crear género</a></li> <!-- No tiene sentido que cualquiera entre y llene la BD de mierda -->
-              <% end %>
-
-
-          <li><a href="/profiles">Comunidad</a></li>
-            <li><a href="/connections/search">Mis conexiones</a></li>
-              <li><a href="/membership_cards/exchange">Subscripción premium</a></li>
-          <li role="separator" class="divider"></li>
-          <li>
-               <%= link_to "Cerrar sesión", destroy_user_session_path, :method => :delete %>
-          </li>
-
-
-
           <% end %>
-
         </ul>
-      </li>
-    </ul>
-  </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle img-container" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <%= image_tag current_user.profile.avatar, class: "img-circle" %>
+              <span class="caret"></span></a>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="/profiles/<%= current_user.profile.id %>">Mi perfil</a></li>
+              <li><a href="/profiles">Comunidad</a></li>
+              <li><a href="/connections/search">Mis conexiones</a></li>
+              <li><a href="/membership_cards/exchange">Subscripción premium</a></li>
+              <% if current_user.role_type == 'Administrator' %>
+              <li role="separator" class="divider"></li>
+              <li><a href="/categories/new">Crear género</a></li>
+              <% end %>
+              <li role="separator" class="divider"></li>
+              <li><%= link_to "Cerrar sesión", destroy_user_session_path, :method => :delete %></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 </header>

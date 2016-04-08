@@ -16,7 +16,7 @@
  *= require bootstrap-wysihtml5
  */
 
-/*Errores */
+/* Errores */
 
 .errors{
   border: 1px solid darkred;
@@ -48,70 +48,63 @@ body{
   background-color: #efefef !important;
 }
 
-header{
-  background-color: #002400 !important;
-  color: #FFFFFF !important;
-}
-
 .header-content{
   min-height:100%;
   padding-bottom: 50px;
 }
 
-
-/* Header */
-
-/* Cambio del color de hr por defecto para que se aprecie con el nuevo fondo */
-hr{
-  border-color: darkgray !important;
-}
-
-#barcon{
-  color: #FFFFFF !important;
-  text-align: left !important;
-  font-size: 14px;
-  position: relative;
-  left: 0px;
-}
-
-/* Parche provisional */
-.logo{
-  margin-top: 10px;
-}
-
-#NH{
-  color: #002400;
-  background-color: #ECA701;
-
-}
-
-/* centered columns styles */
-.row-centered {
-  text-align:center;
-}
-
-.col-centered {
-  display:inline-block;
-  float:none;
-  /* reset the text-align */
-  text-align:left;
-  /* inline-block space fix */
-  margin-right:-4px;
-}
-
-/* resize images */
-a.image_container img {
-  width: 20%;
-  height: 20%;
-}
-
-
-/* Footer */
-
 .footer{
   height: 50px;
   margin-top: -50px !important;
 }
+
+
+/* Header */
+
+header nav{
+  background-color: #002400 !important;
+  border: 0 !important;
+}
+
+header a, a:hover{
+  color: #FFFFFF !important;
+}
+
+.newstory, .newstory:hover{
+  color: #002400 !important;
+  background-color: #ECA701 !important;
+  border-radius: 0 !important;
+  border: 0 !important;
+  padding: 5px !important;
+  margin: 10px;
+}
+
+header img{
+  height: 42px !important;
+}
+
+.img-container{
+  padding: 4px !important;
+}
+
+.navbar-brand{
+  margin-right: 20px !important;
+}
+
+.open .dropdown-toggle{
+  background-color: #002400 !important;
+}
+
+.dropdown-menu{
+  background-color: #002400 !important;
+}
+
+.dropdown-menu a:hover{
+  color: #002400 !important;
+}
+
+
+/* Footer */
 
 footer{
   width: 100%;
@@ -131,4 +124,13 @@ footer a:hover{
   margin: 0 !important;
   border: 0 !important;
   padding-top: 15px;
+}
+
+
+/* Layout */
+
+/* Cambio del color de hr por defecto para
+  que se aprecie con el nuevo fondo */
+hr{
+  border-color: darkgray !important;
 }
