@@ -23,6 +23,7 @@
           <% end %>
         </ul>
         <ul class="nav navbar-nav navbar-right">
+          <% if user_signed_in? %>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle img-container" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
               <%= image_tag current_user.profile.avatar, class: "img-circle" %>
@@ -41,6 +42,9 @@
               <li><%= link_to "Cerrar sesión", destroy_user_session_path, :method => :delete %></li>
             </ul>
           </li>
+          <% else %>
+          <li><a href="/user/sign_in">Iniciar sesión</a></li>
+          <% end %>
         </ul>
       </div>
     </div>
