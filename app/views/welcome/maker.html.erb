@@ -248,6 +248,10 @@
             jsonFinalLast.forEach(function(nodo){
                $.post('/chapters.json', {chapter:nodo}, function(res){console.log(res)})
             })
+            jsonFinalLast.forEach(function(nodo){
+              $.post('CAMBIAME', {chapter:nodo}, function(res){console.log(res)})
+            })
+
             alert("Se ha guardado la historia");
           }));
 
