@@ -1,93 +1,93 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Registro</title>
-      <%= favicon_link_tag 'favicon.ico' %>
-      <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-      <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+<head>
+  <title>Tree Story</title>
+  <%= favicon_link_tag 'favicon.ico' %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular-sanitize.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular-sanitize.js"></script>
 
-      <%= csrf_meta_tags %>
-  </head>
+  <%= csrf_meta_tags %>
+</head>
 
-  <body id="welcome">
-    <div class="container" id="container1">
-      <br>
-      <div class="jumbotron col-md-6 col-md-offset-3 " >
+<body id="welcome">
+  <div class="container">
+    <div class="jumbotron col-md-6 col-md-offset-3 row">
+      <div class="col-md-8 col-md-offset-2">
+
+        <img class="logo center-block" src="/assets/logo definitivo.png">
+              
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <%= devise_error_messages! %>
+
+          <div class="field">
+            <%= f.label :email %>
+            <%= f.email_field :email, autofocus: true, class: "form-control" %>
+          </div>
+
+          <div class="field">
+            <%= f.label :password, "Contraseña" %>
+            <% if @minimum_password_length %>
+            <em>(<%= @minimum_password_length %> caracteres mínimo)</em>
+            <% end %><br/>
+            <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
+          </div>
+
+          <div class="field">
+            <%= f.label :password_confirmation, "Repita contraseña" %><br/>
+            <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control" %>
+          </div>
+
+          <div class="field">
+            <%= f.label :username, "Usuario" %><br/>
+            <%= f.text_field :username, class: "form-control" %>
+          </div>
+
+          <div class="field">
+            <%= f.label :name, "Nombre" %><br/>
+            <%= f.text_field :name, class: "form-control" %>
+          </div>
+
+          <div class="field">
+            <%= f.label :surname1, "Primer apellido" %><br/>
+            <%= f.text_field :surname1, class: "form-control" %>
+          </div>
+
+          <div class="field">
+            <%= f.label :surname2, "Segundo apellido" %><br/>
+            <%= f.text_field :surname2, class: "form-control" %>
+          </div>
+
+          <div class="field">
+            <%= f.label :birthday, "Fecha de nacimiento" %><br/>
+            <%= f.text_field :birthday, :placeholder => "dd/mm/aaaa", class: "form-control" %>
+          </div>
+
+          <div class="field">
+            <%= f.label :phone, "Teléfono" %><br/>
+            <%= f.text_field :phone, class: "form-control" %>
+          </div>
+
+          <div class="field">
+            <%= f.hidden_field :sku, value: User.generateSKU %>
+          </div>
+
+          <br>
+
+          <%= f.submit "Registrarse" , class: "btn btn-primary btn-block" %> 
+
+        <% end %>
+
+        <hr>
+                  
+        <%= button_to 'Iniciar sesión', new_user_session_path, class: 'btn btn-danger btn-block', method: :get %>
           
-            <div class="form-group form-horizontal col-md-offset-3 centerfy">
-              <div class="row">
-                <img  class="image-responsive text-center col-md-9" align="middle" src="/assets/logo definitivo.png">
-              </div>
-              
-              
-              <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-              <%= devise_error_messages! %>
-              <br>
-                <div class="field">
+        <%= link_to 'Descubrir', stories_example_path, class: 'btn btn-success btn-block', data: {'no-turbolink': 'true'} %>
 
-                  <%= f.label :email %> <br>
-                  <%= f.email_field :email, autofocus: true %>
-                </div>
-
-                <div class="field">
-                  <%= f.label :password, "Contraseña" %>
-                  <% if @minimum_password_length %>
-                  <em>(<%= @minimum_password_length %> caracteres mínimo)</em>
-                  <% end %><br/>
-                  <%= f.password_field :password, autocomplete: "off" %>
-                </div>
-
-                <div class="field">
-                  <%= f.label :password_confirmation, "Repita contraseña" %><br/>
-                  <%= f.password_field :password_confirmation, autocomplete: "off" %>
-                </div>
-
-                <div class="field">
-                  <%= f.label :username, "Usuario" %><br/>
-                  <%= f.text_field :username %>
-                </div>
-
-                <div class="field">
-                  <%= f.label :name, "Nombre" %><br/>
-                  <%= f.text_field :name %>
-                </div>
-
-                <div class="field">
-                  <%= f.label :surname1, "Primer apellido" %><br/>
-                  <%= f.text_field :surname1 %>
-                </div>
-
-                <div class="field">
-                  <%= f.label :surname2, "Segundo apellido" %><br/>
-                  <%= f.text_field :surname2 %>
-                </div>
-
-                <div class="field">
-                  <%= f.label :birthday, "Fecha de nacimiento" %><br/>
-                  <%= f.text_field :birthday, :placeholder => "dd/mm/aaaa" %>
-                </div>
-
-                <div class="field">
-                  <%= f.label :phone, "Teléfono" %><br/>
-                  <%= f.text_field :phone %>
-                </div>
-
-                <div class="field">
-                <%= f.hidden_field :sku, value: User.generateSKU %>
-                </div>
-
-
-
-                <div class="actions">
-                  <%= f.submit "Registrate", class: 'btn btn-primary col-md-offset-2 ' %>
-                </div>
-
-              <% end %>
-        </div>  
       </div>
-    </div>
-  </body>  
-          <%= render "devise/shared/links" %>  
+    </div>  
+  </div>
+</body>
+</html>
