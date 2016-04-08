@@ -71,7 +71,7 @@ input[readonly] {
   text-align: left;
   margin-left: 6px;
   margin-top: 0px;
-  margin-bottom: 2px;  
+  margin-bottom: 2px;
 }
 
 .valoration-star {
@@ -121,6 +121,11 @@ input[readonly] {
   font-size: 130%;
   color: gray;
   margin-left: 0px;
+}
+
+.story-metadata .valoration-star {
+  height: auto;
+  max-height: 24px;
 }
 
 .story-metadata .center .story {

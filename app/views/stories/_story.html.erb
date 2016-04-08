@@ -7,7 +7,7 @@
           <%= render 'stories/story_cover', story: story %>
         </div>
       </div>
-      <p class="valoration">Valoración</p>
+      <%= render 'stories/valoration', valoration: 8 %>
       <h2><%= story.creatorProfile.name %></h2>
       <hr/>
       <p>Géneros: <%= story.categories %></p> <!-- TODO: Probar que las categorías se muestren cuando se arregle el problema de BD -->
