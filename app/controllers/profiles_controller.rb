@@ -8,13 +8,18 @@ class ProfilesController < ApplicationController
 
   #GET /profiles/:id
   def show
-    @profile = Profile.find(params[:id])
-    @is_current_profile = is_current_profile? @profile
-    @is_friend_profile = is_friend_profile? @profile
-    #unless @is_current_profile or @profile.profile_status == 'PUBLIC' or @is_friend_profile
-    #  render 'errors/permission_denied'
-    #end
-    @comments = @profile.comments
+    begin
+      @profile = Profile.find(params[:id])
+      @is_current_profile = is_current_profile? @profile
+      @is_friend_profile = is_friend_profile? @profile
+      #unless @is_current_profile or @profile.profile_status == 'PUBLIC' or @is_friend_profile
+      #  render 'errors/permission_denied'
+      #end
+      @comments = @profile.comments
+    rescue ActiveRecord::RecordNotFound => e      # Profile.find is null
+      render 'errors/not_found'
+    end
+
   end
 
   #GET /profiles/new
@@ -28,10 +33,16 @@ class ProfilesController < ApplicationController
   end
 
   def edit
-    @profile = set_profile
-    current_profile = current_user.profile
-    if @profile.id != current_profile.id
+    begin
+      @profile = set_profile
+      current_profile = current_user.profile
+      if @profile.id != current_profile.id
+        render 'errors/permission_denied'
+      end
+    rescue Exception::StandardError::NameError::NoMethodError => e      # current_user is null
       render 'errors/permission_denied'
+    rescue ActiveRecord::RecordNotFound => e      # profile.id not exist
+      render 'errors/not_found'
     end
   end
 
@@ -167,18 +178,30 @@ class ProfilesController < ApplicationController
 
   #GET /profiles/follow/:id
   def follow
-    profile = Profile.find(params[:id])
-    current_user.profile.follow!(profile)
-  #  flash.alert = "Perfil id: " + Profile.find(params[:id]).to_s + "  Perfil actual: " + current_profile.to_s
-    redirect_to profile
+    begin
+      profile = Profile.find(params[:id])
+      current_user.profile.follow!(profile)
+    #  flash.alert = "Perfil id: " + Profile.find(params[:id]).to_s + "  Perfil actual: " + current_profile.to_s
+      redirect_to profile
+    rescue Exception::StandardError::NameError::NoMethodError => e      # current_user is null
+      render 'errors/permission_denied'
+    rescue ActiveRecord::RecordNotFound => e      # profile.id not exist
+      render 'errors/not_found'
+    end
   end
 
   #GET /profiles/unfollow/:id
   def unfollow
-    profile = Profile.find(params[:id])
-    current_user.profile.unfollow!(profile)
-    #  flash.alert = "Perfil id: " + Profile.find(params[:id]).to_s + "  Perfil actual: " + current_profile.to_s
-    redirect_to profile
+    begin
+      profile = Profile.find(params[:id])
+      current_user.profile.unfollow!(profile)
+      #  flash.alert = "Perfil id: " + Profile.find(params[:id]).to_s + "  Perfil actual: " + current_profile.to_s
+      redirect_to profile
+    rescue Exception::StandardError::NameError::NoMethodError => e      # current_user is null
+      render 'errors/permission_denied'
+    rescue ActiveRecord::RecordNotFound => e      # profile.id not exist
+      render 'errors/not_found'
+    end
   end
 
   # Devuelve true si el 'profile' dado es seguido por el usuario
