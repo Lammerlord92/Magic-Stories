@@ -57,13 +57,26 @@ input[readonly] {
   font: arial;
   text-transform: uppercase;
   text-align: left;
-  margin: 2px auto;
+  margin-top: 2px;
   margin-left: 6px;
   margin-right: 6px;
+  margin-bottom: 0px;
 }
 
 .story-info p {
   font-size: 95%;
+}
+
+.story-info .valoration {
+  text-align: left;
+  margin-left: 6px;
+  margin-top: 0px;
+  margin-bottom: 2px;  
+}
+
+.valoration-star {
+  height: auto;
+  max-height: 16px;
 }
 
 .cover-image {
