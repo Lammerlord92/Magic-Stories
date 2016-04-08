@@ -2108,7 +2108,7 @@ function pasarAJSON(storyid,vertice, hijos){
     //window.alert("Sigue bien1!!");
     console.log(vertice);
     //JSON inicial
-    var json = '{"story_id":' + storyid + ',"id":' + veticeNodeId + ',"title":"' + verticeTitle + '","body":"' + verticeBody +
+    var json = '{"story_id":' + storyid + ',"id":' + veticeNodeId + ',"title":"' + verticeTitle.trim() + '","body":"' + verticeBody.trim() +
         '","child_options":[';
 
     //console.log("Todos los hijos " + hijos[0].source.id);
