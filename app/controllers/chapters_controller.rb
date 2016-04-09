@@ -21,6 +21,17 @@ class ChaptersController < ApplicationController
 
   end
 
+  def create_options
+    id = params[:chapter][:id]
+    @chapter = Chapter.find(id)
+    if !@chapter
+      render json: {error: "Error: No existe el capitulo con id #{id}"},
+             status: :unprocessable_entity
+    else
+      parents = chapter_params
+    end
+  end
+
   private
     def chapter_params
       params.require(:chapter).permit('child_options', 'story_id', 'body', 'title', 'id', 'parent_options')
