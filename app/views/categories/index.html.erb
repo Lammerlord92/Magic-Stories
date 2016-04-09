@@ -12,7 +12,11 @@
         <div class="block-left">
           <%= link_to category.name, category,title: category.description, rel: 'tooltip', class: "name-category-list" %>
           <br>
+          <% if user_signed_in? %>
+          <% if current_user.role_type == 'Administrator' %>
           <%= link_to "Borrar",category, method: :delete , class: "category-link" %>
+          <% end %>
+          <% end %>
         </div>
 
     </div>
@@ -21,7 +25,11 @@
 <% end %>
 
 </div>
+
+<% if user_signed_in? %>
+<% if current_user.role_type == 'Administrator' %>
 <div class="buttons col-md-4 col-md-offset-4">
   <%= link_to 'Nueva categoría', new_category_path, class: 'btn btn-default' %>
 </div>
-
+<% end %>
+<% end %>
