@@ -3,7 +3,7 @@
   background-repeat: repeat-x repeat-y;
 }
 
-.jumbotron{
+.jumbo-transparente{
   background: rgba(255, 255, 255, 0.75) !important;
   padding-top: 20px !important;
   margin-top: 30px !important;
@@ -30,7 +30,7 @@
 	margin-bottom: 20px !important;
 }
 
-.btn-success{
+.btn-success, .btn-success:hover{
 	color: white !important;
 }
 
