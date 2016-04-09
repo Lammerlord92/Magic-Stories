@@ -1,19 +1,9 @@
-<!-- Estructura provisional -->
-<div class="container">
 <div class="row">
 
-<div class="col-md-3">
-  <div class="btn-group-vertical" role="group">
-  	<%= link_to "Aspectos básicos de la cuenta", "/user/edit", class: "btn btn-default" %>
-  	<%= link_to "Perfil", "/profiles/#{current_user.profile.id}/edit", class: "btn btn-default" %>
+	<%= render "profiles/editpanel" %>
+
+	<div class="col-md-9 jumbotron">
+		<%= render "profiles/form", name: "Editar" %>
 	</div>
-</div>
 
-<div class="col-md-9">
-
-<%= render "profiles/form", name: "Editar" %>
-
-</div>
-
-</div>
 </div>

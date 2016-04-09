@@ -1,45 +1,43 @@
 <% name ||= "Editar" %>
 
-<head>
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-</head>
-
-<h1><%= name %> perfil</h1>
+<h2><%= name %> perfil</h2>
 
 <%= form_for(@profile) do |f| %>
-    <% @profile.errors.full_messages.each do |message| %>
-        <div class="error">
-          *<%= message %>
-        </div>
-    <% end %>
+    
+  <% @profile.errors.full_messages.each do |message| %>
+    <div class="error">
+      *<%= message %>
+    </div>
+  <% end %>
+    
+  <div class="field">
+    <%= f.label :name, 'Nombre' %>
+    <%= f.text_field :name, placeholder: 'Nombre', class: "form-control" %>
+  </div>
 
-    <br>
-    <div class="field">
-      <%= f.label :name, 'Nombre' %>
-      <%= f.text_field :name, placeholder: 'Nombre' %>
-    </div>
-    <br>
-    <div class="field">
-      <%= f.label :avatar %>
-      <%= f.text_field :avatar, placeholder: 'Avatar' %>
-    </div>
-    <br>
-    <div class="field">
-      <%= f.label :description, 'Descripción' %>
-      <%= f.text_area :description, placeholder: 'Descripción' %>
-    </div>
-    <br>
-    <div class="field">
-      <%= f.label :signature, 'Firma' %>
-      <%= f.text_field :signature, placeholder: 'Firma' %>
-    </div>
-    <div class="field">
-      <%= f.label :profile_status, 'Privacidad' %></br>
-      <%= f.radio_button :profile_status, 'PUBLIC' %> Público</br>
-      <%= f.radio_button :profile_status, 'PRIVATE' %> Privado</br>
-    </div>
-    <div class="field">
-      <%= f.submit 'Guardar' %>
-    </div>
+  <div class="field">
+    <%= f.label :avatar %>
+    <%= f.text_field :avatar, placeholder: 'Avatar', class: "form-control" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :description, 'Descripción' %>
+    <%= f.text_area :description, placeholder: 'Descripción', class: "form-control" %>
+  </div>
+    
+  <div class="field">
+    <%= f.label :signature, 'Firma' %>
+    <%= f.text_field :signature, placeholder: 'Firma', class: "form-control" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :profile_status, 'Privacidad' %></br>
+    <%= f.radio_button :profile_status, 'PUBLIC' %> Público &nbsp;&nbsp;
+    <%= f.radio_button :profile_status, 'PRIVATE' %> Privado</br>
+  </div>
+    
+  <div class="field">
+    <%= f.submit 'Guardar', class: "btn btn-primary" %>
+  </div>
 
 <% end %>
