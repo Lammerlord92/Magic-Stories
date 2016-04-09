@@ -2,7 +2,6 @@
 <div class="row">
 
   <!-- Avatar -->
-  <!-- TODO imágenes cuadradas -->
   <div class="col-md-2">
     <%= image_tag(profile.avatar, class: "img-circle img-responsive") %>
   </div>
@@ -16,7 +15,6 @@
         <h2>
         <a href="/profiles/<%= profile.id %>"><%= profile.name %></a>
         <% if profile.profile_status == 'PRIVATE' %>
-        <!-- TODO Arreglar redimensión icono -->
         <i class="glyphicon glyphicon-lock" aria-hidden="true"></i>
         <% end %>
         </h2>
@@ -25,8 +23,7 @@
       <div class="col-md-5 text-right escritura gris">
         <!-- TODO Añadir atributo de valoración -->
         <p>Nota: 9</p>
-        <!-- TODO Arreglar redimensión icono -->
-        <p><i class="glyphicon glyphicon-book" aria-hidden="true"></i>&nbsp&nbsp<%= profile.stories.count %></p>
+        <p><img src="/assets/libro.png" class="libro">&nbsp&nbsp<%= profile.stories.count %></p>
       </div>
     </div>
 
@@ -44,7 +41,6 @@
     <% end %>
 
     <!-- Seguidores/siguiendo -->
-    <!-- TODO Cambiar atributos de amistad -->
     <div class="row gris">
       <div class="col-md-3 col-md-offset-3 text-center">
         <%= profile.followers_count %><br/>seguidores
@@ -59,11 +55,8 @@
   <!-- Historias -->
   <div class="col-md-6">
     <div class="row">
-      <div class="col-md-1">
-        <!-- Relleno para grid de Bootstrap -->
-      </div>
-      <% profile.stories.last(4).each do |story| %>
-      <div class="col-md-2">
+      <% profile.stories.last(3).each do |story| %>
+      <div class="col-md-4">
         <a href="/stories/<%= story.id %>">
           <%= render 'stories/story_slot', story: story %>
         </a>
