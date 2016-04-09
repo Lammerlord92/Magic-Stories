@@ -8,14 +8,14 @@ class ChaptersController < ApplicationController
   end
 
   def create
-    @chapter = Chapter.find_or_create_by(chapter_params)
+    @chapter = Chapter.find_or_create_by({id: params[:chapter][:id]})
     @chapter.assign_attributes chapter_params
 
     respond_to do |format|
       if @chapter.save
         format.json { render action: 'show', status: :ok }
       else
-        format.json {render json: @chapter.errors, status: :unprocessable_entity }
+        format.json { render json: @chapter.errors, status: :unprocessable_entity }
       end
     end
 
