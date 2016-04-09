@@ -4,7 +4,7 @@
     <%= image_tag(@profile.avatar, class: "img-circle", width: 48, height: 48) %>
     <%= @profile.name %>
     <% if @profile.profile_status == 'PRIVATE' %>
-      <img src='https://storage.googleapis.com/material-icons/external-assets/v4/icons/svg/ic_lock_black_24px.svg' />
+    <i class="glyphicon glyphicon-lock" aria-hidden="true"></i>
     <% end %>
   </h1>
 
