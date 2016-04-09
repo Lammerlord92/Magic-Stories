@@ -29,7 +29,6 @@
 
       ul#my_TextBodyWidgToolbar >li  > a {
         display: inline-block;
-        background-color: white;
         padding: .5em 1em;
         border: 1px solid black;
         width: 130px;
@@ -264,9 +263,11 @@
             jsonFinalLast.forEach(function(nodo){
                $.post('/chapters.json', {chapter:nodo}, function(res){console.log(res)})
             })
+
             jsonFinalLast.forEach(function(nodo){
-              $.post('CAMBIAME', {chapter:nodo}, function(res){console.log(res)})
+              $.post('/chapter_options.json', {chapter:nodo}, function(res){console.log(res)})
             })
+
 
             alert("Se ha guardado la historia");
           }));
