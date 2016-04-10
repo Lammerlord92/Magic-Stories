@@ -94,20 +94,29 @@
         },
         editNode: function (data, callback) {
           // filling in the popup DOM elements
+          console.log("Entra en editar del nodo "+document.getElementById('node-id').value);
           document.getElementById('operation').innerHTML = "Editar capítulo";
           document.getElementById('node-id').value = data.id;
+          document.getElementById('node-title').value = data.title;
+          document.getElementById('node-text').value = data.text;
+          document.getElementById('saveButton').onclick = saveData.bind(this, data, callback);
           document.getElementById('cancelButton').onclick = cancelEdit.bind(this,callback);
-         document.getElementById('network-popUp').style.display = 'block';
+          document.getElementById('network-popUp').style.display = 'block';
         },
         addEdge: function (data, callback) {
           if (data.from == data.to) {
             var r = confirm("¿Quieres conectar el capítulo consigo mismo?");
             if (r == true) {
+              data.label='Bucanero';
               callback(data);
+              //TODO Quizá añadir un formulario para editar el nombre de la arista?
+
             }
           }
           else {
+            data.label='Pirata';
             callback(data);
+            //TODO Quizá añadir un formulario para editar el nombre de la arista?
           }
         }
       }
@@ -119,6 +128,8 @@
     document.getElementById('saveButton').onclick = null;
     document.getElementById('cancelButton').onclick = null;
     document.getElementById('network-popUp').style.display = 'none';
+    document.getElementById('node-title').value = '';
+    document.getElementById('node-text').value = '';
   }
 
   function cancelEdit(callback) {
@@ -127,12 +138,19 @@
   }
 
   function saveData(data,callback) {
+    console.log("Entra en saveData");
     data.id = document.getElementById('node-id').value;
+    console.log("ID: "+data.id);
     data.label=document.getElementById('node-title').value;
     data.title = document.getElementById('node-title').value;
     data.text = document.getElementById('node-text').value;
     clearPopUp();
     callback(data);
+  }
+
+  function actualizaNodo(){
+    //TODO
+    console.log("Aquí va el funcionamiento de guardar");
   }
 
 </script>
@@ -149,7 +167,7 @@
       <script type="text/javascript" charset="utf-8">
         $('#node-text').wysihtml5({'toolbar': { "fa": false ,'blockquote': false, 'html': false, "color": false, "image": false, "lists": false, "link": false}});
       </script>
-  <input type="button" value="save" id="saveButton" />
+  <input type="button" value="save" id="saveButton"/>
   <input type="button" value="cancel" id="cancelButton" />
 </div>
 <br />
