@@ -10,7 +10,7 @@
 
   <!-- Información privilegiada -->
   <% unless @is_current_profile or @profile.profile_status == 'PUBLIC' or @is_friend_profile or (current_user.present? && current_user.role_type == 'Administrator') %>
-    <p><em>Este perfil es privado y solo puede acceder a él si usted es amigo de este usuario.</em></p>
+    <p><em>Este perfil es privado y solo puede acceder a él si usted es amigo de este usuario. Tampoco podrá seguirle</em></p>
   <% else %>
       <p><em>Descripción:</em></p>
     <p><%= @profile.description %></p>

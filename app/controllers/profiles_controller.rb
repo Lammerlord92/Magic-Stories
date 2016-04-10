@@ -196,7 +196,7 @@ class ProfilesController < ApplicationController
       profile = Profile.find(params[:id])
       current_user.profile.unfollow!(profile)
       #  flash.alert = "Perfil id: " + Profile.find(params[:id]).to_s + "  Perfil actual: " + current_profile.to_s
-      redirect_to profile
+        redirect_to profile
     rescue Exception::StandardError::NameError::NoMethodError => e      # current_user is null
       render 'errors/permission_denied'
     rescue ActiveRecord::RecordNotFound => e      # profile.id not exist
