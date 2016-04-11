@@ -94,7 +94,6 @@
         },
         editNode: function (data, callback) {
           // filling in the popup DOM elements
-          console.log("Entra en editar del nodo "+document.getElementById('node-id').value);
           document.getElementById('operation').innerHTML = "Editar capítulo";
           document.getElementById('node-id').value = data.id;
           document.getElementById('node-title').value = data.title;
@@ -138,19 +137,12 @@
   }
 
   function saveData(data,callback) {
-    console.log("Entra en saveData");
     data.id = document.getElementById('node-id').value;
-    console.log("ID: "+data.id);
     data.label=document.getElementById('node-title').value;
     data.title = document.getElementById('node-title').value;
     data.text = document.getElementById('node-text').value;
     clearPopUp();
     callback(data);
-  }
-
-  function actualizaNodo(){
-    //TODO
-    console.log("Aquí va el funcionamiento de guardar");
   }
 
 </script>
