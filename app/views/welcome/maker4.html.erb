@@ -116,10 +116,11 @@
         addEdge: function (data, callback) {
           if (data.from == data.to) {
             var r = confirm("¿Quieres conectar el capítulo consigo mismo?");
+
             if (r == true) {
-              data.label='Bucanero';
               document.getElementById('operationEdge').innerHTML = "Editar arista";
-              document.getElementById('edge-id').value = data.id;
+              document.getElementById('edge-id').value = guid();;
+              console.log("data.id = "+document.getElementById('edge-id').value);
               document.getElementById('edge-title').value = data.title;
               document.getElementById('edge-text').value = data.text;
               document.getElementById('saveButtonEdge').onclick = saveDataEdge.bind(this, data, callback);
@@ -130,9 +131,9 @@
             }
           }
           else {
-            data.label='Pirata';
             document.getElementById('operationEdge').innerHTML = "Editar arista";
-            document.getElementById('edge-id').value = data.id;
+            document.getElementById('edge-id').value = guid();;
+            console.log("data.id = "+document.getElementById('edge-id').value);
             document.getElementById('edge-title').value = data.title;
             document.getElementById('edge-text').value = data.text;
             document.getElementById('saveButtonEdge').onclick = saveDataEdge.bind(this, data, callback);
@@ -153,11 +154,9 @@
     document.getElementById('node-text').value = '';
   }
   function clearPopUpEdge() {
-    console.log("ahsdjhasdjkhbasdkj");
     document.getElementById('saveButtonEdge').onclick = null;
     document.getElementById('cancelButtonEdge').onclick = null;
     document.getElementById('network-popUpEdge').style.display = 'none';
-    console.log("2");
     document.getElementById('edge-title').value = '';
     document.getElementById('edge-text').value = '';
   }
@@ -183,6 +182,9 @@
     data.label=document.getElementById('edge-title').value;
     data.title = document.getElementById('edge-title').value;
     data.text = document.getElementById('edge-text').value;
+    console.log("data.id = "+document.getElementById('edge-id').value);
+    console.log("data.label= "+document.getElementById('edge-title').value);
+
     clearPopUpEdge();
     callback(data);
   }
@@ -200,6 +202,15 @@
  //   }
  // }
 
+  function guid() {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000)
+          .toString(16)
+          .substring(1);
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+        s4() + '-' + s4() + s4() + s4();
+  }
 
 </script>
 <body onload="draw();">
