@@ -47,6 +47,17 @@
       padding:10px;
       text-align: center;
     }
+    #network-popUpEdge {
+      display:none;
+      position:absolute;
+      z-index:299;
+      background-color: #f9f9f9;
+      border-style:solid;
+      border-width:3px;
+      border-color: #5394ed;
+      padding:10px;
+      text-align: center;
+    }
   </style>
 
 
@@ -107,15 +118,26 @@
             var r = confirm("¿Quieres conectar el capítulo consigo mismo?");
             if (r == true) {
               data.label='Bucanero';
-              callback(data);
+              document.getElementById('operationEdge').innerHTML = "Editar arista";
+              document.getElementById('edge-id').value = data.id;
+              document.getElementById('edge-title').value = data.title;
+              document.getElementById('edge-text').value = data.text;
+              document.getElementById('saveButtonEdge').onclick = saveDataEdge.bind(this, data, callback);
+              document.getElementById('cancelButtonEdge').onclick = cancelEditEdge.bind(this,callback);
+              document.getElementById('network-popUpEdge').style.display = 'block';
               //TODO Quizá añadir un formulario para editar el nombre de la arista?
 
             }
           }
           else {
             data.label='Pirata';
-            callback(data);
-            //TODO Quizá añadir un formulario para editar el nombre de la arista?
+            document.getElementById('operationEdge').innerHTML = "Editar arista";
+            document.getElementById('edge-id').value = data.id;
+            document.getElementById('edge-title').value = data.title;
+            document.getElementById('edge-text').value = data.text;
+            document.getElementById('saveButtonEdge').onclick = saveDataEdge.bind(this, data, callback);
+            document.getElementById('cancelButtonEdge').onclick = cancelEditEdge.bind(this,callback);
+            document.getElementById('network-popUpEdge').style.display = 'block';
           }
         }
       }
@@ -130,12 +152,24 @@
     document.getElementById('node-title').value = '';
     document.getElementById('node-text').value = '';
   }
+  function clearPopUpEdge() {
+    console.log("ahsdjhasdjkhbasdkj");
+    document.getElementById('saveButtonEdge').onclick = null;
+    document.getElementById('cancelButtonEdge').onclick = null;
+    document.getElementById('network-popUpEdge').style.display = 'none';
+    console.log("2");
+    document.getElementById('edge-title').value = '';
+    document.getElementById('edge-text').value = '';
+  }
 
   function cancelEdit(callback) {
     clearPopUp();
     callback(null);
   }
-
+  function cancelEditEdge(callback) {
+    clearPopUpEdge();
+    callback(null);
+  }
   function saveData(data,callback) {
     data.id = document.getElementById('node-id').value;
     data.label=document.getElementById('node-title').value;
@@ -144,6 +178,28 @@
     clearPopUp();
     callback(data);
   }
+  function saveDataEdge(data,callback) {
+    data.id = document.getElementById('edge-id').value;
+    data.label=document.getElementById('edge-title').value;
+    data.title = document.getElementById('edge-title').value;
+    data.text = document.getElementById('edge-text').value;
+    clearPopUpEdge();
+    callback(data);
+  }
+ // function updateEdge() {
+ //   try {
+ //     edges.update({
+ //       id: document.getElementById('edge-id').value,
+ //       from: document.getElementById('edge-from').value,
+//        to: document.getElementById('edge-to').value,
+//        text: document.getElementById('edge-text').value
+ //     });
+ //   }
+ //   catch (err) {
+ //     alert(err);
+ //   }
+ // }
+
 
 </script>
 <body onload="draw();">
@@ -161,6 +217,20 @@
       </script>
   <input type="button" value="save" id="saveButton"/>
   <input type="button" value="cancel" id="cancelButton" />
+</div>
+<div id="network-popUpEdge">
+  <span id="operationEdge">chapter</span> <br>
+  <input id="edge-id" value="new value" hidden />
+
+
+  Título<input id="edge-title" class="form-control" value="" />
+
+  Texto<input id="edge-text" value="" class="wysihtml5 form-control"/>
+  <script type="text/javascript" charset="utf-8">
+    $('#edge-text').wysihtml5({'toolbar': { "fa": false ,'blockquote': false, 'html': false, "color": false, "image": false, "lists": false, "link": false}});
+  </script>
+  <input type="button" value="save" id="saveButtonEdge"/>
+  <input type="button" value="cancel" id="cancelButtonEdge" />
 </div>
 <br />
 <div id="mynetwork"></div>
