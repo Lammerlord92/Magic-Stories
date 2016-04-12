@@ -36,6 +36,11 @@
     #operation {
       font-size:28px;
     }
+
+    #operationEdge{
+      font-size:28px;
+    }
+
     #network-popUp {
       display:none;
       position:absolute;
@@ -118,12 +123,23 @@
           document.getElementById('cancelButton').onclick = cancelEdit.bind(this,callback);
           document.getElementById('network-popUp').style.display = 'block';
         },
+        editEdge: function (data, callback) {
+          console.log("Entra!!!!");
+          document.getElementById('operationEdge').innerHTML = "Editar capítulo";
+          document.getElementById('edge-id').value = data.id;
+          console.log("data.id = "+document.getElementById('edge-id').value);
+          document.getElementById('edge-title').value = data.title;
+          document.getElementById('edge-text').value = data.text;
+          document.getElementById('saveButtonEdge').onclick = saveData.bind(this, data, callback);
+          document.getElementById('cancelButtonEdge').onclick = cancelEdit.bind(this,callback);
+          document.getElementById('network-popUpEdge').style.display = 'block';
+        },
         addEdge: function (data, callback) {
           if (data.from == data.to) {
             var r = confirm("¿Quieres conectar el capítulo consigo mismo?");
 
             if (r == true) {
-              document.getElementById('operationEdge').innerHTML = "Editar arista";
+              document.getElementById('operationEdge').innerHTML = "Nueva arista";
               document.getElementById('edge-id').value = guid();;
               console.log("data.id = "+document.getElementById('edge-id').value);
               document.getElementById('edge-title').value = data.title;
@@ -136,7 +152,7 @@
             }
           }
           else {
-            document.getElementById('operationEdge').innerHTML = "Editar arista";
+            document.getElementById('operationEdge').innerHTML = "Nueeva arista";
             document.getElementById('edge-id').value = guid();;
             console.log("data.id = "+document.getElementById('edge-id').value);
             document.getElementById('edge-title').value = data.title;
@@ -152,11 +168,13 @@
   }
 
   function clearPopUp() {
+    console.log("Valor del node-text es:" + document.getElementById('node-text').value + "/ JAJA1.0");
     document.getElementById('saveButton').onclick = null;
     document.getElementById('cancelButton').onclick = null;
     document.getElementById('network-popUp').style.display = 'none';
     document.getElementById('node-title').value = '';
     document.getElementById('node-text').value = '';
+    console.log("Valor del node-text es:" + document.getElementById('node-text').value + "/ JAJA");
   }
   function clearPopUpEdge() {
     document.getElementById('saveButtonEdge').onclick = null;
@@ -200,7 +218,9 @@
     data.title = document.getElementById('node-title').value;
     data.text = document.getElementById('node-text').value;
     nodes.push(data);
+    console.log("Soy un data " + data.text);
     clearPopUp();
+    console.log("Sigue por aqui!!!");
     callback(data);
   }
   function saveDataEdge(data,callback) {
@@ -292,9 +312,9 @@
 
   Título<input id="node-title" class="form-control" value="" />
 
-  Texto<input id="node-text" value="" class="wysihtml5 form-control"/>
+  Texto<textarea id="node-text" value="" class="wysihtml5 form-control"></textarea>
   <script type="text/javascript" charset="utf-8">
-    $('#node-text').wysihtml5({'toolbar': { "fa": false ,'blockquote': false, 'html': false, "color": false, "image": false, "lists": false, "link": false}});
+    $('#node-text').wysihtml5({'toolbar': { "fa": false ,'blockquote': false, 'html': false, "color": true, "image": false, "lists": true, "link": false}});
   </script>
   <input type="button" value="save" id="saveButton"/>
   <input type="button" value="cancel" id="cancelButton" />
