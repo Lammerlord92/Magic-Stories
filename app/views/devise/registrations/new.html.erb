@@ -1,58 +1,53 @@
 <div class="container">
+
   <div class="jumbotron jumbo-transparente col-md-6 col-md-offset-3 row">
-    <div class="col-md-8 col-md-offset-2">
 
-      <img class="logo center-block" src="/assets/logo definitivo.png">
+    <img class="logo center-block" src="/assets/logo definitivo.png">
               
-      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-      <%= devise_error_messages! %>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <%= devise_error_messages! %>
+
+        <h1 id="cabecita">Formulario de Registro</h1>
 
         <div class="field">
-          <%= f.label :email %>
-          <%= f.email_field :email, autofocus: true, class: "form-control" %>
+          <%= f.text_field :name, class: "form-control", placeholder:"Nombre" %>
+          <%= f.text_field :surname1, class: "form-control-inline col-md-6 ", placeholder:"Primer apellido" %>
+
+          <%= f.text_field :surname2, class: "form-control-inline col-md-6 ", placeholder:"Segundo apellido" %>
         </div>
 
         <div class="field">
-          <%= f.label :password, "Contraseña" %>
+          <br>
+          <br>
+        </div>
+
+        <div class="field">
+          <%= f.email_field :email,  class: "form-control", placeholder:"Dirección de correo electrónico" %>
+        </div>
+
+
+        <div class="field">
+
+        </div>
+
+        <div class="field">
+          <%= f.text_field :username, class: "form-control",placeholder:"Nombre de Usuario" %>
+          <%= f.password_field :password, autocomplete: "off", class: "form-control-inline col-md-6",placeholder:"Contraseña" %>
+          <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control-inline col-md-6",placeholder:"Confirme su contraseña" %>
           <% if @minimum_password_length %>
-          <em>(<%= @minimum_password_length %> caracteres mínimo)</em>
+              <em>(<%= @minimum_password_length %> caracteres mínimo)</em>
           <% end %><br/>
-          <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
         </div>
 
-        <div class="field">
-          <%= f.label :password_confirmation, "Repita contraseña" %><br/>
-          <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control" %>
-        </div>
 
-        <div class="field">
-          <%= f.label :username, "Usuario" %><br/>
-          <%= f.text_field :username, class: "form-control" %>
-        </div>
-
-        <div class="field">
-          <%= f.label :name, "Nombre" %><br/>
-          <%= f.text_field :name, class: "form-control" %>
-        </div>
-
-        <div class="field">
-          <%= f.label :surname1, "Primer apellido" %><br/>
-          <%= f.text_field :surname1, class: "form-control" %>
-        </div>
-
-        <div class="field">
-          <%= f.label :surname2, "Segundo apellido" %><br/>
-          <%= f.text_field :surname2, class: "form-control" %>
-        </div>
 
         <div class="field">
           <%= f.label :birthday, "Fecha de nacimiento" %><br/>
-          <%= f.text_field :birthday, :placeholder => "dd/mm/aaaa", class: "form-control" %>
+          <%= f.date_select :birthday, class: "form-control" %>
         </div>
 
         <div class="field">
-          <%= f.label :phone, "Teléfono" %><br/>
-          <%= f.text_field :phone, class: "form-control" %>
+          <%= f.text_field :phone, class: "form-control",placeholder:"Teléfono" %>
         </div>
 
         <div class="field">
@@ -63,7 +58,7 @@
 
         <%= f.submit "Registrarse" , class: "btn btn-primary btn-block" %> 
 
-      <% end %>
+    <% end %>
 
       <hr>
 
@@ -71,6 +66,5 @@
           
       <%= link_to 'Descubrir', stories_example_path, class: 'btn btn-success btn-block', data: {'no-turbolink': 'true'} %>
 
-    </div>
-  </div>  
+  </div>
 </div>

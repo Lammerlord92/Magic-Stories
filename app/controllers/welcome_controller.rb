@@ -4,7 +4,7 @@ class WelcomeController < ApplicationController
     @categories = Category.all
 
     # TODO: Provisional. El backend tiene que insertar las historias del slice
-    @slice_stories = [Story.find(13), Story.find(1), Story.find(2)]
+    @slice_stories = [Story.find(13), Story.find(1), Story.find(3), Story.find(4), Story.find(5)]
 
     # TODO: Provisional. El backend tiene que insertar las historias más nuevas de cada género
     @newest_stories_by_category = Hash.new

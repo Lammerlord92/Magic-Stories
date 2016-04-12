@@ -2,11 +2,15 @@ class Payment < ActiveRecord::Base
   validates :token, uniqueness: true
   validates :amount, presence: true
   validates :identifier, uniqueness: true
-  belongs_to :story
+  belongs_to :good, polymorphic: true
 
   # En este caso siempre va a ser digital, instant y por pop-up (lo contario a recurring), quiere decir
   # no hay shipping ni se va a cobrar mensualmente (no subscripciones). Además vamos a hacer que salte
   # la ventana como pop-up. Dejo esto por si en un futuro se barajaran esas vias
+  scope :story, ->  (recurring) { where(good_type: 'Story') }
+  scope :premium, ->  (recurring) { where(good_type: 'MembershipCard') }
+  scope :donation, ->  (recurring) { where(good_type: 'Donation') }
+
   scope :recurring, ->  (recurring) { where(recurring: true) }
   scope :digital,  -> (digital) { where(digital: true) }
   scope :popup,   ->  (popup) { where(popup: true) }
@@ -82,19 +86,78 @@ class Payment < ActiveRecord::Base
     Paypal::Express::Request.new PAYPAL_CONFIG
   end
 
-
   def payment_request
+    if(self.good_type == 'Story')
+      payment_request_story
+    elsif(self.good_type == 'MembershipCard')
+      if(self.good.message ==! 'VITALICIOSUPERJUANOIDESURRENDERAT20')
+        payment_request_membership_card
+      else
+        payment_request_vitalicio_super_juanoide_surrender_at_20
+      end
+    else
+    # Esto es la donación
+    payment_request_donation
+    end
+
+  end
+
+
+  def payment_request_story
     Paypal::Payment::Request.new(
   :currency_code => :EUR, # if nil, PayPal use USD as default
-  :amount        => self.story.price,
+  :amount        => self.good.price,
   :items => [{
-    :name => self.story.title,
-    :description => self.story.description,
-    :amount => self.story.price,
+    :name => self.good.title,
+    :description => self.good.description,
+    :amount => self.good.price,
     :category => :Digital
   }]
 )
   end
+
+
+
+  # Se deja para cuando salgamos de la beta y se compre el premium por meses
+  def payment_request_membership_card
+    Paypal::Payment::Request.new(
+  :currency_code => :EUR, # if nil, PayPal use USD as default
+  :amount        => self.good.premiumMonths * 5.95,
+  :items => [{
+    :name => 'Cuenta premium por ' + self.good.premiumMonths + 'meses.',
+    :description => 'Disfruta de todas las funcionalidades',
+    :amount => self.good.premiumMonths * 5.95,
+    :category => :Digital
+  }]
+)
+  end
+
+  def payment_request_vitalicio_super_juanoide_surrender_at_20
+    Paypal::Payment::Request.new(
+  :currency_code => :EUR, # if nil, PayPal use USD as default
+  :amount        => 10.0,
+  :items => [{
+    :name => 'Cuenta premium para siempre',
+    :description => 'Disfruta de todas las funcionalidades durante 100 años',
+    :amount => 10.0,
+    :category => :Digital
+  }]
+)
+  end
+
+  def payment_request_donation
+    Paypal::Payment::Request.new(
+  :currency_code => :EUR, # if nil, PayPal use USD as default
+  :amount        => self.good.amount,
+  :items => [{
+    :name => 'Gracias por su donación',
+    :description => 'Gracias a ti el equipo de desarrollo puede seguir trabajando para mejorar estos servicios.',
+    :amount => self.good.amount,
+    :category => :Digital
+    }]
+    )
+  end
+
 
 
 

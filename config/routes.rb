@@ -109,6 +109,9 @@ Rails.application.routes.draw do
   get 'connections/search', to: 'connections#search'
   get 'connections/index', to: 'connections#search'
 
+  # Páginas estáticas
+  resources :pages, :only => :show
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
@@ -167,7 +170,11 @@ Rails.application.routes.draw do
       post :notify
     end
   end
-  get 'payment/create/:id', to: 'payments#create'
+  get 'payment/create/:id', to: 'payments#create_story_payment'
+  get 'payment/donate', to: 'payments#donation_form'
+  post 'payment/donate', to: 'payments#create_donation_payment'
+  get 'payment/be_premium', to: 'payments#create_mc_payment'
+
 
 
   #   Ultima ruta para capturar todas
