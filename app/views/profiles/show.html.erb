@@ -2,7 +2,7 @@
 
   <h1>
     <%= image_tag(@profile.avatar, class: "img-circle", width: 48, height: 48) %>
-    <%= @profile.name %>
+    <%= @profile.user.username %>
     <% if @profile.profile_status == 'PRIVATE' %>
     <i class="glyphicon glyphicon-lock" aria-hidden="true"></i>
     <% end %>
