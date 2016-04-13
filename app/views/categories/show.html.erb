@@ -11,9 +11,9 @@
 
 <div class="buttons">
 	<% if user_signed_in? %>
-  <% if current_user.role_type == 'Administrator' %>
-  <%= link_to "Editar", edit_category_path(@category), class:"btn btn-default"  %>
-  <% end %>
+   <% if current_user.role_type == 'Administrator' %>
+    <%= link_to "Editar", edit_category_path(@category), class:"btn btn-default"  %>
+   <% end %>
   <% end %>
   <%= link_to "Atras", categories_path, class:"btn btn-default"  %>
 </div>

@@ -5,7 +5,11 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    @category=set_category
+    begin
+      @category=set_category
+    rescue ActiveRecord::RecordNotFound => e
+      render 'errors/not_found'
+    end
   end
 
   def new

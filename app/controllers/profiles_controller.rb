@@ -1,4 +1,5 @@
 class ProfilesController < ApplicationController
+  before_action :authenticate_user!
   before_action :params_search, only: [:search]
 
   #GET /profiles
@@ -26,7 +27,7 @@ class ProfilesController < ApplicationController
   def new
     current_profile = current_user.profile
     if current_profile.present?
-      @profile = Profile.new
+      render 'errors/not_found'
     else
       render 'errors/permission_denied'
     end
