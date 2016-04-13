@@ -66,6 +66,7 @@
   var nodes = null;
   var edges = null;
   var network = null;
+  var idInicialGrafo = null;
   nodes = new vis.DataSet();
   edges = new vis.DataSet();
   var data = {
@@ -172,6 +173,29 @@
     callback(null);
   }
   function saveData(data,callback) {
+    var elNodoExiste = false;
+    var nodesAux=[];
+    for (aux=0;aux<nodes.length;aux++){
+      var auxNode = nodes[aux].id;
+      console.log("Comprobando - "+auxNode);
+      console.log("Id del nodo creado - "+data.id);
+      if(auxNode==data.id){
+        console.log("Estamos editando un nodo");
+        nodesAux.push(data);
+        elNodoExiste = true;
+      }
+      else{
+        nodesAux.push(nodes[aux]);
+      }
+      console.log(nodesAux);
+      nodes = nodesAux;
+    }
+
+    if(nodes.length == 0){
+      console.log("NODO NUEVO NODO NUEVO NODO NUEVO NODO NUEVO NODO NUEVO vv NODO NUEVO NODO NUEVO ");
+      idInicialGrafo = document.getElementById('node-id').value;
+    }
+
     data.id = document.getElementById('node-id').value;
     data.label=document.getElementById('node-title').value;
     data.title = document.getElementById('node-title').value;
@@ -224,10 +248,29 @@
     console.log("Tamaño edges = "+edges.length);
     document.getElementById("edgesPre").innerHTML = JSON.stringify(edges);
     console.log("----------------------------------------------------------");
-    pasarAJSON();
+    pasarAJSON2();
   }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  function pasarAJSON2(){
+    console.log("Entra en pasarAJSON2");
+    var vertices = JSON.stringify(nodes);
+    var aristas = JSON.stringify(edges);
+    var storyIdentif = <%=@id%>;
+
+    console.log("storyId");
+    console.log(storyIdentif);
+    console.log("-------------------------------------------");
+
+    console.log("vertices");
+    console.log(vertices);
+    console.log("-------------------------------------------");
+
+    console.log("aristas");
+    console.log(aristas);
+    console.log("-------------------------------------------");
+  }
+
   function pasarAJSON(){
     console.log("Entra en pasarAJSON");
     var vertices = JSON.stringify(nodes);
@@ -240,7 +283,7 @@
 
     var arrVertices = vertices.split("{");
 
-    var jsonFinal ="";
+    var jsonFinal ="[";
 
     for(i=1;i<arrVertices.length;i++){
       var arrVertices2 = arrVertices[i].split("}");
@@ -249,7 +292,7 @@
       var primerHijo=true;
       //console.log("Valores = "+valoresVertice);
       //console.log("Valores.length = "+valoresVertice.length);
-      //console.log("Valor id = "+valoresVertice[0].split(":")[1]);
+     // console.log("Valor id = "+valoresVertice[0].split(":")[1]);
       //console.log("Valor x = "+valoresVertice[1].split(":")[1]);
       //console.log("Valor y = "+valoresVertice[2].split(":")[1]);
       //console.log("Valor label = "+valoresVertice[3].split(":")[1]);
@@ -289,6 +332,7 @@
       json+=']}';
       jsonFinal +=json;
     }
+    jsonFinal+="]"
     console.log("JSON creado ==> "+jsonFinal);
   }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
