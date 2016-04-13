@@ -45,8 +45,12 @@ before_action :authenticate_user!, except: [:example, :show]
 
   #GET /stories/:id
   def show
+    begin
     @story = Story.find(params[:id])
     @comments = @story.comments
+    rescue ActiveRecord::RecordNotFound => e
+      render 'errors/not_found'
+    end
   end
 
   #GET /stories/new
