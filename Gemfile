@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Esta gema solo es para Juan Fran para que me marque los warnings y los hightlinings en sublime
-gem 'rubocop', require: false 
+gem 'rubocop', require: false
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -40,6 +40,10 @@ gem 'bootstrap-wysihtml5-rails'
 
 gem 'mailboxer'
 gem 'devise'
+gem 'omniauth'
+gem 'omniauth-twitter'
+gem 'omniauth-facebook'
+
 gem 'simple_form'
 
 # Use ActiveModel has_secure_password

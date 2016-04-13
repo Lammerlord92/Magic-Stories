@@ -17,6 +17,10 @@ class User < ActiveRecord::Base
 
   has_one :profile
 
+  # Auth Social Net
+  #
+  has_one :identity
+
   # Friendshipping
 
   has_many :friendships
