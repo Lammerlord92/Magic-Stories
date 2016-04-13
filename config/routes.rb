@@ -106,6 +106,7 @@ Rails.application.routes.draw do
   get 'connections/search', to: 'connections#search'
   get 'connections/index', to: 'connections#search'
 
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
@@ -153,6 +154,9 @@ Rails.application.routes.draw do
   #     # Directs /admin/products/* to Admin::ProductsController
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
-  #   end
+
+
+  #   Ultima ruta para catpurar todas
+  get '*path' => "cuatro_cero_cuatro#index"
 
 end

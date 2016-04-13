@@ -1,4 +1,5 @@
 class ProfilesController < ApplicationController
+  before_action :authenticate_user!
   before_action :params_search, only: [:search]
 
   #GET /profiles
@@ -111,7 +112,7 @@ class ProfilesController < ApplicationController
 
 
         if @profiles.blank?
-          flash.alert = "Perfil no encontrado"
+          flash.now.alert = "Perfil no encontrado"
         end
         #Si no tiene alguna string habrá que devolver todos los amigos
       else
@@ -133,7 +134,7 @@ class ProfilesController < ApplicationController
             (Profile.all - Profile.distinct(:user_id).joins(:friendships).where(subquery, {cu_id: current_user.id}))
 
         if @profiles.blank?
-          flash.alert = "Perfil no encontrado"
+          flash.now.alert = "Perfil no encontrado"
         end
 
         # Si no, solo no_amigos
@@ -150,7 +151,7 @@ class ProfilesController < ApplicationController
         #@profiles = Profile.where(query, {q: "%#{@q}%"})
         @profiles = Profile.where(user_id: users)
         if @profiles.blank?
-          flash.alert = "Perfil no encontrado"
+          flash.now.alert = "Perfil no encontrado"
         end
       end
 
@@ -181,7 +182,7 @@ class ProfilesController < ApplicationController
     begin
       profile = Profile.find(params[:id])
       current_user.profile.follow!(profile)
-    #  flash.alert = "Perfil id: " + Profile.find(params[:id]).to_s + "  Perfil actual: " + current_profile.to_s
+    #  flash.now.alert = "Perfil id: " + Profile.find(params[:id]).to_s + "  Perfil actual: " + current_profile.to_s
       redirect_to profile
     rescue Exception::StandardError::NameError::NoMethodError => e      # current_user is null
       render 'errors/permission_denied'
@@ -195,7 +196,7 @@ class ProfilesController < ApplicationController
     begin
       profile = Profile.find(params[:id])
       current_user.profile.unfollow!(profile)
-      #  flash.alert = "Perfil id: " + Profile.find(params[:id]).to_s + "  Perfil actual: " + current_profile.to_s
+      #  flash.now.alert = "Perfil id: " + Profile.find(params[:id]).to_s + "  Perfil actual: " + current_profile.to_s
         redirect_to profile
     rescue Exception::StandardError::NameError::NoMethodError => e      # current_user is null
       render 'errors/permission_denied'

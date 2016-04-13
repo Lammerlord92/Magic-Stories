@@ -15,7 +15,7 @@ before_action :authenticate_user!, except: [:example, :show]
       @stories << addition.story
     end
     if @stories.blank?
-      flash.alert = 'No se han encontrado resultados'
+      flash.now.alert = 'No se han encontrado resultados'
     end
   end
 
@@ -25,7 +25,7 @@ before_action :authenticate_user!, except: [:example, :show]
     #profile  = Profile.find_by(user: current_user)
     @stories = current_user.profile.stories
     if @stories.blank?
-      flash.alert = 'No se han encontrado resultados'
+      flash.now.alert = 'No se han encontrado resultados'
     end
   end
 
@@ -45,8 +45,12 @@ before_action :authenticate_user!, except: [:example, :show]
 
   #GET /stories/:id
   def show
+    begin
     @story = Story.find(params[:id])
     @comments = @story.comments
+    rescue ActiveRecord::RecordNotFound => e
+      render 'errors/not_found'
+    end
   end
 
   #GET /stories/new
@@ -89,7 +93,7 @@ before_action :authenticate_user!, except: [:example, :show]
     if @q
       @stories = Story.where(query, {q: "%#{@q}%"})
       if @stories.blank?
-        flash.alert = 'No se han encontrado resultados'
+        flash.now.alert = 'No se han encontrado resultados'
       end
     else
       @stories = Story.where(published: true)

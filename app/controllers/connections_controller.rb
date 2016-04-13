@@ -40,7 +40,7 @@ class ConnectionsController < ApplicationController
     @t1 = a[1]
 
     if @profiles.blank?
-      flash.alert = "Ningún perfil encontrado con sus parámetros de búsqueda"
+      flash.now.alert = "Ningún perfil encontrado con sus parámetros de búsqueda"
     end
 
   end
