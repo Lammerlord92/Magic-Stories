@@ -27,7 +27,7 @@ class ProfilesController < ApplicationController
   def new
     current_profile = current_user.profile
     if current_profile.present?
-      @profile = Profile.new
+      render 'errors/not_found'
     else
       render 'errors/permission_denied'
     end
