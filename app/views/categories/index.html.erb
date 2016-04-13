@@ -13,9 +13,9 @@
           <%= link_to category.name, category,title: category.description, rel: 'tooltip', class: "name-category-list" %>
           <br>
           <% if user_signed_in? %>
-          <% if current_user.role_type == 'Administrator' %>
+           <% if current_user.role_type == 'Administrator' %>
           <%= link_to "Borrar",category, method: :delete , class: "category-link" %>
-          <% end %>
+           <% end %>
           <% end %>
         </div>
 
