@@ -46,14 +46,7 @@ Rails.application.routes.draw do
   #########################################################################
 
   get 'welcome/index'
-  get 'welcome/maker/:id' => 'maker#show'
-  get 'welcome/maker2'
-  get 'welcome/maker3'
-  get 'welcome/maker4'
-  get 'welcome/maker5'
-  get 'welcome/maker6'
-  get 'welcome/maker_fuken'
-  get 'welcome/maker2pruebaJulio'
+  get 'maker/:id' => 'maker#show'
   get 'welcome/textoDesplegable'
 
   # You can have the root of your site routed with "root"
