@@ -273,7 +273,11 @@
     document.getElementById("aux_maker_edges").setAttribute("value",aristas);
     document.getElementById("aux_maker_storyId").setAttribute("value",storyIdentif);
 
-    $.ajax({url: '/welcome/maker/'+storyIdentif,type:'POST'}); ///'+storyIdentif+'/'+aux_maker
+    $.ajax({
+      type: 'GET',
+      url: 'save',
+    //  data: { <%=@aux_maker %>}
+    });
 
     console.log('Fin de save');
 
