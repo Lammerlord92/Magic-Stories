@@ -62,6 +62,8 @@
 
 
 </head>
+
+<body onload="draw();">
 <script type="text/javascript">
   var nodes = null;
   var edges = null;
@@ -122,21 +124,18 @@
 
             if (r == true) {
               document.getElementById('operationEdge').innerHTML = "Editar arista";
-              document.getElementById('edge-id').value = guid();;
-              console.log("data.id = "+document.getElementById('edge-id').value);
+              document.getElementById('edge-id').value = guid();
               document.getElementById('edge-title').value = data.title;
               document.getElementById('edge-text').value = data.text;
               document.getElementById('saveButtonEdge').onclick = saveDataEdge.bind(this, data, callback);
               document.getElementById('cancelButtonEdge').onclick = cancelEditEdge.bind(this,callback);
               document.getElementById('network-popUpEdge').style.display = 'block';
-              //TODO Quizá añadir un formulario para editar el nombre de la arista?
 
             }
           }
           else {
             document.getElementById('operationEdge').innerHTML = "Editar arista";
             document.getElementById('edge-id').value = guid();;
-            console.log("data.id = "+document.getElementById('edge-id').value);
             document.getElementById('edge-title').value = data.title;
             document.getElementById('edge-text').value = data.text;
             document.getElementById('saveButtonEdge').onclick = saveDataEdge.bind(this, data, callback);
@@ -177,10 +176,7 @@
     var nodesAux=[];
     for (aux=0;aux<nodes.length;aux++){
       var auxNode = nodes[aux].id;
-      console.log("Comprobando - "+auxNode);
-      console.log("Id del nodo creado - "+data.id);
       if(auxNode==data.id){
-        console.log("Estamos editando un nodo");
         nodesAux.push(data);
         elNodoExiste = true;
       }
@@ -192,7 +188,6 @@
     }
 
     if(nodes.length == 0){
-      console.log("NODO NUEVO NODO NUEVO NODO NUEVO NODO NUEVO NODO NUEVO vv NODO NUEVO NODO NUEVO ");
       idInicialGrafo = document.getElementById('node-id').value;
     }
 
@@ -214,19 +209,6 @@
     clearPopUpEdge();
     callback(data);
   }
-  // function updateEdge() {
-  //   try {
-  //     edges.update({
-  //       id: document.getElementById('edge-id').value,
-  //       from: document.getElementById('edge-from').value,
-  //        to: document.getElementById('edge-to').value,
-  //        text: document.getElementById('edge-text').value
-  //     });
-  //   }
-  //   catch (err) {
-  //     alert(err);
-  //   }
-  // }
 
   function guid() {
     function s4() {
@@ -239,36 +221,9 @@
   }
 
   function saveStory(){
-    console.log("Entra en saveStory");
-    console.log("---------------------------------------------------------");
-    console.log(nodes);
-    console.log("Tamaño nodes = "+nodes.length);
     document.getElementById("nodesPre").innerHTML = JSON.stringify(nodes);
-    console.log(edges);
-    console.log("Tamaño edges = "+edges.length);
     document.getElementById("edgesPre").innerHTML = JSON.stringify(edges);
-    console.log("----------------------------------------------------------");
     pasarAJSON2();
-  }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  function pasarAJSON2(){
-    console.log("Entra en pasarAJSON2");
-    var vertices = JSON.stringify(nodes);
-    var aristas = JSON.stringify(edges);
-    var storyIdentif = <%=@id%>;
-
-    console.log("storyId");
-    console.log(storyIdentif);
-    console.log("-------------------------------------------");
-
-    console.log("vertices");
-    console.log(vertices);
-    console.log("-------------------------------------------");
-
-    console.log("aristas");
-    console.log(aristas);
-    console.log("-------------------------------------------");
   }
 
   function pasarAJSON(){
@@ -276,10 +231,6 @@
     var vertices = JSON.stringify(nodes);
     var aristas = JSON.stringify(edges);
     var storyIdentif = <%=@id%>;
-
-    //console.log("storyIdentif = "+storyIdentif);
-    //console.log("vertices = "+vertices);
-    //console.log("aristas = "+aristas);
 
     var arrVertices = vertices.split("{");
 
@@ -290,14 +241,6 @@
       console.log("Arr["+i+"] = "+arrVertices2[0]);
       var valoresVertice = arrVertices2[0].split(",");
       var primerHijo=true;
-      //console.log("Valores = "+valoresVertice);
-      //console.log("Valores.length = "+valoresVertice.length);
-     // console.log("Valor id = "+valoresVertice[0].split(":")[1]);
-      //console.log("Valor x = "+valoresVertice[1].split(":")[1]);
-      //console.log("Valor y = "+valoresVertice[2].split(":")[1]);
-      //console.log("Valor label = "+valoresVertice[3].split(":")[1]);
-      //console.log("Valor title = "+valoresVertice[4].split(":")[1]);
-      //console.log("Valor text = "+valoresVertice[5].split(":")[1]);
 
       var json = '{"story_id":' + storyIdentif + ',"id":' + valoresVertice[0].split(":")[1] + ',"title":"' + valoresVertice[4].split(":")[1].trim() + '","body":"' + valoresVertice[5].split(":")[1].trim() +
           '","child_options":[';
@@ -307,16 +250,7 @@
 
       for(x=1;x<arrAristas.length;x++) {
         var arrAristas2 = arrAristas[x].split("}");
-        //console.log("Arr[" + x + "] = " + arrAristas2[0]);
         var valoresAristas = arrAristas2[0].split(",");
-        //console.log("ValoresAristas = " + valoresAristas);
-        //console.log("ValoresAristas.length = " + valoresAristas.length);
-        //console.log("ValorArista from = " + valoresAristas[0].split(":")[1]);
-        //console.log("ValorArista to = " + valoresAristas[1].split(":")[1]);
-        //console.log("ValorArista id = " + valoresAristas[2].split(":")[1]);
-        //console.log("ValorArista label = " + valoresAristas[3].split(":")[1]);
-        //console.log("ValorArista title = " + valoresAristas[4].split(":")[1]);
-        //console.log("ValorArista text = " + valoresAristas[5].split(":")[1]);
 
         if(valoresAristas[0].split(":")[1] == valoresVertice[0].split(":")[1]){
           if (primerHijo==true){
@@ -333,12 +267,8 @@
       jsonFinal +=json;
     }
     jsonFinal+="]"
-    console.log("JSON creado ==> "+jsonFinal);
   }
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 </script>
-<body onload="draw();">
-
 <div id="network-popUp">
   <span id="operation">chapter</span> <br>
   <input id="node-id" value="new value" hidden />
