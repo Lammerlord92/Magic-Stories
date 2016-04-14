@@ -181,13 +181,15 @@
       console.log("Id del nodo creado - "+data.id);
       if(auxNode==data.id){
         console.log("Estamos editando un nodo");
-        nodesAux.push(data);
+        //nodesAux.push(data);
         elNodoExiste = true;
       }
       else{
         nodesAux.push(nodes[aux]);
       }
       console.log(nodesAux);
+    }
+    if (elNodoExiste == true){
       nodes = nodesAux;
     }
 
