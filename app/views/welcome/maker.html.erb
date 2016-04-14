@@ -181,24 +181,22 @@
     var nodesAux=[];
     for (aux=0;aux<nodes.length;aux++){
       var auxNode = nodes[aux].id;
-      console.log("Comprobando - "+auxNode);
-      console.log("Id del nodo creado - "+data.id);
       if(auxNode==data.id){
-        console.log("Estamos editando un nodo");
+        //console.log("Estamos editando un nodo");
         //nodesAux.push(data);
         elNodoExiste = true;
       }
       else{
         nodesAux.push(nodes[aux]);
       }
-      console.log(nodesAux);
+      //console.log(nodesAux);
     }
     if (elNodoExiste == true){
       nodes = nodesAux;
     }
 
     if(nodes.length == 0){
-      console.log("NODO NUEVO NODO NUEVO NODO NUEVO NODO NUEVO NODO NUEVO vv NODO NUEVO NODO NUEVO ");
+      //console.log("NODO NUEVO NODO NUEVO NODO NUEVO NODO NUEVO NODO NUEVO vv NODO NUEVO NODO NUEVO ");
       idInicialGrafo = document.getElementById('node-id').value;
     }
 
@@ -245,13 +243,7 @@
   }
 
   function saveStory(){
-    console.log("Entra en saveStory");
-    console.log("---------------------------------------------------------");
-    console.log(nodes);
-    console.log("Tamaño nodes = "+nodes.length);
     document.getElementById("nodesPre").innerHTML = JSON.stringify(nodes);
-    console.log(edges);
-    console.log("Tamaño edges = "+edges.length);
     document.getElementById("edgesPre").innerHTML = JSON.stringify(edges);
     console.log("----------------------------------------------------------");
     pasarAJSON2();
@@ -276,9 +268,18 @@
     console.log(aristas);
     console.log("-------------------------------------------");
 
-    document.getElementById("finalNodes").value = vertices;
-    document.getElementById("finalEdges").value = aristas;
-    document.getElementById("finalStoryId").value = storyIdentif;
+
+    document.getElementById("aux_maker_nodes").setAttribute("value",vertices);
+    document.getElementById("aux_maker_edges").setAttribute("value",aristas);
+    document.getElementById("aux_maker_storyId").setAttribute("value",storyIdentif);
+
+    $.ajax({url: '../welcome/maker',type:'POST'}); ///'+storyIdentif+'/'+aux_maker
+
+    console.log('Fin de save');
+
+    //document.getElementById("finalNodes").value = vertices;
+    //document.getElementById("finalEdges").value = aristas;
+    //document.getElementById("finalStoryId").value = storyIdentif;
 
   }
 
@@ -390,5 +391,32 @@
 <input hidden id="finalNodes" value=""/>
 <input hidden id="finalEdges" value=""/>
 <input hidden id="finalStoryId" value=""/>
+
+
+
+
+
+
+
+
+
+
+
+
+    <%=hidden_field(:aux_maker,:edges)%>
+    <%=hidden_field(:aux_maker,:nodes)%>
+    <%=hidden_field(:aux_maker,:storyId)%>
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>
