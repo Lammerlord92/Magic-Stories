@@ -91,15 +91,15 @@ header img{
   margin-right: 20px !important;
 }
 
-.open .dropdown-toggle{
+header .open .dropdown-toggle{
   background-color: #002400 !important;
 }
 
-.dropdown-menu{
+header .dropdown-menu{
   background-color: #002400 !important;
 }
 
-.dropdown-menu a:hover{
+header .dropdown-menu a:hover{
   color: #002400 !important;
 }
 
