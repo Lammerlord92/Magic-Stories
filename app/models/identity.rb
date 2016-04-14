@@ -5,5 +5,6 @@ class Identity < ActiveRecord::Base
 
   def self.find_by_oauth(auth)
     identity = Identity.where({uid: auth.uid, provider: auth.provider}).last
+    identity
   end
 end

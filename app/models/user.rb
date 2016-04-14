@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
 
   has_one :profile
 
-  # Auth Social Net
+  # Auth Social Net (puede loguear desde varios)
   #
   has_one :identity
 
