@@ -4,7 +4,7 @@ class MakerController < ApplicationController
     story=Story.find(id)
 #    chapters=story.chapters
 #    options=Option.where("child_id in ?1 or parent_id in ?1", chapters.map(&:id))
-    @aux_maker=AuxMaker.initialize
+    @aux_maker=AuxMaker.new
     @aux_maker.storyId=id
  #   @aux_maker.nodes=chapters.map do |c| encode_node(c)
   #  end

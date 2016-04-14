@@ -254,7 +254,7 @@
     console.log("Entra en pasarAJSON2");
     var vertices = JSON.stringify(nodes);
     var aristas = JSON.stringify(edges);
-    var storyIdentif = <%=@id%>;
+    var storyIdentif = <%=@aux_maker.storyId%>;
 
     console.log("storyId");
     console.log(storyIdentif);
@@ -273,7 +273,7 @@
     document.getElementById("aux_maker_edges").setAttribute("value",aristas);
     document.getElementById("aux_maker_storyId").setAttribute("value",storyIdentif);
 
-    $.ajax({url: '../welcome/maker',type:'POST'}); ///'+storyIdentif+'/'+aux_maker
+    $.ajax({url: '/welcome/maker/'+storyIdentif,type:'POST'}); ///'+storyIdentif+'/'+aux_maker
 
     console.log('Fin de save');
 
@@ -287,7 +287,7 @@
     console.log("Entra en pasarAJSON");
     var vertices = JSON.stringify(nodes);
     var aristas = JSON.stringify(edges);
-    var storyIdentif = <%=@id%>;
+    var storyIdentif = <%=@aux_maker.storyId%>;
 
     //console.log("storyIdentif = "+storyIdentif);
     //console.log("vertices = "+vertices);
@@ -349,7 +349,7 @@
   }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 </script>
-<body onload="draw();">
+<body onload="draw()">
 
 <div id="network-popUp">
   <span id="operation">chapter</span> <br>
@@ -383,7 +383,7 @@
 <br />
 <div id="mynetwork"></div>
 
-<script>alert("La historia que se está editando es "+<%=@id%>)</script>
+<script>alert("La historia que se está editando es "+<%=@aux_maker.storyId%>)</script>
 
 <button id="saveStoryId" name="saveStory" onclick="saveStory()">Save story</button>
 <pre id="nodesPre"></pre>
