@@ -271,6 +271,11 @@
     console.log("aristas");
     console.log(aristas);
     console.log("-------------------------------------------");
+
+    document.getElementById("finalNodes").value = vertices;
+    document.getElementById("finalEdges").value = aristas;
+    document.getElementById("finalStoryId").value = storyIdentif;
+
   }
 
   function pasarAJSON(){
@@ -366,6 +371,7 @@
   <script type="text/javascript" charset="utf-8">
     $('#edge-text').wysihtml5({'toolbar': { "fa": false ,'blockquote': false, 'html': false, "color": false, "image": false, "lists": false, "link": false}});
   </script>
+
   <input type="button" value="save" id="saveButtonEdge"/>
   <input type="button" value="cancel" id="cancelButtonEdge" />
 </div>
@@ -377,5 +383,8 @@
 <button id="saveStoryId" name="saveStory" onclick="saveStory()">Save story</button>
 <pre id="nodesPre"></pre>
 <pre id="edgesPre"></pre>
+<input hidden id="finalNodes" value=""/>
+<input hidden id="finalEdges" value=""/>
+<input hidden id="finalStoryId" value=""/>
 </body>
 </html>
