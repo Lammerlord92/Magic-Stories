@@ -1,5 +1,5 @@
 class StoriesController < ApplicationController
-before_action :authenticate_user!, except: [:example, :show]
+before_action :authenticate_user!, except: [:example ]
   #GET /stories
   def index
     @stories = Story.all

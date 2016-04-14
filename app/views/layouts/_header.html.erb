@@ -11,12 +11,12 @@
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
+          <% if user_signed_in? %>
           <li><a href="/stories/example" data-no-turbolink="true" >Descubrir</a></li>
           <li><a href="/stories">Historias</a></li>
           <li><a href="/categories">Géneros</a></li>
           <li><a href="/membership_cards/exchange">Suscripción premium</a></li>
           <li><a href="#">Escritores que seguir</a></li>
-          <% if user_signed_in? %>
           <% if current_user.role_type == 'PremiumUser' %>
           <li><%= link_to "+ Nueva Historia", "/stories/new", class: "btn newstory", method: :get %></li>
           <% end %>
