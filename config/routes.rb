@@ -14,6 +14,11 @@ Rails.application.routes.draw do
   match "/423", :to => "errors#permission_denied", :via => :all
   match "/500", :to => "errors#internal_server_error", :via => :all
   match "/503", :to => "errors#service_down", :via => :all
+
+  # AUTH
+  #
+  get "auth/twitter/callback" => "identity#create_session"
+  get "auth/facebook/callback" => "identity#create_session"
   # error pages
   # config/routes.rb
   #%w( 404 422 500 ).each do |code|

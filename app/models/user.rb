@@ -17,6 +17,10 @@ class User < ActiveRecord::Base
 
   has_one :profile
 
+  # Auth Social Net (puede loguear desde varios)
+  #
+  has_one :identity
+
   # Friendshipping
 
   has_many :friendships
