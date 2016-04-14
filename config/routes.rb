@@ -47,6 +47,7 @@ Rails.application.routes.draw do
 
   get 'welcome/index'
   get 'welcome/maker/:id' => 'maker#show'
+  get 'welcome/maker/:id/:auxMaker', to 'maker#save'
   get 'welcome/maker2'
   get 'welcome/maker3'
   get 'welcome/maker4'
