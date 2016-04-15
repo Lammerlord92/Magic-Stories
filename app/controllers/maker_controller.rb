@@ -1,6 +1,6 @@
 class MakerController < ApplicationController
   def show
-    @storyId= params[:id]
+    @id= params[:id]
     render 'welcome/maker'
   end
 

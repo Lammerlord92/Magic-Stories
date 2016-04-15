@@ -227,45 +227,16 @@
     document.getElementById("nodesPre").innerHTML = JSON.stringify(nodes);
     document.getElementById("edgesPre").innerHTML = JSON.stringify(edges);
     console.log("----------------------------------------------------------");
-    pasarAJSON2();
-  }
-
-  function pasarAJSON2(){
-    var vertices = JSON.stringify(nodes);
-    var aristas = JSON.stringify(edges);
-    var storyIdentif = <%=@storyId%>;
-
-    console.log("storyId");
-    console.log(storyIdentif);
-    console.log("-------------------------------------------");
-
-    console.log("vertices");
-    console.log(vertices);
-    console.log("-------------------------------------------");
-
-    console.log("aristas");
-    console.log(aristas);
-    console.log("-------------------------------------------");
-
-
-    document.getElementById("aux_maker_nodes").setAttribute("value",vertices);
-    document.getElementById("aux_maker_edges").setAttribute("value",aristas);
-    document.getElementById("aux_maker_storyId").setAttribute("value",storyIdentif);
-
-    $.ajax({
-      type: 'GET',
-      url: 'save',
-    //  data: { <%=@aux_maker %>}
-    });
-
-
+    pasarAJSON();
+    //pasarAJSON2();
   }
 
   function pasarAJSON(){
     console.log("Entra en pasarAJSON");
     var vertices = JSON.stringify(nodes);
     var aristas = JSON.stringify(edges);
-    var storyIdentif = <%=@storyId%>;
+    var storyIdentif = <%=@id%>;
+    var arraySuperChungo=[];
 
     var arrVertices = vertices.split("{");
 
@@ -279,7 +250,6 @@
 
       var json = '{"story_id":' + storyIdentif + ',"id":' + valoresVertice[0].split(":")[1] + ',"title":"' + valoresVertice[4].split(":")[1].trim() + '","body":"' + valoresVertice[5].split(":")[1].trim() +
           '","child_options":[';
-      //console.log("json ==>  "+json);
 
       var arrAristas = aristas.split("{");
 
@@ -300,8 +270,13 @@
 
       json+=']}';
       jsonFinal +=json;
+      arraySuperChungo.push(json);
     }
     jsonFinal+="]"
+
+    console.log("ArraySuperChulo");
+    console.log("___________________________________________");
+    console.log(arraySuperChungo);
   }
 
 </script>
@@ -339,7 +314,7 @@
 <br />
 <div id="mynetwork"></div>
 
-<script>alert("La historia que se está editando es "+<%=@aux_maker.storyId%>)</script>
+<script>alert("La historia que se está editando es "+<%=@id%>)</script>
 
 <button id="saveStoryId" name="saveStory" onclick="saveStory()">Save story</button>
 <pre id="nodesPre"></pre>
