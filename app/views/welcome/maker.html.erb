@@ -242,41 +242,35 @@
 
     var jsonFinal ="[";
 
-    for(i=1;i<arrVertices.length;i++){
-      var arrVertices2 = arrVertices[i].split("}");
-      console.log("Arr["+i+"] = "+arrVertices2[0]);
-      var valoresVertice = arrVertices2[0].split(",");
-      var primerHijo=true;
-
-      var json = '{"story_id":' + storyIdentif + ',"id":' + valoresVertice[0].split(":")[1] + ',"title":"' + valoresVertice[4].split(":")[1].trim() + '","body":"' + valoresVertice[5].split(":")[1].trim() +
+    for (aux = 0;aux<nodes.length;aux++){
+      var json = '{"story_id":' + storyIdentif + ',"id":' + nodes[aux].id + ',"title":"' + nodes[aux].title + '","body":"' + nodes[aux].text +
           '","child_options":[';
 
-      var arrAristas = aristas.split("{");
+      for (aux2 = 0;aux2<edges.length;aux2++){
+        var primerHijo = true;
 
-      for(x=1;x<arrAristas.length;x++) {
-        var arrAristas2 = arrAristas[x].split("}");
-        var valoresAristas = arrAristas2[0].split(",");
-
-        if(valoresAristas[0].split(":")[1] == valoresVertice[0].split(":")[1]){
+        if(nodes[aux].id == edges[aux2].from){
           if (primerHijo==true){
-            json+='{"child_id":' + valoresAristas[1].split(":")[1] + ',"parent_id":' + valoresVertice[0].split(":")[1] + ',"option":"' + valoresAristas[4].split(":")[1] + '"}';
+            json+='{"child_id":' + edges[aux2].to + ',"parent_id":' + edges[aux2].from + ',"option":"' + edges[aux2].title + '"}';
             primerHijo=false;
           }
           else {
-            json+=',{"child_id":' + valoresAristas[1].split(":")[1] + ',"parent_id":' + valoresVertice[0].split(":")[1] + ',"option":"' + valoresAristas[4].split(":")[1] + '"}';
+            json+=',{"child_id":' + edges[aux2].to + ',"parent_id":' + edges[aux2].from + ',"option":"' + edges[aux2].title + '"}';
           }
         }
       }
 
-      json+=']}';
-      jsonFinal +=json;
+      json+=']';
       arraySuperChungo.push(json);
-    }
-    jsonFinal+="]"
 
-    console.log("ArraySuperChulo");
-    console.log("___________________________________________");
-    console.log(arraySuperChungo);
+    }
+
+    console.log("AL FINAL, EL ARRAY TIENE "+arraySuperChungo.length+" ELEMENTOS");
+    console.log("____________________________________________");
+    for (chungoAux = 0;chungoAux<arraySuperChungo.length;chungoAux++){
+      console.log(arraySuperChungo[chungoAux]);
+    }
+    console.log("____________________________________________");
   }
 
 </script>
