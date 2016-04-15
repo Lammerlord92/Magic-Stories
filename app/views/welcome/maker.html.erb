@@ -101,7 +101,6 @@
       },
       manipulation: {
         addNode: function (data, callback) {
-          // filling in the popup DOM elements
           document.getElementById('operation').innerHTML = "Nuevo capítulo";
           document.getElementById('node-id').value = data.id;
           document.getElementById('node-title').value = data.title;
@@ -111,7 +110,6 @@
           document.getElementById('network-popUp').style.display = 'block';
         },
         editNode: function (data, callback) {
-          // filling in the popup DOM elements
           document.getElementById('operation').innerHTML = "Editar capítulo";
           document.getElementById('node-id').value = data.id;
           document.getElementById('node-title').value = data.title;
@@ -182,21 +180,17 @@
     for (aux=0;aux<nodes.length;aux++){
       var auxNode = nodes[aux].id;
       if(auxNode==data.id){
-        //console.log("Estamos editando un nodo");
-        //nodesAux.push(data);
         elNodoExiste = true;
       }
       else{
         nodesAux.push(nodes[aux]);
       }
-      //console.log(nodesAux);
     }
     if (elNodoExiste == true){
       nodes = nodesAux;
     }
 
     if(nodes.length == 0){
-      //console.log("NODO NUEVO NODO NUEVO NODO NUEVO NODO NUEVO NODO NUEVO vv NODO NUEVO NODO NUEVO ");
       idInicialGrafo = document.getElementById('node-id').value;
     }
 
@@ -218,19 +212,6 @@
     clearPopUpEdge();
     callback(data);
   }
-  // function updateEdge() {
-  //   try {
-  //     edges.update({
-  //       id: document.getElementById('edge-id').value,
-  //       from: document.getElementById('edge-from').value,
-  //        to: document.getElementById('edge-to').value,
-  //        text: document.getElementById('edge-text').value
-  //     });
-  //   }
-  //   catch (err) {
-  //     alert(err);
-  //   }
-  // }
 
   function guid() {
     function s4() {
@@ -249,12 +230,10 @@
     pasarAJSON2();
   }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   function pasarAJSON2(){
-    console.log("Entra en pasarAJSON2");
     var vertices = JSON.stringify(nodes);
     var aristas = JSON.stringify(edges);
-    var storyIdentif = <%=@aux_maker.storyId%>;
+    var storyIdentif = <%=@storyId%>;
 
     console.log("storyId");
     console.log(storyIdentif);
@@ -279,11 +258,6 @@
     //  data: { <%=@aux_maker %>}
     });
 
-    console.log('Fin de save');
-
-    //document.getElementById("finalNodes").value = vertices;
-    //document.getElementById("finalEdges").value = aristas;
-    //document.getElementById("finalStoryId").value = storyIdentif;
 
   }
 
@@ -291,11 +265,7 @@
     console.log("Entra en pasarAJSON");
     var vertices = JSON.stringify(nodes);
     var aristas = JSON.stringify(edges);
-    var storyIdentif = <%=@aux_maker.storyId%>;
-
-    //console.log("storyIdentif = "+storyIdentif);
-    //console.log("vertices = "+vertices);
-    //console.log("aristas = "+aristas);
+    var storyIdentif = <%=@storyId%>;
 
     var arrVertices = vertices.split("{");
 
@@ -306,14 +276,6 @@
       console.log("Arr["+i+"] = "+arrVertices2[0]);
       var valoresVertice = arrVertices2[0].split(",");
       var primerHijo=true;
-      //console.log("Valores = "+valoresVertice);
-      //console.log("Valores.length = "+valoresVertice.length);
-     // console.log("Valor id = "+valoresVertice[0].split(":")[1]);
-      //console.log("Valor x = "+valoresVertice[1].split(":")[1]);
-      //console.log("Valor y = "+valoresVertice[2].split(":")[1]);
-      //console.log("Valor label = "+valoresVertice[3].split(":")[1]);
-      //console.log("Valor title = "+valoresVertice[4].split(":")[1]);
-      //console.log("Valor text = "+valoresVertice[5].split(":")[1]);
 
       var json = '{"story_id":' + storyIdentif + ',"id":' + valoresVertice[0].split(":")[1] + ',"title":"' + valoresVertice[4].split(":")[1].trim() + '","body":"' + valoresVertice[5].split(":")[1].trim() +
           '","child_options":[';
@@ -323,16 +285,7 @@
 
       for(x=1;x<arrAristas.length;x++) {
         var arrAristas2 = arrAristas[x].split("}");
-        //console.log("Arr[" + x + "] = " + arrAristas2[0]);
         var valoresAristas = arrAristas2[0].split(",");
-        //console.log("ValoresAristas = " + valoresAristas);
-        //console.log("ValoresAristas.length = " + valoresAristas.length);
-        //console.log("ValorArista from = " + valoresAristas[0].split(":")[1]);
-        //console.log("ValorArista to = " + valoresAristas[1].split(":")[1]);
-        //console.log("ValorArista id = " + valoresAristas[2].split(":")[1]);
-        //console.log("ValorArista label = " + valoresAristas[3].split(":")[1]);
-        //console.log("ValorArista title = " + valoresAristas[4].split(":")[1]);
-        //console.log("ValorArista text = " + valoresAristas[5].split(":")[1]);
 
         if(valoresAristas[0].split(":")[1] == valoresVertice[0].split(":")[1]){
           if (primerHijo==true){
@@ -349,9 +302,8 @@
       jsonFinal +=json;
     }
     jsonFinal+="]"
-    console.log("JSON creado ==> "+jsonFinal);
   }
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 </script>
 <body onload="draw()">
 
@@ -395,32 +347,6 @@
 <input hidden id="finalNodes" value=""/>
 <input hidden id="finalEdges" value=""/>
 <input hidden id="finalStoryId" value=""/>
-
-
-
-
-
-
-
-
-
-
-
-
-    <%=hidden_field(:aux_maker,:edges)%>
-    <%=hidden_field(:aux_maker,:nodes)%>
-    <%=hidden_field(:aux_maker,:storyId)%>
-
-
-
-
-
-
-
-
-
-
-
 
 </body>
 </html>
