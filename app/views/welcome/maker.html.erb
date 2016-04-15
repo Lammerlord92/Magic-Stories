@@ -191,10 +191,11 @@
     }
 
     if(nodes.length == 0){
-      idInicialGrafo = document.getElementById('node-id').value;
+      idInicialGrafo = nodes.length+1;
     }
 
-    data.id = document.getElementById('node-id').value;
+    //data.id = document.getElementById('node-id').value;
+    data.id = nodes.length + 1;
     data.label=document.getElementById('node-title').value;
     data.title = document.getElementById('node-title').value;
     data.text = document.getElementById('node-text').value;
@@ -203,7 +204,8 @@
     callback(data);
   }
   function saveDataEdge(data,callback) {
-    data.id = document.getElementById('edge-id').value;
+    //data.id = document.getElementById('edge-id').value;
+    data.id = edges.length + 1;
     data.label=document.getElementById('edge-title').value;
     data.title = document.getElementById('edge-title').value;
     data.text = document.getElementById('edge-text').value;
@@ -239,42 +241,43 @@
     var jsonFinal ="[";
 
     for (aux = 0;aux<nodes.length;aux++){
-      var json = '{"story_id":' + storyIdentif + ',"id":' + nodes[aux].id + ',"title":"' + nodes[aux].title + '","body":"' + nodes[aux].text +
+      console.log("id -> "+nodes[aux].id);
+
+
+      var newSuperOverChapterBoss = storyIdentif+'00000'+nodes[aux].id;
+      var json = '{"story_id":"' + storyIdentif + '","id":"' + newSuperOverChapterBoss + '","title":"' + nodes[aux].title + '","body":"' + nodes[aux].text +
           '","child_options":[';
 
       for (aux2 = 0;aux2<edges.length;aux2++){
         var primerHijo = true;
 
         if(nodes[aux].id == edges[aux2].from){
+          var idDadBoss = storyIdentif+'00000'+edges[aux2].from;
+          var idSonBoss = storyIdentif+'00000'+edges[aux2].to;
           if (primerHijo==true){
-            json+='{"child_id":' + edges[aux2].to + ',"parent_id":' + edges[aux2].from + ',"option":"' + edges[aux2].title + '"}';
+            json+='{"child_id":"' + idSonBoss + '","parent_id":"' + idDadBoss + '","option":"' + edges[aux2].title + '"}';
             primerHijo=false;
           }
           else {
-            json+=',{"child_id":' + edges[aux2].to + ',"parent_id":' + edges[aux2].from + ',"option":"' + edges[aux2].title + '"}';
+            json+=',{"child_id":"' + idSonBoss + '","parent_id":"' + idDadBoss + '","option":"' + edges[aux2].title + '"}';
           }
         }
       }
 
-      json+=']';
+      json+=']}';
       arraySuperChungo.push(json);
 
 
     }
 
-    console.log("AL FINAL, EL ARRAY TIENE "+arraySuperChungo.length+" ELEMENTOS");
-    console.log("____________________________________________");
-    for (chungoAux = 0;chungoAux<arraySuperChungo.length;chungoAux++){
-      console.log(arraySuperChungo[chungoAux]);
-    }
     console.log("____________________________________________");
 
     for(var primerPase = 0;  primerPase < arraySuperChungo.length;primerPase++){
-      $.post('/chapters.json', {chapter:json}, function(res){console.log(res)})
+      $.post('/chapters.json', {chapter:JSON.parse(arraySuperChungo[primerPase])}, function(res){console.log(res)})
     }
 
     for(var segundoPase = 0;segundoPase< arraySuperChungo.length;segundoPase++){
-      $.post('/chapter_options.json', {chapter:json}, function(res){console.log(res)})
+      $.post('/chapter_options.json', {chapter:JSON.parse(arraySuperChungo[segundoPase])}, function(res){console.log(res)})
     }
 
   }
