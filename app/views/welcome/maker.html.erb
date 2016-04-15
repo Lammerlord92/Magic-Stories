@@ -232,9 +232,6 @@
   }
 
   function pasarAJSON(){
-    console.log("Entra en pasarAJSON");
-    var vertices = JSON.stringify(nodes);
-    var aristas = JSON.stringify(edges);
     var storyIdentif = <%=@id%>;
     var arraySuperChungo=[];
 
@@ -263,6 +260,7 @@
       json+=']';
       arraySuperChungo.push(json);
 
+
     }
 
     console.log("AL FINAL, EL ARRAY TIENE "+arraySuperChungo.length+" ELEMENTOS");
@@ -271,6 +269,15 @@
       console.log(arraySuperChungo[chungoAux]);
     }
     console.log("____________________________________________");
+
+    for(var primerPase = 0;  primerPase < arraySuperChungo.length;primerPase++){
+      $.post('/chapters.json', {chapter:json}, function(res){console.log(res)})
+    }
+
+    for(var segundoPase = 0;segundoPase< arraySuperChungo.length;segundoPase++){
+      $.post('/chapter_options.json', {chapter:json}, function(res){console.log(res)})
+    }
+
   }
 
 </script>
