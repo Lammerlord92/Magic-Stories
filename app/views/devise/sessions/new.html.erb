@@ -5,7 +5,7 @@
       <img class="logo center-block" src="/assets/logo definitivo.png">
               
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-            
+
         <div class="entrada">
           <%= f.email_field :email, autofocus: true, :placeholder => "Correo electrónico", class: "form-control" %>
           <%= f.password_field :password, autocomplete: "off", :placeholder => "Contraseña", class: "form-control" %>
