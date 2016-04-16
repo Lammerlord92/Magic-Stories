@@ -1,0 +1,16 @@
+development: &sandbox # change to your own
+  username: kiny93-facilitator_api1.hotmail.com
+  password: S9GAZ6FUS8J6CWD7
+  signature: AFcWxV21C7fd0v3bYYYRCpSSRl31AekXVavhFgIAM.3n5l46PN1Dk0rN
+  sandbox: true
+
+test:
+  <<: *sandbox
+
+production: &production
+  username: kiny93-facilitator_api1.hotmail.com
+  password: S9GAZ6FUS8J6CWD7
+  signature: AFcWxV21C7fd0v3bYYYRCpSSRl31AekXVavhFgIAM.3n5l46PN1Dk0rN
+  sandbox: false
+
+  # Cuenta de comprador kiny93-buyer@hotmail.com / pass: buyer.BUYER

@@ -156,8 +156,22 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
 
+  # Paypal payments
+  #
+  resources :payments, only: [:show, :destroy] do
+    collection do
+      get :success
+      get :cancel
+      post :notify
+    end
+  end
+  get 'payment/create/:id', to: 'payments#create'
+
 
   #   Ultima ruta para catpurar todas
   get '*path' => "cuatro_cero_cuatro#index"
+
+
+
 
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160411182701) do
+ActiveRecord::Schema.define(version: 20160415193400) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -235,6 +235,23 @@ ActiveRecord::Schema.define(version: 20160411182701) do
     t.integer  "child_id"
   end
 
+  create_table "payments", force: :cascade do |t|
+    t.float    "amount",     default: 0.0
+    t.string   "token"
+    t.string   "identifier"
+    t.string   "payer_id"
+    t.boolean  "recurring",  default: false
+    t.boolean  "digital",    default: false
+    t.boolean  "popup",      default: false
+    t.boolean  "completed",  default: false
+    t.boolean  "canceled",   default: false
+    t.integer  "story_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "payments", ["story_id"], name: "index_payments_on_story_id", using: :btree
+
   create_table "premium_users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -351,6 +368,7 @@ ActiveRecord::Schema.define(version: 20160411182701) do
   add_foreign_key "mailboxer_conversation_opt_outs", "mailboxer_conversations", column: "conversation_id", name: "mb_opt_outs_on_conversations_id"
   add_foreign_key "mailboxer_notifications", "mailboxer_conversations", column: "conversation_id", name: "notifications_on_conversation_id"
   add_foreign_key "mailboxer_receipts", "mailboxer_notifications", column: "notification_id", name: "receipts_on_notification_id"
+  add_foreign_key "payments", "stories"
   add_foreign_key "stories", "profiles"
   add_foreign_key "story_categories", "categories"
   add_foreign_key "story_categories", "stories"
