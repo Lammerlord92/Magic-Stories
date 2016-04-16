@@ -79,6 +79,15 @@ header a, header a:hover{
   margin: 10px;
 }
 
+#nhist{
+
+    color: #002400 !important;
+    background-color: #ECA701 !important;
+    border-radius: 0 !important;
+    border: 0 !important;
+    padding: 5px !important;
+    margin: 10px;
+}
 header img{
   height: 42px !important;
 }

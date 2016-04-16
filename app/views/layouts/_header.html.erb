@@ -18,7 +18,7 @@
           <li><a href="/membership_cards/exchange">Suscripción premium</a></li>
           <li><a href="#">Escritores que seguir</a></li>
           <% if current_user.role_type == 'PremiumUser' %>
-          <li><%= link_to "+ Nueva Historia", "/stories/new", class: "btn newstory", method: :get %></li>
+          <li><%= link_to "+ Nueva Historia", "/stories/new", class: "btn newstory",id:"nhist", method: :get %></li>
           <% end %>
           <% end %>
         </ul>
