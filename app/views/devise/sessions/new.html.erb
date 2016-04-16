@@ -20,9 +20,6 @@
         <img class="logo center-block" src="/assets/logo definitivo.png">
               
         <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-              
-          <!-- TODO Boton Facebook -->
-          <!--<button class="btn btn-facebook btn-block" type="submit" formaction="#"></button>-->
             
           <div class="entrada">
             <%= f.email_field :email, autofocus: true, :placeholder => "Correo electrónico", class: "form-control" %>
@@ -36,20 +33,18 @@
           <%= f.submit "Iniciar sesión" , class: "btn btn-primary btn-block" %> 
 
         <% end %>
-        <br/>
-        <row>
 
-          <div class= "centered">
-          <text> o conecta:  &nbsp &nbsp </text>
-            <a href="/auth/facebook" target="_blank">
-              <img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Conectar con Facebook" />
-            </a>
-            &nbsp
-            <a href="/auth/twitter" target="_blank">
-              <img src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Conectar con Twitter" />
-            </a>
-          </div>
-        </row>
+        <hr>
+
+        <a href="/auth/facebook" target="_blank" class="btn btn-block btn-social btn-facebook">
+          <span class="fa fa-facebook"></span>
+          <span>Conectar con Facebook</span>
+        </a>
+
+        <a href="/auth/twitter" target="_blank" class="btn btn-block btn-social btn-twitter">
+          <span class="fa fa-twitter"></span>
+          <span>Conectar con Twitter</span>
+        </a>
 
         <hr>
                   
