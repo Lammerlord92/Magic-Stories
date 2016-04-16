@@ -44,3 +44,11 @@
 .btn-success, .btn-success:hover, .btn-social, .btn-social:hover{
 	color: white !important;
 }
+
+.link, .link:hover{
+	color: red !important;
+	text-decoration: underline !important;
+	display: block;
+	text-align: center;
+	margin-top: 10px;
+}
