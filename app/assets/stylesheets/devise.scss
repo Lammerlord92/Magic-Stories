@@ -1,3 +1,6 @@
+@import 'bootstrap-social';
+@import 'font-awesome';
+
 #welcome{
   background-image: url("/assets/cataru.jpg");
   background-repeat: repeat-x repeat-y;
@@ -27,14 +30,17 @@
 }
 
 .btn-danger{
-	margin-bottom: 20px !important;
+	margin-bottom: 10px !important;
 }
 
-.btn-success, .btn-success:hover{
+.btn-facebook{
+	margin-bottom: 10px !important;
+}
+
+.btn-twitter{
+	margin-top: 0 !important;
+}
+
+.btn-success, .btn-success:hover, .btn-social, .btn-social:hover{
 	color: white !important;
-}
-
-.centered{
-  float: none;
-  margin: 0 auto;
 }
