@@ -35,11 +35,13 @@
       <% elsif !current_user.profile.isFriend(profile) %>
         <%= link_to "Solicitud de amistad", "/request_friendships/send_request/#{profile.user_id}", class: "btn btn-primary btn-block" %>
           <% unless @is_current_profile %>
-              <% if current_user.profile.follows?(profile) %>
-                  <%= link_to "Dejar de seguir", "/profiles/unfollow/#{profile.id}", class: "btn btn-primary btn-block"  %>
-              <% else %>
-                  <%= link_to "Seguir", "/profiles/follow/#{profile.id}", class:"btn btn-primary btn-block"  %>
-              <% end %>
+              <% unless profile.profile_status == 'PRIVATE' %>
+                <% if current_user.profile.follows?(profile) %>
+                   <%= link_to "Dejar de seguir", "/profiles/unfollow/#{profile.id}", class: "btn btn-primary btn-block"  %>
+                <% else %>
+                   <%= link_to "Seguir", "/profiles/follow/#{profile.id}", class:"btn btn-primary btn-block"  %>
+                <% end %>
+              <%end %>
           <% end %>
       <% else %>
         <%= link_to "Amigo", "#", class: "btn btn-primary btn-block disabled" %>
