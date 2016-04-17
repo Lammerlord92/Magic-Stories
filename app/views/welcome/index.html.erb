@@ -1,28 +1,22 @@
-<div class="trendings">
-  <h3>Tendencias</h3>
-  <hr/>
-  <div class="row">
-    <% @categories.each do |category| %>
-    <div class="col-md-2">
-      <div class="trending-slot">
-        <%= render 'stories/story_slot', story: @trending_stories[category] %>
-        <p class="category"><%= category.name %></p>
-      </div>
-    </div>
-    <% end %>
+<div class="index-new-stories">
+  <div class="center">
+    <h2>Novedades</h2>
   </div>
-</div>
-
-<% @categories.each do |category| %>
-  <div class="trendings">
-    <h3><%= category.name %></h3>
-    <hr/>
+  <% @categories.each_slice(2) do |categories| %>
     <div class="row">
-      <% @first_six_trending_stories[category].each do |story| %>
-      <div class="col-md-2">
-        <%= render 'stories/story_slot', story: story %>
-      </div>
+      <% categories.each do |category| %>
+        <div class="col-md-6">
+          <h3><img src="<%= category.icon %>" alt="<%= category.name %>" class="category-image" /><%= category.name %></h3>
+          <hr/>
+          <div class="row">
+            <% @newest_stories_by_category[category].each do |story| %>
+              <div class="col-md-4">
+                <%= render 'stories/story_slot', story: story %>
+              </div>
+            <% end %>
+          </div>
+        </div>
       <% end %>
     </div>
-  </div>
-<% end %>
+  <% end %>
+</div>
