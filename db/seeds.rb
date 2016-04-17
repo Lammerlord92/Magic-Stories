@@ -36,32 +36,38 @@ puts "Success: Todas las tablas han sido borradas"
 
 category1 = Category.create!({
                                  name: 'Drama',
-                                 description: 'Género dramático'
+                                 description: 'Género dramático',
+                                 icon: 'assets/categories_logos/drama.png'
                              })
 
 category2 = Category.create!({
                                  name: 'Cuento',
-                                 description: 'Género de cuentos'
+                                 description: 'Género de cuentos',
+                                 icon: 'assets/categories_logos/cuento.png'
                              })
 
 category3 = Category.create!({
                                  name: 'Ficción',
-                                 description: 'Género de ficción'
+                                 description: 'Género de ficción',
+                                 icon: 'assets/categories_logos/ficcion.png'
                              })
 
 category4 = Category.create!({
                                  name: 'Terror',
-                                 description: 'Género de terror'
+                                 description: 'Género de terror',
+                                 icon: 'assets/categories_logos/terror.png'
                              })
 
 category5 = Category.create!({
                                  name: 'Épico',
-                                 description: 'Género épico'
+                                 description: 'Género épico',
+                                 icon: 'assets/categories_logos/epico.png'
                              })
 
 category6 = Category.create!({
                                  name: 'Aventura',
-                                 description: 'Género de aventuras'
+                                 description: 'Género de aventuras',
+                                 icon: 'assets/categories_logos/aventura.png'
                              })
 
 puts "Success: Creación de categorías"
