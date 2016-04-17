@@ -5,8 +5,9 @@ class PaymentsController < ApplicationController
   end
 
   def create
+    count = Time.now.in_time_zone.to_s
     story = Story.find(params[:id])
-    payment = Payment.create!({amount: story.price, digital: true, recurring: false, popup: false, story: story})
+    payment = Payment.create!({amount: story.price, digital: true, recurring: false, popup: false, story: story, identifier: count })
     payment.setup!(
       success_payments_url,
       cancel_payments_url
