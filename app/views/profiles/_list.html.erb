@@ -57,8 +57,10 @@
       <div class="col-md-3 text-center left-divider">
         <%= profile.followees_count %><br/>siguiendo
       </div>
+      <div class="col-md-3 text-center left-divider">
+        <%= Addition.where(profile_id: profile.id).count %><br/>adquisiciones
+      </div>
     </div>
-
   </div>
 
   <!-- Historias -->

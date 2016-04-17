@@ -169,7 +169,7 @@ Rails.application.routes.draw do
   get 'payment/create/:id', to: 'payments#create'
 
 
-  #   Ultima ruta para catpurar todas
+  #   Ultima ruta para capturar todas
   get '*path' => "cuatro_cero_cuatro#index"
 
 

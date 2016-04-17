@@ -284,6 +284,15 @@ user3.profile.stories << story10
 user3.profile.stories << story11
 user3.profile.stories << story12
 
+Addition.create({profile_id: user2.id, story_id: story11.id})
+Addition.create({profile_id: user2.id, story_id: story10.id})
+Addition.create({profile_id: user2.id, story_id: story9.id})
+Addition.create({profile_id: user1.id, story_id: story9.id})
+Addition.create({profile_id: user1.id, story_id: story10.id})
+Addition.create({profile_id: user5.id, story_id: story9.id})
+Addition.create({profile_id: user5.id, story_id: story9.id})
+Addition.create({profile_id: user5.id, story_id: story9.id})
+
 user1.save!
 user2.save!
 user3.save!
