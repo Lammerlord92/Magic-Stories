@@ -239,19 +239,19 @@ puts "Success: Creación de ActorUserGroup"
 # Creacion de Story  -- Unión a profile
 
 story1 = Story.create!({title: 'Title1', description: 'Description', language: 'SPANISH', price: 16.30, release_date: '20/10/2015',
-                        published: true, num_purchased: 0, creatorProfile: user1.profile, cover: 'http://www.upl.co/uploads/drama1460039396.jpg'})
+                        published: true, num_purchased: 0, creatorProfile: user1.profile, cover: 'http://www.upl.co/uploads/drama1460039396.jpg', categories: category1.id})
 
 story2 = Story.create!({title: 'Title2', description: 'Description', language: 'SPANISH', price: 16.30, release_date: '20/10/2015',
-                        published: true, num_purchased: 0, creatorProfile: user1.profile})
+                        published: true, num_purchased: 0, creatorProfile: user1.profile, categories: category2.id})
 
 story3 = Story.create!({title: 'Title3', description: 'Description', language: 'ENGLISH', price: 16.30, release_date: '20/10/2015',
-                        published: true, num_purchased: 0, creatorProfile: user1.profile, cover: 'http://www.upl.co/uploads/ficcion1460039396.jpg'})
+                        published: true, num_purchased: 0, creatorProfile: user1.profile, cover: 'http://www.upl.co/uploads/ficcion1460039396.jpg', categories: category3.id})
 
 story4 = Story.create!({title: 'Title4', description: 'Description', language: 'ENGLISH', price: 16.30, release_date: '20/10/2015',
-                        published: true, num_purchased: 0, creatorProfile: user1.profile, cover: 'http://www.upl.co/uploads/Terror1460039396.jpg'})
+                        published: true, num_purchased: 0, creatorProfile: user1.profile, cover: 'http://www.upl.co/uploads/Terror1460039396.jpg', categories: category4.id})
 
 story5 = Story.create!({title: 'Title5', description: 'Description', language: 'CHINESE', price: 16.30, release_date: '20/10/2015',
-                        published: true, num_purchased: 0, creatorProfile: user2.profile, cover: 'http://www.upl.co/uploads/epico1460039396.jpg'})
+                        published: true, num_purchased: 0, creatorProfile: user2.profile, cover: 'http://www.upl.co/uploads/epico1460039396.jpg', categories: category5.id})
 
 story6 = Story.create!({title: 'Title6', description: 'Description', language: 'SPANISH', price: 16.30, release_date: '20/10/2015',
                         published: true, num_purchased: 0, creatorProfile: user2.profile, cover: 'http://www.upl.co/uploads/aventura1460039396.jpg'})

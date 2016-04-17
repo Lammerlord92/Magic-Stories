@@ -12,15 +12,21 @@ class WelcomeController < ApplicationController
     @trending_stories[@categories[4]] = Story.find(5)
     @trending_stories[@categories[5]] = Story.find(6)
 
+
+    #
     # TODO: Provisional. El backend tiene que insertar las historias más nuevas de cada género
     @newest_stories_by_category = Hash.new
-    @newest_stories_by_category[@categories[0]] = [Story.find(1), Story.find(2), Story.find(3)]
-    @newest_stories_by_category[@categories[1]] = [Story.find(13), Story.find(4), Story.find(5)]
-    @newest_stories_by_category[@categories[2]] = [Story.find(6), Story.find(7), Story.find(8)]
-    @newest_stories_by_category[@categories[3]] = [Story.find(9), Story.find(10), Story.find(11)]
-    @newest_stories_by_category[@categories[4]] = [Story.find(12), Story.find(1), Story.find(2)]
-    @newest_stories_by_category[@categories[5]] = [Story.find(3), Story.find(4), Story.find(5)]
+    count = 0
+    @categories.each { |category|
 
+      # TODO: Hay que cambiar esta sentencia para que haga un where por categoría
+      stories = Story.limit(3).order("release_date DESC")
+      story1=  stories[0]
+      story2 = stories[1]
+      story3 = stories[2]
+      @newest_stories_by_category[@categories[count]] = [story1, story2, story3]
+      count = count + 1
+    }
     render 'index'
   end
 end
