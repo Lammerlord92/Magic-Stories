@@ -20,3 +20,24 @@
     </div>
   <% end %>
 </div>
+
+<div class="index-writers">
+  <div class="center title">
+    <h2>Escritores</h2>
+  </div>
+  <div class="row">
+    <% @writers.each do |writer| %>
+      <div class="col-md-2">
+        <a href="/profiles/<%= writer.id %>">
+          <%= image_tag writer.avatar, class: "img-circle img-responsive" %>
+          <div class="center">
+            <p class="writer-name" ><%= writer.name %></p>
+          </div>
+        </a>
+      </div>
+    <% end %>
+  </div>
+  <div class="center writer-buttom">
+    <%= button_to 'Ver todos los escritores', '/profiles', class: 'btn btn-default', method: :get %>
+  </div>
+</div>

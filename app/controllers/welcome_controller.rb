@@ -27,6 +27,10 @@ class WelcomeController < ApplicationController
       @newest_stories_by_category[@categories[count]] = [story1, story2, story3]
       count = count + 1
     }
+
+    # TODO: Provisional. Insertar los seis escritores que se mostrarán al pie del index
+    @writers = Profile.first(6)
+
     render 'index'
   end
 end
