@@ -31,3 +31,18 @@
 .field{
   margin: 1em 0;
 }
+body.cuerpoCat{
+  background-image: url("/assets/cataru.jpg");
+  background-repeat: repeat-x repeat-y;
+}
+#cabecera{
+  font-size: 200%;
+}
+.jumboCat{
+  background: rgba(255, 255, 255, 0.75) !important;
+  padding-top: 20px !important;
+  margin-top: 30px !important;
+}
+#btnc{
+  color: #FFFFFF !important;
+}

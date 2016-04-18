@@ -1,35 +1,51 @@
-<h1>Categorías</h1>
-<div class="category-list">
-<% @categories.each do |category|%>
+<body class="cuerpoCat">
+  <div class="row">
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br> <!-- Esto es una chapuza temporal -->
+  <div class="jumbotron jumboCat  col-md-8 col-md-offset-2 ">
+    <h1 id="cabecera">Categorías</h1>
+    <div class="category-list">
+    <% @categories.each do |category|%>
 
 
-  <div class="col-md-4">
-    <div class="category-row">
-        <div class="block-right">
-          <img src="<%=category.icon %>" height="40" alt="Sin imagen">
-          <br>
+      <div class="col-md-4">
+        <div class="category-row">
+            <div class="block-right">
+              <img src="<%=category.icon %>" height="40" alt="Sin imagen">
+
+            </div>
+            <div class="block-left">
+              <%= link_to category.name, category,title: category.description, rel: 'tooltip', class: "name-category-list" %>
+              <br>
+              <% if user_signed_in? %>
+               <% if current_user.role_type == 'Administrator' %>
+              <%= link_to "Borrar",category, method: :delete , class: "category-link" %>
+               <% end %>
+              <% end %>
+            </div>
         </div>
-        <div class="block-left">
-          <%= link_to category.name, category,title: category.description, rel: 'tooltip', class: "name-category-list" %>
-          <br>
-          <% if user_signed_in? %>
-           <% if current_user.role_type == 'Administrator' %>
-          <%= link_to "Borrar",category, method: :delete , class: "category-link" %>
-           <% end %>
-          <% end %>
-        </div>
+
+      </div>
+
+    <% end %>
 
     </div>
+
+    <% if user_signed_in? %>
+    <% if current_user.role_type == 'Administrator' %>
+    <div class="buttons col-md-4 col-md-offset-4">
+      <br>
+      <br>
+      <%= link_to 'Nueva categoría', new_category_path, class: 'btn btn-primary',id:'btnc' %>
+    </div>
+    <% end %>
+    <% end %>
+  </div>
   </div>
 
-<% end %>
-
-</div>
-
-<% if user_signed_in? %>
-<% if current_user.role_type == 'Administrator' %>
-<div class="buttons col-md-4 col-md-offset-4">
-  <%= link_to 'Nueva categoría', new_category_path, class: 'btn btn-default' %>
-</div>
-<% end %>
-<% end %>
+</body>
