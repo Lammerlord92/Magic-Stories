@@ -17,14 +17,16 @@ gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
-
-#Pagos con paypal
+# Pagos con paypal
 gem 'paypal-express', '~> 0.8.1'
+
+# Gema para el slider del index
+gem 'jquery-slick-rails'
 
 # Enlace para descasrgar ImageMagic -- Necesario para usar el comando: rake db:seed
 # http://www.imagemagick.org/script/binary-releases.php
 
-#gema socialicitaion para implementar los seguidores:
+# Gema socialicitaion para implementar los seguidores:
 gem "socialization"
 
 # Bootstrap
@@ -79,4 +81,3 @@ group :development do
 
 
 end
-

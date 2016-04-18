@@ -16,6 +16,17 @@
  *= require bootstrap-wysihtml5
  */
 
+ /*
+ [...]
+ *= require slick
+ [...]
+ */
+ /*
+[...]
+*= require slick-theme
+[...]
+*/
+
 /* Errores */
 
 .errors{
