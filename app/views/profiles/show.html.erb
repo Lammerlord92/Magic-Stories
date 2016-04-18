@@ -6,7 +6,7 @@
 
 
   <!-- Perfil -->
-  <div class="col-md-6">
+  <div class="col-md-4">
     <!-- Información -->
     <div class="row">
       <div class="col-md-7">
@@ -16,6 +16,11 @@
           <i class="glyphicon glyphicon-lock" aria-hidden="true"></i>
           <% end %>
         </h2>
+      </div>
+      <div class="col-md-5 text-right escritura gris">
+        <!-- TODO Añadir atributo de valoración -->
+        <p>Nota: 9</p>
+        <p><img src="/assets/libro.png" class="libro">&nbsp&nbsp<%= @profile.stories.count %></p>
       </div>
     </div>
     <div class="row container-fluid boton">
@@ -42,23 +47,66 @@
           </br>
         <% end %>
       <% end %>
-    </div>
-  </div>
-
-  <div class="col-md-4">
-    <div class="row container-fluid boton espacio-boton">
+      <% if current_user.present? && current_user.role_type == 'Administrator' && @profile.user.role_type == 'FreeUser' %>
+          <%= link_to "Convertir a Premium", "/profiles/premium/#{@profile.id}", class:"btn btn-primary btn-block"  %>
+          </br>
+      <% end %>
       <% if current_user.present? and @profile.user.banned_until.present? and (current_user.role_type == 'Administrator' || @profile.user == current_user) %>
           <p >Baneado hasta: <%= @profile.user.banned_until %></p>
       <% end %>
       <% if current_user.present? && current_user.role_type == 'Administrator' && @profile.user.role_type != 'Administrator' && @profile.user.banned_until == nil %>
-        <form action="/profiles/ban/<%=@profile.id%>" method="get", class="form-derecha">
+        <form action="/profiles/ban/<%=@profile.id%>" method="get">
             <input type="text" name="date" placeholder="Banear hasta">
             <button type="submit", class="btn btn-primary">Banear</button>
         </form>
       <% end %>
-      <% if current_user.present? && current_user.role_type == 'Administrator' && @profile.user.role_type == 'FreeUser' %>
-        <%= link_to "Convertir a Premium", "/profiles/premium/#{@profile.id}", class:"btn btn-primary btn-block"  %>
-       </br>
+    </div>
+    <!-- Seguidores/siguiendo -->
+    <div class="row gris">
+      <div class="col-md-3 col-md-offset-3 text-center">
+        <%= @profile.followers_count %><br/>seguidores
+      </div>
+      <div class="col-md-3 text-center left-divider">
+        <%= @profile.followees_count %><br/>siguiendo
+      </div>
+      <div class="col-md-3 text-center left-divider">
+        <%= Addition.where(profile_id: @profile.id).count %><br/>adquisiciones
+      </div>
+    </div>
+  </div>
+
+  <!-- Historias -->
+  <h2>Historias</h2>
+  <div class="col-md-6">
+    <!-- Tabs para cada listado -->
+    <ul class="nav nav-tabs nav-justified">
+
+      <!-- Historias adquiridas (sólo usuarios logueados) -->
+
+
+          <li <% if @option == "acquired" %>class="active"<% end %> role="presentation">
+            <%= link_to "Adquiridas", stories_acquired_path, class:"btn btn-default" %>
+          </li>
+
+          <!-- Historias creadas (sólo usuarios premium y admins) -->
+          <% unless current_user.role_type == "FreeUser" %>
+
+              <li <% if @option == "created" %>class="active"<% end %> role="presentation">
+                <%= link_to "Creadas", stories_created_path, class:"btn btn-default" %>
+              </li>
+
+          <% end %>
+
+
+
+    </ul>
+    <div class="row">
+      <% @profile.stories.last(3).each do |story| %>
+          <div class="col-md-4">
+            <a href="/stories/<%= story.id %>">
+              <%= render 'stories/story_slot', story: story %>
+            </a>
+          </div>
       <% end %>
     </div>
   </div>

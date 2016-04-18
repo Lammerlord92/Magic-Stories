@@ -64,7 +64,30 @@
   </div>
 
   <!-- Historias -->
+  <h2>Historias</h2>
   <div class="col-md-6">
+    <!-- Tabs para cada listado -->
+    <ul class="nav nav-tabs nav-justified">
+
+      <!-- Historias adquiridas (sólo usuarios logueados) -->
+
+
+      <li <% if @option == "acquired" %>class="active"<% end %> role="presentation">
+        <%= link_to "Adquiridas", stories_acquired_path, class:"btn btn-default" %>
+      </li>
+
+      <!-- Historias creadas (sólo usuarios premium y admins) -->
+      <% unless current_user.role_type == "FreeUser" %>
+
+          <li <% if @option == "created" %>class="active"<% end %> role="presentation">
+            <%= link_to "Creadas", stories_created_path, class:"btn btn-default" %>
+          </li>
+
+      <% end %>
+
+
+
+    </ul>
     <div class="row">
       <% profile.stories.last(3).each do |story| %>
       <div class="col-md-4">
