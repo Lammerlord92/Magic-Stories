@@ -79,15 +79,6 @@ header a, header a:hover{
   margin: 10px;
 }
 
-#nhist{
-
-    color: #002400 !important;
-    background-color: #ECA701 !important;
-    border-radius: 0 !important;
-    border: 0 !important;
-    padding: 5px !important;
-    margin: 10px;
-}
 header img{
   height: 42px !important;
 }
@@ -118,21 +109,21 @@ header .dropdown-menu a:hover{
 footer{
   width: 100%;
   background-color: #002400 !important;
-  color: #FFFFFF !important;
 }
 
-footer a{
+footer a, footer a:hover{
+  background-color: #002400 !important;
   color: #FFFFFF !important;
-}
-
-footer a:hover{
-  color: lightgrey !important;
 }
 
 .navbar-footer {
   margin: 0 !important;
   border: 0 !important;
+}
+
+.copyright{
   padding-top: 15px;
+  color: white;
 }
 
 
