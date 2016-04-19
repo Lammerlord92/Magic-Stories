@@ -1,7 +1,11 @@
 /* index-slider */
 
+.slick-content {
+  height: 450px;
+}
+
 .index-story-info {
-  margin-left: 50px;
+  margin-left: 40px;
 }
 
 .index-story-info .trendings {
@@ -9,17 +13,22 @@
 }
 
 .index-story-info .author {
-  font-size: 1.2em;
+  font-size: 1.12em;
   margin-bottom: 0 !important;
+  margin-right: 25px;
+}
+
+.index-story-info .category {
+  float: right;
 }
 
 .index-story-info .title {
   margin-top: 0 !important;
 }
 
-.index-slider .story-cover {
-  border: 1px solid black;
-  height: 100px;
+.index-story-cover {
+  margin-right: 50px;
+  height: 450px;
 }
 
 .nopadding {
