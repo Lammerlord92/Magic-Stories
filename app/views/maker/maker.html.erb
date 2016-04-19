@@ -6,35 +6,162 @@
       height: 400px;
       border: 1px solid lightgrey;
     }
+    #graph_popup{
+      border: 2px solid darkgreen;
+      padding-bottom: 1.5em;
+      position: absolute;
+      z-index: 300;
+      display: none;
+    }
   </style>
+  <div id="graph_popup" class="col-sm-4 col-sm-offset-4">
+    <h3 class="text-center" id="popup-header">Popup</h3>
+
+    <label for="popup-id">Id: </label>
+    <input type="text" value="" id="popup-id" class="form-control">
+
+    <label for="popup-title">Title: </label>
+    <input type="text" value="" id="popup-title" class="form-control">
+    <br>
+    <button id="popup-save"   class="btn btn-primary">Guardar</button>
+    <button id="popup-cancel" class="btn btn-default">Cancelar</button>
+  </div>
   <div id="graph_edit"></div>
   <script type="text/javascript" charset="utf-8">
     var container = $("#graph_edit")[0];
+    var $popup    = $("#graph_popup"); // popup jquery elem
+    var popup     = $popup[0]; // popup html elem
+
+    // title of the popup
+    var popup_header = $popup.find("#popup-header");
+    // value of inputs
+    var popup_id     = $popup.find("#popup-id");
+    var popup_title  = $popup.find("#popup-title");
+
+    // popup buttons
+    var popup_save_btn   = $popup.find("#popup-save");
+    var popup_cancel_btn = $popup.find("#popup-cancel");
 
     // TODO: acordarse de borrar estos datos de ejemplo
     // create an array with nodes
     var nodes = new vis.DataSet([
-      {id: 1, label: 'Node 1'},
-      {id: 2, label: 'Node 2'},
-      {id: 3, label: 'Node 3'},
-      {id: 4, label: 'Node 4'},
-      {id: 5, label: 'Node 5'}
+      {id: 1, label: '1: Momento feliz', title: "Juanoide se muere"},
+      {id: 2, label: 'Nodo 2', title: "Todos lo celebramos"},
+      {id: 3, label: 'Nodo 3', title: "Todos lo celebramos mucho tiempo"},
+      {id: 4, label: 'Nodo 4', title: "El gordo de ispp propone un concurso de tartas en su funeral como team building"},
+      {id: 5, label: 'Nodo 5', title: "Corchu nos encuentra y suspende a juanoide posmuerte"}
     ]);
 
     // create an array with edges
     var edges = new vis.DataSet([
-      {from: 1, to: 3},
-      {from: 1, to: 2},
-      {from: 2, to: 4},
-      {from: 2, to: 5}
+      {from: 1, to: 3, label: "celebracion larga", title: "Lo vemos morir y nos quedamos mucho tiempo celebrando"},
+      {from: 1, to: 2, label: "celebracion corta", title: "Lo vemos y nos quedamos un rato celebrando"},
+      {from: 2, to: 4, label: "vamos a una pizzeria", title: "Nos encontramos al gordo de ispp"},
+      {from: 2, to: 5, label: "vamos al LSI", title: "Nos encontramos a tito corchu"}
     ]);
 
     var data = { edges: edges, nodes: nodes };
     var options = {
       interaction: {
-        navigationButtons: true
+        navigationButtons: true,
+        hover: true
+      },
+      layout: {
+        // asegura que el grafo tenga el mismo layout
+        // mientras no se regargue la libreria vis.js en la pagina
+        randomSeed: 2
+      },
+      manipulation: {
+        addNode:    onAddNode,
+        editNode:   onEditNode,
+        deleteNode: onDelete,
+        addEdge:    onAddEdge,
+        editEdge:   onEditEdge,
+        deleteEdge: onDelete
+      },
+      nodes: {
+        // shape: "forma del nodo",
+        color: {
+          hover: {
+            border: "red",
+            background: "orange"
+          }
+        }
+      },
+      edges: {
+        arrows: {
+          to: {
+            enabled: true,
+            scaleFactor: 0.5
+          }
+        }
       }
     };
+
+    // esta funcion se llama al pulsar sobre "Add node"
+    function onAddNode(data, callback){
+      popup_header.text("Añadir nodo");
+      popup_id.val(data.id);
+      popup_title.val(data.label);
+      popup_save_btn.on("click", onSave.bind(this, data, callback));
+      popup_cancel_btn.on("click", clearPopup.bind());
+      $popup.css("display", "block");
+    }
+    // esta funcion se llama al pulsar sobre "Edit node"
+    function onEditNode(data, callback){
+      popup_header.text("Editar nodo");
+      popup_id.val(data.id);
+      popup_title.val(data.label);
+      popup_save_btn.on("click", onSave.bind(this, data, callback));
+      popup_cancel_btn.on("click", onCancel.bind(this, callback));
+      $popup.css("display", "block");
+    }
+    /* esta funcion se llama al pulsar sobre "Delete selected"
+     * cuando un nodo esta seleccionado
+     * recibe un callback y un objeto data
+     * con las propiedades nodes y edges
+     * indicando los ids de las aristas o nodos borrados
+     * */
+    function onDelete(data, callback){
+      /* el metodo .join se llama sobre un array de strings
+       * para unirlas en una sola string uniendolas con el parametro pasado
+       * */
+      if(data.nodes.length) console.log("se borraron los nodos "+data.nodes.join(", "));
+      if(data.edges.length) console.log("se borraron las aristas "+data.edges.join(", "));
+      callback(data);
+    }
+    function onAddEdge(data, callback){
+      if(data.from == data.to){
+        var respuesta = confirm("¿Quieres conectar el nodo consigo mismo?");
+        if (respuesta == true) callback(data);
+      }else{
+        callback(data);
+      }
+    }
+    function onEditEdge(data, callback){
+      popup_header.text("Editar arista");
+      popup_id.val(data.id);
+      popup_title.val(data.label || "");
+      popup_save_btn.on("click", onSave.bind(this, data, callback));
+      popup_cancel_btn.on("click", onCancel.bind(this, callback));
+      $popup.css("display", "block");
+    }
+
+    function clearPopup(){
+      popup_save_btn.off("click");
+      popup_cancel_btn.off("click");
+      $popup.css("display", "none");
+    }
+    function onCancel(callback){
+      clearPopup();
+      callback(null);
+    }
+    function onSave(data, callback){
+      data.id = popup_id.val();
+      data.label = popup_title.val();
+      clearPopup();
+      callback(data);
+    }
 
     //  vis.Network(container, data, options)
     //    container es un elemento html
