@@ -1,6 +1,13 @@
 <div class="block-right">
   <h1><%= @category.name  %></h1>
 
+  <div class="covers">
+    <% if @category.name = "Drama" %>
+      <img src="/assets/categories_covers/caratula drama.jpg">
+  <% end %>
+  </div>
+
+
   <p>
     Descripción: <%= @category.description  %>
   </p>
