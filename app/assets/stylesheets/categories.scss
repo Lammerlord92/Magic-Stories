@@ -32,7 +32,7 @@
   margin: 1em 0;
 }
 body.cuerpoCat{
-  background-image: url("/assets/cataru.jpg");
+  background-image: url("/assets/mosaico.jpg");
   background-repeat: repeat-x repeat-y;
 }
 #cabecera{
@@ -45,4 +45,9 @@ body.cuerpoCat{
 }
 #btnc{
   color: #FFFFFF !important;
+}
+
+img.cover{
+  width: 420px;
+  height: 420px;
 }
