@@ -57,6 +57,7 @@ Rails.application.routes.draw do
   get 'welcome/maker_fuken'
   get 'welcome/maker2pruebaJulio'
   get 'welcome/textoDesplegable'
+  get 'welcome/wololo'
 
   # You can have the root of your site routed with "root"
   root 'welcome#index'
