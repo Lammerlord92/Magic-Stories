@@ -3,17 +3,9 @@ class WelcomeController < ApplicationController
   def index
     @categories = Category.all
 
-    # TODO: Provisional. El backend tiene que insertar la historia tendencia de cada género
-    @trending_stories = Hash.new
-    @trending_stories[@categories[0]] = Story.find(1)
-    @trending_stories[@categories[1]] = Story.find(13)
-    @trending_stories[@categories[2]] = Story.find(3)
-    @trending_stories[@categories[3]] = Story.find(4)
-    @trending_stories[@categories[4]] = Story.find(5)
-    @trending_stories[@categories[5]] = Story.find(6)
+    # TODO: Provisional. El backend tiene que insertar las historias del slice
+    @slice_stories = [Story.find(13), Story.find(1), Story.find(2)]
 
-
-    #
     # TODO: Provisional. El backend tiene que insertar las historias más nuevas de cada género
     @newest_stories_by_category = Hash.new
     count = 0
@@ -28,7 +20,7 @@ class WelcomeController < ApplicationController
       count = count + 1
     }
 
-    # TODO: Provisional. Insertar los seis escritores que se mostrarán al pie del index
+    # TODO: Provisional. El backend tiene que insertar los seis mejores escritores
     @writers = Profile.first(6)
 
     render 'index'

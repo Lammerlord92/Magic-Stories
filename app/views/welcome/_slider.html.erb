@@ -1,0 +1,33 @@
+<div class="index-slider">
+  <div class="slick-contents">
+    <% @slice_stories.each do |story| %>
+      <div>
+        <div class="row">
+          <div class="col-md-6 nopadding">
+            <div class="index-story-info">
+              <h2 class="trendings">Tendencias</h2>
+              <h4 class="author"><%= story.creatorProfile.name %></h4>
+              <h3 class="title"><%= story.title %></h3>
+              <p class="synopsis"><%= story.description %></p>
+            </div>
+          </div>
+          <div class="col-md-6 nopadding">
+            <div class="index-story-cover">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <script type="text/javascript">
+    $('.slick-contents').slick({
+      dots: false,
+      infinite: true,
+      speed: 300,
+      slidesToShow: 1,
+      adaptiveHeight: true
+    });
+  </script>
+</div>

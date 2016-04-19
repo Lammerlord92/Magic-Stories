@@ -1,3 +1,34 @@
+/* index-slider */
+
+.index-story-info {
+  margin-left: 50px;
+}
+
+.index-story-info .trendings {
+  margin-bottom: 20px;
+}
+
+.index-story-info .author {
+  font-size: 1.2em;
+  margin-bottom: 0 !important;
+}
+
+.index-story-info .title {
+  margin-top: 0 !important;
+}
+
+.index-slider .story-cover {
+  border: 1px solid black;
+  height: 100px;
+}
+
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
+/* index-new-stories */
+
 .index-new-stories {
   margin-bottom: 3%;
 }
@@ -20,6 +51,8 @@ img.category-image {
   max-width: 32px;
   margin-right: 5px;
 }
+
+/* index-writers */
 
 .index-writers .title {
   margin-bottom: 20px;
