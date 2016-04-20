@@ -1,4 +1,6 @@
-
+<% if !@code.nil? %>
+<h1><%=t @code %></h1>
+<% end %>
 <article>
   <h1>
     <%=t @payment.payment_type %> Payment for <%=t @payment.goods_type %> Goods

@@ -77,21 +77,24 @@ def create_mc_payment # Membership Card
       @addition.profile_id = profile.id
       @addition.story_id = story.id
 
-        if @addition.save
+      if @addition.save
 
-          flash[:notice] = 'Payment Transaction Completed'
-          payment_url(payment.identifier)
+        flash[:notice] = 'Payment Transaction Completed'
+        payment_url(payment.identifier)
 
-        else
-          cancel
-        end
       else
+        cancel
+      end
+    elsif(payment.good_type == 'MembershipCard')
+      @code = 'Proceso de pago completado tu código es: #{payment.good.code[0..3]} - #{payment.good.code[4..7]} - #{payment.good.code[8..11]} - #{payment.good.code[12..15]}'
+      payment_url(payment.identifier)
+    else
       flash[:notice] = 'Payment Transaction Completed'
       payment_url(payment.identifier)
-      end
-
     end
+
   end
+end
 
 def cancel
   handle_callback do |payment|
@@ -102,7 +105,7 @@ def cancel
 end
 
 def donation_form
-    @donation = Donation.new
+  @donation = Donation.new
 end
 
 private
@@ -117,25 +120,25 @@ def handle_callback
   end
 end
 
-  def paypal_api_error(e)
-    redirect_to root_url, error: e.response.details.collect(&:long_message).join('<br />')
-  end
+def paypal_api_error(e)
+  redirect_to root_url, error: e.response.details.collect(&:long_message).join('<br />')
+end
 
-  def generateToken
+def generateToken
+  r = SecureRandom.urlsafe_base64(n= 8, false)
+  until Payment.find_by_token(r) == nil
     r = SecureRandom.urlsafe_base64(n= 8, false)
-    until Payment.find_by_token(r) == nil
-      r = SecureRandom.urlsafe_base64(n= 8, false)
-    end
-    return r
   end
+  return r
+end
 
-  def generateIdentifier
+def generateIdentifier
+  r = SecureRandom.urlsafe_base64(n= 8, false)
+  until Payment.find_by_identifier(r) == nil
     r = SecureRandom.urlsafe_base64(n= 8, false)
-    until Payment.find_by_identifier(r) == nil
-      r = SecureRandom.urlsafe_base64(n= 8, false)
-    end
-    return r
   end
+  return r
+end
 
 
 

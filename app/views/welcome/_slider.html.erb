@@ -1,0 +1,37 @@
+<div class="index-slider">
+  <div class="slick-contents">
+    <% @slice_stories.each do |story| %>
+      <div>
+        <div class="row slick-content">
+          <div class="col-md-6 nopadding">
+            <div class="index-story-info">
+              <h2 class="trendings">Tendencias</h2>
+              <h4 class="author">
+                <%= story.creatorProfile.name %>
+                <span class="category">Géneros: [insertar aquí géneros]</span>
+              </h4>
+              <h3 class="title"><%= story.title %></h3>
+              <p class="synopsis"><%= story.description %></p>
+            </div>
+          </div>
+          <div class="col-md-6 nopadding">
+            <div class="index-story-cover" style="background: url('<%= story.cover %>') no-repeat center; background-size: cover;">
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <script type="text/javascript">
+    $('.slick-contents').slick({
+      dots: false,
+      infinite: true,
+      speed: 1000, // 1 segundo
+      slidesToShow: 1,
+      adaptiveHeight: true,
+      autoplay: true,
+      autoplaySpeed: 10000 // 10 segundos
+    });
+  </script>
+</div>

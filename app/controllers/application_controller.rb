@@ -27,7 +27,11 @@ class ApplicationController < ActionController::Base
   private
 
   def layout
-    !(devise_controller? && action_name != 'edit') && "application"
+    if devise_controller? && action_name=='new'
+      return "devise"
+    else
+      return "application"
+    end
   end
 
 end

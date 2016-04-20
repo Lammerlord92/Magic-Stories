@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'connections/search'
 
   get 'membership_cards/exchange'
+  get 'membership_cards/why'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -56,6 +57,7 @@ Rails.application.routes.draw do
   get 'welcome/maker_fuken'
   get 'welcome/maker2pruebaJulio'
   get 'welcome/textoDesplegable'
+  get 'welcome/wololo'
 
   # You can have the root of your site routed with "root"
   root 'welcome#index'
@@ -172,7 +174,7 @@ Rails.application.routes.draw do
 
 
 
-  #   Ultima ruta para catpurar todas
+  #   Ultima ruta para capturar todas
   get '*path' => "cuatro_cero_cuatro#index"
 
 

@@ -1,64 +1,44 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Tree Story</title>
-  <%= favicon_link_tag 'favicon.ico' %>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+<div class="container">
+  <div class="jumbotron jumbo-transparente col-md-6 col-md-offset-3 row">
+    <div class="col-md-8 col-md-offset-2">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular-sanitize.js"></script>
-
-  <%= csrf_meta_tags %>
-</head>
-
-<body id="welcome">
-  <div class="container">
-    <div class="jumbotron jumbo-transparente col-md-6 col-md-offset-3 row">
-      <div class="col-md-8 col-md-offset-2">
-
-        <img class="logo center-block" src="/assets/logo definitivo.png">
+      <img class="logo center-block" src="/assets/logo definitivo.png">
               
-        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-              
-          <!-- TODO Boton Facebook -->
-          <!--<button class="btn btn-facebook btn-block" type="submit" formaction="#"></button>-->
-            
-          <div class="entrada">
-            <%= f.email_field :email, autofocus: true, :placeholder => "Correo electrónico", class: "form-control" %>
-            <%= f.password_field :password, autocomplete: "off", :placeholder => "Contraseña", class: "form-control" %>
-            <% if devise_mapping.rememberable? -%>
-            <%= f.check_box :remember_me %>
-            <%= f.label :remember_me, "Mantener la sesión activa" %>
-            <% end %>
-          </div>
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 
-          <%= f.submit "Iniciar sesión" , class: "btn btn-primary btn-block" %> 
+        <div class="entrada">
+          <%= f.email_field :email, autofocus: true, :placeholder => "Correo electrónico", class: "form-control" %>
+          <%= f.password_field :password, autocomplete: "off", :placeholder => "Contraseña", class: "form-control" %>
+          <% if devise_mapping.rememberable? -%>
+          <%= f.check_box :remember_me %>
+          <%= f.label :remember_me, "Mantener la sesión activa" %>
+          <% end %>
+        </div>
 
-        <% end %>
-        <br/>
-        <row>
+        <%= f.submit "Iniciar sesión" , class: "btn btn-primary btn-block" %> 
 
-          <div class= "centered">
-          <text> o conecta:  &nbsp &nbsp </text>
-            <a href="/auth/facebook" target="_blank">
-              <img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Conectar con Facebook" />
-            </a>
-            &nbsp
-            <a href="/auth/twitter" target="_blank">
-              <img src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Conectar con Twitter" />
-            </a>
-          </div>
-        </row>
+      <% end %>
 
-        <hr>
+      <b><%= link_to "¿Ha olvidado su contraseña?", new_password_path(resource_name), class: "link" %></b>
+
+      <hr>
+
+      <a href="/auth/facebook" target="_blank" class="btn btn-block btn-social btn-facebook">
+        <span class="fa fa-facebook"></span>
+        <span>Conectar con Facebook</span>
+      </a>
+
+      <a href="/auth/twitter" target="_blank" class="btn btn-block btn-social btn-twitter">
+        <span class="fa fa-twitter"></span>
+        <span>Conectar con Twitter</span>
+      </a>
+
+      <hr>
                   
-        <%= button_to 'Registrarse', new_user_registration_path, class: 'btn btn-danger btn-block', method: :get %>
+      <%= button_to 'Registrarse', new_user_registration_path, class: 'btn btn-danger btn-block', method: :get %>
           
-        <%= link_to 'Descubrir', stories_example_path, class: 'btn btn-success btn-block', data: {'no-turbolink': 'true'} %>
+      <%= link_to 'Descubrir', stories_example_path, class: 'btn btn-success btn-block', data: {'no-turbolink': 'true'} %>
 
-      </div>
-    </div>  
-  </div>
-</body>
-</html>
+    </div>
+  </div>  
+</div>

@@ -1,3 +1,38 @@
 // Place all the styles related to the MembershipCards controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#jm{
+	background-color: #002400 !important;
+  color: #FFFFFF;
+  border-style: solid !important;
+  border: 5px;
+  border-color: gold;
+}
+
+#jm p{
+	font-size: 14px;
+}
+
+#jm a, #jm a:hover{
+	color: #ECA701 !important;
+}
+
+#bd{
+  background-image: url("/assets/cataru.jpg");
+  background-repeat: repeat-x repeat-y;
+}
+
+#bt{
+  background-color: #ECA701 !important;
+  color: #002400 !important;
+}
+
+#tit{
+  font-size: 350%;
+}
+
+#pp{
+  font-size: small;
+  color: #ECA701 !important;
+}

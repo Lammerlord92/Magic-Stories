@@ -16,6 +16,17 @@
  *= require bootstrap-wysihtml5
  */
 
+ /*
+ [...]
+ *= require slick
+ [...]
+ */
+ /*
+[...]
+*= require slick-theme
+[...]
+*/
+
 /* Errores */
 
 .errors{
@@ -109,21 +120,21 @@ header .dropdown-menu a:hover{
 footer{
   width: 100%;
   background-color: #002400 !important;
-  color: #FFFFFF !important;
 }
 
-footer a{
+footer a, footer a:hover{
+  background-color: #002400 !important;
   color: #FFFFFF !important;
-}
-
-footer a:hover{
-  color: lightgrey !important;
 }
 
 .navbar-footer {
   margin: 0 !important;
   border: 0 !important;
+}
+
+.copyright{
   padding-top: 15px;
+  color: white;
 }
 
 

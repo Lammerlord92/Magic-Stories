@@ -1,32 +1,41 @@
+<body id="bd">
 <%= form_tag do %>
-<div class="row">
-	<div class="col-md-12">
-		<h1 class="text-center">Canjea tu código</h1>
-    <p class="text-center">Canjea tu código para ser usuario <b>premium </b> o para extender la <b>suscripción</b>:</p>
-	</div>
-</div> 
-<div class="row">
-	<div class="col-md-offset-3 col-md-6">
-		<table class="table">
-			<tbody>
-				<tr>
-					<div class="form-inputs">
-						<td><%=text_field_tag :c1,'' , size: 4, autocomplete: "off", maxlength: 4%></td>
-						<td><%=text_field_tag :c2,'' , size: 4, autocomplete: "off", maxlength: 4%></td>
-						<td><%=text_field_tag :c3,'' , size: 4, autocomplete: "off", maxlength: 4%></td>
-						<td><%=text_field_tag :c4,'' , size: 4, autocomplete: "off", maxlength: 4%></td>
-					</div>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+<div class="container" id="cc">
+	<div class="jumbotron  col-md-6 col-md-offset-3 row" id="jm">
+		<h1 class="text-center" id="tit">Canjea tu código</h1>
+	    <p class="text-center">Canjea tu código para ser usuario <b>premium </b> o para extender la <b>suscripción</b>:</p>
+		
+
+		<div class="row">
+			<div class="col-md-offset-2 col-md-6">
+				<table class="table">
+					<tbody>
+						<tr>
+							<div class="form-inputs">
+								<td><%=text_field_tag :c1,'' , size: 4, autocomplete: "off", maxlength: 4%></td>
+								<td><%=text_field_tag :c2,'' , size: 4, autocomplete: "off", maxlength: 4%></td>
+								<td><%=text_field_tag :c3,'' , size: 4, autocomplete: "off", maxlength: 4%></td>
+								<td><%=text_field_tag :c4,'' , size: 4, autocomplete: "off", maxlength: 4%></td>
+							</div>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<%= submit_tag 'Canjear', class: "btn btn-primary", id:"bt" %>
+          <% end %>
+				</div>
+			</div>
+    <br>
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <a id="pp" href="/membership_cards/why">¿Por qué ser premium?</a>
+      </div>
+    </div>
+
+	</div> 
 </div>
-
-<div class="row">
-	<div class="col-md-12 text-center">
-		<%= submit_tag 'Canjear', class: "btn btn-primary" %>
-	</div>
-</div>
-
-<% end %>
-
+</body>

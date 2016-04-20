@@ -36,32 +36,38 @@ puts "Success: Todas las tablas han sido borradas"
 
 category1 = Category.create!({
                                  name: 'Drama',
-                                 description: 'Género dramático'
+                                 description: 'Género dramático',
+                                 icon: 'assets/categories_logos/drama.png'
                              })
 
 category2 = Category.create!({
                                  name: 'Cuento',
-                                 description: 'Género de cuentos'
+                                 description: 'Género de cuentos',
+                                 icon: 'assets/categories_logos/cuento.png'
                              })
 
 category3 = Category.create!({
                                  name: 'Ficción',
-                                 description: 'Género de ficción'
+                                 description: 'Género de ficción',
+                                 icon: 'assets/categories_logos/ficcion.png'
                              })
 
 category4 = Category.create!({
                                  name: 'Terror',
-                                 description: 'Género de terror'
+                                 description: 'Género de terror',
+                                 icon: 'assets/categories_logos/terror.png'
                              })
 
 category5 = Category.create!({
                                  name: 'Épico',
-                                 description: 'Género épico'
+                                 description: 'Género épico',
+                                 icon: 'assets/categories_logos/epico.png'
                              })
 
 category6 = Category.create!({
                                  name: 'Aventura',
-                                 description: 'Género de aventuras'
+                                 description: 'Género de aventuras',
+                                 icon: 'assets/categories_logos/aventura.png'
                              })
 
 puts "Success: Creación de categorías"
@@ -233,19 +239,19 @@ puts "Success: Creación de ActorUserGroup"
 # Creacion de Story  -- Unión a profile
 
 story1 = Story.create!({title: 'Title1', description: 'Description', language: 'SPANISH', price: 16.30, release_date: '20/10/2015',
-                        published: true, num_purchased: 0, creatorProfile: user1.profile, cover: 'http://www.upl.co/uploads/drama1460039396.jpg'})
+                        published: true, num_purchased: 0, creatorProfile: user1.profile, cover: 'http://www.upl.co/uploads/drama1460039396.jpg', categories: category1.id})
 
 story2 = Story.create!({title: 'Title2', description: 'Description', language: 'SPANISH', price: 16.30, release_date: '20/10/2015',
-                        published: true, num_purchased: 0, creatorProfile: user1.profile})
+                        published: true, num_purchased: 0, creatorProfile: user1.profile, categories: category2.id})
 
 story3 = Story.create!({title: 'Title3', description: 'Description', language: 'ENGLISH', price: 16.30, release_date: '20/10/2015',
-                        published: true, num_purchased: 0, creatorProfile: user1.profile, cover: 'http://www.upl.co/uploads/ficcion1460039396.jpg'})
+                        published: true, num_purchased: 0, creatorProfile: user1.profile, cover: 'http://www.upl.co/uploads/ficcion1460039396.jpg', categories: category3.id})
 
 story4 = Story.create!({title: 'Title4', description: 'Description', language: 'ENGLISH', price: 16.30, release_date: '20/10/2015',
-                        published: true, num_purchased: 0, creatorProfile: user1.profile, cover: 'http://www.upl.co/uploads/Terror1460039396.jpg'})
+                        published: true, num_purchased: 0, creatorProfile: user1.profile, cover: 'http://www.upl.co/uploads/Terror1460039396.jpg', categories: category4.id})
 
 story5 = Story.create!({title: 'Title5', description: 'Description', language: 'CHINESE', price: 16.30, release_date: '20/10/2015',
-                        published: true, num_purchased: 0, creatorProfile: user2.profile, cover: 'http://www.upl.co/uploads/epico1460039396.jpg'})
+                        published: true, num_purchased: 0, creatorProfile: user2.profile, cover: 'http://www.upl.co/uploads/epico1460039396.jpg', categories: category5.id})
 
 story6 = Story.create!({title: 'Title6', description: 'Description', language: 'SPANISH', price: 16.30, release_date: '20/10/2015',
                         published: true, num_purchased: 0, creatorProfile: user2.profile, cover: 'http://www.upl.co/uploads/aventura1460039396.jpg'})
@@ -283,6 +289,15 @@ user3.profile.stories << story9
 user3.profile.stories << story10
 user3.profile.stories << story11
 user3.profile.stories << story12
+
+Addition.create({profile_id: user2.id, story_id: story11.id})
+Addition.create({profile_id: user2.id, story_id: story10.id})
+Addition.create({profile_id: user2.id, story_id: story9.id})
+Addition.create({profile_id: user1.id, story_id: story9.id})
+Addition.create({profile_id: user1.id, story_id: story10.id})
+Addition.create({profile_id: user5.id, story_id: story9.id})
+Addition.create({profile_id: user5.id, story_id: story9.id})
+Addition.create({profile_id: user5.id, story_id: story9.id})
 
 user1.save!
 user2.save!

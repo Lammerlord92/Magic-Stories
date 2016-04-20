@@ -1,28 +1,45 @@
-<div class="trendings">
-  <h3>Tendencias</h3>
-  <hr/>
-  <div class="row">
-    <% @categories.each do |category| %>
-    <div class="col-md-2">
-      <div class="trending-slot">
-        <%= render 'stories/story_slot', story: @trending_stories[category] %>
-        <p class="category"><%= category.name %></p>
-      </div>
-    </div>
-    <% end %>
-  </div>
-</div>
+<%= render 'welcome/slider' %>
 
-<% @categories.each do |category| %>
-  <div class="trendings">
-    <h3><%= category.name %></h3>
-    <hr/>
+<div class="index-new-stories">
+  <div class="center title">
+    <h2>Novedades</h2>
+  </div>
+  <% @categories.each_slice(2) do |categories| %>
     <div class="row">
-      <% @first_six_trending_stories[category].each do |story| %>
-      <div class="col-md-2">
-        <%= render 'stories/story_slot', story: story %>
-      </div>
+      <% categories.each do |category| %>
+        <div class="col-md-6">
+          <h3><img src="<%= category.icon %>" alt="<%= category.name %>" class="category-image" /><%= category.name %></h3>
+          <hr/>
+          <div class="row">
+            <% @newest_stories_by_category[category].each do |story| %>
+              <div class="col-md-4">
+                <%= render 'stories/story_slot', story: story %>
+              </div>
+            <% end %>
+          </div>
+        </div>
       <% end %>
     </div>
+  <% end %>
+</div>
+
+<div class="index-writers">
+  <div class="center title">
+    <h2>Escritores</h2>
   </div>
-<% end %>
+  <div class="row">
+    <% @writers.each do |writer| %>
+      <div class="col-md-2">
+        <a href="/profiles/<%= writer.id %>">
+          <%= image_tag writer.avatar, class: "img-circle img-responsive" %>
+          <div class="center">
+            <p class="writer-name" ><%= writer.name %></p>
+          </div>
+        </a>
+      </div>
+    <% end %>
+  </div>
+  <div class="center writer-buttom">
+    <%= button_to 'Ver todos los escritores', '/profiles', class: 'btn btn-default', method: :get %>
+  </div>
+</div>

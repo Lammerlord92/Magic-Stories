@@ -1,17 +1,83 @@
-.trendings {
+/* index-slider */
+
+.slick-content {
+  height: 450px;
+}
+
+.index-story-info {
+  margin-left: 40px;
+}
+
+.index-story-info .trendings {
+  margin-bottom: 20px;
+}
+
+.index-story-info .author {
+  font-size: 1.12em;
+  margin-bottom: 0 !important;
+  margin-right: 25px;
+}
+
+.index-story-info .category {
+  float: right;
+}
+
+.index-story-info .title {
+  margin-top: 0 !important;
+}
+
+.index-story-cover {
+  margin-right: 50px;
+  height: 450px;
+}
+
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
+/* index-new-stories */
+
+.index-new-stories {
   margin-bottom: 3%;
 }
 
-.trendings h3 {
+.index-new-stories h3 {
   margin-bottom: 3px;
   margin-left: 10px;
 }
 
-.trendings hr {
+.index-new-stories hr {
   border-color: darkgray;
   margin-top: 0;
   margin-bottom: 0;
 }
+
+img.category-image {
+  height: auto;
+  width: 100%;
+  max-height: 32px;
+  max-width: 32px;
+  margin-right: 5px;
+}
+
+/* index-writers */
+
+.index-writers .title {
+  margin-bottom: 20px;
+}
+
+.writer-name {
+  font-size: 1.2em;
+  margin-top: 5%;
+}
+
+.writer-buttom input {
+  width: 25%;
+  margin-top: 20px;
+}
+
+/* Las clases inferiores podrían estar sin usar */
 
 .trending-slot {
   background-color: white;
