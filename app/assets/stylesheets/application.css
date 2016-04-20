@@ -75,6 +75,7 @@ body{
 header nav{
   background-color: #002400 !important;
   border: 0 !important;
+  margin-bottom: 0 !important;
 }
 
 header a, header a:hover{
@@ -112,6 +113,29 @@ header .dropdown-menu{
 
 header .dropdown-menu a:hover{
   color: #002400 !important;
+}
+
+
+/* Banner */
+
+.banner{
+  height: 150px;
+  margin-bottom: 35px;
+  background-image: url("/assets/cataru.jpg");
+  background-size: contain;
+}
+
+.jumbo-banner{
+  height: 100px;
+  margin-bottom: 25px !important;
+  margin-top: 25px;
+  padding: 0 !important;
+  background-color: white !important;
+}
+
+.banner h3{
+  text-align: center;
+  margin: 37px 0 37px 0 !important;
 }
 
 
