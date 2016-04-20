@@ -10,7 +10,11 @@
       <%= render 'stories/valoration', valoration: 8 %>
       <h2><%= story.creatorProfile.name %></h2>
       <hr/>
-      <p>Géneros: <%= story.categories %></p> <!-- TODO: Probar que las categorías se muestren cuando se arregle el problema de BD -->
+      <p>Géneros:</p>
+      <!-- Solución prvisional -->
+      <% story.categories.each do |category| %>
+      <p>&#9679; <%= category.name %></p>
+      <% end %>
       <p>Idioma: <%= story.language %></p> <!-- TODO: Mejorar la forma en la que se muestra el idioma -->
       <p>Fecha de publicación: <%= story.release_date ? story.release_date.strftime('%d/%m/%Y') : 'Sin fecha' %></p>
       <% if current_user.present? %> <!-- Evitar "NilException" -->
