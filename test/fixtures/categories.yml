@@ -2,8 +2,10 @@
 
 one:
   name: MyString
-  desciption: MyString
+  description: MyText
+  icon: MyText
 
 two:
   name: MyString
-  desciption: MyString
+  description: MyText
+  icon: MyText

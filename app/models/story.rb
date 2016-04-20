@@ -9,12 +9,16 @@ class Story < ActiveRecord::Base
   validates_associated :chapters
   #validate :check_date
 
-  attr_reader :categories
+  after_create :save_categories
+
   has_many :chapters
-  has_many :story_categories
-  has_many :categories, through: :story_categories, class_name: 'StoryCategory'
   has_many :comments
   has_many :payments, as: :good
+  has_many :has_categories
+  has_many :categories, through: :has_categories
+
+  # TODO Validar en after_create?
+  # validates :categories, presence: true
 
   #TODO
   #Hasta que no se solucione el problema con la gema de imagenes
@@ -24,8 +28,6 @@ class Story < ActiveRecord::Base
   #Creador perfil
   #TODO Ahora el foreign key es "id" porque si no peta, hay que arreglarlo
   belongs_to :creatorProfile, class_name: "Profile", foreign_key: "profile_id"
-
-
 
   #Setter de la relación
   def categories=(value)
@@ -50,7 +52,7 @@ class Story < ActiveRecord::Base
 
   def save_categories
     @categories.each do |category_id|
-      Story_category.create(category_id:category_id, story_id:self.id)
+      HasCategory.create(category_id: category_id, story_id: self.id)
     end
   end
 

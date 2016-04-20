@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160418181724) do
+ActiveRecord::Schema.define(version: 20160420103345) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,10 +44,10 @@ ActiveRecord::Schema.define(version: 20160418181724) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
-    t.string   "description"
+    t.text     "description"
+    t.text     "icon"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.text     "icon"
   end
 
   create_table "chapters", force: :cascade do |t|
@@ -122,6 +122,16 @@ ActiveRecord::Schema.define(version: 20160418181724) do
   end
 
   add_index "friendships", ["request_friendship_id"], name: "index_friendships_on_request_friendship_id", using: :btree
+
+  create_table "has_categories", force: :cascade do |t|
+    t.integer  "story_id"
+    t.integer  "category_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "has_categories", ["category_id"], name: "index_has_categories_on_category_id", using: :btree
+  add_index "has_categories", ["story_id"], name: "index_has_categories_on_story_id", using: :btree
 
   create_table "identities", force: :cascade do |t|
     t.integer  "user_id"
@@ -349,6 +359,8 @@ ActiveRecord::Schema.define(version: 20160418181724) do
   add_foreign_key "comments", "profiles"
   add_foreign_key "comments", "stories"
   add_foreign_key "friendships", "request_friendships"
+  add_foreign_key "has_categories", "categories"
+  add_foreign_key "has_categories", "stories"
   add_foreign_key "identities", "users"
   add_foreign_key "mailboxer_conversation_opt_outs", "mailboxer_conversations", column: "conversation_id", name: "mb_opt_outs_on_conversations_id"
   add_foreign_key "mailboxer_notifications", "mailboxer_conversations", column: "conversation_id", name: "notifications_on_conversation_id"
