@@ -1,0 +1,33 @@
+<h1>Nuevo donacion</h1>
+
+<%= form_for(@donation, url: '/payment/donate', method: 'post')  do |f| %>
+<% if @donation.errors.full_messages.length > 0 %>
+        <div class="errors">
+          <p>
+            Se encontraron los siguientes errores al guardar la donación
+          </p>
+          <% @donation.errors.full_messages.each do |message| %>
+              <p class="error">
+                *<%= message  %>
+              </p>
+          <% end %>
+        </div>
+    <% end %>
+    <div class="field">
+    <%= f.label :amount, 'Cantidad' %>
+    <%= f.text_field :amount %>
+    </div>
+
+    <div class="field">
+    <h4>Nos interesa saber tu opinión para seguir creciendo.</h4>
+    <%= f.label :message, 'Mensaje' %>
+    <%= f.text_area :message, placeholder: 'Comentario' %>
+    </div>
+
+
+
+   <div class="field">
+      <%= f.submit 'Donar' %>
+   </div>
+
+  <% end %>

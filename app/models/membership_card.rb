@@ -1,6 +1,7 @@
 class MembershipCard < ActiveRecord::Base
 validates :premiumMonths, presence: true
 belongs_to :usage, class_name: "User", foreign_key: "usage"
+has_many :payments, as: :good
 
 
   def validate_out_of_date

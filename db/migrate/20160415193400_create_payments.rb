@@ -4,7 +4,8 @@ class CreatePayments < ActiveRecord::Migration
       t.float :amount, default: 0.0
       t.string :token, :identifier, :payer_id
       t.boolean :recurring, :digital, :popup, :completed, :canceled, default: false
-      t.references :story, index: true, foreign_key: true
+      t.integer  "good_id"
+      t.string   "good_type"
       t.timestamps
     end
   end

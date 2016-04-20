@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160415193400) do
+ActiveRecord::Schema.define(version: 20160418181724) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,12 +45,8 @@ ActiveRecord::Schema.define(version: 20160415193400) do
   create_table "categories", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.string   "icon_file_name"
-    t.string   "icon_content_type"
-    t.integer  "icon_file_size"
-    t.datetime "icon_updated_at"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.text     "icon"
   end
 
@@ -61,8 +57,6 @@ ActiveRecord::Schema.define(version: 20160415193400) do
     t.datetime "updated_at", null: false
     t.integer  "story_id"
   end
-
-  add_index "chapters", ["story_id"], name: "index_chapters_on_story_id", using: :btree
 
   create_table "comments", force: :cascade do |t|
     t.string   "title"
@@ -94,6 +88,13 @@ ActiveRecord::Schema.define(version: 20160415193400) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.boolean  "used"
+  end
+
+  create_table "donations", force: :cascade do |t|
+    t.float    "amount"
+    t.text     "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "follows", force: :cascade do |t|
@@ -245,12 +246,11 @@ ActiveRecord::Schema.define(version: 20160415193400) do
     t.boolean  "popup",      default: false
     t.boolean  "completed",  default: false
     t.boolean  "canceled",   default: false
-    t.integer  "story_id"
+    t.integer  "good_id"
+    t.string   "good_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "payments", ["story_id"], name: "index_payments_on_story_id", using: :btree
 
   create_table "premium_users", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -298,27 +298,13 @@ ActiveRecord::Schema.define(version: 20160415193400) do
     t.date     "release_date"
     t.boolean  "published"
     t.integer  "num_purchased"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.string   "cover_file_name"
-    t.string   "cover_content_type"
-    t.integer  "cover_file_size"
-    t.datetime "cover_updated_at"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.integer  "profile_id"
     t.text     "cover"
   end
 
   add_index "stories", ["profile_id"], name: "index_stories_on_profile_id", using: :btree
-
-  create_table "story_categories", force: :cascade do |t|
-    t.integer  "story_id"
-    t.integer  "category_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  add_index "story_categories", ["category_id"], name: "index_story_categories_on_category_id", using: :btree
-  add_index "story_categories", ["story_id"], name: "index_story_categories_on_story_id", using: :btree
 
   create_table "user_groups", force: :cascade do |t|
     t.string   "name"
@@ -360,7 +346,6 @@ ActiveRecord::Schema.define(version: 20160415193400) do
   add_foreign_key "additions", "discounts"
   add_foreign_key "additions", "profiles"
   add_foreign_key "additions", "stories"
-  add_foreign_key "chapters", "stories"
   add_foreign_key "comments", "profiles"
   add_foreign_key "comments", "stories"
   add_foreign_key "friendships", "request_friendships"
@@ -368,8 +353,5 @@ ActiveRecord::Schema.define(version: 20160415193400) do
   add_foreign_key "mailboxer_conversation_opt_outs", "mailboxer_conversations", column: "conversation_id", name: "mb_opt_outs_on_conversations_id"
   add_foreign_key "mailboxer_notifications", "mailboxer_conversations", column: "conversation_id", name: "notifications_on_conversation_id"
   add_foreign_key "mailboxer_receipts", "mailboxer_notifications", column: "notification_id", name: "receipts_on_notification_id"
-  add_foreign_key "payments", "stories"
   add_foreign_key "stories", "profiles"
-  add_foreign_key "story_categories", "categories"
-  add_foreign_key "story_categories", "stories"
 end

@@ -12,8 +12,9 @@ class Story < ActiveRecord::Base
   attr_reader :categories
   has_many :chapters
   has_many :story_categories
-  has_many :categories, through: :story_categories
+  has_many :categories, through: :story_categories, class_name: 'StoryCategory'
   has_many :comments
+  has_many :payments, as: :good
 
   #TODO
   #Hasta que no se solucione el problema con la gema de imagenes
