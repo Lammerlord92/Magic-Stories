@@ -31,6 +31,31 @@
   height: 450px;
 }
 
+.index-story-cover .title {
+  position: absolute;
+  bottom: 10%;
+  right: 0;
+  margin-right: 50px;
+  width: 50%;
+  height: 10%;
+  border: 1px solid lightgray;
+  border-right: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.index-story-cover .title h3 {
+  position: relative;
+  margin: 0 !important;
+  top: 20%; // ATENCIÓN: esta forma de centrar no es apropiada y depende del ancho del div padre
+  text-align: center;
+}
+
+.absolute-center {
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+
 .nopadding {
    padding: 0 !important;
    margin: 0 !important;
