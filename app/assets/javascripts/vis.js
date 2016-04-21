@@ -21952,7 +21952,7 @@ return /******/ (function(modules) { // webpackBootstrap
    */
   Item.prototype._repaintDeleteButton = function (anchor) {
     var editable = (this.options.editable.remove || this.data.editable === true) && this.data.editable !== false;
-    console.log("Entrando en repaintDeleteButton");
+
     if (this.selected && editable && !this.dom.deleteButton) {
       // create and show button
       var me = this;
@@ -21963,13 +21963,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
       // TODO: be able to destroy the delete button
       new Hammer(deleteButton).on('tap', function (event) {
-        console.log("BORRRRRRRAAAAAAAAAAAAAAAR");
         event.stopPropagation();
-        console.log("BORRRRRRRAAAAAAAAAAAAAAAR");
+
         me.parent.removeFromDataSet(me);
-        console.log("BORRRRRRRAAAAAAAAAAAAAAAR");
       });
-      console.log("BORRRRRRRAAAAAAAAAAAAAAAR 0000000000000000000000");
+
       anchor.appendChild(deleteButton);
       this.dom.deleteButton = deleteButton;
     } else if (!this.selected && this.dom.deleteButton) {
@@ -29086,25 +29084,14 @@ return /******/ (function(modules) { // webpackBootstrap
     }, {
       key: 'remove',
       value: function remove(ids) {
-        var nodes2 = this.body.nodes;
-        var nuevoArray=[];
-        console.log("BORRAR id = "+ids);
-        if (ids == idInicialGrafo){
-            window.alert("No puede borrarse el nodo incial.")
+        var nodes = this.body.nodes;
+
+        for (var i = 0; i < ids.length; i++) {
+          var id = ids[i];
+          delete nodes[id];
         }
-        else{
-            for (var i = 0; i < ids.length; i++) {
-                var id = ids[i];
-                delete nodes2[id];
-            }
-            for(var recorreArra = 0;recorreArra<nodes.length;recorreArra++){
-                if (ids != nodes[recorreArra].id){
-                    nuevoArray.push(nodes[recorreArra]);
-                }
-            }
-            nodes = nuevoArray;
-            this.body.emitter.emit("_dataChanged");
-        }
+
+        this.body.emitter.emit("_dataChanged");
       }
 
       /**
@@ -32122,24 +32109,16 @@ return /******/ (function(modules) { // webpackBootstrap
     }, {
       key: 'remove',
       value: function remove(ids) {
-        var arrayNuevo=[];
-        var edges2 = this.body.edges;
+        var edges = this.body.edges;
         for (var i = 0; i < ids.length; i++) {
           var id = ids[i];
-          var edge = edges2[id];
+          var edge = edges[id];
           if (edge !== undefined) {
             edge.cleanup();
             edge.disconnect();
-            delete edges2[id];
+            delete edges[id];
           }
         }
-       for(var aux = 0;aux<edges.length;aux++){
-           var u = edges[aux].id;
-           if( u != ids){
-               arrayNuevo.push(edges[aux]);
-           }
-       }
-        edges=arrayNuevo;
 
         this.body.emitter.emit("_dataChanged");
       }

@@ -23,6 +23,11 @@
     <label for="popup-title">Title: </label>
     <input type="text" value="" id="popup-title" class="form-control">
     <br>
+
+    <label for="popup-body">Body: </label>
+    <textarea type="text" value="" id="popup-body" class="form-control"></textarea>
+    <br>
+
     <button id="popup-save"   class="btn btn-primary">Guardar</button>
     <button id="popup-cancel" class="btn btn-default">Cancelar</button>
   </div>
@@ -37,6 +42,7 @@
     // value of inputs
     var popup_id     = $popup.find("#popup-id");
     var popup_title  = $popup.find("#popup-title");
+    var popup_body   = $popup.find("#popup-body");
 
     // popup buttons
     var popup_save_btn   = $popup.find("#popup-save");
@@ -103,6 +109,7 @@
       popup_header.text("Añadir nodo");
       popup_id.val(data.id);
       popup_title.val(data.label);
+      popup_body.val(data.textArea);
       popup_save_btn.on("click", onSave.bind(this, data, callback));
       popup_cancel_btn.on("click", clearPopup.bind());
       $popup.css("display", "block");
@@ -112,6 +119,7 @@
       popup_header.text("Editar nodo");
       popup_id.val(data.id);
       popup_title.val(data.label);
+      popup_body.val(data.textArea);
       popup_save_btn.on("click", onSave.bind(this, data, callback));
       popup_cancel_btn.on("click", onCancel.bind(this, callback));
       $popup.css("display", "block");
@@ -159,6 +167,8 @@
     function onSave(data, callback){
       data.id = popup_id.val();
       data.label = popup_title.val();
+      data.textArea = popup_body.val();
+      console.log("Los datos del textarea son:" + data.textArea);
       clearPopup();
       callback(data);
     }
