@@ -1,7 +1,34 @@
+/* index-categories */
+
+.index-categories {
+  margin-bottom: 30px;
+}
+
+.index-categories h3 {
+  margin-top: 0 !important;
+}
+
+.index-categories .btn-category-1 {
+  width: 100%;
+  background-color: #002400 !important;
+  border-color: #002400 !important;
+}
+
+.index-categories .btn-category-2 {
+  width: 100%;
+  background-color: #e8c469 !important;
+  border-color: #e8c469 !important;
+  color: black !important;
+}
+
 /* index-slider */
 
+.slick-content {
+  height: 450px;
+}
+
 .index-story-info {
-  margin-left: 50px;
+  margin-left: 40px;
 }
 
 .index-story-info .trendings {
@@ -9,17 +36,47 @@
 }
 
 .index-story-info .author {
-  font-size: 1.2em;
+  font-size: 1.12em;
   margin-bottom: 0 !important;
+  margin-right: 25px;
+}
+
+.index-story-info .category {
+  float: right;
 }
 
 .index-story-info .title {
   margin-top: 0 !important;
 }
 
-.index-slider .story-cover {
-  border: 1px solid black;
-  height: 100px;
+.index-story-cover {
+  margin-right: 50px;
+  height: 450px;
+}
+
+.index-story-cover .title {
+  position: absolute;
+  bottom: 10%;
+  right: 0;
+  margin-right: 50px;
+  width: 50%;
+  height: 10%;
+  border: 1px solid lightgray;
+  border-right: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.index-story-cover .title h3 {
+  position: relative;
+  margin: 0 !important;
+  top: 20%; // ATENCIÓN: esta forma de centrar no es apropiada y depende del ancho del div padre
+  text-align: center;
+}
+
+.absolute-center {
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
 }
 
 .nopadding {
