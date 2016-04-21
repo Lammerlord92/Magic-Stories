@@ -109,6 +109,9 @@ Rails.application.routes.draw do
   get 'connections/search', to: 'connections#search'
   get 'connections/index', to: 'connections#search'
 
+  # Páginas estáticas
+  resources :pages, :only => :show
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
