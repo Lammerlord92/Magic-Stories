@@ -3,12 +3,21 @@
 
 #welcome{
   background-image: url("/assets/mosaico_transparente.jpg");
+  background-position: center center;
+  @media (max-width: 990px){
+  	background-size: cover;
+	}
 }
 
 .jumbo-transparente{
   background: rgba(255, 255, 255, 0.75) !important;
   padding-top: 20px !important;
   margin-top: 30px !important;
+  @media (max-width: 990px){
+  	margin-top: 15px !important;
+  	margin-bottom: 15px !important;
+  	margin-left: 0 !important;
+	}
 }
 
 .logo{
