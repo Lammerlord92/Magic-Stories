@@ -23,7 +23,6 @@
                   <div class="col-md-1">
                     <% if @profile.present? && (current_user.profile.user == comment.profile.user ||current_user.role_type == 'Administrator' ||
                         @is_current_profile) %>
-                        <i class="glyphicon glyphicon-pencil icon_derecha" aria-hidden="true"></i>
                         <%= link_to "", "edit_comment_path#{comment.__id__}", class:"glyphicon glyphicon-pencil icon_derecha"   %>
                     <% end %>
                   </div>
