@@ -1,18 +1,13 @@
 <div class="container">
-<<<<<<< HEAD
-  <div class="jumbotron jumbo-transparente col-md-6 col-md-offset-3 row">
-=======
-  <div class="jumbotron jumbo-transparente col-md-6 col-md-offset-3 col-xs-12 row">
-    <div class="col-md-8 col-md-offset-2 col-xs-12">
->>>>>>> d081e9900b6ea7f086717d14440916433ac8dfb2
 
+  <div class="jumbotron jumbo-transparente col-md-6 col-md-offset-3 row">
 
     <img class="logo center-block" src="/assets/logo definitivo.png">
               
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
         <%= devise_error_messages! %>
 
-      <h1 id="cabecita">Formulario de Registro</h1>
+        <h1 id="cabecita">Formulario de Registro</h1>
 
         <div class="field">
           <%= f.text_field :name, class: "form-control", placeholder:"Nombre" %>
