@@ -1,7 +1,6 @@
 class MakerController < ApplicationController
   def show
-    @id= params[:id]
-    render 'welcome/maker'
+    @id = params[:id]
+    render 'maker/maker'
   end
-
 end
