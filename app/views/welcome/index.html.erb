@@ -1,25 +1,27 @@
-<div class="index-categories">
-  <div class="row">
-    <div class="col-md-3">
-      <h3>Explora por géneros:</h3>
-    </div>
-    <div class="col-md-9">
-      <div class="row">
-        <% @categories.first(6).each_with_index do |category, i| %>
-          <div class="col-md-2">
-            <form action='/stories/search?category=<%= category.name %>' method="get">
-              <% unless i.odd? %>
-                <button type="submit" class="btn btn-primary btn-category-1">
-                  <%= category.name %>
-                </button>
-              <% else %>
-                <button type="submit" class="btn btn-primary btn-category-2">
-                  <%= category.name %>
-                </button>
-              <% end %>
-            </form>
-          </div>
-        <% end %>
+<div style="background-color: white;">
+  <div class="index-categories">
+    <div class="row">
+      <div class="col-md-3">
+        <h3>Explora por géneros:</h3>
+      </div>
+      <div class="col-md-9">
+        <div class="row">
+          <% @categories.first(6).each_with_index do |category, i| %>
+            <div class="col-md-2">
+              <form action='/stories/search?category=<%= category.name %>' method="get">
+                <% unless i.odd? %>
+                  <button type="submit" class="btn btn-primary btn-category-1">
+                    <%= category.name %>
+                  </button>
+                <% else %>
+                  <button type="submit" class="btn btn-primary btn-category-2">
+                    <%= category.name %>
+                  </button>
+                <% end %>
+              </form>
+            </div>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
