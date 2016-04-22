@@ -15,7 +15,9 @@
       <% story.categories.each do |category| %>
       <p>&#9679; <%= category.name %></p>
       <% end %>
-      <p>Idioma: <%= story.language %></p> <!-- TODO: Mejorar la forma en la que se muestra el idioma -->
+      <!-- No se muestra en esta versión -->
+      <!--<p>Idioma: <%= story.language %></p>-->
+      <!-- TODO: Mejorar la forma en la que se muestra el idioma -->
       <p>Fecha de publicación: <%= story.release_date ? story.release_date.strftime('%d/%m/%Y') : 'Sin fecha' %></p>
       <% if current_user.present? %> <!-- Evitar "NilException" -->
         <% if story.creatorProfile.id == current_user.profile.id %>
@@ -41,7 +43,8 @@
             <form action='/payment/create/<%=story.id%>' method="get">
               <button type="submit" class="btn btn-primary">
                 <p class="btn-label">Adquirir historia</p>
-                <p class="price">Precio: <span><%= story.price %> €</span></p>
+                <!-- No se muestra en esta versión -->
+                <!--<p class="price">Precio: <span><%= story.price %> €</span></p>-->
               </button>
             </form>
           <% else %>
