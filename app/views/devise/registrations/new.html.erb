@@ -1,70 +1,58 @@
-<div class="container">
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
 
-  <div class="jumbotron jumbo-transparente col-md-6 col-md-offset-3 row">
+  <h1 id="cabecita">Formulario de Registro</h1>
 
-    <img class="logo center-block" src="/assets/logo definitivo.png">
-              
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-        <%= devise_error_messages! %>
+  <div class="field">
+    <%= f.text_field :name, class: "form-control", placeholder:"Nombre" %>
+    <%= f.text_field :surname1, class: "form-control-inline col-md-6 ", placeholder:"Primer apellido" %>
+    <%= f.text_field :surname2, class: "form-control-inline col-md-6 ", placeholder:"Segundo apellido" %>
+  </div>
 
-        <h1 id="cabecita">Formulario de Registro</h1>
+  <div class="field">
+    <br>
+    <br>
+  </div>
 
-        <div class="field">
-          <%= f.text_field :name, class: "form-control", placeholder:"Nombre" %>
-          <%= f.text_field :surname1, class: "form-control-inline col-md-6 ", placeholder:"Primer apellido" %>
+  <div class="field">
+    <%= f.email_field :email,  class: "form-control", placeholder:"Dirección de correo electrónico" %>
+  </div>
 
-          <%= f.text_field :surname2, class: "form-control-inline col-md-6 ", placeholder:"Segundo apellido" %>
-        </div>
-
-        <div class="field">
-          <br>
-          <br>
-        </div>
-
-        <div class="field">
-          <%= f.email_field :email,  class: "form-control", placeholder:"Dirección de correo electrónico" %>
-        </div>
-
-
-        <div class="field">
-
-        </div>
-
-        <div class="field">
-          <%= f.text_field :username, class: "form-control",placeholder:"Nombre de Usuario" %>
-          <%= f.password_field :password, autocomplete: "off", class: "form-control-inline col-md-6",placeholder:"Contraseña" %>
-          <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control-inline col-md-6",placeholder:"Confirme su contraseña" %>
-          <% if @minimum_password_length %>
-              <em>(<%= @minimum_password_length %> caracteres mínimo)</em>
-          <% end %><br/>
-        </div>
-
-
-
-        <div class="field">
-          <%= f.label :birthday, "Fecha de nacimiento" %><br/>
-          <%= f.date_select :birthday, class: "form-control" %>
-        </div>
-
-        <div class="field">
-          <%= f.text_field :phone, class: "form-control",placeholder:"Teléfono" %>
-        </div>
-
-        <div class="field">
-          <%= f.hidden_field :sku, value: User.generateSKU %>
-        </div>
-
-        <br>
-
-        <%= f.submit "Registrarse" , class: "btn btn-primary btn-block" %> 
-
-    <% end %>
-
-      <hr>
-
-      <%= button_to 'Iniciar sesión', new_user_session_path, class: 'btn btn-danger btn-block', method: :get %>
-          
-      <%= link_to 'Descubrir', stories_example_path, class: 'btn btn-success btn-block', data: {'no-turbolink': 'true'} %>
+  <div class="field">
 
   </div>
-</div>
+
+  <div class="field">
+    <%= f.text_field :username, class: "form-control",placeholder:"Nombre de Usuario" %>
+    <%= f.password_field :password, autocomplete: "off", class: "form-control-inline col-md-6",placeholder:"Contraseña" %>
+    <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control-inline col-md-6",placeholder:"Confirme su contraseña" %>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> caracteres mínimo)</em>
+    <% end %>
+    <br/>
+  </div>
+
+  <div class="field">
+    <%= f.label :birthday, "Fecha de nacimiento" %><br/>
+    <%= f.date_select :birthday, class: "form-control" %>
+  </div>
+
+  <div class="field">
+    <%= f.text_field :phone, class: "form-control",placeholder:"Teléfono" %>
+  </div>
+
+  <div class="field">
+    <%= f.hidden_field :sku, value: User.generateSKU %>
+  </div>
+
+  <br>
+
+  <%= f.submit "Registrarse" , class: "btn btn-primary btn-block" %> 
+
+<% end %>
+
+<hr>
+
+<%= button_to 'Iniciar sesión', new_user_session_path, class: 'btn btn-danger btn-block', method: :get %>
+          
+<%= link_to 'Descubrir', stories_example_path, class: 'btn btn-success btn-block', data: {'no-turbolink': 'true'} %>

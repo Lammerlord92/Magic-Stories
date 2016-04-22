@@ -1,24 +1,13 @@
-<div class="container">
-  <div class="jumbotron jumbo-transparente col-md-6 col-md-offset-3 row">
-    <div class="col-md-8 col-md-offset-2">
+<h4>Introduzca su dirección de email y en breve le enviaremos un correo con instrucciones para obtener una nueva contraseña</h4>
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+  <%= devise_error_messages! %>
 
-      <img class="logo center-block" src="/assets/logo definitivo.png">
+	<%= f.email_field :email, autofocus: true, :placeholder => "Email", class: "form-control" %>
 
-      <h4>Introduzca su dirección de email y en breve le enviaremos un correo con instrucciones para obtener una nueva contraseña</h4>
+	<%= f.submit "Confirmar", class: "btn btn-primary btn-block" %>
 
-			<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-			  <%= devise_error_messages! %>
+<% end %>
 
-			  <%= f.email_field :email, autofocus: true, :placeholder => "Email", class: "form-control" %>
-
-			  <%= f.submit "Confirmar", class: "btn btn-primary btn-block" %>
-
-			<% end %>
-
-			<br/>
+<br/>
                   
-      <%= button_to 'Cancelar', new_user_session_path, class: 'btn btn-danger btn-block', method: :get %>
-
-    </div>
-  </div>  
-</div>
+<%= button_to 'Cancelar', new_user_session_path, class: 'btn btn-danger btn-block', method: :get %>
