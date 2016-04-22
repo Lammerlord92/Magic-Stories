@@ -65,18 +65,20 @@ before_action :authenticate_user!, except: [:example ]
     @story.num_purchased = 0
     @story.published = false
     @story.creatorProfile = current_user.profile
+    @story.categories = params[:categories]
     @categories = Category.all
 
-
+    # No se muestra en esta versión
+    @story.language = "SPANISH"
+    @story.price = 0.0
 
     if @story.save
       redirect_to @story
     else
-      flash[:alert] = 'Error almacenando historia'
       @categories = Category.all
+      flash[:alert] = 'Error almacenando historia'
       render :new
-      end
-
+    end
   end
 
   def story_params

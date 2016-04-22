@@ -45,50 +45,24 @@
     <label for="description">Sinopsis</label><br>
     <%= f.text_area :description, placeholder: "Sinopsis", class: "form-control" %>
   </div>
-  <div class="form-group">
+  <!-- No se muestra en esta versión -->
+  <!--<div class="form-group">
     <label for="language">Idioma</label><br>
     <%= f.text_field :language, placeholder: "Idioma", class: "form-control" %>
   </div>
   <div class="form-group">
     <label for="price">Precio</label><br>
     <%= f.number_field :price, placeholder: "Precio", class: "form-control"  %>
+  </div>-->
+  <div class="form-group">
+    <label for="categorias">Elija las categorías (al menos una)</label>
+    <% @categories.each do |category| %>
+      <br/><%= check_box_tag "categories[]", category.id %>&nbsp;<%= category.name %>
+    <% end %>
   </div>
-
-  <button type="button" id="buttonStory" class="btn btn-default">Seleccionar géneros...</button>
 
   <div class="field">
     <%= f.submit "Guardar", class: "btn btn-primary" %>
   </div>
 
-  <section id="modal" class="modal fade">
-    <div class="modal-body">
-      <form action="buttonStory.php" method="post" role="form">
-        <span id="close" class="glyphicon glyphicon-remove-circle pull-right"></span>
-        <div class="form-group">
-          <% @categories.each do |category|%>
-            <%= check_box_tag 'name'%>&nbsp;<%= h category.name %><br/>
-          <% end %>
-          <br/>
-          <button type="button" id="confirmCategory" class="btn btn-primary">Confirm</button>
-        </div>
-      </form>
-    </div>
-  </section>
-
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $("#buttonStory").on('click',function(){
-        $("#modal").modal({
-          show:true
-        });
-        $("#close").on('click',function() {
-          $("#modal").modal('hide');
-        });
-        $("#button").on('click',function() {
-          console.log('aaaaaaaaaaaaaaa');
-          $("#modal").modal('hide');
-        });
-      })
-    })
-  </script>
 <%end%>
