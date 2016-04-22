@@ -34,7 +34,7 @@
 
   <div class="field">
 
-    <%= f.text_field :birthday,class: "form-control calendario", 'data-provide':'datepicker',id:'dt5', placeholder:'Fecha de Nacimiento',:value=>Date.today.strftime('%m-%d-%Y') %>
+    <%= f.text_field :birthday,class: "form-control calendario", 'data-provide':'datepicker',id:'dt5', placeholder:'Fecha de Nacimiento' %>
     <script>
       $("#dt5").datepicker({
           format: 'dd/mm/yyyy'
@@ -43,6 +43,7 @@
           $('#dt5').datepicker('hide');
         });
     </script>
+
 
 
   </div>
