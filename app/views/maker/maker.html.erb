@@ -47,6 +47,7 @@
 
     var vis_nodes = [];
     var vis_edges = [];
+    var grafo = null;
 
     $.get("/stories/"+story_id+".json", function(story){
       var ch_ids = story.chapter_ids;
@@ -90,7 +91,8 @@
             from: option.parent_id,
             to: option.child_id,
             label: option.option,
-            title: option.option
+            title: option.option,
+            id: option.id
           };
           vis_edges.push(vis_edge);
         });
@@ -106,7 +108,7 @@
       //  vis.Network(container, data, options)
       //    container es un elemento html
       //    data es un objeto con las propiedades nodes y edges
-      var grafo = new vis.Network(container, vis_data, vis_options);
+      grafo = new vis.Network(container, vis_data, vis_options);
     }
 
     // create an array with edges
@@ -195,11 +197,31 @@
       }
     }
     function onEditEdge(data, callback){
+      console.log("Maker: editing edge "+JSON.stringify(data));
+      console.log("Maker: edges "+JSON.stringify(vis_edges));
+
+      var id = data.id;
+      var edges = grafo.body.data.edges.get().filter(function(edge){
+        // comparacion debil
+        // 5 === "5" devuelve false
+        // 5 ==  "5" devuelve true
+        // buscamos lo segundo
+        return edge.id == id;
+      });
+      var edge = edges.length ? edges[0] : false;
+      if(edge){
+        data.label = edge.label;
+        data.title = edge.title;
+      }else{
+        console.log("Maker: no se encontro la arista con id "+id);
+      }
+
       popup_header.text("Editar arista");
       popup_id.val(data.id);
       popup_title.val(data.label || "");
       popup_save_btn.on("click", onSave.bind(this, data, callback));
-      popup_cancel_btn.on("click", onCancel.bind(this, callback));
+      //popup_cancel_btn.on("click", onCancel.bind(this, callback));
+      popup_cancel_btn.on("click", clearPopup.bind());
       $popup.css("display", "block");
     }
 
