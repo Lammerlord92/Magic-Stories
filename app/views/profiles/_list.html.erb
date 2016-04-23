@@ -22,8 +22,8 @@
       </div>
       <div class="col-md-5 text-right escritura gris">
         <!-- TODO Añadir atributo de valoración -->
-        <p>Nota: 9</p>
-        <p><img src="/assets/libro.png" class="libro">&nbsp&nbsp<%= profile.stories.count %></p>
+        <p>Obras adquiridas: <%= Addition.where(profile_id: profile.id).count %></p>
+        <p>Obras creadas: <%= profile.stories.count %></p>
       </div>
     </div>
 
@@ -57,14 +57,14 @@
       <div class="col-md-3 text-center left-divider">
         <%= profile.followees_count %><br/>siguiendo
       </div>
-      <div class="col-md-3 text-center left-divider">
-        <%= Addition.where(profile_id: profile.id).count %><br/>adquisiciones
-      </div>
+    <!--  <div class="col-md-3 text-center left-divider">
+        < Addition.where(profile_id: profile.id).count %><br/>adquisiciones
+      </div> -->
     </div>
   </div>
 
   <!-- Historias -->
-  <h2>Historias</h2>
+
   <div class="col-md-6">
     <!-- Tabs para cada listado -->
     <ul class="nav nav-tabs nav-justified">
@@ -73,7 +73,7 @@
 
 
       <li <% if @option == "acquired" %>class="active"<% end %> role="presentation">
-        <%= link_to "Adquiridas", stories_acquired_path, class:"btn btn-default" %>
+        <%= link_to "Listado de obras adquiridas", stories_acquired_path, class:"btn btn-default" %>
       </li>
 
       <!-- Historias creadas (sólo usuarios premium y admins) -->
@@ -84,7 +84,7 @@
           </li>
 
       <% end %>
-
+      <h2>Adquiridas recientemente:</h2>
 
 
     </ul>
