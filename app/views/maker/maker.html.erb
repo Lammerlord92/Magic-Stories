@@ -81,9 +81,25 @@
         console.log("Maker: parsed node "+JSON.stringify(node));
       })*/
     }
+    function parsearAristas(){
+      console.log("Maker: loading edges from db");
+      db_chapters.forEach(function(chapter){
+        var options = chapter.child_options;
+        options.forEach(function(option){
+          var vis_edge = {
+            from: option.parent_id,
+            to: option.child_id,
+            label: option.option,
+            title: option.option
+          };
+          vis_edges.push(vis_edge);
+        });
+      });
+    }
 
     function iniciaGrafo(){
       parsearNodos();
+      parsearAristas();
 
       var vis_data = { edges: vis_edges, nodes: vis_nodes };
 
