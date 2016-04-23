@@ -28,6 +28,7 @@
   </div>
   <div id="graph_edit"></div>
   <script type="text/javascript" charset="utf-8">
+    var story_id  = <%= @id %>;
     var container = $("#graph_edit")[0];
     var $popup    = $("#graph_popup"); // popup jquery elem
     var popup     = $popup[0]; // popup html elem
@@ -42,26 +43,65 @@
     var popup_save_btn   = $popup.find("#popup-save");
     var popup_cancel_btn = $popup.find("#popup-cancel");
 
-    // TODO: acordarse de borrar estos datos de ejemplo
-    // create an array with nodes
-    var nodes = new vis.DataSet([
-      {id: 1, label: '1: Momento feliz', title: "Juanoide se muere"},
-      {id: 2, label: 'Nodo 2', title: "Todos lo celebramos"},
-      {id: 3, label: 'Nodo 3', title: "Todos lo celebramos mucho tiempo"},
-      {id: 4, label: 'Nodo 4', title: "El gordo de ispp propone un concurso de tartas en su funeral como team building"},
-      {id: 5, label: 'Nodo 5', title: "Corchu nos encuentra y suspende a juanoide posmuerte"}
-    ]);
+    var db_chapters = [];
+
+    var vis_nodes = [];
+    var vis_edges = [];
+
+    $.get("/stories/"+story_id+".json", function(story){
+      var ch_ids = story.chapter_ids;
+      console.log("Maker: story from db "+JSON.stringify(story));
+      var chapters_parsed = 0;
+      if(!ch_ids.length){
+        iniciaGrafo();
+      }
+      ch_ids.forEach(function(ch_id){
+        $.get("/chapters/"+ch_id+".json", function(chapter){
+          db_chapters.push(chapter);
+          chapters_parsed++;
+          console.log("Maker: node from db "+JSON.stringify(chapter));
+          if(chapters_parsed === ch_ids.length){
+            iniciaGrafo();
+          }
+        });
+      });
+    });
+
+    function parsearNodos(){
+      console.log("Maker: loading nodes from db");
+      db_chapters.forEach(function(chapter){
+        var vis_node = {
+          label: chapter.title,
+          title: chapter.body,
+          id: chapter.id
+        };
+        vis_nodes.push(vis_node);
+      });
+      /*vis_nodes.forEach(function(node) {
+        console.log("Maker: parsed node "+JSON.stringify(node));
+      })*/
+    }
+
+    function iniciaGrafo(){
+      parsearNodos();
+
+      var vis_data = { edges: vis_edges, nodes: vis_nodes };
+
+      //  vis.Network(container, data, options)
+      //    container es un elemento html
+      //    data es un objeto con las propiedades nodes y edges
+      var grafo = new vis.Network(container, vis_data, vis_options);
+    }
 
     // create an array with edges
-    var edges = new vis.DataSet([
+    /*var edges = new vis.DataSet([
       {from: 1, to: 3, label: "celebracion larga", title: "Lo vemos morir y nos quedamos mucho tiempo celebrando"},
       {from: 1, to: 2, label: "celebracion corta", title: "Lo vemos y nos quedamos un rato celebrando"},
       {from: 2, to: 4, label: "vamos a una pizzeria", title: "Nos encontramos al gordo de ispp"},
       {from: 2, to: 5, label: "vamos al LSI", title: "Nos encontramos a tito corchu"}
-    ]);
+    ]);*/
 
-    var data = { edges: edges, nodes: nodes };
-    var options = {
+    var vis_options = {
       interaction: {
         navigationButtons: true,
         hover: true
@@ -162,11 +202,6 @@
       clearPopup();
       callback(data);
     }
-
-    //  vis.Network(container, data, options)
-    //    container es un elemento html
-    //    data es un objeto con las propiedades nodes y edges
-    var grafo = new vis.Network(container, data, options);
 
   </script>
 </div>
