@@ -17,10 +17,10 @@
           <% end %>
         </h2>
       </div>
-      <div class="col-md-5 text-right escritura gris">
-        <!-- TODO Añadir atributo de valoración -->
-        <p>Nota: 9</p>
-        <p><img src="/assets/libro.png" class="libro">&nbsp&nbsp<%= @profile.stories.count %></p>
+         <div class="col-md-5 text-right escritura gris">
+           <!-- TODO Añadir atributo de valoración -->
+      <!--    <p>Adquisiciones:  < Addition.where(profile_id: @profile.id).count %> </p>-->
+       <p><img src="/assets/libro.png" class="libro">&nbsp&nbsp <%= @profile.stories.count %></p>
       </div>
     </div>
     <div class="row container-fluid boton">
@@ -69,9 +69,7 @@
       <div class="col-md-3 text-center left-divider">
         <%= @profile.followees_count %><br/>siguiendo
       </div>
-      <div class="col-md-3 text-center left-divider">
-        <%= Addition.where(profile_id: @profile.id).count %><br/>adquisiciones
-      </div>
+
     </div>
   </div>
 
