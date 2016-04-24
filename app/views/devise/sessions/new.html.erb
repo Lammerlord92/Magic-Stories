@@ -32,3 +32,23 @@
 <%= button_to 'Registrarse', new_user_registration_path, class: 'btn btn-danger btn-block', method: :get %>
           
 <%= link_to 'Descubrir', stories_example_path, class: 'btn btn-success btn-block', data: {'no-turbolink': 'true'} %>
+
+
+
+
+
+
+<div class="container">
+      <div class="row">
+        <div class="col-sm-12" id="bodyCol">
+          <%= yield %>
+          <br>
+          <% if flash.alert %>
+          <p class="alert-notice"><%= flash.alert %></p>
+          <% end %>
+          <% if flash.notice %>
+          <p class="alert-alert"><%= flash.notice %></p>
+          <% end %>
+        </div>
+      </div>
+    </div>
