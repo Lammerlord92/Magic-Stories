@@ -3,16 +3,15 @@ class WelcomeController < ApplicationController
   def index
     @categories = Category.all
 
-    # TODO: Provisional. El backend tiene que insertar las historias del slice
-    @slice_stories = [Story.find(13), Story.find(1), Story.find(3), Story.find(4), Story.find(5)]
+    # Done. 5 historias más adquiridas en los últimos 7 días.
+    @slice_stories = Addition.where('created_at > ?', Date.today - 7.days).group(:story).order('count_id desc').count('id').keys[0..4]
 
-    # TODO: Provisional. El backend tiene que insertar las historias más nuevas de cada género
+    # Done
     @newest_stories_by_category = Hash.new
     count = 0
-    @categories.each { |category|
+    @categories.each { |cat|
 
-      # TODO: Hay que cambiar esta sentencia para que haga un where por categoría
-      stories = Story.limit(3).order("release_date DESC")
+      stories = cat.stories.order(release_date: :desc).limit(3)
       story1=  stories[0]
       story2 = stories[1]
       story3 = stories[2]
@@ -20,8 +19,9 @@ class WelcomeController < ApplicationController
       count = count + 1
     }
 
-    # TODO: Provisional. El backend tiene que insertar los seis mejores escritores
-    @writers = Profile.first(6)
+    # Done. Se muestran los perfiles de los usuarios cuyos libros tienen más adquisiciones.
+    @writers = Profile.where(id: Addition.group(:story).order('count_id desc').count('id').keys[0..25].map(&:profile_id)).limit(6)
+
 
     render 'index'
   end

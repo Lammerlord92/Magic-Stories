@@ -9,6 +9,7 @@ class Profile < ActiveRecord::Base
 
   has_many :stories
   has_many :comments
+  has_many :additions
 
 # Permite que un perfil pueda seguir a otros y que pueda ser seguido:
 

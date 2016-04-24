@@ -89,7 +89,7 @@
 
     </ul>
     <div class="row">
-      <% profile.stories.last(3).each do |story| %>
+      <% Story.where(id: profile.additions.last(3).map(&:story_id)).each do |story| %>
       <div class="col-md-4">
         <a href="/stories/<%= story.id %>">
           <%= render 'stories/story_slot', story: story %>
