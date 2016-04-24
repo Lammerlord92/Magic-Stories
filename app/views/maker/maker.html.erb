@@ -120,6 +120,9 @@
       grafo = new vis.Network(container, vis_data, vis_options);
 
       grafo.on("selectEdge", function(data){
+        if(data.nodes.length){
+          return; // no queremos ejecutar el codigo cuando hayas pulsado sobre un nodo
+        }
         edit_edge_text_btn.css("display", "block");
         var edge = grafo.body.data.edges.get(data.edges[0]);
         edit_edge_text_btn.on("click", function(){
