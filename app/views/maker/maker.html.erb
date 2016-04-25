@@ -149,23 +149,26 @@
       grafo.on("deselectEdge", onDeselectEdge);
     }
 
+    // logica para mostrar y ocultar botones de edicion segun el elemento seleccionado
     function onSelectNode(data){
+      show_on_edge.hide();
       show_on_node.show();
     }
     function onDeselectNode(data){
-      show_on_node.hide();
+      if(!data.nodes.length) show_on_node.hide();
     }
     function onSelectEdge(data){
       if(!data.nodes.length) show_on_edge.show();
     }
     function onDeselectEdge(data){
-      show_on_edge.hide();
+      if(!data.edges.length) show_on_edge.hide();
     }
 
     var vis_options = {
       interaction: {
         navigationButtons: true,
-        hover: true
+        hover: true,
+        selectConnectedEdges: false
       },
       layout: {
         // asegura que el grafo tenga el mismo layout
@@ -174,12 +177,13 @@
       },
       manipulation: { // solo queremos mostrar el boton "back" y las descripciones
         initiallyActive: true,
-        addNode:    false,
-        editNode:   false,
-        deleteNode: false,
-        addEdge:    false,
-        editEdge:   false,
-        deleteEdge: false
+        enabled: false,
+        addNode:    onAddNode,
+        editNode:   onEditNode,
+        deleteNode: onDelete,
+        addEdge:    onAddEdge,
+        editEdge:   onEditEdge,
+        deleteEdge: onDelete
       },
       nodes: {
         // shape: "forma del nodo",
