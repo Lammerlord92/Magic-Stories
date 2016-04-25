@@ -13,13 +13,36 @@
       z-index: 300;
       display: none;
     }
-    #edit_edge_text{
+    .show-on-edge-select, .show-on-node-select{
       display: none;
     }
+    #maker-controls .glyphicon{
+      font-size: 1em !important;
+    }
+
   </style>
-  <button id="edit_edge_text" class="btn btn-primary">
-    Edit edge text
-  </button>
+
+  <div id="maker-controls" class="btn-group">
+    <button class="btn btn-default" onclick="grafo.addNodeMode()">
+      <span class="glyphicon glyphicon-plus"></span> Add node
+    </button>
+    <button class="btn btn-default" onclick="grafo.addEdgeMode()">
+      <span class="glyphicon glyphicon-resize-small"></span> Add edge
+    </button>
+    <button class="show-on-node-select btn btn-default">
+      <span class="glyphicon glyphicon-pencil"></span> Edit node text
+    </button>
+    <button class="show-on-edge-select btn btn-default">
+      <span class="glyphicon glyphicon-pencil"></span> Edit edge text
+    </button>
+    <button class="show-on-edge-select btn btn-default">
+      <span class="glyphicon glyphicon-link"></span> Edit edge connections
+    </button>
+    <button class="show-on-edge-select show-on-node-select btn btn-default">
+      <span class="glyphicon glyphicon-remove"></span> Delete selected
+    </button>
+  </div>
+
   <div id="graph_popup" class="col-sm-4 col-sm-offset-4">
     <h3 class="text-center" id="popup-header">Popup</h3>
 
@@ -49,8 +72,8 @@
     var popup_save_btn   = $popup.find("#popup-save");
     var popup_cancel_btn = $popup.find("#popup-cancel");
 
-    // edit edge text buttons
-    var edit_edge_text_btn = $("#edit_edge_text");
+    var show_on_edge = $(".show-on-edge-select");
+    var show_on_node = $(".show-on-node-select");
 
     var db_chapters = [];
 
@@ -119,24 +142,24 @@
       //    data es un objeto con las propiedades nodes y edges
       grafo = new vis.Network(container, vis_data, vis_options);
 
-      grafo.on("selectEdge", function(data){
-        if(data.nodes.length){
-          return; // no queremos ejecutar el codigo cuando hayas pulsado sobre un nodo
-        }
-        edit_edge_text_btn.css("display", "block");
-        var edge = grafo.body.data.edges.get(data.edges[0]);
-        edit_edge_text_btn.on("click", function(){
-          onEditEdge(edge, function(newEdge){
-            grafo.body.data.edges.update(newEdge, data.id);
-          });
-        });
-      });
-      grafo.on("deselectEdge", function(data){
-        if(!data.edges.length){
-          edit_edge_text_btn.css("display", "none");
-          edit_edge_text_btn.off("click");
-        }
-      })
+      grafo.on("selectNode", onSelectNode);
+      grafo.on("deselectNode", onDeselectNode);
+
+      grafo.on("selectEdge", onSelectEdge);
+      grafo.on("deselectEdge", onDeselectEdge);
+    }
+
+    function onSelectNode(data){
+      show_on_node.show();
+    }
+    function onDeselectNode(data){
+      show_on_node.hide();
+    }
+    function onSelectEdge(data){
+      if(!data.nodes.length) show_on_edge.show();
+    }
+    function onDeselectEdge(data){
+      show_on_edge.hide();
     }
 
     // create an array with edges
@@ -229,15 +252,8 @@
       console.log("Maker: editing edge "+JSON.stringify(data));
       console.log("Maker: edges "+JSON.stringify(vis_edges));
 
-      var id = data.id;
-      var edges = grafo.body.data.edges.get().filter(function(edge){
-        // comparacion debil
-        // 5 === "5" devuelve false
-        // 5 ==  "5" devuelve true
-        // buscamos lo segundo
-        return edge.id == id;
-      });
-      var edge = edges.length ? edges[0] : false;
+      var edge = grafo.body.data.edges.get(data.id);
+
       if(edge){
         data.label = edge.label;
         data.title = edge.title;
@@ -282,8 +298,6 @@
       clearPopup();
       callback(data);
     }
-
-
 
   </script>
 </div>
