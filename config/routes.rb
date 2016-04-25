@@ -74,8 +74,16 @@ Rails.application.routes.draw do
 
   #Chapters
   get 'chapters/:id' => 'chapters#show'
-  post 'chapters' => 'chapters#create'
+  post 'chapters/:id' => 'chapters#create'
   post 'chapter_options' => 'chapters#create_options'
+  put 'chapters/:id' => 'chapters#update'
+  delete 'chapters/:id' => 'chapters#destroy'
+
+  #Options
+  post 'options/:id' => 'options#create'
+  put 'options/:id' => 'options#update'
+  delete 'options/:id' => 'options#destroy'
+
 
   #Profiles
   get 'profiles/search', to: 'profiles#search'
