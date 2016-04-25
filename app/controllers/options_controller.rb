@@ -1,5 +1,5 @@
 class OptionController < ApplicationController
-    respond_to :json, only: [:create,:update,:destroy]
+  respond_to :json, only: [:create,:update,:destroy]
 
   def create
     @option = Option.new(option_params)
@@ -21,23 +21,23 @@ class OptionController < ApplicationController
   def destroy
     @option=option_find
     @option.destroy
- #   redirect_to_maker_view
+    #   redirect_to_maker_view
   end
 
-    private
-      def option_find
-        @option = Option.find(params[:id])
-      end
+  private
+  def option_find
+    @option = Option.find(params[:id])
+  end
 
-      def option_params
-        params
-            .require(:chapter)
-            .permit(
-                :id,
-                :parent_id,
-                :child_id,
-                :option
-            )
-      end
+  def option_params
+    params
+        .require(:chapter)
+        .permit(
+            :id,
+            :parent_id,
+            :child_id,
+            :option
+        )
+  end
 
 end
