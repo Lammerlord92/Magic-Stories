@@ -24,22 +24,22 @@
 
   <div id="maker-controls" class="btn-group">
     <button class="btn btn-default" onclick="grafo.addNodeMode()">
-      <span class="glyphicon glyphicon-plus"></span> Add node
+      <span title="añadir" class="glyphicon glyphicon-plus"></span> Añadir nodo
     </button>
     <button class="btn btn-default" onclick="grafo.addEdgeMode()">
-      <span class="glyphicon glyphicon-resize-small"></span> Add edge
+      <span title="" class="glyphicon glyphicon-resize-small"></span> Añadir arista
     </button>
     <button class="show-on-node-select btn btn-default">
-      <span class="glyphicon glyphicon-pencil"></span> Edit node text
+      <span class="glyphicon glyphicon-pencil"></span> Editar texto del nodo
     </button>
     <button class="show-on-edge-select btn btn-default">
-      <span class="glyphicon glyphicon-pencil"></span> Edit edge text
+      <span class="glyphicon glyphicon-pencil"></span> Editar texto de la arista
     </button>
     <button class="show-on-edge-select btn btn-default">
-      <span class="glyphicon glyphicon-link"></span> Edit edge connections
+      <span class="glyphicon glyphicon-link"></span> Editar conexiones de la arista
     </button>
     <button class="show-on-edge-select show-on-node-select btn btn-default">
-      <span class="glyphicon glyphicon-remove"></span> Delete selected
+      <span class="glyphicon glyphicon-remove"></span> Borrar
     </button>
   </div>
 
@@ -180,14 +180,13 @@
         // mientras no se regargue la libreria vis.js en la pagina
         randomSeed: 2
       },
-      manipulation: {
-        initiallyActive: true,
-        addNode:    onAddNode,
-        editNode:   onEditNode,
-        deleteNode: onDelete,
-        addEdge:    onAddEdge,
-        editEdge:   onEditEdge,
-        deleteEdge: onDelete
+      manipulation: { // solo queremos mostrar el boton "back" y las descripciones
+        addNode:    false,
+        editNode:   false,
+        deleteNode: false,
+        addEdge:    false,
+        editEdge:   false,
+        deleteEdge: false
       },
       nodes: {
         // shape: "forma del nodo",
