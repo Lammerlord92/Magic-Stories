@@ -13,7 +13,7 @@
       z-index: 300;
       display: none;
     }
-    .show-on-edge-select, .show-on-node-select{
+    .show-on-edge-select, .show-on-node-select, .show-on-select-both{
       display: none;
     }
     #maker-controls .glyphicon{
@@ -35,10 +35,10 @@
     <button class="show-on-edge-select btn btn-default">
       <span class="glyphicon glyphicon-pencil"></span> Editar texto de la arista
     </button>
-    <button class="show-on-edge-select btn btn-default">
+    <button class="show-on-edge-select btn btn-default" onclick="grafo.editEdgeMode()">
       <span class="glyphicon glyphicon-link"></span> Editar conexiones de la arista
     </button>
-    <button class="show-on-edge-select show-on-node-select btn btn-default">
+    <button class="show-on-select-both btn btn-default">
       <span class="glyphicon glyphicon-remove"></span> Borrar
     </button>
   </div>
@@ -74,6 +74,7 @@
 
     var show_on_edge = $(".show-on-edge-select");
     var show_on_node = $(".show-on-node-select");
+    var show_on_both = $(".show-on-select-both");
 
     var db_chapters = [];
 
@@ -142,26 +143,30 @@
       //    data es un objeto con las propiedades nodes y edges
       grafo = new vis.Network(container, vis_data, vis_options);
 
-      grafo.on("selectNode", onSelectNode);
-      grafo.on("deselectNode", onDeselectNode);
-
-      grafo.on("selectEdge", onSelectEdge);
-      grafo.on("deselectEdge", onDeselectEdge);
+      grafo.on("click", onGraphClick);
     }
 
     // logica para mostrar y ocultar botones de edicion segun el elemento seleccionado
-    function onSelectNode(data){
-      show_on_edge.hide();
-      show_on_node.show();
-    }
-    function onDeselectNode(data){
-      if(!data.nodes.length) show_on_node.hide();
-    }
-    function onSelectEdge(data){
-      if(!data.nodes.length) show_on_edge.show();
-    }
-    function onDeselectEdge(data){
-      if(!data.edges.length) show_on_edge.hide();
+    function onGraphClick(){
+      var nodeIds = grafo.getSelectedNodes();
+      var edgeIds = grafo.getSelectedEdges();
+
+      // si no hay nada seleccionado
+      if(!nodeIds.length && !edgeIds.length ){
+        show_on_both.hide();
+        show_on_edge.hide();
+        show_on_node.hide();
+
+        return;
+      }else if(nodeIds.length){ // si hay algun nodo seleccionado
+        show_on_both.show();
+        show_on_edge.hide();
+        show_on_node.show();
+      }else{                   // si hay alguna arista seleccionada
+        show_on_both.show();
+        show_on_edge.show();
+        show_on_node.hide();
+      }
     }
 
     var vis_options = {
@@ -245,38 +250,14 @@
       }
     }
     function onEditEdge(data, callback){
-      console.log("Maker: editing edge "+JSON.stringify(data));
-      console.log("Maker: edges "+JSON.stringify(vis_edges));
+      var data_to_callback = data;
 
-      var edge = grafo.body.data.edges.get(data.id);
-
-      if(edge){
-        data.label = edge.label;
-        data.title = edge.title;
-      }else{
-        console.log("Maker: no se encontro la arista con id "+id);
+      if(data.from === data.to){
+        var dialog_confirm = confirm("¿Quieres conectar el nodo consigo mismo?");
+        if(!dialog_confirm) data_to_callback = null;
       }
 
-      // true por defecto
-      // solo interesa que sea false cuando el usuario pulse "no" el confirm()
-      var dialog_confirm = true;
-
-      if(data.from == data.to){
-        dialog_confirm = confirm("¿Quieres conectar el nodo consigo mismo?");
-      }
-
-      if(dialog_confirm){
-        popup_header.text("Editar arista");
-        popup_id.val(data.id);
-        popup_title.val(data.label || "");
-        popup_save_btn.on("click", onSave.bind(this, data, callback));
-        //popup_cancel_btn.on("click", onCancel.bind(this, callback));
-        popup_cancel_btn.on("click", clearPopup.bind());
-        $popup.css("display", "block");
-      }else{
-        callback(null);
-      }
-
+      callback(data_to_callback)
     }
 
     function clearPopup(){
@@ -293,6 +274,20 @@
       data.label = popup_title.val();
       clearPopup();
       callback(data);
+    }
+
+    function onClickEditEdgeConnection(){
+      var edgeIds = grafo.getSelectedEdges();
+      var edges = edgesIds.map(function(id){
+        return grafo.body.data.edges.getDataSet().get(id);
+      });
+
+      onEditEdge(edges[0], editEdgeCallback);
+
+      function editEdgeCallback(data){
+        grafo.body.data.edges.getDataSet().update(data, data.id)
+      }
+
     }
 
   </script>
