@@ -13,38 +13,45 @@
       z-index: 300;
       display: none;
     }
-    .show-on-edge-select, .show-on-node-select, .show-on-select-both{
+    .show-on-edge-select, .show-on-node-select, .show-on-select-both, .show-on-action{
       display: none;
     }
     #maker-controls .glyphicon{
       font-size: 1em !important;
     }
-
+    .action-description{
+      line-height: 2.5;
+      padding: 0.6em 1em;
+      border-bottom: 1px solid lightgrey;
+    }
   </style>
 
   <div id="maker-controls" class="btn-group">
-    <button class="btn btn-default" onclick="grafo.addNodeMode()">
+    <button class="btn btn-default" onclick="UI_action('addNodeMode')">
       <span title="añadir" class="glyphicon glyphicon-plus"></span> Añadir nodo
     </button>
-    <button class="btn btn-default" onclick="grafo.addEdgeMode()">
+    <button class="btn btn-default" onclick="UI_action('addEdgeMode')">
       <span title="" class="glyphicon glyphicon-resize-small"></span> Añadir arista
     </button>
-    <button class="show-on-node-select btn btn-default">
+    <button class="show-on-node-select btn btn-default" onclick="UI_action('editNode')">
       <span class="glyphicon glyphicon-pencil"></span> Editar texto del nodo
     </button>
-    <button class="show-on-edge-select btn btn-default">
+    <button class="show-on-edge-select btn btn-default" onclick="UI_action('editEdgeText')">
       <span class="glyphicon glyphicon-pencil"></span> Editar texto de la arista
     </button>
-    <button class="show-on-edge-select btn btn-default" onclick="grafo.editEdgeMode()">
+    <button class="show-on-edge-select btn btn-default" onclick="UI_action('editEdgeMode')">
       <span class="glyphicon glyphicon-link"></span> Editar conexiones de la arista
     </button>
-    <button class="show-on-select-both btn btn-default">
+    <button class="show-on-select-both btn btn-default" onclick="UI_action('deleteSelected')">
       <span class="glyphicon glyphicon-remove"></span> Borrar
     </button>
     <br>
-    <button class="btn btn-default" onclick="grafo.disableEditMode()">
-      <span class="glyphicon glyphicon-arrow-left"></span> Cancelar
-    </button>
+    <div class="show-on-action btn-group">
+      <button class="btn btn-default" onclick="UI_action('cancel')">
+        <span class="glyphicon glyphicon-arrow-left"></span> Cancelar
+      </button>
+      <span class="action-description">Descripcion de la accion</span>
+    </div>
   </div>
 
   <div id="graph_popup" class="col-sm-4 col-sm-offset-4">
@@ -76,9 +83,10 @@
     var popup_save_btn   = $popup.find("#popup-save");
     var popup_cancel_btn = $popup.find("#popup-cancel");
 
-    var show_on_edge = $(".show-on-edge-select");
-    var show_on_node = $(".show-on-node-select");
-    var show_on_both = $(".show-on-select-both");
+    var show_on_edge   = $(".show-on-edge-select");
+    var show_on_node   = $(".show-on-node-select");
+    var show_on_both   = $(".show-on-select-both");
+    var show_on_action = $(".show-on-action");
 
     var db_chapters = [];
 
@@ -155,22 +163,52 @@
       var nodeIds = grafo.getSelectedNodes();
       var edgeIds = grafo.getSelectedEdges();
 
-      // si no hay nada seleccionado
+      // si no hay nada seleccionado oculta todo
       if(!nodeIds.length && !edgeIds.length ){
-        show_on_both.hide();
-        show_on_edge.hide();
-        show_on_node.hide();
-
-        return;
-      }else if(nodeIds.length){ // si hay algun nodo seleccionado
-        show_on_both.show();
-        show_on_edge.hide();
-        show_on_node.show();
-      }else{                   // si hay alguna arista seleccionada
-        show_on_both.show();
-        show_on_edge.show();
-        show_on_node.hide();
+        hideAllUI();
+      }else if(nodeIds.length){ // si hay algun nodo seleccionado muestra botones para nodos
+        showUIFor("node");
+      }else{                   // si hay alguna arista seleccionada muestra botones para aristas
+        showUIFor("edge");
       }
+    }
+
+    function hideAllUI(){
+      show_on_action.hide();
+      show_on_both.hide();
+      show_on_edge.hide();
+      show_on_node.hide();
+    }
+
+    function showUIFor(name){
+      hideAllUI();
+      switch(name){
+        case "node":
+          show_on_node.show();
+          show_on_both.show();
+          break;
+        case "edge":
+          show_on_edge.show();
+          show_on_both.show();
+          break;
+        default:
+          break;
+      }
+    }
+
+    function UI_action(action_name){
+      if(action_name === "cancel"){
+        hideAllUI();
+        clearPopup();
+        grafo.disableEditMode();
+      }else if(action_name === "editNodeText"){
+
+      }else{
+        grafo[action_name]();
+      }
+
+      show_on_action.show();
+      $(".action-description").text(action_name);
     }
 
     var vis_options = {
@@ -277,6 +315,7 @@
       data.id = popup_id.val();
       data.label = popup_title.val();
       clearPopup();
+      hideAllUI();
       callback(data);
     }
 
