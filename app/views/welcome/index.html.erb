@@ -8,7 +8,8 @@
         <div class="row">
           <% @categories.first(6).each_with_index do |category, i| %>
             <div class="col-md-2">
-              <form action='/stories/search?category=<%= category.name %>' method="get">
+             <!-- <form action='/stories/search?category=<= category.name %>' method="get"> -->
+                <form action='/stories/' method="get">
                 <% unless i.odd? %>
                   <button type="submit" class="btn btn-primary btn-category-1">
                     <%= category.name %>
