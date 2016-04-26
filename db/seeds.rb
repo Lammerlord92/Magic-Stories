@@ -177,10 +177,11 @@ user10.profile.update!({name: 'Profile10', description: 'This is my profile10', 
 user11.profile.update!({name: 'David', description: 'Descripción de David', signature: 'My sign11', avatar: 'http://cdn.teknlife.com/wp-content/uploads/2014/02/Bellotas_de_encina.jpg'})
 puts "Success: Actualización de usuarios con perfiles"
 
+=begin
+
 ############################################################################
 #   Peticiones de amistad. TABLA: request_friendships
 ############################################################################
-=begin t
 friendShip1 = RequestFriendship.create!({message: "RequestFriendship16", sender_id: user1.id, recipient_id: user6.id, status: "ACCEPTED"})
 friendShip2 = RequestFriendship.create!({message: "RequestFriendship71", sender_id: user7.id, recipient_id: user1.id, status: "ACCEPTED"})
 friendShip3 = RequestFriendship.create!({message: "RequestFriendship62", sender_id: user6.id, recipient_id: user2.id, status: "ACCEPTED"})
@@ -192,8 +193,6 @@ friendShip8 = RequestFriendship.create!({message: "RequestFriendship410", sender
 friendShip9 = RequestFriendship.create!({message: "RequestFriendship59", sender_id: user5.id, recipient_id: user9.id, status: "ACCEPTED"})
 friendShip10 = RequestFriendship.create!({message: "RequestFriendship105", sender_id: user10.id, recipient_id: user5.id, status: "ACCEPTED"})
 puts "Success: Creación de peticiones de amistad"
-
-=end
 
 ############################################################################
 #   Creación de amigos. TABLA: friendships
@@ -209,6 +208,9 @@ Friendship.createFriendship(friendShip8)
 Friendship.createFriendship(friendShip9)
 Friendship.createFriendship(friendShip10)
 puts "Success: Creación de amigos"
+
+=end
+
 # Creacion de UserGroups
 
 uG1 = UserGroup.create!(name: 'UserGroup1', code: '1231')
@@ -216,6 +218,7 @@ uG2 = UserGroup.create!(name: 'UserGroup2', code: '1232')
 uG3 = UserGroup.create!(name: 'UserGroup3', code: '1233')
 uG4 = UserGroup.create!(name: 'UserGroup4', code: '1234')
 puts "Success: Creación de grupos de usuarios"
+
 # Creacion de ActorUserGroup
 
 aUG1 = ActorUserGroup.create({usergroup_id: uG1.id, user_id: user1.id})
