@@ -5,6 +5,13 @@ class WelcomeController < ApplicationController
 
     # Done. 5 historias más adquiridas en los últimos 7 días.
     @slice_stories = Addition.where('created_at > ?', Date.today - 7.days).group(:story).order('count_id desc').count('id').keys[0..4]
+    # Solución provisional
+    @slice_stories.each do |slice_story|
+      if slice_story.cover == nil
+        cat = I18n.transliterate(slice_story.categories.first.name).downcase
+        slice_story.cover = "/assets/categories_covers/" + cat + ".jpg"
+      end
+    end
 
     # Done
     @newest_stories_by_category = Hash.new
@@ -12,7 +19,7 @@ class WelcomeController < ApplicationController
     @categories.each { |cat|
 
       stories = cat.stories.order(release_date: :desc).limit(3)
-      story1=  stories[0]
+      story1 = stories[0]
       story2 = stories[1]
       story3 = stories[2]
       @newest_stories_by_category[@categories[count]] = [story1, story2, story3]

@@ -164,23 +164,24 @@ end
 
 # Creacion de Perfiles
 
-user1.profile.update!({name: 'Profile1', description: 'This is my profile1', signature: 'My sign1', profile_status: 'PRIVATE'})
+user1.profile.update!({name: 'Profile1', description: 'This is my profile1', signature: 'My sign1'})
 user2.profile.update!({name: 'Profile2', description: 'This is my profile2', signature: 'My sign2'})
-user3.profile.update!({name: 'Profile3', description: 'This is my profile3', signature: 'My sign3', profile_status: 'PRIVATE'})
+user3.profile.update!({name: 'Profile3', description: 'This is my profile3', signature: 'My sign3'})
 user4.profile.update!({name: 'Profile4', description: 'This is my profile4', signature: 'My sign4'})
 user5.profile.update!({name: 'Profile5', description: 'This is my profile5', signature: 'My sign5'})
-user6.profile.update!({name: 'Profile6', description: 'This is my profile6', signature: 'My sign6', profile_status: 'PRIVATE'})
+user6.profile.update!({name: 'Profile6', description: 'This is my profile6', signature: 'My sign6'})
 user7.profile.update!({name: 'Profile7', description: 'This is my profile7', signature: 'My sign7'})
 user8.profile.update!({name: 'Profile8', description: 'This is my profile8', signature: 'My sign8'})
-user9.profile.update!({name: 'Profile9', description: 'This is my profile9', signature: 'My sign9', profile_status: 'PRIVATE'})
+user9.profile.update!({name: 'Profile9', description: 'This is my profile9', signature: 'My sign9'})
 user10.profile.update!({name: 'Profile10', description: 'This is my profile10', signature: 'My sign10'})
 user11.profile.update!({name: 'David', description: 'Descripción de David', signature: 'My sign11', avatar: 'http://cdn.teknlife.com/wp-content/uploads/2014/02/Bellotas_de_encina.jpg'})
 puts "Success: Actualización de usuarios con perfiles"
 
+=begin
+
 ############################################################################
 #   Peticiones de amistad. TABLA: request_friendships
 ############################################################################
-
 friendShip1 = RequestFriendship.create!({message: "RequestFriendship16", sender_id: user1.id, recipient_id: user6.id, status: "ACCEPTED"})
 friendShip2 = RequestFriendship.create!({message: "RequestFriendship71", sender_id: user7.id, recipient_id: user1.id, status: "ACCEPTED"})
 friendShip3 = RequestFriendship.create!({message: "RequestFriendship62", sender_id: user6.id, recipient_id: user2.id, status: "ACCEPTED"})
@@ -207,6 +208,9 @@ Friendship.createFriendship(friendShip8)
 Friendship.createFriendship(friendShip9)
 Friendship.createFriendship(friendShip10)
 puts "Success: Creación de amigos"
+
+=end
+
 # Creacion de UserGroups
 
 uG1 = UserGroup.create!(name: 'UserGroup1', code: '1231')
@@ -214,6 +218,7 @@ uG2 = UserGroup.create!(name: 'UserGroup2', code: '1232')
 uG3 = UserGroup.create!(name: 'UserGroup3', code: '1233')
 uG4 = UserGroup.create!(name: 'UserGroup4', code: '1234')
 puts "Success: Creación de grupos de usuarios"
+
 # Creacion de ActorUserGroup
 
 aUG1 = ActorUserGroup.create({usergroup_id: uG1.id, user_id: user1.id})

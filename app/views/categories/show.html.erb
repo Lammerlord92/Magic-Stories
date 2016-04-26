@@ -2,20 +2,9 @@
 
 <h1><%= @category.name  %></h1>
 
-<div class="block-right">
-    <% if @category.name == 'Drama' %>
-      <img class="cover" src="/assets/categories_covers/caratula drama.jpg">
-    <% elsif @category.name == 'Cuento' %>
-        <img class="cover" src="/assets/categories_covers/cuento.jpg">
-    <% elsif @category.name == 'Ficción' %>
-        <img class="cover" src="/assets/categories_covers/ficcion.jpg">
-    <% elsif @category.name == 'Terror' %>
-        <img class="cover" src="/assets/categories_covers/terror.jpg">
-    <% elsif @category.name == 'Épico' %>
-        <img class="cover" src="/assets/categories_covers/epico.jpg">
-    <% elsif @category.name == 'Aventura' %>
-        <img class="cover" src="/assets/categories_covers/aventura.jpg">
-    <% end %>
+  <div class="block-right">
+    <% cat = I18n.transliterate(@category.name).downcase %>
+    <img class="cover" src="/assets/categories_covers/<%= cat %>.jpg">
   </div>
 
     <div class="block-left">

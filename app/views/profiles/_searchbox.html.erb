@@ -1,24 +1,15 @@
 <!-- Cuadro de búsqueda de perfiles de usuario -->
 <form action="/profiles/search" method="get">
 	
-	<div class="row">
-	  
-	  <!-- Búsqueda por amigos -->
-	  <% if user_signed_in? %>
-	  <div class="col-md-3">
-	    <input type="radio" name="choice" value="friends" id="amigos">
-	    <label for="amigos">Amigos</label>
-	    <span>&nbsp</span>
-	    <input type="radio" name="choice" value="no_friends"id="no_amigos">
-	    <label for="no_amigos">No amigos</label>
-	  </div>
-	  <% end %>
+	<div class="container row">
 	  
 	  <!-- Cuadro de búsqueda -->
-	  <div class="col-md-4">
+	  <div class="text-right">
 		  <input type="text" name="q" placeholder="Buscar usuarios">
 		  <button type="submit">Buscar</button>
 		</div>
+
+		<br/>
 
   </div>
 

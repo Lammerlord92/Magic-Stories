@@ -1,5 +1,7 @@
 <% unless story.cover.present? %>
-  <img class="cover-image" title="<%= story.title %>" src="/assets/temporal_cover.jpg" />
+	<!-- Solución provisional -->
+	<% cat = I18n.transliterate(story.categories.first.name).downcase %>
+  <img class="cover-image" title="<%= story.title %>" src="/assets/categories_covers/<%= cat %>.jpg" />
 <% else %>
   <%= image_tag story.cover, class: 'cover-image' %>
 <% end %>

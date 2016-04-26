@@ -12,7 +12,7 @@ class ProfilesController < ApplicationController
     begin
       @profile = Profile.find(params[:id])
       @is_current_profile = is_current_profile? @profile
-      @is_friend_profile = is_friend_profile? @profile
+      # @is_friend_profile = is_friend_profile? @profile
       #unless @is_current_profile or @profile.profile_status == 'PUBLIC' or @is_friend_profile
       #  render 'errors/permission_denied'
       #end
@@ -86,6 +86,7 @@ class ProfilesController < ApplicationController
     params.permit(:q, :choice)
   end
 
+=begin t
 
   def search
     choice = params[:choice]
@@ -119,6 +120,7 @@ class ProfilesController < ApplicationController
         query = '(friendships.user_id != :cu_id and friendships.friend_id = :cu_id)'
         @profiles = Profile.distinct(:user_id).joins(:friendships).where(query, {cu_id: current_user.id})
       end
+
 
       # Si se quiere filtrar entre no amigos
 
@@ -155,12 +157,13 @@ class ProfilesController < ApplicationController
         end
       end
 
-
     end
     #@profiles
     #render 'index'
 
   end
+
+=end
   #FIXME - Nos estamos hackeando a nosotros mismos. Pasar a un usuario premium así bytheface? Sin restringir quien puede acceder a esta URL?
   #Además va a dar petidos pues el usuario premium ya tiene una fecha de expiración que es obligatoria. Si se quiere mantener este método
   #habría que usar el upgradeUser de MembershipCardsHelper. Creando primero una membershipCard.
@@ -235,7 +238,7 @@ class ProfilesController < ApplicationController
       return false
     end
   end
-
+=begin t
   # Devuelve true si el 'profile' dado es de un usuario amigo del usuario autentificado
   def is_friend_profile?(profile)
     if current_user.present?
@@ -244,6 +247,8 @@ class ProfilesController < ApplicationController
     else
       return false
     end
-  end
 
+
+  end
+=end
 end

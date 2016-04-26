@@ -40,11 +40,13 @@
         <% unless current_user.nil? %>
           <% unless story.has_been_acquired_by_user?(current_user) or
               story.creatorProfile.id == current_user.profile.id %>
-            <form action='/payment/create/<%=story.id%>' method="get">
+            <form action='/additions/create/<%=story.id%>' method="get">
+            <!-- No hay pagos en esta versión -->
+            <!--<form action='/payment/create/<%=story.id%>' method="get">-->
               <button type="submit" class="btn btn-primary">
                 <p class="btn-label">Adquirir historia</p>
-                <!--No se muestra en esta versión -->
-                <p class="price">Precio: <span><%= story.price %> €</span></p>
+                <!-- No se muestra en esta versión -->
+                <!--<p class="price">Precio: <span><%= story.price %> €</span></p>-->
               </button>
             </form>
           <% else %>
