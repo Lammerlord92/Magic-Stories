@@ -66,12 +66,15 @@ Rails.application.routes.draw do
   resources :categories
 
   #peticiones de amistad
+=begin t
   resource :request_friendships
   get 'request_friendships/send_request/:recipient', to: 'request_friendships#send_request'
   post 'request_friendships/creates', to: 'request_friendships#creates'
   get 'request_friendships/deciding_request/:rf/:choice', to: 'request_friendships#deciding_request'
   get 'request_friendships/show_pending', to: 'request_friendships#show_pending'
   get 'request_friendships/cancel_friendship', to: 'request_friendships#cancel_friendship'
+
+=end
 
   #Stories
   get 'stories/read'
@@ -88,7 +91,7 @@ Rails.application.routes.draw do
   post 'chapter_options' => 'chapters#create_options'
 
   #Profiles
-  get 'profiles/search', to: 'profiles#search'
+# t  get 'profiles/search', to: 'profiles#search'
   get 'profiles/premium/:id', to: 'profiles#premium'
   get 'profiles/follow/:id', to: 'profiles#follow'
   get 'profiles/unfollow/:id', to: 'profiles#unfollow'

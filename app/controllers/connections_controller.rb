@@ -30,8 +30,10 @@ class ConnectionsController < ApplicationController
       [searchFollowers(@q), 'Seguidores']
     when 'followees' then
       [searchFollowees(@q), 'Siguiendo']
+=begin t
     when 'friends' then
       [searchFriends(@q), 'Amigos']
+=end
     else
       [current_user.profile.followees(Profile), 'Siguiendo']
     end

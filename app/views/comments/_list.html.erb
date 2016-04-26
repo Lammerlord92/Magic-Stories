@@ -1,7 +1,8 @@
 <% name ||= "Comentarios" %>
 
 <% if @profile.present? && (@profile.profile_status == 'PUBLIC' ||  current_user.present? &&
-    (current_user.role_type == 'Administrator' || @is_friend_profile || @is_current_profile)) || @story.present? %>
+  # t en caso de amistades Completariamos la comprobación de abajo con: || @is_friend_profile
+    (current_user.role_type == 'Administrator'  || @is_current_profile)) || @story.present? %>
 
     <% @comments.each do |comment|%>
       <div class="container-fluid">

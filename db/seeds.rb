@@ -180,7 +180,7 @@ puts "Success: Actualización de usuarios con perfiles"
 ############################################################################
 #   Peticiones de amistad. TABLA: request_friendships
 ############################################################################
-
+=begin t
 friendShip1 = RequestFriendship.create!({message: "RequestFriendship16", sender_id: user1.id, recipient_id: user6.id, status: "ACCEPTED"})
 friendShip2 = RequestFriendship.create!({message: "RequestFriendship71", sender_id: user7.id, recipient_id: user1.id, status: "ACCEPTED"})
 friendShip3 = RequestFriendship.create!({message: "RequestFriendship62", sender_id: user6.id, recipient_id: user2.id, status: "ACCEPTED"})
@@ -192,6 +192,8 @@ friendShip8 = RequestFriendship.create!({message: "RequestFriendship410", sender
 friendShip9 = RequestFriendship.create!({message: "RequestFriendship59", sender_id: user5.id, recipient_id: user9.id, status: "ACCEPTED"})
 friendShip10 = RequestFriendship.create!({message: "RequestFriendship105", sender_id: user10.id, recipient_id: user5.id, status: "ACCEPTED"})
 puts "Success: Creación de peticiones de amistad"
+
+=end
 
 ############################################################################
 #   Creación de amigos. TABLA: friendships
