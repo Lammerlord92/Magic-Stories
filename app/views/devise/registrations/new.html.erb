@@ -33,8 +33,19 @@
   </div>
 
   <div class="field">
-    <%= f.label :birthday, "Fecha de nacimiento" %><br/>
-    <%= f.date_select :birthday, class: "form-control" %>
+
+    <%= f.text_field :birthday,class: "form-control calendario", 'data-provide':'datepicker',id:'dt5', placeholder:'Fecha de Nacimiento' %>
+    <script>
+      $("#dt5").datepicker({
+          format: 'dd/mm/yyyy'
+        })
+        .on('changeDate', function(ev){
+          $('#dt5').datepicker('hide');
+        });
+    </script>
+
+
+
   </div>
 
   <div class="field">

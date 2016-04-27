@@ -8,7 +8,12 @@
               <h2 class="trendings">Tendencias</h2>
               <h4 class="author">
                 <%= story.creatorProfile.name %>
-                <span class="category">Géneros: [insertar aquí géneros]</span>
+                <span class="category">
+                  <b>Géneros:</b>
+                  <% story.categories.each do |category| %>
+                    <br/><%= category.name %>
+                  <% end %>
+                </span>
               </h4>
               <h3 class="title"><%= story.title %></h3>
               <p class="synopsis"><%= story.description %></p>

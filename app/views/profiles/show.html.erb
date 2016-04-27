@@ -17,15 +17,16 @@
           <% end %>
         </h2>
       </div>
-      <div class="col-md-5 text-right escritura gris">
-        <!-- TODO Añadir atributo de valoración -->
-        <p>Nota: 9</p>
-        <p><img src="/assets/libro.png" class="libro">&nbsp&nbsp<%= @profile.stories.count %></p>
+         <div class="col-md-5 text-right escritura gris">
+           <!-- TODO Añadir atributo de valoración -->
+      <!--    <p>Adquisiciones:  < Addition.where(profile_id: @profile.id).count %> </p>-->
+       <p><img src="/assets/libro.png" class="libro">&nbsp&nbsp <%= @profile.stories.count %></p>
       </div>
     </div>
     <div class="row container-fluid boton">
       <!-- Información privilegiada -->
-      <% unless @is_current_profile or @profile.profile_status == 'PUBLIC' or @is_friend_profile or (current_user.present? && current_user.role_type == 'Administrator') %>
+      <!-- t En caso de amistades completariamos la comprobación de abajo con: or @is_friend_profile -->
+      <% unless @is_current_profile or @profile.profile_status == 'PUBLIC'  or (current_user.present? && current_user.role_type == 'Administrator') %>
         <p><em>Este perfil es privado y solo puede acceder a él si usted es amigo de este usuario. Tampoco podrá seguirle</em></p>
       <% else %>
           <p><em>Descripción:</em></p>
@@ -42,10 +43,11 @@
         <%= link_to "Editar", edit_profile_path(@profile), class:"btn btn-primary btn-block" %>
         </br>
       <% else %>
-        <% unless @is_friend_profile or not current_user.present? %>
-          <%= link_to "Enviar petición de amistad", "/request_friendships/send_request/#{@profile.user_id}", class: "btn btn-primary btn-block"  %>
+      <!-- t En caso de amistade comletariamos la comprobación de abajo con: or @is_friend_profile -->
+        <%# t unless not current_user.present? %>
+          <%# t  link_to "Enviar petición de amistad", "/request_friendships/send_request/#{@profile.user_id}", class: "btn btn-primary btn-block"  %>
           </br>
-        <% end %>
+        <%# t end %>
       <% end %>
       <% if current_user.present? && current_user.role_type == 'Administrator' && @profile.user.role_type == 'FreeUser' %>
           <%= link_to "Convertir a Premium", "/profiles/premium/#{@profile.id}", class:"btn btn-primary btn-block"  %>
@@ -69,9 +71,7 @@
       <div class="col-md-3 text-center left-divider">
         <%= @profile.followees_count %><br/>siguiendo
       </div>
-      <div class="col-md-3 text-center left-divider">
-        <%= Addition.where(profile_id: @profile.id).count %><br/>adquisiciones
-      </div>
+
     </div>
   </div>
 

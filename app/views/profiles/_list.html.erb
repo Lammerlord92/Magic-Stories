@@ -22,29 +22,20 @@
       </div>
       <div class="col-md-5 text-right escritura gris">
         <!-- TODO Añadir atributo de valoración -->
-        <p>Nota: 9</p>
-        <p><img src="/assets/libro.png" class="libro">&nbsp&nbsp<%= profile.stories.count %></p>
+        <p>Obras adquiridas: <%= Addition.where(profile_id: profile.id).count %></p>
+        <p>Obras creadas: <%= profile.stories.count %></p>
       </div>
     </div>
 
-    <!-- Botón de amistad -->
+    <!-- Botón de seguir -->
     <% if user_signed_in? %>
     <div class="row container-fluid boton">
       <% if current_user.profile == profile %>
         <%= link_to "Editar mi perfil", "/profiles/#{profile.id}/edit", class: "btn btn-primary btn-block" %>
-      <% elsif !current_user.profile.isFriend(profile) %>
-        <%= link_to "Solicitud de amistad", "/request_friendships/send_request/#{profile.user_id}", class: "btn btn-primary btn-block" %>
-          <% unless @is_current_profile %>
-              <% unless profile.profile_status == 'PRIVATE' %>
-                <% if current_user.profile.follows?(profile) %>
-                   <%= link_to "Dejar de seguir", "/profiles/unfollow/#{profile.id}", class: "btn btn-primary btn-block"  %>
-                <% else %>
-                   <%= link_to "Seguir", "/profiles/follow/#{profile.id}", class:"btn btn-primary btn-block"  %>
-                <% end %>
-              <%end %>
-          <% end %>
+      <% elsif !current_user.profile.follows?(profile) %>
+        <%= link_to "Seguir", "/profiles/follow/#{profile.id}", class: "btn btn-primary btn-block" %>
       <% else %>
-        <%= link_to "Amigo", "#", class: "btn btn-primary btn-block disabled" %>
+        <%= link_to "Dejar de seguir", "/profiles/unfollow/#{profile.id}", class: "btn btn-primary btn-block" %>
       <% end %>
     </div>
     <% end %>
@@ -57,14 +48,14 @@
       <div class="col-md-3 text-center left-divider">
         <%= profile.followees_count %><br/>siguiendo
       </div>
-      <div class="col-md-3 text-center left-divider">
-        <%= Addition.where(profile_id: profile.id).count %><br/>adquisiciones
-      </div>
+    <!--  <div class="col-md-3 text-center left-divider">
+        < Addition.where(profile_id: profile.id).count %><br/>adquisiciones
+      </div> -->
     </div>
   </div>
 
   <!-- Historias -->
-  <h2>Historias</h2>
+
   <div class="col-md-6">
     <!-- Tabs para cada listado -->
     <ul class="nav nav-tabs nav-justified">
@@ -73,7 +64,7 @@
 
 
       <li <% if @option == "acquired" %>class="active"<% end %> role="presentation">
-        <%= link_to "Adquiridas", stories_acquired_path, class:"btn btn-default" %>
+        <%= link_to "Listado de obras adquiridas", stories_acquired_path, class:"btn btn-default" %>
       </li>
 
       <!-- Historias creadas (sólo usuarios premium y admins) -->
@@ -84,12 +75,12 @@
           </li>
 
       <% end %>
-
+      <h2>Adquiridas recientemente:</h2>
 
 
     </ul>
     <div class="row">
-      <% profile.stories.last(3).each do |story| %>
+      <% Story.where(id: profile.additions.last(3).map(&:story_id)).each do |story| %>
       <div class="col-md-4">
         <a href="/stories/<%= story.id %>">
           <%= render 'stories/story_slot', story: story %>
