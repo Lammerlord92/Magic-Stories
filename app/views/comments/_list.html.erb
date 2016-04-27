@@ -1,66 +1,28 @@
 <% name ||= "Comentarios" %>
+<hr/>
 
-<% if @profile.present? && (@profile.profile_status == 'PUBLIC' ||  current_user.present? &&
-  # t en caso de amistades Completariamos la comprobación de abajo con: || @is_friend_profile
-    (current_user.role_type == 'Administrator'  || @is_current_profile)) || @story.present? %>
-
-    <% @comments.each do |comment|%>
-      <div class="container-fluid">
-        <div class="col-md-10 col-md-offset-1 row listar_comentarios">
-          <div class="row">
-            <div class="row">
-              <div class="col-md-2">
-                <%= image_tag(comment.profile.avatar, class: "img-circle img-responsive") %>
-              </div>
-
-              <div class="row">
-                <div class="col-md-9">
-                  <div class="col-md-8">
-                    <%= comment.author %>
-                  </div>
-                  <div class="col-md-3">
-                    <%= comment.date %>
-                  </div>
-                  <div class="col-md-1">
-                    <% if @profile.present? && (current_user.profile.user == comment.profile.user ||current_user.role_type == 'Administrator' ||
-                        @is_current_profile) %>
-                        <%= link_to "", "edit_comment_path#{comment.__id__}", class:"glyphicon glyphicon-pencil icon_derecha"   %>
-                    <% end %>
-                  </div>
-                </div>
-                <div class="col-md-9">
-                  <div class="col-md-9">
-                    <%= comment.title %>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-            <div class="col-md-2 container-fluid boton">
-              <% unless @is_current_profile %>
-                  <% if current_user.profile.follows?(@profile) %>
-                      <%= link_to "Dejar de seguir", "/profiles/unfollow/#{@profile.id}", class:"btn btn-primary btn-block"  %>
-                  <% else %>
-                      <%= link_to "Seguir", "/profiles/follow/#{@profile.id}", class:"btn btn-primary btn-block"  %>
-                  <% end %>
-              <% end %>
-            </div>
-            <div class="col-md-10">
-              <div class="col-md-12">
-                <%= comment.body %>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    <% end %>
-
-    </br>
-
-    <div class="boton">
-      <% if current_user.present? %>
-          <%= link_to "Nuevo comentario", new_comment_path(:id => id, :commentedClass => commentedClass), class:"btn btn-primary", :method => :get %>
+<% @comments.each do |comment|%>
+  <div class="container-fluid row">
+    <div class="col-md-2">
+      <%= image_tag(comment.profile.avatar, class: "img-circle img-responsive") %>
+      <p class="text-center"><%= comment.profile.name %></p>
+    </div>
+    <div class="col-md-9">
+      <h4><%= comment.title %></h4>
+      <p><%= comment.body %><p>
+      <b class="comment-date"><%= comment.date.strftime("%A, %dth %B %Y") %></b>
+    </div>
+    <div class="col-md-1">
+      <% if current_user.profile == comment.profile %>
+      <%= link_to "", edit_comment_path(comment, :id_story => id), class: "glyphicon glyphicon-pencil" %>
       <% end %>
     </div>
-
+  </div>
+  <hr/>
 <% end %>
+
+<div class="boton">
+  <% if current_user.present? %>
+    <%= link_to "Nuevo comentario", new_comment_path(:id_story => id), class: "btn btn-primary", :method => :get %>
+  <% end %>
+</div>

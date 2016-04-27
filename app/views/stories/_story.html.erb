@@ -59,5 +59,12 @@
         <% end %>
       </div>
     </div>
+
+    <!-- Comentarios -->
+    <div class="story-comments">
+      <h3>Comentarios</h3>
+      <%= render 'comments/list', id: @story.id %>
+    </div>
+    
   </div>
 </div>

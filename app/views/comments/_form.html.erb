@@ -1,0 +1,66 @@
+<body id="bdc">
+
+  <%= form_for([@comment])  do |f| %>
+
+      <% if @comment.errors.full_messages.length > 0 %>
+          <div class="errors">
+            <p>
+              Se encontraron los siguientes errores al guardar el comentario:
+            </p>
+            <% @comment.errors.full_messages.each do |message| %>
+                <p class="error">
+                  *<%= message  %>
+                </p>
+            <% end %>
+          </div>
+      <% end %>
+
+      <br>
+      <div class="container">
+        <div class="jumbotron  col-md-6 col-md-offset-3 row" id="jbc">
+          <p><%= name %></p>
+          <form class="form-inline" role="form">
+            <div class="form-group">
+
+              <%= f.text_field :title, placeholder: 'Titulo',id:'title' %><br>
+              <%= f.text_area :body, placeholder: 'Comentario',id:'cm' %>
+            </div>
+
+            <!--
+            <br>
+
+            <div>
+              <fieldset class="rating">
+                <legend id="lg">Valoración:</legend>
+                <%= f.radio_button :rating, '1'%> &#9733
+                <br>
+                <%= f.radio_button :rating, '2'%> &#9733 &#9733
+                <br>
+                <%= f.radio_button :rating, '3'%> &#9733 &#9733 &#9733
+                <br>
+                <%= f.radio_button :rating, '4'%> &#9733 &#9733 &#9733 &#9733
+                <br>
+                <%= f.radio_button :rating, '5'%> &#9733 &#9733 &#9733 &#9733 &#9733
+              </fieldset>
+            </div>
+
+          <% if false %>
+            select_tag(:rating, options_for_select([["&#9733",1],['&#9733 &#9733',2]], selected: :rating)) %>
+                Quedaría mejor con un select_tag que con un fieldset no tengo claro como es en rails
+          <% end %>
+          -->
+
+
+            <br>
+
+            <%= f.hidden_field :story_id, :value => @idStory %>
+
+            <div class="field text-center">
+              <%= f.submit 'Publicar',id:"bt", class: "btn btn-primary" %>
+            </div>
+          </form>
+        </div>
+      </div>
+
+  <% end %>
+</body>
