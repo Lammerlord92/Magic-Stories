@@ -174,7 +174,6 @@
     }
 
     function hideAllUI(){
-      show_on_action.hide();
       show_on_both.hide();
       show_on_edge.hide();
       show_on_node.hide();
@@ -199,15 +198,15 @@
     function UI_action(action_name){
       if(action_name === "cancel"){
         hideAllUI();
-        clearPopup();
-        grafo.disableEditMode();
+        show_on_action.hide();
+        onCancel();
       }else if(action_name === "editEdgeText"){
-
+        show_on_action.show();
       }else{
+        show_on_action.show();
         grafo[action_name]();
       }
 
-      show_on_action.show();
       $(".action-description").text(action_name);
     }
 
@@ -257,7 +256,7 @@
       popup_id.val(data.id);
       popup_title.val(data.label);
       popup_save_btn.on("click", onSave.bind(this, data, callback));
-      popup_cancel_btn.on("click", clearPopup.bind());
+      popup_cancel_btn.on("click", onCancel.bind(this, callback));
       $popup.css("display", "block");
     }
     // esta funcion se llama al pulsar sobre "Edit node"
@@ -281,13 +280,22 @@
        * */
       if(data.nodes.length) console.log("se borraron los nodos "+data.nodes.join(", "));
       if(data.edges.length) console.log("se borraron las aristas "+data.edges.join(", "));
-      callback(data);
+      show_on_action.hide();
+      if(confirm("¿Esta seguro de que desea borrar el elemento seleccionado?")){
+        callback(data);
+      }else{
+        callback(null);
+      }
     }
     function onAddEdge(data, callback){
       if(data.from == data.to){
         var respuesta = confirm("¿Quieres conectar el nodo consigo mismo?");
-        if (respuesta == true) callback(data);
+        if (respuesta == true){
+          show_on_action.hide();
+          callback(data);
+        }
       }else{
+        show_on_action.hide();
         callback(data);
       }
     }
@@ -299,7 +307,8 @@
         if(!dialog_confirm) data_to_callback = null;
       }
 
-      callback(data_to_callback)
+      callback(data_to_callback);
+      show_on_action.hide();
     }
 
     function clearPopup(){
@@ -309,7 +318,9 @@
     }
     function onCancel(callback){
       clearPopup();
-      callback(null);
+      if(callback) callback(null);
+      show_on_action.hide();
+      grafo.disableEditMode();
     }
     function onSave(data, callback){
       data.id = popup_id.val();
@@ -317,6 +328,8 @@
       clearPopup();
       hideAllUI();
       callback(data);
+      show_on_action.hide();
+      grafo.disableEditMode();
     }
 
     function onClickEditEdgeConnection(){
