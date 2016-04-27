@@ -1,7 +1,7 @@
-<h1>Nuevo donacion</h1>
+<h1>Nueva donacion</h1>
 
 <%= form_for(@donation, url: '/payment/donate', method: 'post')  do |f| %>
-<% if @donation.errors.full_messages.length > 0 %>
+  <% if @donation.errors.full_messages.length > 0 %>
         <div class="errors">
           <p>
             Se encontraron los siguientes errores al guardar la donación
@@ -13,21 +13,33 @@
           <% end %>
         </div>
     <% end %>
-    <div class="field">
-    <%= f.label :amount, 'Cantidad' %>
-    <%= f.text_field :amount %>
+
+
+    <div class="container-fluid">
+      <div class="col-md-6 col-md-offset-4 row">
+        <div class="row">
+          <div class="field">
+            <!-- <%= f.label :amount, 'Cantidad' %> -->
+            <i class="glyphicon glyphicon-euro" aria-hidden="true"></i>
+          <%= f.text_field :amount %>
+          </div>
+
+          <div class="field">
+          <h4>Nos interesa saber tu opinión para seguir creciendo.</h4>
+          <%= f.label :message, 'Mensaje' %>
+          <%= f.text_area :message, placeholder: 'Comentario' %>
+          </div>
+        </div>
+        <div class="row boton">
+          <div class="col-md-6">
+            <%= f.submit 'Donar' , class:"btn btn-primary btn-block"%>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="field">
-    <h4>Nos interesa saber tu opinión para seguir creciendo.</h4>
-    <%= f.label :message, 'Mensaje' %>
-    <%= f.text_area :message, placeholder: 'Comentario' %>
-    </div>
 
 
 
-   <div class="field">
-      <%= f.submit 'Donar' %>
-   </div>
 
-  <% end %>
+<% end %>
