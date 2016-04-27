@@ -202,6 +202,7 @@
         onCancel();
       }else if(action_name === "editEdgeText"){
         show_on_action.show();
+
       }else{
         show_on_action.show();
         grafo[action_name]();
@@ -330,20 +331,6 @@
       callback(data);
       show_on_action.hide();
       grafo.disableEditMode();
-    }
-
-    function onClickEditEdgeConnection(){
-      var edgeIds = grafo.getSelectedEdges();
-      var edges = edgesIds.map(function(id){
-        return grafo.body.data.edges.getDataSet().get(id);
-      });
-
-      onEditEdge(edges[0], editEdgeCallback);
-
-      function editEdgeCallback(data){
-        grafo.body.data.edges.getDataSet().update(data, data.id)
-      }
-
     }
 
   </script>
