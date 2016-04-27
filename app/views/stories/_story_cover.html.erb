@@ -3,5 +3,5 @@
 	<% cat = I18n.transliterate(story.categories.first.name).downcase %>
   <img class="cover-image" title="<%= story.title %>" src="/assets/categories_covers/<%= cat %>.jpg" />
 <% else %>
-  <%= image_tag story.cover, class: 'cover-image' %>
+  <img class="cover-image" title="<%= story.title %>" src="<%= story.cover %>" />
 <% end %>
