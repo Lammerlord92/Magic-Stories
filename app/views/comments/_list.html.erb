@@ -4,8 +4,10 @@
 <% @comments.each do |comment|%>
   <div class="container-fluid row">
     <div class="col-md-2">
+      <a href="/profiles/<%= comment.profile.id %>">
       <%= image_tag(comment.profile.avatar, class: "img-circle img-responsive") %>
-      <p class="text-center"><%= comment.profile.name %></p>
+      <p class="text-center"><%= comment.profile.user.name %></p>
+      </a>
     </div>
     <div class="col-md-9">
       <h4><%= comment.title %></h4>
