@@ -202,7 +202,12 @@
         onCancel();
       }else if(action_name === "editEdgeText"){
         show_on_action.show();
-
+        var edgeId = grafo.getSelectedEdges()[0];
+        var data = grafo.body.data.edges.getDataSet().get(edgeId);
+        var callback = function(data){
+          grafo.body.data.edges.getDataSet().update(data, data.id);
+        };
+        onEditEdgeText(data, callback);
       }else{
         show_on_action.show();
         grafo[action_name]();
@@ -310,6 +315,14 @@
 
       callback(data_to_callback);
       show_on_action.hide();
+    }
+    function onEditEdgeText(data, callback){
+      popup_header.text("Editar texto de la arista");
+      popup_id.val(data.id);
+      popup_title.val(data.label);
+      popup_save_btn.on("click", onSave.bind(this, data, callback));
+      popup_cancel_btn.on("click", onCancel.bind(this, callback));
+      $popup.css("display", "block");
     }
 
     function clearPopup(){
