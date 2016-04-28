@@ -94,6 +94,16 @@
     var vis_edges = [];
     var grafo = null;
 
+    var action_descriptions = {
+      addNodeMode: "Pulsa en un espacio vacio para colocar un nuevo nodo",
+      addEdgeMode: "Pulsa en un nodo y arrasta la arista hacia otro nodo para conectarlo",
+      editNode: "",
+      editEdgeText: "",
+      editEdgeMode: "",
+      deleteSelected: "Borrar el elemento seleccionado",
+      cancel: "Accion cancelada"
+    };
+
     $.get("/stories/"+story_id+".json", function(story){
       var ch_ids = story.chapter_ids;
       //console.log("Maker: story from db "+JSON.stringify(story));
@@ -213,7 +223,7 @@
         grafo[action_name]();
       }
 
-      $(".action-description").text(action_name);
+      $(".action-description").text(action_descriptions[action_name]);
     }
 
     var vis_options = {
@@ -229,7 +239,7 @@
       },
       manipulation: { // solo queremos mostrar el boton "back" y las descripciones
         initiallyActive: true,
-        enabled: false,
+        enabled: true,
         addNode:    onAddNode,
         editNode:   onEditNode,
         deleteNode: onDelete,
