@@ -1,7 +1,6 @@
 #module Api
   class OptionController < ApplicationController
     respond_to :json, only: [:create,:update,:destroy]
-    before_action :convert_from_json,[:create,:update,:destroy]
 
     def create
       @option = Option.new(option_params)
@@ -41,25 +40,23 @@
 
     private
     def option_find
-      @option = Option.find(params[:id])
+      @option = Option.find(params[:chapter][:id])
     end
 
     def option_params
       params
-        .require(:option)
+        .require(:chapter)
         .permit(
-            :id,
-            :parent,
-            :child,
-            :option
+            :from,
+            :to,
+            :title
         )
     end
 
     def convert_from_json
-      @option.id = :id,
-      @option.parent = :from,
-      @option.child=:to,
-      @option.option=:title
+      @option.parent =params[:chapter][:from],
+      @option.child=params[:chapter][:to],
+      @option.option=params[:chapter][:title]
     end
   end
 #end

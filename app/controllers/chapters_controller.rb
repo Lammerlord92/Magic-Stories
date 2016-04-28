@@ -3,7 +3,6 @@ class ChaptersController < ApplicationController
   # GET /chapters/1.jsonº
   # GET /chapters/1.json{"id":2,"title":Capítulo 01,"body":Este es el texto del capítulo 01. Este capítulo no puede borrarse, ya que es el primer capítulo de tu historia. Puedes crear nuevos capítulos y enlaces mediante los botones de la izquierda.,"child_options":[{"child_id":3,"parent_id":2,"option":1985"}],"parent_options":[]}
   respond_to :json, only: [:create,:update,:destroy]
-  before_action :convert_from_json, only: [:create,:update,:destroy]
   def show
     begin
       @chapter = Chapter.find(params[:id])
@@ -36,7 +35,6 @@ class ChaptersController < ApplicationController
          end
     end
 
-#    redirect_to_maker_view
   end
   def destroy
     @chapter=chapter_find
@@ -51,52 +49,9 @@ class ChaptersController < ApplicationController
     end
   end
 
-=begin
- def create_options
-   id = params[:chapter][:id]
-   @chapter = Chapter.find(id)
-   if !@chapter
-     render json: {error: "Error: No existe el capitulo con id #{id}"},
-            status: :unprocessable_entity
-   else
-     parents = chapter_params[:parent_options]
-     if parents
-       parents.map! do |parent|
-         {child_id: id, parent_id: parent}
-       end
-
-       parents.map! do |parsed_parent|
-         option = Option.find_or_initialize_by(parsed_parent)
-         unless option.option
-           option.option = "Conecta nodo #{parsed_parent[:child_id]} con #{parsed_parent[:parent_id]}"
-         end
-         unless option.save
-           render json: @chapter.errors, status: :unprocessable_entity
-         end
-       end
-     end
-=end
-=begin
-      children = chapter_params[:child_options]
-      if children
-        children.each_pair do |index, child|
-          option = Option.find_or_initialize_by({child_id: child[:child_id], parent_id: child[:parent_id]})
-          option.assign_attributes child
-          unless option.save
-            render json: @chapter.errors, status: :unprocessable_entity
-          end
-        end
-      end
-
-      render action: 'show', status: :ok
-
-    end
-  end
-=end
-
   private
     def chapter_find
-      @chapter = Chapter.find(params[:id])
+      @chapter = Chapter.find(params[:chapter][:id])
     end
 
     def redirect_to_maker_view
@@ -108,15 +63,15 @@ class ChaptersController < ApplicationController
           .require(:chapter)
           .permit(
               :id,
-              :body,
               :title,
+              :label,
               :story_id
           )
     end
   def convert_from_json
-    @chapter.id = :id,
-    @chapter.body = :title,
-    @chapter.title=:label,
-    @chapter.story_id=:story
+    @chapter.id = params[:chapter][:id],
+    @chapter.body = params[:chapter][:title],
+    @chapter.title=params[:chapter][:label],
+    @chapter.story_id=params[:chapter][:story_id]
   end
 end
