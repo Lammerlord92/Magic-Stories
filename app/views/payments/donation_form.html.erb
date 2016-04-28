@@ -1,6 +1,7 @@
-<h1>Nueva donacion</h1>
+
 
 <%= form_for(@donation, url: '/payment/donate', method: 'post')  do |f| %>
+
   <% if @donation.errors.full_messages.length > 0 %>
         <div class="errors">
           <p>
@@ -15,27 +16,28 @@
     <% end %>
 
 
-    <div class="container-fluid">
-      <div class="col-md-6 col-md-offset-4 row">
-        <div class="row">
-          <div class="field">
-            <!-- <%= f.label :amount, 'Cantidad' %> -->
-            <i class="glyphicon glyphicon-euro" aria-hidden="true"></i>
-          <%= f.text_field :amount %>
+    <div class="container" id="ccdon">
+
+        <div class="jumbotron jdon1  col-md-8 col-md-offset-3 row" >
+          <div class="jumbotron jdon2  col-md-6 col-md-offset-3 row" >
+          <h1 id="cabdon">Nueva donacion</h1>
+          <div class="row center">
+
+            <div class="field">
+              <%= f.text_field :amount,id:'textdon',placeholder:'Cantidad a donar...' %>
+            <!-- <%= f.label :message, 'Mensaje' %> --><br><br>
+            <%= f.text_area :message,id:'textdon', placeholder: 'Nos interesa saber tu opinión para seguir creciendo.' %>
+              <div class="row boton">
+                <%= f.submit 'Donar' , class:"btn btn-primary btn-block boton"%>
+            </div>
           </div>
 
-          <div class="field">
-          <h4>Nos interesa saber tu opinión para seguir creciendo.</h4>
-          <%= f.label :message, 'Mensaje' %>
-          <%= f.text_area :message, placeholder: 'Comentario' %>
+            <div class="col-md-6 center">
+
+            </div>
           </div>
-        </div>
-        <div class="row boton">
-          <div class="col-md-6">
-            <%= f.submit 'Donar' , class:"btn btn-primary btn-block"%>
-          </div>
-        </div>
       </div>
+          </div>
     </div>
 
 
