@@ -5,7 +5,7 @@
   <div class="col-md-3">
     <div class="story-search-params">
       <div class="categories">
-        <h3>Géneros</h3>
+        <h3>GÉNEROS</h3>
         <hr/>
         <% @categories.each do |category| %>
           <p><%= category.name %></p>
@@ -13,11 +13,16 @@
       </div>
       <hr/>
       <form action="/stories/search" method="get" role="form">
-        <div class="input-group search">
-          <span class="input-group-addon">🔎</span>
+        <div class="form-group has-feedback">
+          <label class="control-label">Buscar</label>
           <input class="form-control" type="text" name="q" placeholder="Buscar..." value="<%= @q %>" />
+          <i class="glyphicon glyphicon-search form-control-feedback"></i>
         </div>
       </form>
+      <hr/>
+      <div class="filter">
+        <h3>FILTRAR POR</h3>
+      </div>
     </div>
   </div>
 </div>
