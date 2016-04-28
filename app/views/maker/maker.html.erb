@@ -372,14 +372,16 @@
     }
 
     function sendAjaxForActionType(action_type, data){
-      if(action_type.indexOf("node") === -1 ){
-        data.body = data.title;
-        data.title = data.label;
+      if(action_type.indexOf("node") !== -1 ){
+        data.body = data.title || "Texto a rellenar";
+        data.title = data.label || "Texto a rellenar";
+        console.log("Maker: ha pasado por la conversión de nodos");
       }
-      if(action_type.indexOf("edge") === -1 ){
+      if(action_type.indexOf("edge") !== -1 ){
         data.child_id = data.to;
         data.parent_id = data.from;
-        data.option = data.title;
+        data.option = data.title || "Texto a rellenar";
+        console.log("Maker: ha pasado por la conversión de aristas");
       }
       switch(action_type){
         case "post_node":
@@ -389,7 +391,7 @@
           sendAjax("/chapters.json", data, "PUT", action_type);
           break;
         case "delete_node":
-          sendAjax("/chapters.json", data, "DELETE", action_type);
+          sendAjax("/chapters.json", {id: data.nodes[0]}, "DELETE", action_type);
           break;
 
         case "post_edge":
@@ -399,7 +401,7 @@
           sendAjax("/options.json", data, "PUT", action_type);
           break;
         case "delete_edge":
-          sendAjax("/options.json", data, "DELETE", action_type);
+          sendAjax("/options.json", {id: data.edges[0]}, "DELETE", action_type);
           break;
         default:
           console.log("Maker: onSave recibio un action_type desconocido");

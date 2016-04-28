@@ -1,5 +1,5 @@
 #module Api
-  class OptionController < ApplicationController
+  class OptionsController < ApplicationController
     respond_to :json, only: [:create,:update,:destroy]
 
     def create
@@ -18,10 +18,13 @@
       if !@option
         render json: {error: "Error: No existe la opción con id #{@option.id}"},
              status: :unprocessable_entity
-      else
-        format.json { render json: @option.errors, status: :unprocessable_entity }
+      else if @option.update(option_params)
+             format.json { render json: @option.reload, status: :ok }
+           else
+             format.json { render json: @option.errors, status: :unprocessable_entity }
+           end
       end
-      @option.update(option_params)
+
 #     redirect_to_maker_view
     end
 
@@ -31,7 +34,7 @@
         render json: {error: "Error: No existe la opción con id #{@option.id}"},
                status: :unprocessable_entity
       else if @option.destroy
-             format.json { render json:{message: "Destruido con éxito la opción con id: #{@option.id}"}, status: :ok }
+             format.json { render json:{message: "Destruido con éxito la opción"}, status: :ok }
            else
              format.json { render json: @option.errors, status: :unprocessable_entity }
            end
@@ -47,16 +50,18 @@
       params
         .require(:chapter)
         .permit(
-            :from,
-            :to,
-            :title
+            :child_id,
+            :parent_id,
+            :option
         )
     end
-
+=begin
     def convert_from_json
       @option.parent =params[:chapter][:from],
       @option.child=params[:chapter][:to],
       @option.option=params[:chapter][:title]
     end
+=end
   end
+
 #end

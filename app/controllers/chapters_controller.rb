@@ -42,7 +42,7 @@ class ChaptersController < ApplicationController
       render json: {error: "Error: No existe el capitulo con id #{@chapter.id}"},
              status: :unprocessable_entity
     else if @chapter.destroy
-           format.json { render json:{message: "Destruido con éxito el capítulo con id: #{@chapter.id}"}, status: :ok }
+           format.json { render json:{message: "Destruido con éxito el capítulo"}, status: :ok }
          else
            format.json { render json: @chapter.errors, status: :unprocessable_entity }
          end
@@ -62,16 +62,17 @@ class ChaptersController < ApplicationController
       params
           .require(:chapter)
           .permit(
-              :id,
               :title,
-              :label,
+              :body,
               :story_id
           )
     end
+=begin
   def convert_from_json
     @chapter.id = params[:chapter][:id],
     @chapter.body = params[:chapter][:title],
     @chapter.title=params[:chapter][:label],
     @chapter.story_id=params[:chapter][:story_id]
   end
+=end
 end
