@@ -57,11 +57,11 @@
   <div id="graph_popup" class="col-sm-4 col-sm-offset-4">
     <h3 class="text-center" id="popup-header">Popup</h3>
 
-    <label for="popup-id">Id: </label>
-    <input type="text" value="" id="popup-id" class="form-control">
-
-    <label for="popup-title">Title: </label>
+    <label for="popup-title">Id: </label>
     <input type="text" value="" id="popup-title" class="form-control">
+
+    <label for="popup-label">Title: </label>
+    <input type="text" value="" id="popup-label" class="form-control">
     <br>
     <button id="popup-save"   class="btn btn-primary">Guardar</button>
     <button id="popup-cancel" class="btn btn-default">Cancelar</button>
@@ -76,7 +76,7 @@
     // title of the popup
     var popup_header = $popup.find("#popup-header");
     // value of inputs
-    var popup_id     = $popup.find("#popup-id");
+    var popup_label  = $popup.find("#popup-label");
     var popup_title  = $popup.find("#popup-title");
 
     // popup buttons
@@ -354,6 +354,14 @@
       callback(data);
       show_on_action.hide();
       grafo.disableEditMode();
+
+      $.post("/chapters.json", {chapter: data})
+          .done(function(res){
+            console.log("Maker: onSave recibio como respuesta a $.post "+JSON.stringify(res));
+          })
+          .fail(function(res){
+            console.log("Maker: fallo en onSave al hacer $.post "+JSON.stringify(res));
+          })
     }
 
   </script>

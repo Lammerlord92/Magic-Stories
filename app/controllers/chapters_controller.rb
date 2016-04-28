@@ -13,35 +13,41 @@ class ChaptersController < ApplicationController
 
   def create
     @chapter = Chapter.new(chapter_params)
-    @chapter.save
 
-#    redirect_to_maker_view
-=begin
     respond_to do |format|
       if @chapter.save
-        format.json { render action: 'show', status: :ok }
+        format.json { render json: @chapter.reload, status: :ok }
       else
         format.json { render json: @chapter.errors, status: :unprocessable_entity }
       end
     end
-=end
   end
 
   def update
     @chapter = chapter_find
     if !@chapter
-      render json: {error: "Error: No existe el capitulo con id #{id}"},
+      render json: {error: "Error: No existe el capitulo con id #{@chapter.id}"},
              status: :unprocessable_entity
-    else
-      format.json { render json: @chapter.errors, status: :unprocessable_entity }
+    else if @chapter.update(chapter_params)
+           format.json { render json: @chapter.reload, status: :ok }
+         else
+           format.json { render json: @chapter.errors, status: :unprocessable_entity }
+         end
     end
-    @chapter.update(chapter_params)
+
 #    redirect_to_maker_view
   end
   def destroy
     @chapter=chapter_find
-    @chapter.destroy
- #   redirect_to_maker_view
+    if !@chapter
+      render json: {error: "Error: No existe el capitulo con id #{@chapter.id}"},
+             status: :unprocessable_entity
+    else if @chapter.destroy
+           format.json { render json:{message: "Destruido con éxito el capítulo con id: #{@chapter.id}"}, status: :ok }
+         else
+           format.json { render json: @chapter.errors, status: :unprocessable_entity }
+         end
+    end
   end
 
 =begin
