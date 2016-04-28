@@ -97,10 +97,10 @@
     var action_descriptions = {
       addNodeMode: "Pulsa en un espacio vacio para colocar un nuevo nodo",
       addEdgeMode: "Pulsa en un nodo y arrasta la arista hacia otro nodo para conectarlo",
-      editNode: "",
-      editEdgeText: "",
-      editEdgeMode: "",
-      deleteSelected: "Borrar el elemento seleccionado",
+      editNode: "Pulsa en guardar para terminar la edicion y en cancelar para regresar al estado anterior",
+      editEdgeText: "Pulsa en guardar para terminar la edicion y en cancelar para regresar al estado anterior",
+      editEdgeMode: "Pulsa en los puntos de control y arrastalos a un nodo para conectarlos a el",
+      deleteSelected: "Confirme el borrado del elemento",
       cancel: "Accion cancelada"
     };
 
@@ -239,7 +239,7 @@
       },
       manipulation: { // solo queremos mostrar el boton "back" y las descripciones
         initiallyActive: true,
-        enabled: true,
+        enabled: false,
         addNode:    onAddNode,
         editNode:   onEditNode,
         deleteNode: onDelete,
