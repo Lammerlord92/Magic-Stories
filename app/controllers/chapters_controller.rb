@@ -3,6 +3,7 @@ class ChaptersController < ApplicationController
   # GET /chapters/1.jsonº
   # GET /chapters/1.json{"id":2,"title":Capítulo 01,"body":Este es el texto del capítulo 01. Este capítulo no puede borrarse, ya que es el primer capítulo de tu historia. Puedes crear nuevos capítulos y enlaces mediante los botones de la izquierda.,"child_options":[{"child_id":3,"parent_id":2,"option":1985"}],"parent_options":[]}
   respond_to :json, only: [:create,:update,:destroy]
+  before_action :convert_from_json, only: [:create,:update,:destroy]
   def show
     begin
       @chapter = Chapter.find(params[:id])
@@ -112,5 +113,10 @@ class ChaptersController < ApplicationController
               :story_id
           )
     end
-
+  def convert_from_json
+    @chapter.id = :id,
+    @chapter.body = :title,
+    @chapter.title=:label,
+    @chapter.story_id=:story
+  end
 end
