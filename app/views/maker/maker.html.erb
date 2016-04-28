@@ -269,10 +269,11 @@
 
     // esta funcion se llama al pulsar sobre "Add node"
     function onAddNode(data, callback){
+      data.story_id = story_id;
       popup_header.text("Añadir nodo");
       popup_title.val(data.title);
       popup_label.val(data.label);
-      popup_save_btn.on("click", onSave.bind(this, data, callback));
+      popup_save_btn.on("click", onSave.bind(this, "post_node", data, callback));
       popup_cancel_btn.on("click", onCancel.bind(this, callback));
       $popup.css("display", "block");
     }
@@ -281,7 +282,7 @@
       popup_header.text("Editar nodo");
       popup_title.val(data.title);
       popup_label.val(data.label);
-      popup_save_btn.on("click", onSave.bind(this, data, callback));
+      popup_save_btn.on("click", onSave.bind(this, "put_node", data, callback));
       popup_cancel_btn.on("click", onCancel.bind(this, callback));
       $popup.css("display", "block");
     }
@@ -292,13 +293,17 @@
      * indicando los ids de las aristas o nodos borrados
      * */
     function onDelete(data, callback){
-      /* el metodo .join se llama sobre un array de strings
-       * para unirlas en una sola string uniendolas con el parametro pasado
-       * */
-      if(data.nodes.length) console.log("se borraron los nodos "+data.nodes.join(", "));
-      if(data.edges.length) console.log("se borraron las aristas "+data.edges.join(", "));
       show_on_action.hide();
       if(confirm("¿Esta seguro de que desea borrar el elemento seleccionado?")){
+        if(data.nodes.length){
+          sendAjaxForActionType("delete_node", data);
+          console.log("se borraron los nodos "+data.nodes.join(", "));
+        }
+        if(data.edges.length) {
+          sendAjaxForActionType("delete_edge", data);
+          console.log("se borraron las aristas "+data.edges.join(", "));
+        }
+
         callback(data);
       }else{
         callback(null);
@@ -310,6 +315,7 @@
         if (respuesta == true){
           show_on_action.hide();
           callback(data);
+          sendAjaxForActionType("post_edge", data);
         }
       }else{
         show_on_action.hide();
@@ -321,8 +327,12 @@
 
       if(data.from === data.to){
         var dialog_confirm = confirm("¿Quieres conectar el nodo consigo mismo?");
-        if(!dialog_confirm) data_to_callback = null;
+        if(!dialog_confirm){
+          data_to_callback = null;
+        }
       }
+
+      sendAjaxForActionType("put_edge", data);
 
       callback(data_to_callback);
       show_on_action.hide();
@@ -331,7 +341,7 @@
       popup_header.text("Editar texto de la arista");
       popup_title.val(data.title);
       popup_label.val(data.label);
-      popup_save_btn.on("click", onSave.bind(this, data, callback));
+      popup_save_btn.on("click", onSave.bind(this, "put_edge", data, callback));
       popup_cancel_btn.on("click", onCancel.bind(this, callback));
       $popup.css("display", "block");
     }
@@ -347,7 +357,7 @@
       show_on_action.hide();
       grafo.disableEditMode();
     }
-    function onSave(data, callback){
+    function onSave(action_type, data, callback){
       data.title = popup_title.val();
       data.label = popup_label.val();
       clearPopup();
@@ -356,14 +366,50 @@
       show_on_action.hide();
       grafo.disableEditMode();
 
-      $.post("/chapters.json", {chapter: data})
+      sendAjaxForActionType(action_type, data);
+    }
+
+    function sendAjaxForActionType(action_type, data){
+      switch(action_type){
+        case "post_node":
+          sendAjax("/chapters.json", data, "POST", action_type);
+          break;
+        case "put_node":
+          sendAjax("/chapters.json", data, "PUT", action_type);
+          break;
+        case "delete_node":
+          sendAjax("/chapters.json", data, "DELETE", action_type);
+          break;
+
+        case "post_edge":
+          sendAjax("/options.json", data, "POST", action_type);
+          break;
+        case "put_edge":
+          sendAjax("/options.json", data, "PUT", action_type);
+          break;
+        case "delete_edge":
+          sendAjax("/options.json", data, "DELETE", action_type);
+          break;
+        default:
+          console.log("Maker: onSave recibio un action_type desconocido");
+          break;
+      }
+    }
+
+    function sendAjax(url, data, method, action_name){
+      $.ajax({
+        url: url,
+        data: {chapter: data},
+        method: method
+      })
           .done(function(res){
-            console.log("Maker: onSave recibio como respuesta a $.post "+JSON.stringify(res));
+            console.log("Maker: "+action_name+"recibio como respuesta a $.ajax "+JSON.stringify(res));
           })
           .fail(function(res){
-            console.log("Maker: fallo en onSave al hacer $.post "+JSON.stringify(res));
+            console.log("Maker: fallo en "+action_name+" al hacer $.ajax "+JSON.stringify(res));
           })
     }
+
 
   </script>
 </div>
