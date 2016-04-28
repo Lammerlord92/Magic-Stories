@@ -215,7 +215,7 @@
         var edgeId = grafo.getSelectedEdges()[0];
         var data = grafo.body.data.edges.getDataSet().get(edgeId);
         var callback = function(data){
-          grafo.body.data.edges.getDataSet().update(data, data.id);
+          if(data) grafo.body.data.edges.getDataSet().update(data, data.id);
         };
         onEditEdgeText(data, callback);
       }else{
