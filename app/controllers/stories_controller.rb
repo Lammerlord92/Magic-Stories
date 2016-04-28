@@ -87,9 +87,10 @@ before_action :authenticate_user!, except: [:example ]
   end
 
   def search
+    @categories = Category.all
+    
     if params[:q]
       @q = params[:q].downcase
-      @categories = Category.all
       query = 'lower(title) like :q OR lower(description) like :q OR lower(language) like :q and published = true'
       if @q
         @stories = Story.where(query, {q: "%#{@q}%"})
