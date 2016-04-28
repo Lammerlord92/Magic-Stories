@@ -88,7 +88,7 @@ before_action :authenticate_user!, except: [:example ]
 
   def search
     @categories = Category.all
-    
+
     if params[:q]
       @q = params[:q].downcase
       query = 'lower(title) like :q OR lower(description) like :q OR lower(language) like :q and published = true'
@@ -104,13 +104,19 @@ before_action :authenticate_user!, except: [:example ]
 
     if params[:category_id]
       category_id = params[:category_id].to_i
-      category = Category.find(category_id)
-      stories_by_category = category.stories
-      if @stories
+      if category_id > 0
+        @category = Category.find(category_id)
+        stories_by_category = @category.stories
+      end
+      if @stories and category_id > 0
         @stories = @stories & stories_by_category # Intersección de conjunto en Ruby2
       else
         @stories = stories_by_category
       end
+    end
+
+    if params[:q] == nil and params[:category_id] == nil
+      @stories = Story.all
     end
   end
 end
