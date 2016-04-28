@@ -15,12 +15,10 @@ class WelcomeController < ApplicationController
 
     # Done
     @newest_stories_by_category = Hash.new
-    count = 0
-    @categories.each { |cat|
-      stories = cat.stories.order(release_date: :desc).limit(3)
-      @newest_stories_by_category[@categories[count]] = stories
-      count = count + 1
-    }
+    @categories.each do |category|
+      stories = category.stories.order(release_date: :desc).limit(3)
+      @newest_stories_by_category[category] = stories
+    end
 
     # Done. Se muestran los perfiles de los usuarios cuyos libros tienen más adquisiciones.
     @writers = Profile.where(id: Addition.group(:story).order('count_id desc').count('id').keys[0..25].map(&:profile_id)).limit(6)
