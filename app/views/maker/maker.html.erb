@@ -319,6 +319,7 @@
         }
       }else{
         show_on_action.hide();
+        sendAjaxForActionType("post_edge", data);
         callback(data);
       }
     }
@@ -329,10 +330,11 @@
         var dialog_confirm = confirm("¿Quieres conectar el nodo consigo mismo?");
         if(!dialog_confirm){
           data_to_callback = null;
+          sendAjaxForActionType("put_edge", data);
         }
+      }else{
+        sendAjaxForActionType("put_edge", data);
       }
-
-      sendAjaxForActionType("put_edge", data);
 
       callback(data_to_callback);
       show_on_action.hide();
@@ -370,6 +372,15 @@
     }
 
     function sendAjaxForActionType(action_type, data){
+      if(action_type.indexOf("node") === -1 ){
+        data.body = data.title;
+        data.title = data.label;
+      }
+      if(action_type.indexOf("edge") === -1 ){
+        data.child_id = data.to;
+        data.parent_id = data.from;
+        data.option = data.title;
+      }
       switch(action_type){
         case "post_node":
           sendAjax("/chapters.json", data, "POST", action_type);
