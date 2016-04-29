@@ -1,0 +1,455 @@
+<div>
+  <%= stylesheet_link_tag 'vis' %>
+  <style>
+    #graph_edit{
+      width: 100%;
+      height: 400px;
+      border: 1px solid lightgrey;
+    }
+    #graph_popup{
+      border: 2px solid darkgreen;
+      padding-bottom: 1.5em;
+      position: absolute;
+      z-index: 300;
+      display: none;
+      background-color: rgba(164,209,252,0.8);
+    }
+    .show-on-edge-select, .show-on-node-select, .show-on-select-both, .show-on-action{
+      display: none;
+    }
+    #maker-controls .glyphicon{
+      font-size: 1em !important;
+    }
+    .action-description{
+      line-height: 2.5;
+      padding: 0.6em 1em;
+      border-bottom: 1px solid lightgrey;
+    }
+  </style>
+
+  <div id="maker-controls" class="btn-group">
+    <button class="btn btn-default" onclick="UI_action('addNodeMode')">
+      <span title="añadir" class="glyphicon glyphicon-plus"></span> Añadir nodo
+    </button>
+    <button class="btn btn-default" onclick="UI_action('addEdgeMode')">
+      <span title="" class="glyphicon glyphicon-resize-small"></span> Añadir arista
+    </button>
+    <button class="show-on-node-select btn btn-default" onclick="UI_action('editNode')">
+      <span class="glyphicon glyphicon-pencil"></span> Editar texto del nodo
+    </button>
+    <button class="show-on-edge-select btn btn-default" onclick="UI_action('editEdgeText')">
+      <span class="glyphicon glyphicon-pencil"></span> Editar texto de la arista
+    </button>
+    <button class="show-on-edge-select btn btn-default" onclick="UI_action('editEdgeMode')">
+      <span class="glyphicon glyphicon-link"></span> Editar conexiones de la arista
+    </button>
+    <button class="show-on-select-both btn btn-default" onclick="UI_action('deleteSelected')">
+      <span class="glyphicon glyphicon-remove"></span> Borrar
+    </button>
+    <br>
+    <div class="show-on-action btn-group">
+      <button class="btn btn-default" onclick="UI_action('cancel')">
+        <span class="glyphicon glyphicon-arrow-left"></span> Cancelar
+      </button>
+      <span class="action-description">Descripcion de la accion</span>
+    </div>
+  </div>
+
+  <div id="graph_popup" class="col-sm-4 col-sm-offset-4">
+    <h3 class="text-center" id="popup-header">Popup</h3>
+
+    <label for="popup-label">Title: </label>
+    <input type="text" value="" id="popup-label" class="form-control">
+
+    <label for="popup-title">Body: </label>
+    <textarea id="popup-title" class="form-control"></textarea>
+
+    <br>
+    <button id="popup-save"   class="btn btn-success">Guardar</button>
+    <button id="popup-cancel" class="btn btn-default">Cancelar</button>
+  </div>
+  <div id="graph_edit"></div>
+  <script type="text/javascript" charset="utf-8">
+    var story_id  = <%= @id %>;
+    var container = $("#graph_edit")[0];
+    var $popup    = $("#graph_popup"); // popup jquery elem
+    var popup     = $popup[0]; // popup html elem
+
+    // title of the popup
+    var popup_header = $popup.find("#popup-header");
+    // value of inputs
+    var popup_label  = $popup.find("#popup-label");
+    var popup_title  = $popup.find("#popup-title");
+
+    // popup buttons
+    var popup_save_btn   = $popup.find("#popup-save");
+    var popup_cancel_btn = $popup.find("#popup-cancel");
+
+    var show_on_edge   = $(".show-on-edge-select");
+    var show_on_node   = $(".show-on-node-select");
+    var show_on_both   = $(".show-on-select-both");
+    var show_on_action = $(".show-on-action");
+
+    var db_chapters = [];
+
+    var vis_nodes = [];
+    var vis_edges = [];
+    var grafo = null;
+
+    var action_descriptions = {
+      addNodeMode: "Pulsa en un espacio vacio para colocar un nuevo nodo",
+      addEdgeMode: "Pulsa en un nodo y arrasta la arista hacia otro nodo para conectarlo",
+      editNode: "Pulsa en guardar para terminar la edicion y en cancelar para regresar al estado anterior",
+      editEdgeText: "Pulsa en guardar para terminar la edicion y en cancelar para regresar al estado anterior",
+      editEdgeMode: "Pulsa en los puntos de control y arrastalos a un nodo para conectarlos a el",
+      deleteSelected: "Confirme el borrado del elemento",
+      cancel: "Accion cancelada"
+    };
+
+    $.get("/stories/"+story_id+".json", function(story){
+      var ch_ids = story.chapter_ids;
+      //console.log("Maker: story from db "+JSON.stringify(story));
+      var chapters_parsed = 0;
+      if(!ch_ids.length){
+        iniciaGrafo();
+      }
+      ch_ids.forEach(function(ch_id){
+        $.get("/chapters/"+ch_id+".json", function(chapter){
+          db_chapters.push(chapter);
+          chapters_parsed++;
+          //console.log("Maker: node from db "+JSON.stringify(chapter));
+          if(chapters_parsed === ch_ids.length){
+            iniciaGrafo();
+          }
+        });
+      });
+    });
+
+    function parsearNodos(){
+      console.log("Maker: loading nodes from db");
+      db_chapters.forEach(function(chapter){
+        var vis_node = {
+          label: chapter.title,
+          title: chapter.body,
+          id: chapter.id
+        };
+        vis_nodes.push(vis_node);
+      });
+      /*vis_nodes.forEach(function(node) {
+        console.log("Maker: parsed node "+JSON.stringify(node));
+      })*/
+    }
+    function parsearAristas(){
+      console.log("Maker: loading edges from db");
+      db_chapters.forEach(function(chapter){
+        var options = chapter.child_options;
+        options.forEach(function(option){
+          var vis_edge = {
+            from: option.parent_id,
+            to: option.child_id,
+            label: option.option,
+            title: option.option,
+            id: option.id
+          };
+          vis_edges.push(vis_edge);
+        });
+      });
+    }
+
+    function iniciaGrafo(){
+      parsearNodos();
+      parsearAristas();
+
+      var vis_data = { edges: vis_edges, nodes: vis_nodes };
+
+      //  vis.Network(container, data, options)
+      //    container es un elemento html
+      //    data es un objeto con las propiedades nodes y edges
+      grafo = new vis.Network(container, vis_data, vis_options);
+
+      grafo.on("click", onGraphClick);
+    }
+
+    // logica para mostrar y ocultar botones de edicion segun el elemento seleccionado
+    function onGraphClick(){
+      var nodeIds = grafo.getSelectedNodes();
+      var edgeIds = grafo.getSelectedEdges();
+
+      // si no hay nada seleccionado oculta todo
+      if(!nodeIds.length && !edgeIds.length ){
+        hideAllUI();
+      }else if(nodeIds.length){ // si hay algun nodo seleccionado muestra botones para nodos
+        showUIFor("node");
+      }else{                   // si hay alguna arista seleccionada muestra botones para aristas
+        showUIFor("edge");
+      }
+    }
+
+    function hideAllUI(){
+      show_on_both.hide();
+      show_on_edge.hide();
+      show_on_node.hide();
+    }
+
+    function showUIFor(name){
+      hideAllUI();
+      switch(name){
+        case "node":
+          show_on_node.show();
+          show_on_both.show();
+          break;
+        case "edge":
+          show_on_edge.show();
+          show_on_both.show();
+          break;
+        default:
+          break;
+      }
+    }
+
+    function UI_action(action_name){
+      if(action_name === "cancel"){
+        hideAllUI();
+        show_on_action.hide();
+        onCancel();
+      }else if(action_name === "editEdgeText"){
+        show_on_action.show();
+        var edgeId = grafo.getSelectedEdges()[0];
+        var data = grafo.body.data.edges.getDataSet().get(edgeId);
+        var callback = function(data){
+          if(data) grafo.body.data.edges.getDataSet().update(data, data.id);
+        };
+        onEditEdgeText(data, callback);
+      }else{
+        show_on_action.show();
+        grafo[action_name]();
+      }
+
+      $(".action-description").text(action_descriptions[action_name]);
+    }
+
+    var vis_options = {
+      interaction: {
+        navigationButtons: true,
+        hover: true,
+        selectConnectedEdges: false
+      },
+      layout: {
+        // asegura que el grafo tenga el mismo layout
+        // mientras no se regargue la libreria vis.js en la pagina
+        randomSeed: 2
+      },
+      manipulation: { // solo queremos mostrar el boton "back" y las descripciones
+        initiallyActive: true,
+        enabled: false,
+        addNode:    onAddNode,
+        editNode:   onEditNode,
+        deleteNode: onDelete,
+        addEdge:    onAddEdge,
+        editEdge:   onEditEdge,
+        deleteEdge: onDelete
+      },
+      nodes: {
+        // shape: "forma del nodo",
+        color: {
+          hover: {
+            border: "red",
+            background: "orange"
+          }
+        }
+      },
+      edges: {
+        arrows: {
+          to: {
+            enabled: true,
+            scaleFactor: 0.5
+          }
+        }
+      }
+    };
+
+    // esta funcion se llama al pulsar sobre "Add node"
+    function onAddNode(data, callback){
+      data.story_id = story_id;
+      popup_header.text("Añadir nodo");
+      popup_title.val(data.title);
+      popup_label.val(data.label);
+      popup_save_btn.on("click", onSave.bind(this, "post_node", data, callback));
+      popup_cancel_btn.on("click", onCancel.bind(this, callback));
+      $popup.css("display", "block");
+    }
+    // esta funcion se llama al pulsar sobre "Edit node"
+    function onEditNode(data, callback){
+      popup_header.text("Editar nodo");
+      popup_title.val(data.title);
+      popup_label.val(data.label);
+      popup_save_btn.on("click", onSave.bind(this, "put_node", data, callback));
+      popup_cancel_btn.on("click", onCancel.bind(this, callback));
+      $popup.css("display", "block");
+    }
+    /* esta funcion se llama al pulsar sobre "Delete selected"
+     * cuando un nodo esta seleccionado
+     * recibe un callback y un objeto data
+     * con las propiedades nodes y edges
+     * indicando los ids de las aristas o nodos borrados
+     * */
+    function onDelete(data, callback){
+      show_on_action.hide();
+      if(confirm("¿Esta seguro de que desea borrar el elemento seleccionado?")){
+        if(data.nodes.length){
+          sendAjaxForActionType("delete_node", data);
+          getEdgesOfNode(data.nodes[0]).forEach(function(edge){
+            sendAjaxForActionType("delete_edge", {edges: [edge.id]});
+          })
+          console.log("Se borraron los nodos "+data.nodes.join(", "));
+        }
+        if(data.edges.length) {
+          sendAjaxForActionType("delete_edge", data);
+          console.log("Se borraron las aristas "+data.edges.join(", "));
+        }
+
+        callback(data);
+      }else{
+        callback(null);
+      }
+    }
+    function onAddEdge(data, callback){
+      if(data.from == data.to){
+        var respuesta = confirm("¿Quieres conectar el nodo consigo mismo?");
+        if (respuesta == true){
+          show_on_action.hide();
+          callback(data);
+          sendAjaxForActionType("post_edge", data);
+        }
+      }else{
+        show_on_action.hide();
+        sendAjaxForActionType("post_edge", data);
+        callback(data);
+      }
+    }
+    function onEditEdge(data, callback){
+      var data_to_callback = data;
+
+      if(data.from === data.to){
+        var dialog_confirm = confirm("¿Quieres conectar el nodo consigo mismo?");
+        if(!dialog_confirm){
+          data_to_callback = null;
+          sendAjaxForActionType("put_edge", data);
+        }
+      }else{
+        sendAjaxForActionType("put_edge", data);
+      }
+
+      callback(data_to_callback);
+      show_on_action.hide();
+    }
+    function onEditEdgeText(data, callback){
+      popup_header.text("Editar texto de la arista");
+      popup_title.val(data.title);
+      popup_label.val(data.label);
+      popup_save_btn.on("click", onSave.bind(this, "put_edge", data, callback));
+      popup_cancel_btn.on("click", onCancel.bind(this, callback));
+      $popup.css("display", "block");
+    }
+
+    function clearPopup(){
+      popup_save_btn.off("click");
+      popup_cancel_btn.off("click");
+      $popup.css("display", "none");
+    }
+    function onCancel(callback){
+      clearPopup();
+      if(callback) callback(null);
+      show_on_action.hide();
+      grafo.disableEditMode();
+    }
+    function onSave(action_type, data, callback){
+      data.title = popup_title.val();
+      data.label = popup_label.val();
+      clearPopup();
+      hideAllUI();
+      callback(data);
+      show_on_action.hide();
+      grafo.disableEditMode();
+
+      sendAjaxForActionType(action_type, data);
+    }
+
+    function sendAjaxForActionType(action_type, data){
+      if(action_type.indexOf("node") !== -1 ){
+        data.body = data.title || "Texto a rellenar";
+        data.title = data.label || "Texto a rellenar";
+        console.log("Maker: ha pasado por la conversión de nodos");
+      }
+      if(action_type.indexOf("edge") !== -1 ){
+        data.child_id = data.to;
+        data.parent_id = data.from;
+        data.option = data.title || "Texto a rellenar";
+        console.log("Maker: ha pasado por la conversión de aristas");
+      }
+      switch(action_type){
+        case "post_node":
+          sendAjax("/chapters.json", data, "POST", action_type);
+          break;
+        case "put_node":
+          sendAjax("/chapters.json", data, "PUT", action_type);
+          break;
+        case "delete_node":
+          sendAjax("/chapters.json", {id: data.nodes[0]}, "DELETE", action_type);
+          break;
+
+        case "post_edge":
+          sendAjax("/options.json", data, "POST", action_type);
+          break;
+        case "put_edge":
+          sendAjax("/options.json", data, "PUT", action_type);
+          break;
+        case "delete_edge":
+          sendAjax("/options.json", {id: data.edges[0]}, "DELETE", action_type);
+          break;
+        default:
+          console.log("Maker: onSave recibio un action_type desconocido");
+          break;
+      }
+    }
+
+    function sendAjax(url, data, method, action_name){
+      $.ajax({
+        url: url,
+        data: {chapter: data},
+        method: method
+      })
+          .done(function(res){
+            if(res.id){
+              var old_id = data.id;
+              data.id = res.id;
+              if(action_name.indexOf("node") !== -1){
+                grafo.body.data.nodes.getDataSet().remove(old_id)
+                grafo.body.data.nodes.getDataSet().update(data, data.id)
+              }
+              if(action_name.indexOf("edge") !== -1){
+                if(res.option){
+                  data.title = res.option;
+                  data.label = res.option;
+                }
+                grafo.body.data.edges.getDataSet().remove(old_id)
+                grafo.body.data.edges.getDataSet().update(data, data.id)
+              }
+            }
+            console.log("Maker: "+action_name+"recibio como respuesta a $.ajax "+JSON.stringify(res));
+          })
+          .fail(function(res){
+            console.log("Maker: fallo en "+action_name+" al hacer $.ajax "+JSON.stringify(res));
+          })
+    }
+    function getEdgesOfNode(nodeId) {
+      var edges =  grafo.body.data.edges.get();
+
+      console.log("Maker: getEdgesOfNode recibio nodeId "+nodeId);
+      return edges.filter(function (edge) {
+        var valid = edge.from === nodeId || edge.to === nodeId;
+        return valid;
+      });
+    }
+  </script>
+</div>

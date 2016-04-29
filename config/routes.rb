@@ -47,15 +47,7 @@ Rails.application.routes.draw do
   #########################################################################
 
   get 'welcome/index'
-  get 'welcome/maker/:id' => 'maker#show'
-  get 'welcome/maker/save' => 'maker#save'
-  get 'welcome/maker2'
-  get 'welcome/maker3'
-  get 'welcome/maker4'
-  get 'welcome/maker5'
-  get 'welcome/maker6'
-  get 'welcome/maker_fuken'
-  get 'welcome/maker2pruebaJulio'
+  get 'maker/:id' => 'maker#show'
   get 'welcome/textoDesplegable'
   get 'welcome/wololo'
 
@@ -89,6 +81,14 @@ Rails.application.routes.draw do
   get 'chapters/:id' => 'chapters#show'
   post 'chapters' => 'chapters#create'
   post 'chapter_options' => 'chapters#create_options'
+  put 'chapters' => 'chapters#update'
+  delete 'chapters' => 'chapters#destroy'
+
+  #Options
+  post 'options' => 'options#create'
+  put 'options' => 'options#update'
+  delete 'options' => 'options#destroy'
+
 
   #Profiles
 # t  get 'profiles/search', to: 'profiles#search'

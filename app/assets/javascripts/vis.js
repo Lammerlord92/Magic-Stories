@@ -42601,7 +42601,6 @@ return /******/ (function(modules) { // webpackBootstrap
           }
 
           if (typeof this.options.deleteNode === 'function') {
-              console.log("Estamos borrando");
             deleteFunction = this.options.deleteNode;
           }
         } else if (selectedEdges.length > 0) {

@@ -1,2 +1,2 @@
 # options json partial
-json.(option, :child_id, :parent_id, :option)
+json.(option, :id, :child_id, :parent_id, :option)
