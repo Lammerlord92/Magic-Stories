@@ -17,19 +17,24 @@
 
     <!-- Contenido -->
     <article ng-hide="loading">
+
+      <!-- Retroceder -->
       <div ng-show="parent_id">
-        <button class="btn btn-primary"  ng-click="setChapter(parent_id)">
-          <span class="glyphicon glyphicon-chevron-left"></span> Atrás
-        </button>
-        <br><br>
+        <a ng-click="setChapter(parent_id)" class="book-back">
+          <p><span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Atrás</p>
+        </a>
       </div>
+
+      <!-- Cuerpo del capítulo -->
       <p ng-bind-html="current_chapter? current_chapter.body : 'No hay cuerpo del capitulo/nodo'"></p>
       <p ng-hide="options.length > 0" class="text-center"><b>FIN</b></p>
-      <ul id="options-list" class="text-center list-unstyled">
+
+      <!-- Lista de opciones -->
+      <ul id="options-list" class="list-unstyled">
         <li ng-repeat="option in options">
-          <button ng-click="setChapter(option.child_id)" class="btn btn-block btn-primary">
-            <span class="glyphicon glyphicon-chevron-right"></span> {{option.option}}
-          </button>
+          <a ng-click="setChapter(option.child_id)" class="book-option">
+            <p><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;{{option.option}}</p>
+          </a>
         </li>
       </ul>
     </article>

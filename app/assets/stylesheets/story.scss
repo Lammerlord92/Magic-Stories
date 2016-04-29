@@ -241,3 +241,17 @@ p.price span {
 .book .col-md-4{
   padding: 0 35px 0 35px;
 }
+
+a.book-option,
+a.book-option .glyphicon{
+  color: green !important;
+}
+
+a.book-back,
+a.book-back .glyphicon{
+  color: red !important;
+}
+
+.book .glyphicon{
+  font-size: 12px !important;
+}
