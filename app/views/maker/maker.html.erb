@@ -417,8 +417,10 @@
       })
           .done(function(res){
             if(res.id){
+              var old_id = data.id;
               data.id = res.id;
               if(action_name.indexOf("node") !== -1){
+                grafo.body.data.nodes.getDataSet().remove(old_id)
                 grafo.body.data.nodes.getDataSet().update(data, data.id)
               }
               if(action_name.indexOf("edge") !== -1){
@@ -426,6 +428,7 @@
                   data.title = res.option;
                   data.label = res.option;
                 }
+                grafo.body.data.edges.getDataSet().remove(old_id)
                 grafo.body.data.edges.getDataSet().update(data, data.id)
               }
             }
