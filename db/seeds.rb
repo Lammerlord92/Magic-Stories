@@ -434,7 +434,10 @@ Un día, su madre le pidió que llevase unos pasteles a su abuela que vivía en 
 Caperucita Roja recogió la cesta con los pasteles y se puso en camino. La niña tenía que atravesar el bosque para llegar a casa de la Abuelita, pero no le daba miedo, porque allí siempre se encontraba con muchos amigos: los pájaros, las ardillas...
 </p>
 <p>
-De repente, vio al lobo, enorme, delante de ella.
+De repente, vio al lobo, enorme, delante de ella...
+</p>
+<p>
+Hasta ahora todo bien, ¿no? Pues atento, querido lector, porque aquí es donde la cosa cambia. Ahora eres TÚ quien decide cómo continúa la historia. Para ello puedes elegir entre una de las opciones que se muestran más abajo. Elige una, y continúa la historia.
 </p>
 
 EOF
