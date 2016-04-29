@@ -2,7 +2,7 @@
 
 <h1><%= @category.name  %></h1>
 
-  <div class="block-right">
+  <div class="block-left">
     <% cat = I18n.transliterate(@category.name).downcase %>
     <img class="cover" src="/assets/categories_covers/<%= cat %>.jpg">
 
@@ -18,21 +18,15 @@
   </div>
 
 
-
-
-        <!-- TODO Mostrar las historias de la categoría -->
-          <div class="block-left col-md-3">
-            <%= @category.description %><br>
-
-
-
-            <h2>Historias</h2>
-            <% @category.stories.each do |story| %>
-            <div class="field">
-              <%= render 'stories/story_slot', story: story %>
-            </div>
-          <%end%>
-          </div>
+  <div class="block-right col-md-3">
+    <%= @category.description %><br>
+    <h2>Historias</h2>
+    <% @category.stories.each do |story| %>
+        <div class="col-md-4">
+          <%= render 'stories/story_slot', story: story %>
+        </div>
+        <%end%>
+  </div>
 
 
 
