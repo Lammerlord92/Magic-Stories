@@ -12,6 +12,7 @@
       position: absolute;
       z-index: 300;
       display: none;
+      background-color: rgba(164,209,252,0.8);
     }
     .show-on-edge-select, .show-on-node-select, .show-on-select-both, .show-on-action{
       display: none;
@@ -61,10 +62,10 @@
     <input type="text" value="" id="popup-label" class="form-control">
 
     <label for="popup-title">Body: </label>
-    <input type="text" value="" id="popup-title" class="form-control">
+    <textarea id="popup-title" class="form-control"></textarea>
 
     <br>
-    <button id="popup-save"   class="btn btn-primary">Guardar</button>
+    <button id="popup-save"   class="btn btn-success">Guardar</button>
     <button id="popup-cancel" class="btn btn-default">Cancelar</button>
   </div>
   <div id="graph_edit"></div>
@@ -297,11 +298,14 @@
       if(confirm("¿Esta seguro de que desea borrar el elemento seleccionado?")){
         if(data.nodes.length){
           sendAjaxForActionType("delete_node", data);
-          console.log("se borraron los nodos "+data.nodes.join(", "));
+          getEdgesOfNode(data.nodes[0]).forEach(function(edge){
+            sendAjaxForActionType("delete_edge", {edges: [edge.id]});
+          })
+          console.log("Se borraron los nodos "+data.nodes.join(", "));
         }
         if(data.edges.length) {
           sendAjaxForActionType("delete_edge", data);
-          console.log("se borraron las aristas "+data.edges.join(", "));
+          console.log("Se borraron las aristas "+data.edges.join(", "));
         }
 
         callback(data);
@@ -438,6 +442,14 @@
             console.log("Maker: fallo en "+action_name+" al hacer $.ajax "+JSON.stringify(res));
           })
     }
+    function getEdgesOfNode(nodeId) {
+      var edges =  grafo.body.data.edges.get();
 
+      console.log("Maker: getEdgesOfNode recibio nodeId "+nodeId);
+      return edges.filter(function (edge) {
+        var valid = edge.from === nodeId || edge.to === nodeId;
+        return valid;
+      });
+    }
   </script>
 </div>

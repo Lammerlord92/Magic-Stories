@@ -16,7 +16,7 @@
       <% if current_user.present? %> <!-- Evitar "NilException" -->
         <% if story.creatorProfile.id == current_user.profile.id %>
           <div class="center" style="margin-bottom: 10px;">
-            <%= button_to 'Ir al editor de historias', "/welcome/maker/#{story.id}",  class: 'btn btn-default', method: :get %>
+            <%= button_to 'Ir al editor de historias', "/maker/#{story.id}",  class: 'btn btn-default', method: :get %>
           </div>
         <% end %>
       <% end %>
