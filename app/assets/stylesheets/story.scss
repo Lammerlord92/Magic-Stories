@@ -216,3 +216,28 @@ p.price span {
 .story-search-params hr {
   width: 60% !important;
 }
+
+
+/* Lector */
+
+.book-title{
+  margin: 20px;
+}
+
+.book-title h1, .book-title h3{
+  margin-top: 0;
+}
+
+.book{
+  background-image: url("/assets/livre_ouvert.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 500px;
+  padding-top: 35px;
+  padding-bottom: 35px;
+}
+
+.book .col-md-4{
+  padding: 0 35px 0 35px;
+}

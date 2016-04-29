@@ -1,83 +1,74 @@
-<script type="text/javascript" charset="utf-8">
+<!-- Título y autor -->
+<div class="container text-center book-title">
+  <h1><%= @story.title %></h1>
+  <h3><%= @story.creatorProfile.name %></h3>
+</div>
 
-</script>
-<div ng-app="reader" ng-controller="ReaderController" class="col-sm-6 col-sm-offset-3">
-  <style>
-    .shadow{
-      box-shadow: 2px 2px 5px #888;
-    }
-    header.shadow{
-      font-size: 2em;
-      padding: .2rem .4rem;
-    }
-    article{
-      padding: 1rem;
-    }
-    .btn, .btn:hover{
-      color: white !important;
-    }
-    .glyphicon, .glyphicon:hover{
-      color: white;
-      font-size: 1em;
-    }
-  </style>
-  <header class="shadow">
-    <span class="story-title"><%= @story.title %></span>
-    <small class="story-date pull-right text-muted"><%= @story.release_date %></small>
-  </header>
-  <br>
-  <h2 class="text-center" ng-show="loading">
-    <img src="/ripple.svg" alt="Loading...">
-  </h2>
-  <article class="shadow" ng-hide="loading">
-    <div ng-show="parent_id">
-      <button class="btn btn-primary"  ng-click="setChapter(parent_id)">
-        <span class="glyphicon glyphicon-chevron-left"></span> Atrás
-      </button>
-      <br><br>
-    </div>
-    <!--
-    <p>{{ current_chapter? current_chapter.body : 'No hay cuerpo del capitulo/nodo' }}</p>
-    -->
-    <p ng-bind-html="current_chapter? current_chapter.body : 'No hay cuerpo del capitulo/nodo'"></p>
-    <p ng-hide="options.length > 0" class="text-center">FIN</p>
-    <ul id="options-list" class="text-center list-unstyled">
-      <li ng-repeat="option in options">
-        <button ng-click="setChapter(option.child_id)" class="btn btn-block btn-primary">
-          <span class="glyphicon glyphicon-chevron-right"></span> {{option.option}}
+<!-- Libro -->
+<div ng-app="reader" ng-controller="ReaderController" class="container book">
+  
+  <!-- Página izquierda -->
+  <div class="col-md-4 col-md-offset-2">
+    
+    <!--Animación de loading-->
+    <h2 class="text-center" ng-show="loading">
+      <img src="/ripple.svg" alt="Loading...">
+    </h2>
+
+    <!-- Contenido -->
+    <article ng-hide="loading">
+      <div ng-show="parent_id">
+        <button class="btn btn-primary"  ng-click="setChapter(parent_id)">
+          <span class="glyphicon glyphicon-chevron-left"></span> Atrás
         </button>
-      </li>
-    </ul>
-  </article>
-  <br>
+        <br><br>
+      </div>
+      <p ng-bind-html="current_chapter? current_chapter.body : 'No hay cuerpo del capitulo/nodo'"></p>
+      <p ng-hide="options.length > 0" class="text-center"><b>FIN</b></p>
+      <ul id="options-list" class="text-center list-unstyled">
+        <li ng-repeat="option in options">
+          <button ng-click="setChapter(option.child_id)" class="btn btn-block btn-primary">
+            <span class="glyphicon glyphicon-chevron-right"></span> {{option.option}}
+          </button>
+        </li>
+      </ul>
+    </article>
 
-  <script type="text/javascript" charset="utf-8">
-    (function(){
-      angular.module("reader", ["ngSanitize"])
-        .controller("ReaderController", function($scope, $sanitize){
-          $scope.loading = true;
-          $scope.parent_id = null;
-          $scope.options = [];
-          $scope.current_chapter = null;
-
-          $scope.setChapter = function setChapter(id){
+    <script type="text/javascript" charset="utf-8">
+      (function(){
+        angular.module("reader", ["ngSanitize"])
+          .controller("ReaderController", function($scope, $sanitize){
             $scope.loading = true;
-            $.get("/chapters/"+id+".json", function(chapter){
-              var first_parent = chapter.parent_options[0];
-              chapter.body = $sanitize(chapter.body);
-              console.log((chapter.body));
-              $scope.options = chapter.child_options;
-              $scope.parent_id = first_parent? first_parent.parent_id : null;
-              $scope.current_chapter = chapter;
-              $scope.loading = false;
-              $scope.$digest();
-            })
-          };
+            $scope.parent_id = null;
+            $scope.options = [];
+            $scope.current_chapter = null;
 
-          $scope.setChapter(<%= @story.chapters.first.id %>);
+            $scope.setChapter = function setChapter(id){
+              $scope.loading = true;
+              $.get("/chapters/"+id+".json", function(chapter){
+                var first_parent = chapter.parent_options[0];
+                chapter.body = $sanitize(chapter.body);
+                console.log((chapter.body));
+                $scope.options = chapter.child_options;
+                $scope.parent_id = first_parent? first_parent.parent_id : null;
+                $scope.current_chapter = chapter;
+                $scope.loading = false;
+                $scope.$digest();
+              })
+            };
 
-        });
-    })();
+            $scope.setChapter(<%= @story.chapters.first.id %>);
 
-  </script>
+          });
+      })();
+
+    </script>
+  </div>
+
+  <!-- Página derecha -->
+  <div class="col-md-4">
+    <!-- Provisional -->
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>Lorem ipsum dolor sit amet, consectetur.
+  </div>
+
 </div>
