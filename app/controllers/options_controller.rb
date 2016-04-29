@@ -19,9 +19,9 @@
         render json: {error: "Error: No existe la opción con id #{@option.id}"},
              status: :unprocessable_entity
       else if @option.update(option_params)
-             format.json { render json: @option.reload, status: :ok }
+             render json: @option.reload, status: :ok
            else
-             format.json { render json: @option.errors, status: :unprocessable_entity }
+             render json: @option.errors, status: :unprocessable_entity
            end
       end
 
@@ -34,9 +34,9 @@
         render json: {error: "Error: No existe la opción con id #{@option.id}"},
                status: :unprocessable_entity
       else if @option.destroy
-             format.json { render json:{message: "Destruido con éxito la opción"}, status: :ok }
+             render json:{message: "Destruido con éxito la opción"}, status: :ok
            else
-             format.json { render json: @option.errors, status: :unprocessable_entity }
+             render json: @option.errors, status: :unprocessable_entity
            end
       end
     end

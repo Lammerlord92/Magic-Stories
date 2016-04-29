@@ -29,9 +29,9 @@ class ChaptersController < ApplicationController
       render json: {error: "Error: No existe el capitulo con id #{@chapter.id}"},
              status: :unprocessable_entity
     else if @chapter.update(chapter_params)
-           format.json { render json: @chapter.reload, status: :ok }
+           render json: @chapter.reload, status: :ok
          else
-           format.json { render json: @chapter.errors, status: :unprocessable_entity }
+           render json: @chapter.errors, status: :unprocessable_entity
          end
     end
 
@@ -42,9 +42,9 @@ class ChaptersController < ApplicationController
       render json: {error: "Error: No existe el capitulo con id #{@chapter.id}"},
              status: :unprocessable_entity
     else if @chapter.destroy
-           format.json { render json:{message: "Destruido con éxito el capítulo"}, status: :ok }
+           render json:{message: "Destruido con éxito el capítulo"}, status: :ok
          else
-           format.json { render json: @chapter.errors, status: :unprocessable_entity }
+           render json: @chapter.errors, status: :unprocessable_entity
          end
     end
   end
