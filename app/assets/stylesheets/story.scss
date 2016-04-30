@@ -216,3 +216,52 @@ p.price span {
 .story-search-params hr {
   width: 60% !important;
 }
+
+
+/* Lector */
+
+.book-title{
+  margin-bottom: 30px;
+}
+
+.book-title h1, .book-title h3{
+  margin-top: 0;
+}
+
+a.book-option,
+a.book-option .glyphicon{
+  color: green !important;
+}
+
+a.book-back,
+a.book-back .glyphicon{
+  color: red !important;
+}
+
+.book .glyphicon{
+  font-size: 12px !important;
+}
+
+.page-left, .page-right{
+  border-top: solid 3px;
+  border-bottom: solid 3px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+}
+
+.page-right{
+  border-left: solid 2px;
+  border-right: solid 30px #808080;
+}
+
+.page-left{
+  border-left: solid 1px #808080;
+}
+
+.row-eq-height {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
