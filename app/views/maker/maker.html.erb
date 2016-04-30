@@ -77,28 +77,22 @@
     var container = $("#graph_edit")[0];
     var $popup    = $("#graph_popup"); // popup jquery elem
     var popup     = $popup[0]; // popup html elem
-
     // title of the popup
     var popup_header = $popup.find("#popup-header");
     // value of inputs
     var popup_label  = $popup.find("#popup-label");
     var popup_title  = $popup.find("#popup-title");
-
     // popup buttons
     var popup_save_btn   = $popup.find("#popup-save");
     var popup_cancel_btn = $popup.find("#popup-cancel");
-
     var show_on_edge   = $(".show-on-edge-select");
     var show_on_node   = $(".show-on-node-select");
     var show_on_both   = $(".show-on-select-both");
     var show_on_action = $(".show-on-action");
-
     var db_chapters = [];
-
     var vis_nodes = [];
     var vis_edges = [];
     var grafo = null;
-
     var action_descriptions = {
       addNodeMode: "Pulsa en un espacio vacio para colocar un nuevo nodo",
       addEdgeMode: "Pulsa en un nodo y arrasta la arista hacia otro nodo para conectarlo",
@@ -108,7 +102,6 @@
       deleteSelected: "Confirme el borrado del elemento",
       cancel: "Accion cancelada"
     };
-
     $.get("/stories/"+story_id+".json", function(story){
       var ch_ids = story.chapter_ids;
       //console.log("Maker: story from db "+JSON.stringify(story));
@@ -127,7 +120,6 @@
         });
       });
     });
-
     function parsearNodos(){
       console.log("Maker: loading nodes from db");
       db_chapters.forEach(function(chapter){
@@ -139,8 +131,8 @@
         vis_nodes.push(vis_node);
       });
       /*vis_nodes.forEach(function(node) {
-        console.log("Maker: parsed node "+JSON.stringify(node));
-      })*/
+       console.log("Maker: parsed node "+JSON.stringify(node));
+       })*/
     }
     function parsearAristas(){
       console.log("Maker: loading edges from db");
@@ -158,26 +150,20 @@
         });
       });
     }
-
     function iniciaGrafo(){
       parsearNodos();
       parsearAristas();
-
       var vis_data = { edges: vis_edges, nodes: vis_nodes };
-
       //  vis.Network(container, data, options)
       //    container es un elemento html
       //    data es un objeto con las propiedades nodes y edges
       grafo = new vis.Network(container, vis_data, vis_options);
-
       grafo.on("click", onGraphClick);
     }
-
     // logica para mostrar y ocultar botones de edicion segun el elemento seleccionado
     function onGraphClick(){
       var nodeIds = grafo.getSelectedNodes();
       var edgeIds = grafo.getSelectedEdges();
-
       // si no hay nada seleccionado oculta todo
       if(!nodeIds.length && !edgeIds.length ){
         hideAllUI();
@@ -187,13 +173,11 @@
         showUIFor("edge");
       }
     }
-
     function hideAllUI(){
       show_on_both.hide();
       show_on_edge.hide();
       show_on_node.hide();
     }
-
     function showUIFor(name){
       hideAllUI();
       switch(name){
@@ -209,7 +193,6 @@
           break;
       }
     }
-
     function UI_action(action_name){
       if(action_name === "cancel"){
         hideAllUI();
@@ -227,10 +210,8 @@
         show_on_action.show();
         grafo[action_name]();
       }
-
       $(".action-description").text(action_descriptions[action_name]);
     }
-
     var vis_options = {
       interaction: {
         navigationButtons: true,
@@ -270,7 +251,6 @@
         }
       }
     };
-
     // esta funcion se llama al pulsar sobre "Add node"
     function onAddNode(data, callback){
       data.story_id = story_id;
@@ -310,7 +290,6 @@
           sendAjaxForActionType("delete_edge", data);
           console.log("Se borraron las aristas "+data.edges.join(", "));
         }
-
         callback(data);
       }else{
         callback(null);
@@ -332,7 +311,6 @@
     }
     function onEditEdge(data, callback){
       var data_to_callback = data;
-
       if(data.from === data.to){
         var dialog_confirm = confirm("¿Quieres conectar el nodo consigo mismo?");
         if(!dialog_confirm){
@@ -342,7 +320,6 @@
       }else{
         sendAjaxForActionType("put_edge", data);
       }
-
       callback(data_to_callback);
       show_on_action.hide();
     }
@@ -354,7 +331,6 @@
       popup_cancel_btn.on("click", onCancel.bind(this, callback));
       $popup.css("display", "block");
     }
-
     function clearPopup(){
       popup_save_btn.off("click");
       popup_cancel_btn.off("click");
@@ -374,10 +350,8 @@
       callback(data);
       show_on_action.hide();
       grafo.disableEditMode();
-
       sendAjaxForActionType(action_type, data);
     }
-
     function sendAjaxForActionType(action_type, data){
       if(action_type.indexOf("node") !== -1 ){
         data.body = data.title || "Texto a rellenar";
@@ -400,7 +374,6 @@
         case "delete_node":
           sendAjax("/chapters.json", {id: data.nodes[0]}, "DELETE", action_type);
           break;
-
         case "post_edge":
           sendAjax("/options.json", data, "POST", action_type);
           break;
@@ -415,18 +388,19 @@
           break;
       }
     }
-
     function sendAjax(url, data, method, action_name){
       $.ajax({
-        url: url,
-        data: {chapter: data},
-        method: method
-      })
+            url: url,
+            data: {chapter: data},
+            method: method
+          })
           .done(function(res){
             if(res.id){
               var old_id = data.id;
               data.id = res.id;
               if(action_name.indexOf("node") !== -1){
+                console.log("Ids del antiguo "+old_id)
+
                 grafo.body.data.nodes.getDataSet().remove(old_id)
                 grafo.body.data.nodes.getDataSet().update(data, data.id)
               }
@@ -447,7 +421,6 @@
     }
     function getEdgesOfNode(nodeId) {
       var edges =  grafo.body.data.edges.get();
-
       console.log("Maker: getEdgesOfNode recibio nodeId "+nodeId);
       return edges.filter(function (edge) {
         var valid = edge.from === nodeId || edge.to === nodeId;

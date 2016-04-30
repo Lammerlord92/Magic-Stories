@@ -50,23 +50,23 @@ class ChaptersController < ApplicationController
   end
 
   private
-    def chapter_find
-      @chapter = Chapter.find(params[:chapter][:id])
-    end
+  def chapter_find
+    @chapter = Chapter.find(params[:chapter][:id])
+  end
 
-    def redirect_to_maker_view
-      redirect_to controller: 'maker_controller', action: 'show', id: params[:story_id]
-    end
+  def redirect_to_maker_view
+    redirect_to controller: 'maker_controller', action: 'show', id: params[:story_id]
+  end
 
-    def chapter_params
-      params
-          .require(:chapter)
-          .permit(
-              :title,
-              :body,
-              :story_id
-          )
-    end
+  def chapter_params
+    params
+        .require(:chapter)
+        .permit(
+            :title,
+            :body,
+            :story_id
+        )
+  end
 =begin
   def convert_from_json
     @chapter.id = params[:chapter][:id],
