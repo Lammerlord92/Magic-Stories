@@ -2,33 +2,38 @@
 
 <h1><%= @category.name  %></h1>
 
-  <div class="block-right">
+  <div class="block-left">
     <% cat = I18n.transliterate(@category.name).downcase %>
     <img class="cover" src="/assets/categories_covers/<%= cat %>.jpg">
+
+    <div class="buttons">
+      <% if user_signed_in? %>
+          <% if current_user.role_type == 'Administrator' %>
+              <br>
+              <%= link_to "Editar", edit_category_path(@category), class:"btn btn-default"  %>
+          <% end %>
+      <% end %>
+      <%= link_to "Atras", categories_path, class:"btn btn-default"  %>
+    </div>
   </div>
 
-    <div class="block-left">
-      <%= @category.description %><br>
 
-      <h2>Historias</h2>
-      <% @category.stories.each do |story| %>
-        <!-- TODO Mostrar las historias de la categoría -->
-      <%end%>
-    </div>
-
-
-
-
+  <div class="block-right col-md-3">
+    <%= @category.description %><br>
+    <h2>Historias</h2>
+    <% @category.stories.each do |story| %>
+        <div class="col-md-4">
+          <%= render 'stories/story_slot', story: story %>
+        </div>
+        <%end%>
+  </div>
 
 
 
 
-<div class="buttons">
-	<% if user_signed_in? %>
-   <% if current_user.role_type == 'Administrator' %>
-          <br>
-    <%= link_to "Editar", edit_category_path(@category), class:"btn btn-default"  %>
-   <% end %>
-  <% end %>
-  <%= link_to "Atras", categories_path, class:"btn btn-default"  %>
-</div>
+
+
+
+
+
+

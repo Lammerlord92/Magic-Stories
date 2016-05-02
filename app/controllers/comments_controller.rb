@@ -1,52 +1,22 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
 
-  #GET /comments/new
   def new
     @comment = Comment.new
-
-    if params[:commentedClass].eql?('profile')
-      @idProfile = params[:id]
-    else
-      @idStory = params[:id]
-    end
-
-    @commentedClass = params[:commentedClass]
+    @idStory = params[:id_story]
   end
 
   def create
-    @comment = Comment.new(comment_params)
-
     if current_user.profile.present?
-
-      if @comment.profile_id.present?
-        @profile = Profile.find(@comment.profile_id)
-        @comment.profile = @profile
-      else
-        @story = Story.find(@comment.story_id)
-        @comment.story = @story
-      end
-
-      @comment.author = current_user.name + ' ' + current_user.surname1 + ' ' + current_user.surname2
+      @comment = Comment.new(comment_params)
+      story = Story.find(@comment.story_id)
+      @comment.story = story
+      @comment.profile = current_user.profile
       @comment.date = Date.current
-
-
       if @comment.save
-        if @comment.profile_id.present?
-          redirect_to @profile
-        else
-          redirect_to @story
-        end
+        redirect_to story
       else
-        @idProfile = @comment.profile_id
         @idStory = @comment.story_id
-
-        if @idProfile.nil?
-          @commentedClass = 'story'
-        else
-          @commentedClass = 'profile'
-        end
-
         render :new
       end
     else
@@ -54,9 +24,24 @@ class CommentsController < ApplicationController
     end
   end
 
+  def edit
+    @comment = Comment.find(params[:id])
+    @idStory = params[:id_story]
+  end
+
+  def update
+    @comment = Comment.find(params[:id])
+    @comment.date = Date.current
+    story = Story.find(@comment.story_id)
+    if @comment.update(comment_params)
+      redirect_to story
+    else
+      render :edit
+    end
+  end
+
   def comment_params
-    params.require(:comment).permit(:title, :body, :rating, :date, :author, :profile_id, :story_id)
-    #params.require(:comment).permit(:title, :body, :rating, :date, :author, :class_id)
+    params.require(:comment).permit(:title, :body, :story_id)
   end
 
 end

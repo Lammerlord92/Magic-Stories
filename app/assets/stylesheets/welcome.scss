@@ -58,7 +58,7 @@
   position: absolute;
   bottom: 10%;
   right: 0;
-  margin-right: 50px;
+  margin-right: 17px;
   width: 50%;
   height: 10%;
   border: 1px solid lightgray;
@@ -71,6 +71,12 @@
   margin: 0 !important;
   top: 20%; // ATENCIÓN: esta forma de centrar no es apropiada y depende del ancho del div padre
   text-align: center;
+}
+
+.index-story-info .more-details {
+  font-weight: bold;
+  color: #b89439;
+  display: inline-block;
 }
 
 .absolute-center {

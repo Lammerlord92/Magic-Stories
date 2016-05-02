@@ -87,19 +87,36 @@ before_action :authenticate_user!, except: [:example ]
   end
 
   def search
-    # Documentacion sobre queries aqui:
-    # http://guides.rubyonrails.org/active_record_querying.html
-    @q = params[:q].downcase
     @categories = Category.all
-    query = 'lower(title) like :q OR lower(description) like :q OR lower(language) like :q and published = true'
-    if @q
-      @stories = Story.where(query, {q: "%#{@q}%"})
-      if @stories.blank?
-        flash.now.alert = 'No se han encontrado resultados'
+
+    if params[:q]
+      @q = params[:q].downcase
+      query = 'lower(title) like :q OR lower(description) like :q OR lower(language) like :q and published = true'
+      if @q
+        @stories = Story.where(query, {q: "%#{@q}%"})
+        if @stories.blank?
+          flash.now.alert = 'No se han encontrado resultados'
+        end
+      else
+        @stories = Story.where(published: true)
       end
-    else
-      @stories = Story.where(published: true)
+    end
+
+    if params[:category_id]
+      category_id = params[:category_id].to_i
+      if category_id > 0
+        @category = Category.find(category_id)
+        stories_by_category = @category.stories
+      end
+      if @stories and category_id > 0
+        @stories = @stories & stories_by_category # Intersección de conjunto en Ruby2
+      else
+        @stories = stories_by_category
+      end
+    end
+
+    if params[:q] == nil and params[:category_id] == nil
+      @stories = Story.all
     end
   end
-
 end

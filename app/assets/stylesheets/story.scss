@@ -95,6 +95,10 @@ input[readonly] {
   margin: auto auto;
 }
 
+.filter {
+  text-align: center;
+}
+
 /* Relativo a story-metadata */
 
 .story-metadata {
@@ -198,8 +202,66 @@ p.price span {
   font-weight: bold;
 }
 
+/* Comentarios */
+
+.story-comments {
+  border: 1px solid #ccc;
+  background-color: white;
+  margin-top: 30px;
+  padding: 0 15px 5px 15px;
+}
+
 /* Otras cosas */
 
 .story-search-params hr {
   width: 60% !important;
+}
+
+
+/* Lector */
+
+.book-title{
+  margin-bottom: 30px;
+}
+
+.book-title h1, .book-title h3{
+  margin-top: 0;
+}
+
+a.book-option,
+a.book-option .glyphicon{
+  color: green !important;
+}
+
+a.book-back,
+a.book-back .glyphicon{
+  color: red !important;
+}
+
+.book .glyphicon{
+  font-size: 12px !important;
+}
+
+.page-left, .page-right{
+  border-top: solid 3px;
+  border-bottom: solid 3px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+}
+
+.page-right{
+  border-left: solid 2px;
+  border-right: solid 30px #808080;
+}
+
+.page-left{
+  border-left: solid 1px #808080;
+}
+
+.row-eq-height {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
 }
