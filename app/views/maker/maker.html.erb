@@ -60,9 +60,10 @@
 
   <div id="graph_popup" class="col-sm-4 col-sm-offset-4">
     <h3 class="text-center" id="popup-header">Popup</h3>
-
-    <label for="popup-label">Title: </label>
-    <input type="text" value="" id="popup-label" class="form-control">
+    <div id="show-on-edit-node">
+      <label for="popup-label">Title: </label>
+      <input type="text" value="" id="popup-label" class="form-control">
+    </div>
 
     <label for="popup-title">Body: </label>
     <textarea id="popup-title" class="form-control"></textarea>
@@ -89,6 +90,8 @@
     var show_on_node   = $(".show-on-node-select");
     var show_on_both   = $(".show-on-select-both");
     var show_on_action = $(".show-on-action");
+    var show_on_edit_node=$("#show-on-edit-node");
+
     var db_chapters = [];
     var vis_nodes = [];
     var vis_edges = [];
@@ -255,6 +258,7 @@
     function onAddNode(data, callback){
       data.story_id = story_id;
       popup_header.text("Añadir nodo");
+      show_on_edit_node.show();
       popup_title.val(data.title);
       popup_label.val(data.label);
       popup_save_btn.on("click", onSave.bind(this, "post_node", data, callback));
@@ -264,6 +268,7 @@
     // esta funcion se llama al pulsar sobre "Edit node"
     function onEditNode(data, callback){
       popup_header.text("Editar nodo");
+      show_on_edit_node.show();
       popup_title.val(data.title);
       popup_label.val(data.label);
       popup_save_btn.on("click", onSave.bind(this, "put_node", data, callback));
@@ -296,6 +301,7 @@
       }
     }
     function onAddEdge(data, callback){
+      show_on_edit_node.hide();
       if(data.from == data.to){
         var respuesta = confirm("¿Quieres conectar el nodo consigo mismo?");
         if (respuesta == true){
@@ -310,6 +316,7 @@
       }
     }
     function onEditEdge(data, callback){
+      show_on_edit_node.hide();
       var data_to_callback = data;
       if(data.from === data.to){
         var dialog_confirm = confirm("¿Quieres conectar el nodo consigo mismo?");
@@ -324,6 +331,7 @@
       show_on_action.hide();
     }
     function onEditEdgeText(data, callback){
+      show_on_edit_node.hide();
       popup_header.text("Editar texto de la arista");
       popup_title.val(data.title);
       popup_label.val(data.label);
