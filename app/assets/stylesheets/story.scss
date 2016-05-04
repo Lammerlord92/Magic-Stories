@@ -136,6 +136,38 @@ input[readonly] {
   margin-bottom: 1.2em;
 }
 
+.author{
+  margin-top: 15px;
+  margin-bottom: -10px;
+}
+
+.author h2{
+  display: inline;
+}
+
+.author img{
+  width: 50px;
+  height: 50px;
+  margin-top: -15px !important;
+}
+
+.boton{
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.boton .btn-primary{
+  color: white !important;
+  background-color: #113e05 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  margin-bottom: 10px;
+}
+
+.boton .btn-primary:hover{
+  background-color: darkgreen !important;
+}
+
 /* Relativo a story-data */
 
 .story-data {

@@ -1,28 +1,34 @@
 <div class="row">
   <div class="col-md-4">
-    <div class="story-metadata">
+    <div class="story-metadata container-fluid">
       <div class="center">
         <div class="story">
           <!-- TODO: Hacer que la imagen se posicione igual que como en las imágenes del diseñador -->
           <%= render 'stories/story_cover', story: story %>
         </div>
       </div>
-      <%= render 'stories/valoration', valoration: 8 %>
-      <h2><%= story.creatorProfile.name %></h2>
+      <!-- No se muestra en esta versión -->
+      <!-- render 'stories/valoration', valoration: 8 -->
       <hr/>
-      <p>Géneros:</p>
+      <div class="author center">
+        <%= image_tag(story.creatorProfile.avatar, class: "img-circle") %>
+        <h2><%= story.creatorProfile.name %></h2>
+      </div>
+      <hr/>
+      <p><b>Géneros:</b></p>
       <!-- Solución prvisional -->
       <% story.categories.each do |category| %>
-      <p>&#9679; <%= category.name %></p>
+      <p><a href="/categories/<%= category.id %>">&#9679; <%= category.name %></a></p>
       <% end %>
       <!-- No se muestra en esta versión -->
       <!--<p>Idioma: <%= story.language %></p>-->
       <!-- TODO: Mejorar la forma en la que se muestra el idioma -->
-      <p>Fecha de publicación: <%= story.release_date ? story.release_date.strftime('%d/%m/%Y') : 'Sin fecha' %></p>
+      <p><b>Fecha de publicación:</b> <%= story.release_date ? story.release_date.strftime('%d/%m/%Y') : 'Sin fecha' %></p>
       <% if current_user.present? %> <!-- Evitar "NilException" -->
         <% if story.creatorProfile.id == current_user.profile.id %>
-          <div class="center" style="margin-bottom: 10px;">
-            <%= button_to 'Ir al editor de historias', "/maker/#{story.id}",  class: 'btn btn-default', method: :get %>
+          <div class="boton col-md-8 col-md-offset-2">
+            <%= button_to "Editar información", "/stories/#{story.id}/edit", class: "btn btn-default btn-primary btn-block", method: :get %>
+            <%= button_to 'Ir al editor de historias', "/maker/#{story.id}", class: 'btn btn-default btn-primary btn-block', method: :get %>
           </div>
         <% end %>
       <% end %>
