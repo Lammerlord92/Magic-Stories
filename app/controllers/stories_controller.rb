@@ -59,6 +59,11 @@ before_action :authenticate_user!, except: [:example ]
     @categories = Category.all
   end
 
+  def edit
+    @story = Story.find(params[:id])
+    @categories = Category.all
+  end
+
   #POST /stories
   def create
     @story = Story.new(story_params)
@@ -78,6 +83,20 @@ before_action :authenticate_user!, except: [:example ]
       @categories = Category.all
       flash[:alert] = 'Error almacenando historia'
       render :new
+    end
+  end
+
+  def update
+    @story = Story.find(params[:id])
+    @story.categories = params[:categories]
+    @categories = Category.all
+
+    if @story.update(story_params)
+      redirect_to @story
+    else
+      @categories = Category.all
+      flash[:alert] = 'Error almacenando historia'
+      render :edit
     end
   end
 

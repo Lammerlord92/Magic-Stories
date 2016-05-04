@@ -21,7 +21,7 @@
 
 <% name ||= "Crear" %>
 
-<h1>Crear historia</h1>
+<h1><%= name %> historia</h1>
 
 <%= form_for(@story) do |f|%>
   <% if @story.errors.full_messages.length > 0 %>

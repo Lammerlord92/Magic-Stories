@@ -10,6 +10,8 @@ class Story < ActiveRecord::Base
   #validate :check_date
 
   after_create :save_categories
+  # TODO Actualizar categorías
+  # after_update :save_categories
 
   has_many :chapters
   has_many :comments
