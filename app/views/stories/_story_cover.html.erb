@@ -1,7 +1,7 @@
 <% unless story.cover.present? %>
 	<!-- Solución provisional -->
 	<% cat = I18n.transliterate(story.categories.first.name).downcase %>
-  <img class="cover-image" title="<%= story.title %>" src="/assets/categories_covers/<%= cat %>.jpg" />
+  <img class="cover-image" title="<%= story.title %>" src="/assets/categories_covers/<%= cat %>.jpg" width="2480" height="3508" />
 <% else %>
-  <img class="cover-image" title="<%= story.title %>" src="<%= story.cover %>" />
+  <img class="cover-image" title="<%= story.title %>" src="<%= story.cover %>" width="24" height="3508" />
 <% end %>
