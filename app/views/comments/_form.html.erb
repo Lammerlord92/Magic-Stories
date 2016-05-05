@@ -1,11 +1,12 @@
 <%= form_for([@comment]) do |f| %>
 
-  <%= f.text_field :title, placeholder: 'Titulo' %>
-  <br>
-  <%= f.text_area :body, placeholder: 'Comentario' %>
+  <%= f.text_field :title, placeholder: 'Título', class: 'form-control' %>
+  <%= f.text_area :body, placeholder: 'Comentario', class: 'form-control' %>
 
   <%= f.hidden_field :story_id, :value => id_story %>
 
-  <%= f.submit 'Publicar', class: "btn btn-primary" %>
+	<div class="boton">
+  	<%= f.submit 'Publicar comentario', class: "btn btn-primary" %>
+  </div>
 
 <% end %>
