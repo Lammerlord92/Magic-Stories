@@ -25,6 +25,6 @@
 
 <div class="boton">
   <% if current_user.present? %>
-    <%= link_to "Nuevo comentario", new_comment_path(:id_story => id), class: "btn btn-primary", :method => :get %>
+    <%= render 'comments/form', id_story: id %>
   <% end %>
 </div>

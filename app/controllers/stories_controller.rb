@@ -48,6 +48,7 @@ before_action :authenticate_user!, except: [:example ]
     begin
     @story = Story.find(params[:id])
     @comments = @story.comments
+    @comment = Comment.new
     rescue ActiveRecord::RecordNotFound => e
       render 'errors/not_found'
     end

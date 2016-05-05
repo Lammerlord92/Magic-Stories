@@ -1,11 +1,6 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
 
-  def new
-    @comment = Comment.new
-    @idStory = params[:id_story]
-  end
-
   def create
     if current_user.profile.present?
       @comment = Comment.new(comment_params)
