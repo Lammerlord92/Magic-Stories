@@ -21,8 +21,12 @@
 }
 .buttons{
   clear: left;
-  position: relative;
 
+
+
+}
+.block-left{
+  text-align: left;
 }
 .button{
   text-align: center;
@@ -51,4 +55,17 @@
 img.cover{
   width: 240px;
   height: 350px;
+}
+#hed{
+  font-size:200% ;
+  color: gold;
+}
+
+.jumboCatS{
+  background-image: url("/assets/mosaico.jpg");
+  background-repeat: repeat-x repeat-y;
+}
+.jumbopp{
+  background-color: #002400 !important;
+  color: white !important;
 }
