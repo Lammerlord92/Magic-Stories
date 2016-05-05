@@ -16,7 +16,8 @@
     </div>
     <div class="col-md-1">
       <% if current_user.profile == comment.profile %>
-      <%= link_to "", edit_comment_path(comment, :id_story => id), class: "glyphicon glyphicon-pencil" %>
+      <%= link_to "", edit_comment_path(comment), class: "glyphicon glyphicon-pencil" %>
+      <%= link_to "", comment_path(comment), method: :delete, class: "glyphicon glyphicon-remove" %>
       <% end %>
     </div>
   </div>

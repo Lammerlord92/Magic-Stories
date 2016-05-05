@@ -103,7 +103,7 @@ Rails.application.routes.draw do
   delete 'additions' => 'additions#delete'
 
   #Comments
-  resources :comments, only: [:create, :edit, :update]
+  resources :comments, only: [:create, :edit, :update, :destroy]
 
   post 'membership_cards/exchange', to: 'membership_cards#exchange'
   get 'membership_cards/exchange', to: 'membership_cards#exchange'

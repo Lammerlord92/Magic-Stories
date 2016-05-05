@@ -19,7 +19,6 @@ class CommentsController < ApplicationController
 
   def edit
     @comment = Comment.find(params[:id])
-    @idStory = params[:id_story]
   end
 
   def update
@@ -31,6 +30,15 @@ class CommentsController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def destroy
+    @comment = Comment.find(params[:id])
+    story = Story.find(@comment.story_id)
+    if !@comment.destroy
+      flash.alert = "El comentario no se ha podido eliminar"
+    end
+    redirect_to story_path(story, anchor: 'new_comment')
   end
 
   def comment_params
