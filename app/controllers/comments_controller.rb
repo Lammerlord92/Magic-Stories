@@ -8,12 +8,10 @@ class CommentsController < ApplicationController
       @comment.story = story
       @comment.profile = current_user.profile
       @comment.date = Date.current
-      if @comment.save
-        redirect_to story
-      else
-        @idStory = @comment.story_id
-        render :new
+      if !@comment.save
+        flash.alert = "Por favor, revise su comentario"
       end
+      redirect_to story_path(story, anchor: 'new_comment')
     else
       render 'errors/permission_denied'
     end

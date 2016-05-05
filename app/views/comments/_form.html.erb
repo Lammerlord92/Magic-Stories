@@ -1,14 +1,5 @@
 <%= form_for([@comment]) do |f| %>
 
-  <% if @comment.errors.full_messages.length > 0 %>
-    <div class="errors">
-      <p>Se encontraron los siguientes errores al guardar el comentario:</p>
-      <% @comment.errors.full_messages.each do |message| %>
-        <p class="error">*<%= message %></p>
-      <% end %>
-    </div>
-  <% end %>
-
   <%= f.text_field :title, placeholder: 'Titulo' %>
   <br>
   <%= f.text_area :body, placeholder: 'Comentario' %>

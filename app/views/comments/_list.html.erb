@@ -23,7 +23,7 @@
   <hr/>
 <% end %>
 
-<div class="boton">
+<div id="new_comment">
   <% if current_user.present? %>
     <%= render 'comments/form', id_story: id %>
   <% end %>
