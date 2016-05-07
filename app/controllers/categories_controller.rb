@@ -39,8 +39,12 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    @category=set_category
+    @category = Category.find(params[:id])
+    #@category=set_category
     @category.destroy
+    if !@category.destroy
+      flash.alert = "No se puedo eliminar ya que existen historias que pertenecen a este género"
+    end
     redirect_to categories_path
   end
 
