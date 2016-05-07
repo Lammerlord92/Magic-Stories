@@ -1,2 +1,73 @@
-<%= render 'stories/header', option: "all" %>
-<%= render 'stories/list' %>
+<div class="row">
+
+	<h1 class="text-center">Historias</h1>
+	<br/>
+
+	<!-- Listado de historias -->
+	<div class="col-md-9">
+		
+		<!-- Tabs para cada listado -->
+		<ul class="nav nav-pills nav-justified">
+		  <!-- Todas las historias (todos los usuarios) -->
+		  <li <% if params[:option] == nil %>class="active"<% end %> role="presentation">
+		    <%= link_to "Todas", stories_path, class:"btn btn-default", style: "margin-right: 5px;" %>
+		  </li>
+		  <!-- Historias adquiridas (sólo usuarios logueados) -->
+		  <% if user_signed_in? %>
+
+		    <li <% if params[:option] == "acquired" %>class="active"<% end %> role="presentation">
+		      <%= link_to "Adquiridas", stories_path(:option => "acquired"), class:"btn btn-default", style: "margin-right: 5px;" %>
+		    </li>
+		    <!-- Historias creadas (sólo usuarios premium y admins) -->
+		    <% unless current_user.role_type == "FreeUser" %>
+		      <li <% if params[:option] == "created" %>class="active"<% end %> role="presentation">
+		        <%= link_to "Creadas", stories_path(:option => "created"), class:"btn btn-default" %>
+		      </li>
+		    <% end %>
+		  <% end %>
+		</ul>
+
+		<!-- Historias -->
+		<% @stories.each_slice(4) do |stories| %>
+		  <div class="row">
+		    <% stories.each do |story| %>
+		      <div class="col-md-3">
+		        <%= render 'stories/story_slot', story: story %>
+		      </div>
+		    <% end %>
+		  </div>
+		<% end %>
+		
+	</div>
+
+	<!-- Búsqueda y filtrado -->
+	<!-- TODO Arreglar -->
+	<div class="col-md-3">
+		<div class="story-search-params">
+      <div class="categories">
+        <h3>GÉNEROS</h3>
+        <hr/>
+        <% @categories.each do |category| %>
+          <% if @category and @category == category %>
+            <p><strong><%= category.name %></strong></p>
+          <% else %>
+            <p><%= category.name %></p>
+          <% end %>
+        <% end %>
+      </div>
+      <hr/>
+      <form action="/stories" method="get" role="form">
+        <div class="form-group has-feedback">
+          <label class="control-label">Buscar</label>
+          <input class="form-control" type="text" name="q" placeholder="Buscar..." value="<%= @q %>" />
+          <i class="glyphicon glyphicon-search form-control-feedback"></i>
+        </div>
+      </form>
+      <hr/>
+      <div class="filter">
+        <h3>FILTRAR POR</h3>
+      </div>
+    </div>
+	</div>
+
+</div>

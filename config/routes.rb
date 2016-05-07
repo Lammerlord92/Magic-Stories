@@ -72,10 +72,6 @@ Rails.application.routes.draw do
   get 'stories/read'
   get 'stories/read/:id' => 'stories#dbread' # read from DB
   get 'stories/example' => 'stories#example' # Caperucita Roja
-  get 'stories/acquired' => 'stories#acquired'
-  get 'stories/created' => 'stories#created'
-  get 'stories/search', to: 'stories#search'
-
   #TODO get 'profiles/:id/stories/acquired'
   resources :stories
 

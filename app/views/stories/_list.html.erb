@@ -1,9 +1,0 @@
-<% @stories.each_slice(4) do |stories| %>
-  <div class="row">
-    <% stories.each do |story| %>
-      <div class="col-md-3">
-        <%= render 'stories/story_slot', story: story %>
-      </div>
-    <% end %>
-  </div>
-<% end %>
