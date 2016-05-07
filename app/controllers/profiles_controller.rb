@@ -256,7 +256,7 @@ class ProfilesController < ApplicationController
   #GET profiles/:id/following
  def following
    @profile = Profile.find(params[:id])
-   @profiles = @profile.followings(Profile)
+   @profiles = @profile.following(Profile)
 
  end
 
