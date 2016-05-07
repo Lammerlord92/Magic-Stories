@@ -251,4 +251,18 @@ class ProfilesController < ApplicationController
 
   end
 =end
+
+=begin  TODO
+  #GET profiles/:id/following
+ def following
+   @profiles =
+
+ end
+
+  #GET profiles/:id/followers
+  def followers
+    @profiles =
+
+  end
+=end
 end
