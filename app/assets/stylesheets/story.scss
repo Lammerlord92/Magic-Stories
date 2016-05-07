@@ -297,3 +297,11 @@ a.book-back .glyphicon{
   display: -ms-flexbox;
   display: flex;
 }
+
+
+/* Listado de historias */
+
+.nav-pills li.active a{
+  background-color: #002400 !important;
+  color: white !important;
+}
