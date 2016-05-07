@@ -75,6 +75,8 @@ Rails.application.routes.draw do
   get 'stories/acquired' => 'stories#acquired'
   get 'stories/created' => 'stories#created'
   get 'stories/search', to: 'stories#search'
+
+  #TODO get 'profiles/:id/stories/acquired'
   resources :stories
 
   #Chapters
