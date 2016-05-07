@@ -252,17 +252,19 @@ class ProfilesController < ApplicationController
   end
 =end
 
-=begin  TODO
+
   #GET profiles/:id/following
  def following
-   @profiles =
+   @profile = Profile.find(params[:id])
+   @profiles = @profile.followings(Profile)
 
  end
 
   #GET profiles/:id/followers
   def followers
-    @profiles =
+    @profile = Profile.find(params[:id])
+    @profiles = @profile.followers(Profile)
 
   end
-=end
+
 end
