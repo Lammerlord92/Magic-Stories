@@ -63,15 +63,15 @@
       <!-- Historias adquiridas (sólo usuarios logueados) -->
 
 
-      <li <% if @option == "acquired" %>class="active"<% end %> role="presentation">
-        <%= link_to "Listado de obras adquiridas", stories_acquired_path, class:"btn btn-default" %>
+      <li <% if params[:option] == "acquired" %>class="active"<% end %> role="presentation">
+        <%= link_to "Adquiridas", stories_path(:option => "acquired"), class:"btn btn-default" %>
       </li>
 
       <!-- Historias creadas (sólo usuarios premium y admins) -->
       <% unless current_user.role_type == "FreeUser" %>
 
-          <li <% if @option == "created" %>class="active"<% end %> role="presentation">
-            <%= link_to "Creadas", stories_created_path, class:"btn btn-default" %>
+          <li <% if params[:option] == "created" %>class="active"<% end %> role="presentation">
+            <%= link_to "Creadas", stories_path(:option => "created"), class:"btn btn-default" %>
           </li>
 
       <% end %>
