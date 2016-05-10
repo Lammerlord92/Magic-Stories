@@ -73,7 +73,58 @@
     <button id="popup-cancel" class="btn btn-default">Cancelar</button>
   </div>
   <div id="graph_edit"></div>
+  <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
   <script type="text/javascript" charset="utf-8">
+
+    tinyMCE.init({
+      selector:'#popup-title',
+      menubar: false,
+      min_height: 50,
+      menu: {
+        //file: {title: 'File', items: 'newdocument'},
+        edit: {title: 'Edit', items: 'undo redo | cut copy paste pastetext | selectall'},
+        //insert: {title: 'Insert', items: 'link media | template hr'},
+        //view: {title: 'View', items: 'visualaid'},
+        //format: {title: 'Format', items: 'bold italic underline strikethrough superscript subscript | formats | removeformat'},
+        format: {title: 'Format', items: 'bold italic underline strikethrough | formats | removeformat'},
+        //table: {title: 'Table', items: 'inserttable tableprops deletetable | cell row column'},
+        //tools: {title: 'Tools', items: 'spellchecker code'}
+      },
+      resize: 'false',
+      style_formats: [
+        {title: 'Headers', items: [
+          {title: 'Header 1', format: 'h1'},
+          {title: 'Header 2', format: 'h2'},
+          {title: 'Header 3', format: 'h3'}//,
+          //{title: 'Header 4', format: 'h4'},
+          //{title: 'Header 5', format: 'h5'},
+          //{title: 'Header 6', format: 'h6'}
+        ]},
+        {title: 'Inline', items: [
+          {title: 'Bold', icon: 'bold', format: 'bold'},
+          {title: 'Italic', icon: 'italic', format: 'italic'},
+          {title: 'Underline', icon: 'underline', format: 'underline'},
+          {title: 'Strikethrough', icon: 'strikethrough', format: 'strikethrough'}//,
+          //{title: 'Superscript', icon: 'superscript', format: 'superscript'},
+          //{title: 'Subscript', icon: 'subscript', format: 'subscript'},
+          //{title: 'Code', icon: 'code', format: 'code'}
+        ]},
+        /*{title: 'Blocks', items: [
+         {title: 'Paragraph', format: 'p'},
+         {title: 'Blockquote', format: 'blockquote'},
+         {title: 'Div', format: 'div'},
+         {title: 'Pre', format: 'pre'}
+         ]},
+         {title: 'Alignment', items: [
+         {title: 'Left', icon: 'alignleft', format: 'alignleft'},
+         {title: 'Center', icon: 'aligncenter', format: 'aligncenter'},
+         {title: 'Right', icon: 'alignright', format: 'alignright'},
+         {title: 'Justify', icon: 'alignjustify', format: 'alignjustify'}
+         ]}*/
+      ]
+
+    });
+
     var story_id  = <%= @id %>;
     var container = $("#graph_edit")[0];
     var $popup    = $("#graph_popup"); // popup jquery elem
@@ -215,6 +266,7 @@
       }
       $(".action-description").text(action_descriptions[action_name]);
     }
+
     var vis_options = {
       interaction: {
         navigationButtons: true,
@@ -261,6 +313,9 @@
       show_on_edit_node.show();
       popup_title.val(data.title);
       popup_label.val(data.label);
+
+      tinyMCE.activeEditor.setContent(data.title || '');
+
       popup_save_btn.on("click", onSave.bind(this, "post_node", data, callback));
       popup_cancel_btn.on("click", onCancel.bind(this, callback));
       $popup.css("display", "block");
@@ -271,6 +326,9 @@
       show_on_edit_node.show();
       popup_title.val(data.title);
       popup_label.val(data.label);
+
+      tinyMCE.activeEditor.setContent(data.title || '');
+
       popup_save_btn.on("click", onSave.bind(this, "put_node", data, callback));
       popup_cancel_btn.on("click", onCancel.bind(this, callback));
       $popup.css("display", "block");
@@ -288,7 +346,7 @@
           sendAjaxForActionType("delete_node", data);
           getEdgesOfNode(data.nodes[0]).forEach(function(edge){
             sendAjaxForActionType("delete_edge", {edges: [edge.id]});
-          })
+          });
           console.log("Se borraron los nodos "+data.nodes.join(", "));
         }
         if(data.edges.length) {
@@ -335,6 +393,9 @@
       popup_header.text("Editar texto de la arista");
       popup_title.val(data.title);
       popup_label.val(data.label);
+
+      tinyMCE.activeEditor.setContent(data.title || '');
+
       popup_save_btn.on("click", onSave.bind(this, "put_edge", data, callback));
       popup_cancel_btn.on("click", onCancel.bind(this, callback));
       $popup.css("display", "block");
@@ -351,6 +412,8 @@
       grafo.disableEditMode();
     }
     function onSave(action_type, data, callback){
+      tinyMCE.triggerSave();
+
       data.title = popup_title.val();
       data.label = popup_label.val();
       clearPopup();
@@ -360,65 +423,73 @@
       grafo.disableEditMode();
       sendAjaxForActionType(action_type, data);
     }
-    function sendAjaxForActionType(action_type, data){
+    function sendAjaxForActionType(action_type, _data){
+      var data = $.extend({}, _data);
       if(action_type.indexOf("node") !== -1 ){
-        data.body = data.title || "Texto a rellenar";
-        data.title = data.label || "Texto a rellenar";
+        data.body = _data.title || "Texto a rellenar";
+        data.title = _data.label || "Texto a rellenar";
+        delete data.label;
         console.log("Maker: ha pasado por la conversión de nodos");
       }
       if(action_type.indexOf("edge") !== -1 ){
-        data.child_id = data.to;
-        data.parent_id = data.from;
-        data.option = data.title || "Texto a rellenar";
+        data.child_id = _data.to;
+        data.parent_id = _data.from;
+        data.option = _data.title || "Texto a rellenar";
+        delete data.to;
+        delete data.from;
+        delete data.title;
         console.log("Maker: ha pasado por la conversión de aristas");
       }
       switch(action_type){
         case "post_node":
-          sendAjax("/chapters.json", data, "POST", action_type);
+          sendAjax("/chapters.json", _data, data, "POST", action_type);
           break;
         case "put_node":
-          sendAjax("/chapters.json", data, "PUT", action_type);
+          sendAjax("/chapters.json", _data, data, "PUT", action_type);
           break;
         case "delete_node":
-          sendAjax("/chapters.json", {id: data.nodes[0]}, "DELETE", action_type);
+          sendAjax("/chapters.json", _data, {id: data.nodes[0]}, "DELETE", action_type);
           break;
         case "post_edge":
-          sendAjax("/options.json", data, "POST", action_type);
+          sendAjax("/options.json", _data, data, "POST", action_type);
           break;
         case "put_edge":
-          sendAjax("/options.json", data, "PUT", action_type);
+          sendAjax("/options.json", _data, data, "PUT", action_type);
           break;
         case "delete_edge":
-          sendAjax("/options.json", {id: data.edges[0]}, "DELETE", action_type);
+          sendAjax("/options.json", _data, {id: data.edges[0]}, "DELETE", action_type);
           break;
         default:
           console.log("Maker: onSave recibio un action_type desconocido");
           break;
       }
     }
-    function sendAjax(url, data, method, action_name){
+    function sendAjax(url, original_data, converted_data, method, action_name){
       $.ajax({
             url: url,
-            data: {chapter: data},
+            data: {chapter: converted_data},
             method: method
           })
           .done(function(res){
             if(res.id){
-              var old_id = data.id;
-              data.id = res.id;
+              var old_id = original_data.id;
+              original_data.id = res.id;
               if(action_name.indexOf("node") !== -1){
                 console.log("Ids del antiguo "+old_id)
 
+                original_data.title = res.body;
+                original_data.label = res.title;
+
                 grafo.body.data.nodes.getDataSet().remove(old_id)
-                grafo.body.data.nodes.getDataSet().update(data, data.id)
+                grafo.body.data.nodes.getDataSet().update(original_data)
               }
               if(action_name.indexOf("edge") !== -1){
                 if(res.option){
-                  data.title = res.option;
-                  data.label = res.option;
+                  original_data.title = res.option;
+                  original_data.label = res.option;
                 }
                 grafo.body.data.edges.getDataSet().remove(old_id)
-                grafo.body.data.edges.getDataSet().update(data, data.id)
+                grafo.body.data.edges.getDataSet().update(original_data)
               }
             }
             console.log("Maker: "+action_name+"recibio como respuesta a $.ajax "+JSON.stringify(res));
