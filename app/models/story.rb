@@ -10,8 +10,7 @@ class Story < ActiveRecord::Base
   #validate :check_date
 
   after_create :save_categories
-  # TODO Actualizar categorías
-  # after_update :save_categories
+  after_update :save_categories
 
   has_many :chapters
   has_many :comments
@@ -53,9 +52,13 @@ class Story < ActiveRecord::Base
   private
 
   def save_categories
+    categories_to_remove = self.categories.pluck(:id) - @categories.split(',')
+    categories_to_remove.each do |category_id|
+      HasCategory.where(category_id: category_id, story_id: self.id).destroy_all
+    end
+
     @categories.each do |category_id|
       HasCategory.create(category_id: category_id, story_id: self.id)
     end
   end
-
 end
