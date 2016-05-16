@@ -5,7 +5,7 @@
 
 	<!-- Listado de historias -->
 	<div class="col-md-9">
-		
+				
 		<!-- Tabs para cada listado -->
 		<ul class="nav nav-pills nav-justified">
 		  <!-- Todas las historias (todos los usuarios) -->
@@ -37,7 +37,6 @@
 		    <% end %>
 		  </div>
 		<% end %>
-		
 	</div>
 
 	<!-- Búsqueda y filtrado -->
@@ -48,11 +47,13 @@
         <h3>GÉNEROS</h3>
         <hr/>
         <% @categories.each do |category| %>
-          <% if @category and @category == category %>
-            <p><strong><%= category.name %></strong></p>
-          <% else %>
-            <p><%= category.name %></p>
-          <% end %>
+					<a href='/stories?category_id=<%= category.id %>'>
+	          <% if @category and @category == category %>
+							<p><strong><%= category.name %></strong></p></br>
+	          <% else %>
+	            <p><%= category.name %></p></br>
+	          <% end %>
+					</a>
         <% end %>
       </div>
       <hr/>
@@ -69,5 +70,4 @@
       </div>
     </div>
 	</div>
-
 </div>
