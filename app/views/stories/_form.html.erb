@@ -57,7 +57,7 @@
   <div class="form-group">
     <label for="categorias">Elija las categorías (al menos una)</label>
     <% @categories.each do |category| %>
-      <br/><%= check_box_tag "categories[]", category.id %>&nbsp;<%= category.name %>
+      <br/><%= check_box_tag "categories[]", category.id, f.object.categories.include?(category) %>&nbsp;<%= category.name %>
     <% end %>
   </div>
 
