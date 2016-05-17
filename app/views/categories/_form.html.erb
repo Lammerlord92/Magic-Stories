@@ -23,25 +23,30 @@
 
 <% name ||= "Crear" %>
 <h1><%= name %> Género</h1>
-<%= form_for(@category) do |cat|%>
-    <% @category.errors.full_messages.each do |message| %>
-        <div class="error">
-          *<%= message  %>
-        </div>
-    <% end %>
-    <div class="field">
-      <%= cat.text_field :name, placeholder: "Nombre de categoría", class:"form-field" %>
+<%= form_for(@category) do |f| %>
+  <% if @category.errors.full_messages.length > 0 %>
+    <div class="errors">
+      <p>Se encontraron los siguientes errores al guardar la historia:</p>
+      <% @category.errors.full_messages.each do |message| %>
+        <p class="error">*<%= message %></p>
+      <% end %>
     </div>
-    <div class="field">
-        <%= cat.text_area :description, placeholder: "Descripción de categoría" %>
-    </div>
-    <div class="field">
-      <input type="file" onchange="previewFile()"><br>
-      <img src="<%=@category.icon %>" height="200" alt="Imagen actual">
-    </div>
-    <%=hidden_field(:category,:icon)%>
-    <div class="buttons">
-      <%= cat.submit "Guardar", class:"btn btn-default" %>
-      <%= link_to "Volver", categories_path,class: "btn btn-default" %>
-    </div>
+  <% end %>
+
+  <div class="form-group">
+    <label for="title">Icono representativo del género</label><br>
+    <%= f.text_field :icon, placeholder: "URL del icono", class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <label for="title">Nombre del género</label><br>
+    <%= f.text_field :name, placeholder: "Nombre", class:"form-control" %>
+  </div>
+  <div class="field">
+    <label for="title">Descripción del género</label><br>
+    <%= f.text_area :description, placeholder: "Descipción", class:"form-control" %>
+  </div>
+
+  <div class="field">
+    <%= f.submit "Guardar", class: "btn btn-primary" %>
+  </div>
 <% end %>
