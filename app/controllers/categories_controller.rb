@@ -40,11 +40,15 @@ class CategoriesController < ApplicationController
 
   def destroy
     @category = Category.find(params[:id])
-    #@category=set_category
-    @category.destroy
-    if !@category.destroy
-      flash.alert = "No se puedo eliminar ya que existen historias que pertenecen a este género"
+    if @category.destroy
+      redirect_to categories_path
+    else
+      flash.alert = "No se pudo eliminar ya que existen historias que pertenecen a este género"
     end
+  end
+
+  rescue_from 'ActiveRecord::InvalidForeignKey' do |exception|
+    flash.alert = "No se pudo eliminar ya que existen historias que pertenecen a este género"
     redirect_to categories_path
   end
 
