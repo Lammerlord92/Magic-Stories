@@ -36,17 +36,19 @@
   <% @categories.each_slice(2) do |categories| %>
     <div class="row">
       <% categories.each do |category| %>
-        <div class="col-md-6">
-          <h3><img src="<%= category.icon %>" alt="<%= category.name %>" class="category-image" /><%= category.name %></h3>
-          <hr/>
-          <div class="row">
-            <% @newest_stories_by_category[category].each do |story| %>
-              <div class="col-md-4">
-                <%= render 'stories/story_slot', story: story %>
-              </div>
-            <% end %>
+        <% unless category.stories.empty? %>
+          <div class="col-md-6">
+            <h3><img src="<%= category.icon %>" alt="<%= category.name %>" class="category-image" /><%= category.name %></h3>
+            <hr/>
+            <div class="row">
+              <% @newest_stories_by_category[category].each do |story| %>
+                <div class="col-md-4">
+                  <%= render 'stories/story_slot', story: story %>
+                </div>
+              <% end %>
+            </div>
           </div>
-        </div>
+        <% end %>
       <% end %>
     </div>
   <% end %>
