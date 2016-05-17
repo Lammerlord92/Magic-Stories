@@ -40,7 +40,7 @@
               <% end %>
       <% end %>
       <% if @is_current_profile %>
-        <%= link_to "Editar", edit_profile_path(@profile), class:"btn btn-primary btn-block" %>
+        <%= link_to "Editar", '/profiles/edit', class:"btn btn-primary btn-block" %>
         </br>
       <% else %>
       <!-- t En caso de amistade comletariamos la comprobación de abajo con: or @is_friend_profile -->

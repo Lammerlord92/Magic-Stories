@@ -33,6 +33,8 @@ class ProfilesController < ApplicationController
     end
   end
 
+  # XXX: Este método podría quedar obsoleto ya que edit_current lo sustituye
+  # Ver https://github.com/Lammerlord92/Magic-Stories/issues/11
   def edit
     begin
       @profile = set_profile
@@ -45,6 +47,11 @@ class ProfilesController < ApplicationController
     rescue ActiveRecord::RecordNotFound => e      # profile.id not exist
       render 'errors/not_found'
     end
+  end
+
+  def edit_current
+    @profile = current_user.profile
+    render 'profiles/edit'
   end
 
   def create

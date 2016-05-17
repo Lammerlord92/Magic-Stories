@@ -94,6 +94,7 @@ Rails.application.routes.draw do
   get 'profiles/follow/:id', to: 'profiles#follow'
   get 'profiles/unfollow/:id', to: 'profiles#unfollow'
   get 'profiles/ban/:id', to: 'profiles#ban'
+  get 'profiles/edit', to: 'profiles#edit_current'
   resources :profiles
 
   #Additions

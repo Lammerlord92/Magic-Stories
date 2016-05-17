@@ -31,7 +31,7 @@
     <% if user_signed_in? %>
     <div class="row container-fluid boton">
       <% if current_user.profile == profile %>
-        <%= link_to "Editar mi perfil", "/profiles/#{profile.id}/edit", class: "btn btn-primary btn-block" %>
+        <%= link_to "Editar mi perfil", "/profiles/edit", class: "btn btn-primary btn-block" %>
       <% elsif !current_user.profile.follows?(profile) %>
         <%= link_to "Seguir", "/profiles/follow/#{profile.id}", class: "btn btn-primary btn-block" %>
       <% else %>
