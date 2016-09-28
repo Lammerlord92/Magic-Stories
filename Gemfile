@@ -49,7 +49,7 @@ gem 'rails-i18n'
 gem 'bootstrap-wysihtml5-rails'
 
 gem 'mailboxer'
-gem 'devise'
+gem 'devise', '~> 3.5.6'
 gem 'omniauth'
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'
